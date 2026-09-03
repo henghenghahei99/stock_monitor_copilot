@@ -1,0 +1,14 @@
+{
+  "id": "a_rank",
+  "name": "A股板块得分排名(A_rank)",
+  "type": "sector_rank",
+  "description": "A股上涨趋势 -> 按 8/8记8分、7/8记6分、6/8记4分 得到行业加权总分; 取总分前15名为池, 再按平均分排序",
+  "weight": 1.0,
+  "params": {
+    "market": "cn",
+    "base": "uptrend",
+    "score_map": "8:8,7:6,6:4",
+    "top": 15,
+    "sort": "平均分"
+  }
+}

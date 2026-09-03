@@ -1,0 +1,10 @@
+{
+  "id": "uptrend",
+  "name": "上涨趋势",
+  "type": "uptrend",
+  "description": "多头排列/站上年线/MA20上行/低点抬高/高点抬高/斜率向上/近60日新高/放量 共8个条件打分",
+  "weight": 1.0,
+  "params": {
+    "min_score": 5
+  }
+}

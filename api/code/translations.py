@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+行业/板块 英中翻译映射(共享模块)。
+供 find_overbought_stocks.py / find_uptrend.py / run_strategy.py / translate_industry.py 使用。
+未收录的原文原样返回。
+"""
+
+from __future__ import annotations
+
+# 板块(纳斯达克 GICS 大类)
+SECTOR_ZH = {
+    "Technology": "科技",
+    "Communication Services": "通信服务",
+    "Health Care": "医疗保健",
+    "Finance": "金融",
+    "Consumer Discretionary": "非必需消费",
+    "Consumer Staples": "必需消费",
+    "Industrials": "工业",
+    "Basic Materials": "基础材料",
+    "Energy": "能源",
+    "Utilities": "公用事业",
+    "Real Estate": "房地产",
+    "Miscellaneous": "其他",
+}
+
+# 行业(纳斯达克 screener 细分行业)
+INDUSTRY_ZH = {
+    # 生物/医药/医疗
+    "Biotechnology: Pharmaceutical Preparations": "生物科技：制药",
+    "Biotechnology: Biological Products (No Diagnostic Substances)": "生物科技：生物制品",
+    "Biotechnology: Laboratory Analytical Instruments": "生物科技：实验室分析仪器",
+    "Biotechnology: Commercial Physical & Biological Resarch": "生物科技：商业物理与生物研究",
+    "Biotechnology: Electromedical & Electrotherapeutic Apparatus": "生物科技：电子医疗设备",
+    "Biotechnology: In Vitro & In Vivo Diagnostic Substances": "生物科技：体外/体内诊断",
+    "Major Pharmaceuticals": "大型制药",
+    "Pharmaceuticals: Other": "其他制药",
+    "Medical Specialities": "医疗专科",
+    "Medical/Dental Instruments": "医疗/牙科器械",
+    "Medical Instruments & Supplies": "医疗器械与用品",
+    "Medical/Nursing Services": "医疗/护理服务",
+    "Medicinal Chemicals and Botanical Products": "医药化工与植物药",
+    "Hospital/Nursing Management": "医院/护理管理",
+    "Health Services": "健康服务",
+    "Managed Health Care": "管理式医疗",
+    "Home Health Care": "家庭医疗",
+    # 科技
+    "Computer Software: Prepackaged Software": "计算机软件：成品软件",
+    "Computer Software: Programming Data Processing": "计算机软件：编程与数据处理",
+    "Computer Manufacturing": "计算机制造",
+    "Computer Communications Equipment": "计算机网络设备",
+    "Computer Peripheral Equipment": "电脑外设",
+    "Semiconductors": "半导体",
+    "Semiconductor Equipment": "半导体设备",
+    "Electronic Components": "电子元器件",
+    "EDP Services": "电子数据处理服务",
+    "Internet and Information Services": "互联网与信息服务",
+    "Office Automation/Equipment": "办公自动化/设备",
+    "Telecommunications Equipment": "电信设备",
+    "Consumer Electronics/Appliances": "消费电子/家电",
+    "Retail: Computer Software & Peripheral Equipment": "零售：电脑软件及外设",
+    # 金融
+    "Major Banks": "大型银行",
+    "Money Center Banks": "货币中心银行",
+    "Commercial Banks": "商业银行",
+    "Regional Banks": "地区银行",
+    "Savings Institutions": "储蓄机构",
+    "Finance: Consumer Services": "金融：消费服务",
+    "Diversified Financial Services": "多元化金融服务",
+    "Investment Bankers/Brokers/Service": "投资银行/经纪服务",
+    "Investment Managers": "投资管理",
+    "Finance: Investment Managers": "金融：投资管理",
+    "Property-Casualty Insurers": "财产意外险",
+    "Specialty Insurers": "专业保险",
+    "Life Insurance": "人寿保险",
+    "Multi-Line Insurance": "综合保险",
+    "Insurance Brokers": "保险经纪",
+    "Real Estate Investment Trusts": "房地产投资信托(REITs)",
+    "Blank Checks": "空白支票公司(壳)",
+    # 工业/制造
+    "Industrial Machinery/Components": "工业机械/零部件",
+    "Industrial Specialties": "工业特种品",
+    "Aerospace & Defense": "航空航天与国防",
+    "Aircraft": "飞机制造",
+    "Air Freight/Delivery Services": "航空货运/快递",
+    "Trucking Freight/Courier Services": "货运/快递",
+    "Railroads": "铁路运输",
+    "Marine Transportation": "海上运输",
+    "Auto Manufacturing": "汽车制造",
+    "Construction/Ag Equipment/Trucks": "工程/农用机械/卡车",
+    "Homebuilding": "住宅建设",
+    "General Building Contractors": "建筑工程总承包",
+    "Building Materials": "建筑材料",
+    "Building Products": "建筑产品",
+    "Forest Products": "林产品",
+    "Paper": "造纸",
+    "Steel Production": "钢铁生产",
+    "Metal Mining": "金属矿业",
+    "Precious Metals": "贵金属",
+    "Mining & Quarrying of Nonmetallic Minerals": "非金属矿开采",
+    # 能源/公用
+    "Oil & Gas Production": "油气生产",
+    "Oil & Gas Pipelines": "油气管道",
+    "Integrated oil Companies": "综合石油公司",
+    "Coal Mining": "煤炭开采",
+    "Electric Utilities: Central": "电力公用事业",
+    "Natural Gas Distribution": "天然气分销",
+    "Water Utilities": "水务",
+    # 消费
+    "Clothing/Shoe/Accessory Stores": "服装/鞋/配饰零售",
+    "Package Goods/Cosmetics": "包装商品/化妆品",
+    "Beverages (Production/Distribution)": "饮料（生产/分销）",
+    "Packaged Foods": "包装食品",
+    "Food Chains": "连锁餐饮/食品零售",
+    "Catalog/Specialty Distribution": "目录/专业分销",
+    "Other Specialty Stores": "其他专卖店",
+    "Auto & Home Supply Stores": "汽车与家居用品零售",
+    "Retail: Building Materials": "零售：建材",
+    "Retail: Major Department Stores": "零售：大型百货",
+    "Publishing": "出版",
+    "Newspapers/Magazines": "报纸/杂志",
+    "Movies/Entertainment": "电影/娱乐",
+    "Broadcasting": "广播电视",
+    "Cable & Other Pay Television Services": "有线及其他付费电视",
+    "Business Services": "商业服务",
+    "Professional Services": "专业服务",
+    "Advertising": "广告",
+    "Apparel": "服装",
+    "Footwear & Accessories": "鞋类及配饰",
+    "Household Products": "家用产品",
+    "Tobacco": "烟草",
+    # 其他
+    "Agriculture: Chemicals": "农业化学品",
+    "Agriculture: Fertilizers": "农业肥料",
+    "Chemicals: Major Diversified": "多元化化工",
+    "Containers/Packaging": "容器/包装",
+    "Restaurants": "餐饮",
+    "Hotels/Resorts": "酒店/度假村",
+    "Recreational Vehicles/Other Motor Vehicles": "房车/其他机动车",
+    "Oil Refining/Marketing": "炼油/销售",
+    "Oil & Gas Field Services": "油气田服务",
+}
+
+
+def translate(value: str) -> str:
+    value = (value or "").strip()
+    if not value:
+        return value
+    return INDUSTRY_ZH.get(value) or SECTOR_ZH.get(value) or value

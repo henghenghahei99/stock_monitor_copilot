@@ -1,0 +1,14 @@
+{
+  "id": "a_rank_report_v1",
+  "name": "A_rank_report_v1",
+  "type": "sector_rank",
+  "description": "A_rank_report_v1: A股上涨趋势 -> 8个条件打分(>=5命中, 历史不足按比例折到/8) -> 按 8/8记8分、7/8记6分、6/8记4分 得行业加权总分; 取总分前15名为池, 池内按平均分排序; 每行业给代表股(加权分最高前9只); 生成日报并邮件发送。",
+  "weight": 1.0,
+  "params": {
+    "market": "cn",
+    "base": "uptrend",
+    "score_map": "8:8,7:6,6:4",
+    "top": 15,
+    "sort": "平均分"
+  }
+}

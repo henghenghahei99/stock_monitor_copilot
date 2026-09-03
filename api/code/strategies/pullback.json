@@ -1,0 +1,13 @@
+{
+  "id": "pullback",
+  "name": "大涨回撤缩量",
+  "type": "pullback",
+  "description": "20日涨幅超阈值(大涨)后, 从阶段高点回撤一段(回调), 且成交量明显萎缩(缩量), 视为健康回踩",
+  "weight": 1.0,
+  "params": {
+    "rally_pct": 15.0,
+    "pullback_min": 3.0,
+    "pullback_max": 20.0,
+    "vol_shrink_ratio": 0.7
+  }
+}

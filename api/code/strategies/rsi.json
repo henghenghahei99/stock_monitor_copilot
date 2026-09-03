@@ -1,0 +1,11 @@
+{
+  "id": "rsi",
+  "name": "RSI超买",
+  "type": "rsi",
+  "description": "RSI 超过阈值判定为超买信号",
+  "weight": 1.0,
+  "params": {
+    "period": 6,
+    "threshold": 80.0
+  }
+}
