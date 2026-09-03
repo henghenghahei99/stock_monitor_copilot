@@ -2,10 +2,5 @@
 __pycache__/
 *.py[cod]
 
-# 运行时生成物(不纳入版本控制: 行情缓存 / 每日结果 / 日志)
-api/data/
-api/output/
-*.log
-
 # 系统/编辑器
 .DS_Store

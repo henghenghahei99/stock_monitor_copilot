@@ -1,0 +1,48 @@
+﻿ticker,name,sector,industry,date,close,chg20,volume,score,passed,pullback
+XHLD,"Ten Holdings, Inc.",非必需消费,商业服务,2026-08-27,8.28,659.6,34370251,1.0,pullback,涨660% 撤3% 量比0.27
+FCUV,富柯斯,工业,工业机械/零部件,2026-08-27,10.43,454.8,69426711,1.0,pullback,涨455% 撤10% 量比0.02
+QMCO,昆腾,科技,电子元器件,2026-08-27,23.56,109.6,50009810,1.0,pullback,涨110% 撤10% 量比0.42
+SATL,Satellogic Inc.,科技,Radio And Television Broadcasting And Communications Equipment,2026-08-27,5.31,52.1,31359967,1.0,pullback,涨52% 撤11% 量比0.68
+IBTA,"Ibotta, Inc.",非必需消费,广告,2026-08-27,36.42,38.0,11571234,1.0,pullback,涨38% 撤6% 量比0.45
+NMAX,"Newsmax, Inc.",工业,广播电视,2026-08-27,10.48,36.6,12361663,1.0,pullback,涨37% 撤8% 量比0.62
+MNTN,"Mntn, Inc.",非必需消费,广告,2026-08-27,12.6,36.5,14134398,1.0,pullback,涨37% 撤5% 量比0.69
+DCTH,迪卡斯,医疗保健,医疗/牙科器械,2026-08-27,16.39,36.1,11984000,1.0,pullback,涨36% 撤6% 量比0.59
+PSIX,"Power Solutions International, Inc.",工业,工业机械/零部件,2026-08-27,37.77,35.7,18415135,1.0,pullback,涨36% 撤12% 量比0.56
+TIC,"Tic Solutions, Inc.",非必需消费,商业服务,2026-08-27,9.81,35.1,23050127,1.0,pullback,涨35% 撤7% 量比0.66
+BAND,Bandwidth Inc.,科技,计算机软件：成品软件,2026-08-27,51.85,33.5,39045506,1.0,pullback,涨34% 撤4% 量比0.67
+RDW,Redwire Corporation,工业,Military/Government/Technical,2026-08-27,11.27,33.1,203163146,1.0,pullback,涨33% 撤17% 量比0.58
+PUBM,"Pubmatic, Inc.",科技,计算机软件：编程与数据处理,2026-08-27,16.35,28.3,13940275,1.0,pullback,涨28% 撤8% 量比0.59
+WPP,Wpp Plc American Depositary Shs Each Rep 5 Ord,非必需消费,广告,2026-08-27,25.95,26.8,13679335,1.0,pullback,涨27% 撤6% 量比0.57
+DUOT,"Duos Technologies Group, Inc.",科技,计算机软件：成品软件,2026-08-27,10.3,26.5,13588172,1.0,pullback,涨27% 撤11% 量比0.63
+TWLO,Twilio Inc.,科技,计算机软件：成品软件,2026-08-27,241.34,26.4,606675835,1.0,pullback,涨26% 撤6% 量比0.61
+RCAT,"Red Cat Holdings, Inc.",科技,计算机软件：成品软件,2026-08-27,9.28,25.7,90376590,1.0,pullback,涨26% 撤17% 量比0.64
+ACHR,Archer Aviation Inc.,工业,Aerospace,2026-08-27,5.93,25.1,247614823,1.0,pullback,涨25% 撤15% 量比0.67
+DXPE,"Dxp Enterprises, Inc.",工业,工业机械/零部件,2026-08-27,192.81,24.6,28234296,1.0,pullback,涨25% 撤4% 量比0.65
+LDOS,"Leidos Holdings, Inc.",科技,电子数据处理服务,2026-08-27,139.86,24.4,205558543,1.0,pullback,涨24% 撤4% 量比0.63
+HAE,美国血液技术,医疗保健,医疗/牙科器械,2026-08-27,105.0,23.8,84964048,1.0,pullback,涨24% 撤3% 量比0.67
+GCT,大健云仓,非必需消费,目录/专业分销,2026-08-27,51.58,22.2,33147608,1.0,pullback,涨22% 撤3% 量比0.59
+INSP,"Inspire Medical Systems, Inc.",医疗保健,医疗/牙科器械,2026-08-27,60.82,21.6,39910739,1.0,pullback,涨22% 撤5% 量比0.63
+OWL,Blue Owl Capital Inc.,金融,投资管理,2026-08-27,12.02,20.6,230751018,1.0,pullback,涨21% 撤5% 量比0.64
+DOCS,"Doximity, Inc.",科技,电子数据处理服务,2026-08-27,25.59,20.5,197036336,1.0,pullback,涨20% 撤7% 量比0.30
+MGNI,"Magnite, Inc.",科技,计算机软件：编程与数据处理,2026-08-27,23.36,20.5,67142988,1.0,pullback,涨20% 撤6% 量比0.59
+TMDX,"Transmedics Group, Inc.",医疗保健,生物科技：电子医疗设备,2026-08-27,91.75,20.5,76079941,1.0,pullback,涨21% 撤3% 量比0.60
+ARHS,"Arhaus, Inc.",非必需消费,其他专卖店,2026-08-27,8.81,20.0,15561719,1.0,pullback,涨20% 撤12% 量比0.61
+VRDN,"Viridian Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-27,23.88,20.0,38353763,1.0,pullback,涨20% 撤4% 量比0.54
+DXCM,德康医疗,医疗保健,医疗/牙科器械,2026-08-27,89.29,19.8,482047674,1.0,pullback,涨20% 撤3% 量比0.69
+INSM,Insmed Incorporated,医疗保健,生物科技：制药,2026-08-27,121.39,19.6,359748633,1.0,pullback,涨20% 撤10% 量比0.53
+HRB,H & R布洛克税务公司,非必需消费,Other Consumer Services,2026-08-27,52.51,18.6,130543215,1.0,pullback,涨19% 撤3% 量比0.50
+DNOW,Dnow Inc.,非必需消费,Oil and Gas Field Machinery,2026-08-27,16.28,18.5,42332900,1.0,pullback,涨18% 撤3% 量比0.64
+FOXF,福克斯工厂控股,非必需消费,Motor Vehicles,2026-08-27,21.1,18.5,12395236,1.0,pullback,涨18% 撤3% 量比0.46
+FUBO,Fubotv Inc.,非必需消费,电影/娱乐,2026-08-27,10.1,17.6,16637294,1.0,pullback,涨18% 撤8% 量比0.67
+CRWV,CoreWeave,科技,计算机软件：成品软件,2026-08-27,86.8,17.5,2847875967,1.0,pullback,涨17% 撤19% 量比0.60
+CCB,Coastal Financial Corporation,金融,大型银行,2026-08-27,46.74,17.1,16048973,1.0,pullback,涨17% 撤11% 量比0.37
+W,Wayfair Inc.,非必需消费,目录/专业分销,2026-08-27,105.01,17.0,361642511,1.0,pullback,涨17% 撤10% 量比0.53
+ONTO,Onto Innovation,工业,工业机械/零部件,2026-08-27,292.62,16.8,335321317,1.0,pullback,涨17% 撤17% 量比0.70
+RSKD,睿思飞,非必需消费,商业服务,2026-08-27,6.12,16.8,10748330,1.0,pullback,涨17% 撤6% 量比0.68
+AXON,"Axon Enterprise, Inc.",工业,Ordnance And Accessories,2026-08-27,611.2,16.4,540730833,1.0,pullback,涨16% 撤5% 量比0.61
+KTOS,克瑞拓斯安全防卫,工业,Military/Government/Technical,2026-08-27,53.69,16.3,222050051,1.0,pullback,涨16% 撤17% 量比0.68
+SNDK,闪迪,科技,电子元器件,2026-08-27,1484.95,16.0,20907215786,1.0,pullback,涨16% 撤17% 量比0.67
+FSK,Fs Kkr Capital Corp.,金融,投资管理,2026-08-27,12.23,15.8,27246473,1.0,pullback,涨16% 撤3% 量比0.61
+SLN,Silence Therapeutics Plc,医疗保健,生物科技：制药,2026-08-27,13.45,15.7,27239445,1.0,pullback,涨16% 撤13% 量比0.28
+STEP,Stepstone Group Inc.,金融,投资管理,2026-08-27,50.2,15.1,65940148,1.0,pullback,涨15% 撤3% 量比0.54
+SEPN,"Septerna, Inc.",医疗保健,生物科技：制药,2026-08-27,40.47,15.0,19712374,1.0,pullback,涨15% 撤16% 量比0.69

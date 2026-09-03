@@ -1,0 +1,953 @@
+﻿ticker,prefixed,name,sector,industry,date,close,chg20,volume,score,passed,uptrend
+XHLD,usXHLD.OQ,"Ten Holdings, Inc.",非必需消费,商业服务,2026-08-31,9.09,910.0,39643876,1.0,uptrend,6/8
+MRNA,usMRNA.OQ,莫德纳,医疗保健,生物科技：生物制品,2026-08-31,140.34,154.5,4483954763,1.0,uptrend,5/8
+ARCT,usARCT.OQ,Arcturus Therapeutics Holdings Inc.,医疗保健,生物科技：制药,2026-08-31,14.76,146.0,17053328,1.0,uptrend,7/8
+QMCO,usQMCO.OQ,昆腾,科技,电子元器件,2026-08-31,24.33,130.4,51154464,1.0,uptrend,6/8
+XPON,usXPON.OQ,Expion Energy,其他,工业机械/零部件,2026-08-31,7.01,114.4,52642912,1.0,uptrend,6/8
+ASST,usASST.OQ,"Strive, Inc.",科技,计算机软件：成品软件,2026-08-31,24.22,105.3,131619306,1.0,uptrend,8/8
+BOXL,usBOXL.OQ,宝视来,房地产,Other Consumer Services,2026-08-31,6.28,100.0,29487576,1.0,uptrend,5/8
+ABCL,usABCL.OQ,Abcellera Biologics Inc.,医疗保健,生物科技：制药,2026-08-31,11.48,96.9,107616363,1.0,uptrend,6/8
+IOVA,usIOVA.OQ,"Iovance Biotherapeutics, Inc.",医疗保健,生物科技：生物制品,2026-08-31,8.17,89.1,139403175,1.0,uptrend,6/8
+HTFL,usHTFL.OQ,"Heartflow, Inc.",医疗保健,医疗/牙科器械,2026-08-31,50.39,88.3,94655632,1.0,uptrend,7/8
+TEAM,usTEAM.OQ,Atlassian Corporation,科技,计算机软件：成品软件,2026-08-31,194.17,87.2,885378970,1.0,uptrend,7/8
+PURR,usPURR.OQ,Hyperliquid Strategies Inc,金融,金融：消费服务,2026-08-31,12.25,86.2,214128402,1.0,uptrend,7/7
+AMR,usAMR.N,"Alpha Metallurgical Resources, Inc.",能源,煤炭开采,2026-08-31,235.7,70.3,68463672,1.0,uptrend,7/8
+AMLX,usAMLX.OQ,"Amylyx Pharmaceuticals, Inc.",医疗保健,生物科技：制药,2026-08-31,33.75,67.3,132183923,1.0,uptrend,6/8
+IMMX,usIMMX.OQ,"Immix Biopharma, Inc.",医疗保健,生物科技：制药,2026-08-31,14.03,66.6,19298801,1.0,uptrend,8/8
+NIQ,usNIQ.N,Niq Global Intelligence Plc,科技,计算机软件：编程与数据处理,2026-08-31,19.06,64.9,32144995,1.0,uptrend,7/8
+FGI,usFGI.OQ,Fgi Industries Ltd.,工业,工业特种品,2026-08-31,7.07,64.4,62459477,1.0,uptrend,5/8
+ARX,usARX.N,Accelerant Holdings,金融,专业保险,2026-08-31,19.73,64.1,133314760,1.0,uptrend,7/8
+METC,usMETC.OQ,"Ramaco Resources, Inc.",能源,煤炭开采,2026-08-31,14.24,60.0,26368527,1.0,uptrend,5/8
+LIFE,usLIFE.OQ,Ethos Technologies Inc.,金融,专业保险,2026-08-31,36.33,59.1,58281674,1.0,uptrend,5/7
+CRCL,usCRCL.N,Circle互联网集团,金融,金融：消费服务,2026-08-31,95.55,58.3,1185718956,1.0,uptrend,8/8
+CAI,usCAI.OQ,"Caris Life Sciences, Inc.",医疗保健,医疗专科,2026-08-31,25.49,56.2,136689401,1.0,uptrend,7/8
+HNST,usHNST.OQ,"The Honest Company, Inc.",非必需消费,目录/专业分销,2026-08-31,5.72,55.9,18678714,1.0,uptrend,7/8
+BWMN,usBWMN.OQ,Bowman Consulting Group Ltd.,非必需消费,专业服务,2026-08-31,42.59,55.4,23077965,1.0,uptrend,7/8
+WIX,usWIX.OQ,Wix.Com Ltd.,科技,计算机软件：编程与数据处理,2026-08-31,88.25,55.3,127758432,1.0,uptrend,7/8
+VREX,usVREX.OQ,Varex Imaging Corporation,科技,工业机械/零部件,2026-08-31,18.49,55.1,27793008,1.0,uptrend,7/8
+APPN,usAPPN.OQ,Appian Corporation,科技,计算机软件：成品软件,2026-08-31,42.95,55.0,31864892,1.0,uptrend,8/8
+INBX,usINBX.OQ,"Inhibrx Biosciences, Inc.",医疗保健,生物科技：生物制品,2026-08-31,126.7,53.2,29516203,1.0,uptrend,8/8
+IBTA,usIBTA.N,"Ibotta, Inc.",非必需消费,广告,2026-08-31,37.21,51.4,11340867,1.0,uptrend,7/8
+OMER,usOMER.OQ,奥麦罗制药,医疗保健,生物科技：制药,2026-08-31,18.79,49.6,40742841,1.0,uptrend,7/8
+BBNX,usBBNX.OQ,"Beta Bionics, Inc.",医疗保健,医疗/牙科器械,2026-08-31,19.95,49.4,20111439,1.0,uptrend,7/8
+AUGO,usAUGO.OQ,Aura Minerals Inc.,基础材料,金属矿业,2026-08-31,83.58,49.0,81245924,1.0,uptrend,6/8
+HZO,usHZO.N,海上麦斯服务,非必需消费,汽车与家居用品零售,2026-08-31,52.18,48.6,50687636,1.0,uptrend,7/8
+BLSH,usBLSH.N,Bullish,金融,金融：消费服务,2026-08-31,34.03,48.4,46515762,1.0,uptrend,6/8
+PLTR,usPLTR.OQ,Palantir,科技,计算机软件：成品软件,2026-08-31,186.38,48.3,7634053441,1.0,uptrend,7/8
+AMPL,usAMPL.OQ,"Amplitude, Inc.",科技,计算机软件：成品软件,2026-08-31,14.1,48.1,27453982,1.0,uptrend,7/8
+HELP,usHELP.OQ,Cybin Inc.,医疗保健,生物科技：制药,2026-08-31,11.76,45.9,23105989,1.0,uptrend,5/8
+GTE,usGTE.AM,Gran Tierra Energy Inc.,能源,油气生产,2026-08-31,10.15,45.6,17813501,1.0,uptrend,7/8
+BMNR,usBMNR.N,"Bitmine Immersion Technologies, Inc.",金融,金融：消费服务,2026-08-31,25.32,45.4,863280488,1.0,uptrend,8/8
+NG,usNG.AM,Novagold Resources Inc.,基础材料,贵金属,2026-08-31,8.6,44.8,42903836,1.0,uptrend,5/8
+RUM,usRUM.OQ,Rum Group Inc.,科技,计算机软件：编程与数据处理,2026-08-31,8.96,44.7,37031106,1.0,uptrend,7/8
+SGMT,usSGMT.OQ,Sagimet Biosciences Inc. - Series A,医疗保健,生物科技：制药,2026-08-31,10.26,43.5,12882785,1.0,uptrend,6/8
+PATH,usPATH.N,"Uipath, Inc.",科技,计算机软件：成品软件,2026-08-31,18.67,43.1,1091112568,1.0,uptrend,7/8
+BTG,usBTG.AM,B2Gold Corp,基础材料,贵金属,2026-08-31,5.48,42.3,160695228,1.0,uptrend,7/8
+PAYC,usPAYC.N,"Paycom Software, Inc.",科技,计算机软件：成品软件,2026-08-31,239.1,42.0,195740206,1.0,uptrend,7/8
+ESTC,usESTC.N,Elastic N.V.,科技,计算机软件：成品软件,2026-08-31,97.55,41.9,264301923,1.0,uptrend,8/8
+ALM,usALM.OQ,Almonty Industries Inc.,基础材料,Other Metals and Minerals,2026-08-31,17.8,41.7,100964902,1.0,uptrend,6/8
+FIGS,usFIGS.N,"Figs, Inc.",非必需消费,服装,2026-08-31,15.34,41.0,42119126,1.0,uptrend,7/8
+BTGO,usBTGO.N,"Bitgo Holdings, Inc.",金融,金融：消费服务,2026-08-31,7.12,40.7,10846810,1.0,uptrend,6/7
+XNCR,usXNCR.OQ,"Xencor, Inc.",医疗保健,生物科技：制药,2026-08-31,27.27,40.6,34138536,1.0,uptrend,7/8
+EQX,usEQX.AM,Equinox Gold Corp.,基础材料,贵金属,2026-08-31,12.86,40.4,187663867,1.0,uptrend,5/8
+MSTR,usMSTR.OQ,微策略,科技,计算机软件：成品软件,2026-08-31,132.94,40.1,2900059115,1.0,uptrend,7/8
+PRGO,usPRGO.N,百利高,医疗保健,生物科技：制药,2026-08-31,14.64,40.0,36946197,1.0,uptrend,7/8
+ZLAB,usZLAB.OQ,再鼎医药,医疗保健,生物科技：制药,2026-08-31,25.46,40.0,32922192,1.0,uptrend,6/8
+FDMT,usFDMT.OQ,"4D Molecular Therapeutics, Inc.",医疗保健,生物科技：生物制品,2026-08-31,14.11,39.8,15511441,1.0,uptrend,6/8
+AVAH,usAVAH.OQ,Aveanna Healthcare Holdings Inc.,医疗保健,医疗/护理服务,2026-08-31,13.42,39.6,45991975,1.0,uptrend,6/8
+SSRM,usSSRM.OQ,Ssr Mining Inc.,工业,贵金属,2026-08-31,37.61,39.5,99066477,1.0,uptrend,7/8
+FSM,usFSM.N,Fortuna Mining Corp.,基础材料,贵金属,2026-08-31,12.08,39.3,67974684,1.0,uptrend,6/8
+ARIS,usARIS.N,Aris Mining Corporation,,,2026-08-31,19.99,38.9,29260540,1.0,uptrend,6/8
+SBET,usSBET.OQ,"Sharplink, Inc.",科技,计算机软件：成品软件,2026-08-31,8.63,38.7,63595612,1.0,uptrend,8/8
+EXK,usEXK.N,Endeavour Silver Corporation,基础材料,贵金属,2026-08-31,10.71,38.6,94299394,1.0,uptrend,6/8
+IAG,usIAG.N,Iamgold Corporation,基础材料,贵金属,2026-08-31,20.45,38.6,120402102,1.0,uptrend,6/8
+AU,usAU.N,盎格鲁黄金,基础材料,贵金属,2026-08-31,112.32,38.5,312934677,1.0,uptrend,6/8
+CRM,usCRM.N,赛富时,科技,计算机软件：成品软件,2026-08-31,257.54,38.5,3447230844,1.0,uptrend,8/8
+USAU,usAU.N,盎格鲁黄金,基础材料,金属矿业,2026-08-31,112.32,38.5,312934677,1.0,uptrend,6/8
+VEEV,usVEEV.N,Veeva Systems Inc.,科技,计算机软件：成品软件,2026-08-31,285.69,38.5,519570192,1.0,uptrend,8/8
+MNTN,usMNTN.N,"Mntn, Inc.",非必需消费,广告,2026-08-31,13.15,38.0,14703086,1.0,uptrend,7/8
+ABTC,usABTC.OQ,American Bitcoin Corp.,金融,金融：消费服务,2026-08-31,8.07,37.9,12867800,1.0,uptrend,6/8
+AEM,usAEM.N,伊格尔矿业,基础材料,贵金属,2026-08-31,203.11,37.8,723168678,1.0,uptrend,6/8
+HL,usHL.N,赫克拉矿业,工业,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2026-08-31,19.87,37.7,718991041,1.0,uptrend,6/8
+KURA,usKURA.OQ,"Kura Oncology, Inc.",医疗保健,生物科技：制药,2026-08-31,12.65,37.6,26703339,1.0,uptrend,7/8
+TWST,usTWST.OQ,Twist Bioscience Corporation,医疗保健,生物科技：生物制品,2026-08-31,139.0,37.5,228076765,1.0,uptrend,6/8
+AYA,usAYA.OQ,Aya Gold & Silver Inc.,基础材料,贵金属,2026-08-31,27.92,37.3,29150349,1.0,uptrend,8/8
+ZETA,usZETA.N,Zeta Global Holdings Corp.,科技,计算机软件：成品软件,2026-08-31,30.97,37.3,272883910,1.0,uptrend,7/8
+TEM,usTEM.OQ,Tempus AI,科技,计算机软件：编程与数据处理,2026-08-31,63.05,36.9,466182511,1.0,uptrend,6/8
+BTU,usBTU.N,皮博迪能源,能源,煤炭开采,2026-08-31,29.69,36.7,56468899,1.0,uptrend,7/8
+CHYM,usCHYM.OQ,"Chime Financial, Inc.",金融,金融：消费服务,2026-08-31,33.11,36.5,309008965,1.0,uptrend,7/8
+FIGR,usFIGR.OQ,"Figure Technology Solutions, Inc.",金融,金融：消费服务,2026-08-31,36.69,36.5,155717089,1.0,uptrend,5/8
+GFI,usGFI.N,金田,基础材料,贵金属,2026-08-31,46.37,36.5,173377353,1.0,uptrend,7/8
+NMAX,usNMAX.N,"Newsmax, Inc.",工业,广播电视,2026-08-31,10.76,36.4,12849653,1.0,uptrend,6/8
+CGEM,usCGEM.OQ,"Cullinan Therapeutics, Inc.",医疗保健,生物科技：生物制品,2026-08-31,22.07,35.8,14401076,1.0,uptrend,7/8
+ERO,usERO.N,Ero Copper Corp.,基础材料,金属矿业,2026-08-31,37.13,35.7,63609346,1.0,uptrend,6/8
+DXYZ,usDXYZ.N,科技100封闭基金-Destiny,,,2026-08-31,32.13,35.0,43404093,1.0,uptrend,6/8
+WPM,usWPM.N,Wheaton Precious Metals Corp,基础材料,贵金属,2026-08-31,150.83,35.0,362548892,1.0,uptrend,6/8
+AQST,usAQST.OQ,"Aquestive Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,5.11,34.8,17530529,1.0,uptrend,6/8
+ZYME,usZYME.OQ,Zymeworks Inc.,医疗保健,生物科技：制药,2026-08-31,29.41,34.8,19005451,1.0,uptrend,8/8
+PAYS,usPAYS.OQ,"Paysign, Inc.",科技,电子数据处理服务,2026-08-31,12.46,34.7,10950473,1.0,uptrend,5/8
+HCC,usHCC.N,"Warrior Met Coal, Inc.",能源,煤炭开采,2026-08-31,108.24,34.6,60413693,1.0,uptrend,7/8
+FRNM,usFRNM.OQ,"Freenome, Inc.",医疗保健,医疗专科,2026-08-31,14.79,34.3,11299383,1.0,uptrend,7/8
+ETON,usETON.OQ,"Eton Pharmaceuticals, Inc.",医疗保健,生物科技：制药,2026-08-31,60.44,33.9,38306981,1.0,uptrend,6/8
+TRLV,usTRLV.N,Trulieve Cannabis Corp. Subordinate Voting Shares,医疗保健,医药化工与植物药,2026-08-31,11.51,33.8,11277281,1.0,uptrend,7/8
+CDE,usCDE.N,科尔黛伦矿业,基础材料,贵金属,2026-08-31,20.78,33.5,781573561,1.0,uptrend,6/8
+PLSE,usPLSE.OQ,"Pulse Biosciences, Inc",医疗保健,医疗/牙科器械,2026-08-31,50.33,33.4,19157651,1.0,uptrend,7/8
+SPT,usSPT.OQ,"Sprout Social, Inc",科技,计算机软件：成品软件,2026-08-31,11.38,33.1,14729742,1.0,uptrend,7/8
+TXG,usTXG.OQ,"10X Genomics, Inc.",工业,生物科技：实验室分析仪器,2026-08-31,62.45,32.8,190577171,1.0,uptrend,7/8
+PSKY,usPSKY.OQ,Paramount Skydance,工业,广播电视,2026-08-31,10.91,32.7,108512640,1.0,uptrend,6/8
+SBSW,usSBSW.N,Sibanye Stillwater Ltd,基础材料,贵金属,2026-08-31,11.85,32.6,60988750,1.0,uptrend,6/8
+BRZE,usBRZE.OQ,"Braze, Inc.",科技,计算机软件：成品软件,2026-08-31,34.04,32.5,75228677,1.0,uptrend,7/8
+VIA,usVIA.N,"Via Transportation, Inc.",科技,计算机软件：成品软件,2026-08-31,27.93,32.5,17817857,1.0,uptrend,7/8
+SRPT,usSRPT.OQ,"Sarepta Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,21.03,32.4,55342645,1.0,uptrend,8/8
+NEM,usNEM.N,纽曼矿业,基础材料,贵金属,2026-08-31,126.06,32.2,1021440817,1.0,uptrend,7/8
+RPD,usRPD.OQ,"Rapid7, Inc.",科技,计算机软件：成品软件,2026-08-31,13.46,32.2,26657942,1.0,uptrend,7/8
+ASM,usASM.AM,Avino Silver & Gold Mines Ltd.,基础材料,金属矿业,2026-08-31,7.3,32.0,32749485,1.0,uptrend,6/8
+ELF,usELF.N,"E.L.F. Beauty, Inc.",非必需消费,包装商品/化妆品,2026-08-31,109.05,32.0,230578696,1.0,uptrend,7/8
+BXC,usBXC.N,布鲁林克斯,非必需消费,Wholesale Distributors,2026-08-31,79.63,31.6,14972519,1.0,uptrend,5/8
+ANF,usANF.N,爱芬奇,非必需消费,服装/鞋/配饰零售,2026-08-31,143.08,31.5,290023022,1.0,uptrend,8/8
+AG,usAG.N,First Majestic Silver Corp.,基础材料,贵金属,2026-08-31,20.59,31.2,199067722,1.0,uptrend,6/8
+KGC,usKGC.N,金罗斯黄金,基础材料,贵金属,2026-08-31,30.68,31.1,267725659,1.0,uptrend,6/8
+GTLB,usGTLB.OQ,Gitlab Inc.,科技,计算机软件：成品软件,2026-08-31,46.54,30.8,179966114,1.0,uptrend,7/8
+PPTA,usPPTA.OQ,Perpetua Resources Corp.,基础材料,贵金属,2026-08-31,24.94,30.8,32047439,1.0,uptrend,5/8
+IT,usIT.N,加特纳,非必需消费,Other Consumer Services,2026-08-31,198.11,30.7,285413956,1.0,uptrend,7/8
+WK,usWK.N,Workiva Inc.,科技,计算机软件：成品软件,2026-08-31,80.0,30.7,60821034,1.0,uptrend,8/8
+BULL,usBULL.OQ,微牛,金融,投资银行/经纪服务,2026-08-31,9.48,30.6,144631899,1.0,uptrend,8/8
+CGAU,usCGAU.N,Centerra Gold Inc.,基础材料,贵金属,2026-08-31,22.92,30.4,36003459,1.0,uptrend,6/8
+TDW,usTDW.N,潮水公司,非必需消费,海上运输,2026-08-31,93.12,30.3,57898928,1.0,uptrend,7/8
+SMCI,usSMCI.OQ,超微电脑,科技,计算机制造,2026-08-31,37.28,30.2,1980952341,1.0,uptrend,6/8
+GWRE,usGWRE.N,"Guidewire Software, Inc.",科技,计算机软件：成品软件,2026-08-31,204.75,30.1,198351845,1.0,uptrend,8/8
+SVM,usSVM.AM,希尔威,基础材料,贵金属,2026-08-31,12.44,30.1,35124575,1.0,uptrend,6/8
+INTA,usINTA.OQ,"Intapp, Inc.",科技,计算机软件：成品软件,2026-08-31,43.37,29.9,28615210,1.0,uptrend,7/8
+CADL,usCADL.OQ,"Candel Therapeutics, Inc.",医疗保健,生物科技：生物制品,2026-08-31,13.07,29.8,15693712,1.0,uptrend,7/8
+ANRO,usANRO.N,"Alto Neuroscience, Inc.",医疗保健,生物科技：制药,2026-08-31,35.38,29.7,15747220,1.0,uptrend,7/8
+TGB,usTGB.AM,Trekor Metals Limited,基础材料,贵金属,2026-08-31,9.04,29.7,53998682,1.0,uptrend,7/8
+MEI,usMEI.N,"Methode Electronics, Inc.",科技,Electrical Products,2026-08-31,18.23,29.6,10400930,1.0,uptrend,7/8
+NOW,usNOW.N,现在服务公司,科技,计算机软件：成品软件,2026-08-31,147.99,29.6,2353939110,1.0,uptrend,8/8
+HALO,usHALO.OQ,奥洛兹美医疗,医疗保健,生物科技：生物制品,2026-08-31,106.49,29.4,241792939,1.0,uptrend,7/8
+RGLD,usRGLD.OQ,皇家黄金,工业,贵金属,2026-08-31,261.47,29.4,183101290,1.0,uptrend,7/8
+GRRR,usGRRR.OQ,Gorilla Technology Group Inc.,科技,计算机软件：成品软件,2026-08-31,15.04,28.5,16772431,1.0,uptrend,5/8
+REPL,usREPL.OQ,"Replimune Group, Inc.",医疗保健,生物科技：生物制品,2026-08-31,15.3,28.5,57821890,1.0,uptrend,7/8
+COIN,usCOIN.OQ,Coinbase,金融,金融：消费服务,2026-08-31,188.12,28.4,1609288056,1.0,uptrend,5/8
+HP,usHP.N,赫尔默里奇和佩恩材料,能源,油气生产,2026-08-31,43.58,28.3,59379338,1.0,uptrend,8/8
+PUBM,usPUBM.OQ,"Pubmatic, Inc.",科技,计算机软件：编程与数据处理,2026-08-31,16.63,28.3,14420422,1.0,uptrend,6/8
+CVI,usCVI.N,CVR能源,能源,综合石油公司,2026-08-31,41.86,27.7,33353803,1.0,uptrend,8/8
+AGI,usAGI.N,Alamos Gold Inc.,基础材料,贵金属,2026-08-31,36.61,27.6,165623029,1.0,uptrend,5/8
+CNR,usCNR.N,"Core Natural Resources, Inc.",能源,煤炭开采,2026-08-31,102.3,27.6,53101894,1.0,uptrend,7/8
+SDGR,usSDGR.OQ,"Schrodinger, Inc.",医疗保健,生物科技：制药,2026-08-31,19.5,27.6,21570464,1.0,uptrend,7/8
+PD,usPD.N,"Pagerduty, Inc.",科技,计算机软件：成品软件,2026-08-31,14.14,27.4,17159699,1.0,uptrend,8/8
+PSNL,usPSNL.OQ,"Personalis, Inc.",医疗保健,医疗专科,2026-08-31,16.78,27.1,58391873,1.0,uptrend,6/8
+SII,usSII.N,Sprott Inc.,金融,金融：消费服务,2026-08-31,131.85,27.1,28607968,1.0,uptrend,7/8
+VSTM,usVSTM.OQ,"Verastem, Inc.",医疗保健,生物科技：制药,2026-08-31,7.22,26.9,12765018,1.0,uptrend,7/8
+MDB,usMDB.OQ,"Mongodb, Inc.",科技,计算机软件：成品软件,2026-08-31,453.37,26.7,637713415,1.0,uptrend,7/8
+SLN,usSLN.OQ,Silence Therapeutics Plc,医疗保健,生物科技：制药,2026-08-31,13.53,26.7,27346573,1.0,uptrend,6/8
+NVAX,usNVAX.OQ,诺瓦瓦克斯医药,医疗保健,生物科技：生物制品,2026-08-31,9.37,26.5,40621671,1.0,uptrend,6/8
+DCTH,usDCTH.OQ,迪卡斯,医疗保健,医疗/牙科器械,2026-08-31,16.46,26.2,12111120,1.0,uptrend,6/8
+CXM,usCXM.N,"Sprinklr, Inc.",科技,计算机软件：成品软件,2026-08-31,8.21,25.9,21235062,1.0,uptrend,8/8
+SHOP,usSHOP.OQ,Shopify Inc.,科技,计算机软件：成品软件,2026-08-31,147.37,25.9,1468474933,1.0,uptrend,5/8
+NOG,usNOG.N,"Northern Oil And Gas, Inc.",能源,油气生产,2026-08-31,26.01,25.8,57866611,1.0,uptrend,7/8
+WPP,usWPP.N,Wpp Plc American Depositary Shs Each Rep 5 Ord,非必需消费,广告,2026-08-31,25.58,25.7,13570553,1.0,uptrend,5/8
+ACHV,usACHV.OQ,"Achieve Life Sciences, Inc.",医疗保健,生物科技：体外/体内诊断,2026-08-31,7.94,25.6,10317009,1.0,uptrend,6/8
+WGS,usWGS.OQ,Genedx Holdings Corp.,医疗保健,医疗/护理服务,2026-08-31,84.81,25.0,54152013,1.0,uptrend,5/8
+ATRC,usATRC.OQ,AtriCure,医疗保健,医疗/牙科器械,2026-08-31,48.35,24.9,30136221,1.0,uptrend,8/8
+OCUL,usOCUL.OQ,"Ocular Therapeutix, Inc.",医疗保健,生物科技：制药,2026-08-31,10.49,24.9,28348945,1.0,uptrend,6/8
+CRL,usCRL.N,查尔斯河实验室,医疗保健,生物科技：商业物理与生物研究,2026-08-31,288.24,24.8,281616787,1.0,uptrend,7/8
+QNST,usQNST.OQ,"Quinstreet, Inc.",非必需消费,商业服务,2026-08-31,19.44,24.5,23462825,1.0,uptrend,5/8
+RBRK,usRBRK.N,"Rubrik, Inc.",科技,计算机软件：成品软件,2026-08-31,93.04,24.5,383845087,1.0,uptrend,6/8
+SXC,usSXC.N,"Suncoke Energy, Inc.",工业,Steel/Iron Ore,2026-08-31,10.33,24.5,13418445,1.0,uptrend,7/8
+ARGX,usARGX.OQ,Argenx Se,医疗保健,生物科技：生物制品,2026-08-31,1031.66,24.2,294195575,1.0,uptrend,7/8
+SRRK,usSRRK.OQ,Scholar Rock Holding Corporation,医疗保健,生物科技：生物制品,2026-08-31,56.8,23.9,59261443,1.0,uptrend,7/8
+AAUC,usAAUC.N,Allied Gold Corporation,,,2026-08-31,23.56,23.4,15398507,1.0,uptrend,5/8
+NUTX,usNUTX.OQ,Nutex Health Inc.,非必需消费,商业服务,2026-08-31,188.76,23.4,30164172,1.0,uptrend,7/8
+RIGL,usRIGL.OQ,"Rigel Pharmaceuticals, Inc.",医疗保健,生物科技：制药,2026-08-31,46.18,23.4,15183239,1.0,uptrend,7/8
+DOCS,usDOCS.N,"Doximity, Inc.",科技,电子数据处理服务,2026-08-31,26.71,23.3,198319610,1.0,uptrend,6/8
+PTEN,usPTEN.OQ,"Patterson-Uti Energy, Inc.",能源,油气生产,2026-08-31,12.64,23.1,87221261,1.0,uptrend,8/8
+RGEN,usRGEN.OQ,Repligen Corporation,医疗保健,生物科技：生物制品,2026-08-31,180.98,23.1,168644118,1.0,uptrend,7/8
+VIR,usVIR.OQ,"Vir Biotechnology, Inc.",医疗保健,生物科技：生物制品,2026-08-31,10.94,22.9,17080455,1.0,uptrend,8/8
+UEC,usUEC.AM,Uranium Energy Corp.,基础材料,Other Metals and Minerals,2026-08-31,12.24,22.8,95905243,1.0,uptrend,6/8
+DT,usDT.N,"Dynatrace, Inc.",科技,计算机软件：成品软件,2026-08-31,54.59,22.6,395047075,1.0,uptrend,7/8
+FNV,usFNV.N,Franco-Nevada Corporation,基础材料,贵金属,2026-08-31,263.15,22.6,215583131,1.0,uptrend,7/8
+GO,usGO.OQ,Grocery Outlet Holding Corp.,必需消费,连锁餐饮/食品零售,2026-08-31,11.95,22.6,32056349,1.0,uptrend,7/8
+MLAB,usMLAB.OQ,"Mesa Laboratories, Inc.",工业,工业机械/零部件,2026-08-31,127.87,22.6,19363540,1.0,uptrend,7/8
+USGO,usGO.OQ,Grocery Outlet Holding Corp.,基础材料,贵金属,2026-08-31,11.95,22.6,32056349,1.0,uptrend,7/8
+HBM,usHBM.N,Hudbay Minerals Inc.,基础材料,金属矿业,2026-08-31,28.66,22.5,130898051,1.0,uptrend,6/8
+ORIC,usORIC.OQ,"Oric Pharmaceuticals, Inc.",医疗保健,生物科技：制药,2026-08-31,12.99,22.5,18202704,1.0,uptrend,5/8
+APPF,usAPPF.OQ,"Appfolio, Inc.",科技,计算机软件：成品软件,2026-08-31,234.21,22.2,85621163,1.0,uptrend,7/8
+OKTA,usOKTA.OQ,"Okta, Inc.",科技,计算机软件：成品软件,2026-08-31,173.04,22.2,562362482,1.0,uptrend,7/8
+ZS,usZS.OQ,"Zscaler, Inc.",科技,电子数据处理服务,2026-08-31,188.39,22.0,399249506,1.0,uptrend,8/8
+MPC,usMPC.N,马拉松石油,能源,综合石油公司,2026-08-31,373.32,21.9,893718529,1.0,uptrend,7/8
+SLB,usSLB.N,斯伦贝谢,能源,Oilfield Services/Equipment,2026-08-31,60.1,21.9,603617109,1.0,uptrend,8/8
+TYL,usTYL.N,泰勒科技,科技,计算机软件：成品软件,2026-08-31,372.22,21.8,334190681,1.0,uptrend,8/8
+RNG,usRNG.N,铃盛,科技,电子数据处理服务,2026-08-31,69.62,21.7,103079208,1.0,uptrend,7/8
+ABNB,usABNB.OQ,爱彼迎,非必需消费,Diversified Commercial Services,2026-08-31,183.22,21.6,1047597172,1.0,uptrend,7/8
+CACI,usCACI.N,CACI国际,科技,电子数据处理服务,2026-08-31,623.01,21.5,190353587,1.0,uptrend,5/8
+OR,usOR.N,Or Royalties Inc.,基础材料,贵金属,2026-08-31,36.96,21.5,39907132,1.0,uptrend,6/8
+FROG,usFROG.OQ,捷蛙科技,科技,计算机软件：成品软件,2026-08-31,100.07,21.4,203506821,1.0,uptrend,8/8
+UUUU,usUUUU.AM,Energy Fuels Inc,工业,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2026-08-31,14.75,21.4,105144094,1.0,uptrend,5/8
+EL,usEL.N,雅诗兰黛,非必需消费,包装商品/化妆品,2026-08-31,102.3,21.2,361112748,1.0,uptrend,7/8
+TARS,usTARS.OQ,"Tarsus Pharmaceuticals, Inc.",医疗保健,生物科技：生物制品,2026-08-31,74.24,21.1,49144972,1.0,uptrend,7/8
+TIC,usTIC.N,"Tic Solutions, Inc.",非必需消费,商业服务,2026-08-31,9.49,21.0,22302336,1.0,uptrend,5/8
+CRGY,usCRGY.N,Crescent Energy Company,能源,油气生产,2026-08-31,13.69,20.9,68741069,1.0,uptrend,7/8
+SGML,usSGML.OQ,Sigma Lithium Corporation,基础材料,金属矿业,2026-08-31,12.64,20.8,20110947,1.0,uptrend,5/8
+CNXC,usCNXC.OQ,Concentrix Corporation,科技,计算机软件：成品软件,2026-08-31,30.1,20.6,29991026,1.0,uptrend,8/8
+INSP,usINSP.N,"Inspire Medical Systems, Inc.",医疗保健,医疗/牙科器械,2026-08-31,62.99,20.6,38845769,1.0,uptrend,6/8
+TVTX,usTVTX.OQ,"Travere Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,66.28,20.6,105630526,1.0,uptrend,7/8
+RSKD,usRSKD.N,睿思飞,非必需消费,商业服务,2026-08-31,6.29,20.5,11743643,1.0,uptrend,7/8
+B,usB.N,巴里克矿业,基础材料,贵金属,2026-08-31,44.83,20.4,543296983,1.0,uptrend,6/8
+SKE,usSKE.N,Skeena Resources Limited,基础材料,贵金属,2026-08-31,32.63,20.4,20932645,1.0,uptrend,6/8
+USB,usB.N,巴里克矿业,金融,大型银行,2026-08-31,44.83,20.4,543296983,1.0,uptrend,6/8
+ASAN,usASAN.N,阿莎娜,科技,计算机软件：成品软件,2026-08-31,10.26,20.3,39607995,1.0,uptrend,7/8
+DOCU,usDOCU.OQ,"Docusign, Inc.",科技,计算机软件：成品软件,2026-08-31,66.27,20.2,179571328,1.0,uptrend,8/8
+PSX,usPSX.N,Phillips 66,能源,综合石油公司,2026-08-31,246.58,20.2,657861596,1.0,uptrend,7/8
+QLYS,usQLYS.OQ,科力斯,科技,计算机软件：成品软件,2026-08-31,186.14,20.2,128380605,1.0,uptrend,7/8
+SA,usSA.N,"Seabridge Gold, Inc.",基础材料,贵金属,2026-08-31,31.78,20.2,28266862,1.0,uptrend,5/8
+CMPS,usCMPS.OQ,Compass Pathways Plc,医疗保健,生物科技：制药,2026-08-31,13.51,20.1,36762477,1.0,uptrend,5/8
+MGNI,usMGNI.OQ,"Magnite, Inc.",科技,计算机软件：编程与数据处理,2026-08-31,23.49,20.0,68588158,1.0,uptrend,5/8
+SN,usSN.N,尚科宁家,非必需消费,消费电子/家电,2026-08-31,192.49,19.9,323173988,1.0,uptrend,7/8
+TWLO,usTWLO.N,Twilio Inc.,科技,计算机软件：成品软件,2026-08-31,235.63,19.9,617878714,1.0,uptrend,6/8
+MTDR,usMTDR.N,Matador Resources Company,能源,油气生产,2026-08-31,58.01,19.7,111912205,1.0,uptrend,7/8
+OMDA,usOMDA.OQ,"Omada Health, Inc.",医疗保健,医疗/护理服务,2026-08-31,24.55,19.7,33547569,1.0,uptrend,6/8
+WDAY,usWDAY.OQ,Workday,科技,电子数据处理服务,2026-08-31,197.45,19.6,967667343,1.0,uptrend,8/8
+SAIL,usSAIL.OQ,"Sailpoint, Inc.",科技,计算机软件：成品软件,2026-08-31,20.56,19.5,60979315,1.0,uptrend,8/8
+WLDN,usWLDN.OQ,Willdan集团,非必需消费,Military/Government/Technical,2026-08-31,87.95,19.5,22197012,1.0,uptrend,5/8
+FIVN,usFIVN.OQ,"Five9, Inc.",科技,电子数据处理服务,2026-08-31,34.56,19.4,76413045,1.0,uptrend,7/8
+HMY,usHMY.N,哈莫尼黄金,基础材料,贵金属,2026-08-31,19.65,19.3,77890000,1.0,uptrend,6/8
+NSIT,usNSIT.OQ,"Insight Enterprises, Inc.",非必需消费,目录/专业分销,2026-08-31,157.02,19.3,57243217,1.0,uptrend,7/8
+RAPP,usRAPP.OQ,"Rapport Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,48.67,19.3,13643544,1.0,uptrend,7/8
+HNGE,usHNGE.N,"Hinge Health, Inc.",科技,电子数据处理服务,2026-08-31,92.56,19.2,170404863,1.0,uptrend,8/8
+MANH,usMANH.OQ,曼哈顿联合软件,科技,计算机软件：成品软件,2026-08-31,223.19,19.2,172220622,1.0,uptrend,7/8
+IMNM,usIMNM.OQ,"Immunome, Inc.",医疗保健,生物科技：制药,2026-08-31,27.41,19.1,32724353,1.0,uptrend,6/8
+NTRA,usNTRA.OQ,"Natera, Inc.",医疗保健,医疗专科,2026-08-31,321.96,19.1,465344168,1.0,uptrend,7/8
+PAAS,usPAAS.N,泛美白银,基础材料,贵金属,2026-08-31,51.92,19.1,276781710,1.0,uptrend,6/8
+SKM,usSKM.N,韩国SK电信,Telecommunications,电信设备,2026-08-31,38.39,19.1,72065552,1.0,uptrend,6/8
+FCX,usFCX.N,麦克莫兰铜金,基础材料,金属矿业,2026-08-31,75.74,19.0,1064583980,1.0,uptrend,7/8
+INFQ,usINFQ.N,"Infleqtion, Inc.",科技,电子数据处理服务,2026-08-31,13.07,19.0,123057955,1.0,uptrend,5/7
+MRVI,usMRVI.OQ,"Maravai Lifesciences Holdings, Inc.",医疗保健,生物科技：制药,2026-08-31,7.64,19.0,35140863,1.0,uptrend,6/8
+JANX,usJANX.OQ,"Janux Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,18.22,18.9,12303659,1.0,uptrend,7/8
+SLS,usSLS.OQ,"Sellas Life Sciences Group, Inc.",医疗保健,生物科技：制药,2026-08-31,13.34,18.9,94179750,1.0,uptrend,7/8
+HAE,usHAE.N,美国血液技术,医疗保健,医疗/牙科器械,2026-08-31,103.07,18.8,82971374,1.0,uptrend,6/8
+RHI,usRHI.N,罗致恒富,非必需消费,专业服务,2026-08-31,45.34,18.6,83811338,1.0,uptrend,8/8
+ECO,usECO.N,Okeanis Eco Tankers Corp.,非必需消费,海上运输,2026-08-31,66.74,18.5,38188614,1.0,uptrend,7/8
+CCC,usCCC.OQ,Ccc Intelligent Solutions Holdings Inc.,科技,计算机软件：成品软件,2026-08-31,7.46,18.4,65834063,1.0,uptrend,7/8
+KYMR,usKYMR.OQ,"Kymera Therapeutics, Inc.",医疗保健,生物科技：生物制品,2026-08-31,118.81,18.4,79881216,1.0,uptrend,6/8
+PDS,usPDS.N,Precision Drilling Corporation,能源,油气生产,2026-08-31,91.71,18.4,10064280,1.0,uptrend,6/8
+FRSH,usFRSH.OQ,Freshworks Inc.,科技,计算机软件：成品软件,2026-08-31,13.92,18.3,79783982,1.0,uptrend,7/8
+LDOS,usLDOS.N,"Leidos Holdings, Inc.",科技,电子数据处理服务,2026-08-31,140.21,18.1,204479775,1.0,uptrend,6/8
+TPG,usTPG.OQ,Tpg Inc.,金融,投资管理,2026-08-31,54.12,18.1,166715447,1.0,uptrend,7/8
+SQM,usSQM.N,智利矿业化工,工业,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2026-08-31,79.01,17.9,69841578,1.0,uptrend,6/8
+AVNT,usAVNT.N,Avient Corporation,工业,Major Chemicals,2026-08-31,44.06,17.8,40711885,1.0,uptrend,6/8
+CTSH,usCTSH.OQ,高知特,科技,电子数据处理服务,2026-08-31,64.58,17.7,469866950,1.0,uptrend,7/8
+NCNO,usNCNO.OQ,"Ncino, Inc.",科技,计算机软件：成品软件,2026-08-31,22.6,17.7,53857656,1.0,uptrend,8/8
+OGC,usOGC.N,Oceanagold Corporation,,,2026-08-31,29.4,17.6,16466783,1.0,uptrend,5/8
+PEGA,usPEGA.OQ,Pegasystems Inc.,科技,电子数据处理服务,2026-08-31,36.81,17.6,54366272,1.0,uptrend,7/8
+TTAN,usTTAN.OQ,"Servicetitan, Inc.",科技,计算机软件：成品软件,2026-08-31,98.04,17.6,103706850,1.0,uptrend,8/8
+CLMT,usCLMT.OQ,卡路美,能源,综合石油公司,2026-08-31,49.73,17.4,57088179,1.0,uptrend,7/8
+LFST,usLFST.OQ,"Lifestance Health Group, Inc.",医疗保健,医疗/护理服务,2026-08-31,12.36,17.3,53310654,1.0,uptrend,6/8
+LITE,usLITE.OQ,Lumentum,Telecommunications,电信设备,2026-08-31,914.76,17.3,4371055918,1.0,uptrend,6/8
+TH,usTH.OQ,Target Hospitality Corp.,非必需消费,酒店/度假村,2026-08-31,18.52,17.3,22831026,1.0,uptrend,6/8
+FRPT,usFRPT.OQ,"Freshpet, Inc.",必需消费,包装食品,2026-08-31,69.86,17.2,107035522,1.0,uptrend,5/8
+APA,usAPA.OQ,阿帕奇石油,能源,油气生产,2026-08-31,43.15,17.0,230463564,1.0,uptrend,7/8
+GDYN,usGDYN.OQ,"Grid Dynamics Holdings, Inc.",科技,计算机软件：成品软件,2026-08-31,7.98,17.0,11957311,1.0,uptrend,7/8
+TRUP,usTRUP.OQ,"Trupanion, Inc.",医疗保健,医疗专科,2026-08-31,29.15,17.0,18462177,1.0,uptrend,5/8
+ANDG,usANDG.N,Andersen Group Inc.,非必需消费,商业服务,2026-08-31,55.74,16.9,29367243,1.0,uptrend,6/7
+LB,usLB.N,Landbridge Company Llc,能源,油气生产,2026-08-31,87.58,16.9,29974300,1.0,uptrend,6/8
+FDS,usFDS.N,慧甚,科技,计算机软件：编程与数据处理,2026-08-31,313.55,16.7,237280486,1.0,uptrend,8/8
+VLO,usVLO.N,瓦莱罗能源,能源,综合石油公司,2026-08-31,358.92,16.7,817074438,1.0,uptrend,7/8
+ABUS,usABUS.OQ,Arbutus Biopharma Corporation,医疗保健,生物科技：制药,2026-08-31,5.08,16.5,20327590,1.0,uptrend,7/8
+ADBE,usADBE.OQ,Adobe Inc.,科技,计算机软件：成品软件,2026-08-31,292.79,16.5,1162816809,1.0,uptrend,8/8
+FET,usFET.N,"Forum Energy Technologies, Inc.",非必需消费,Oil and Gas Field Machinery,2026-08-31,81.97,16.5,16221276,1.0,uptrend,6/8
+SAP,usSAP.N,思爱普,科技,计算机软件：成品软件,2026-08-31,220.89,16.5,530904407,1.0,uptrend,8/8
+MAN,usMAN.N,万宝盛华,非必需消费,专业服务,2026-08-31,62.95,16.4,50556158,1.0,uptrend,7/8
+SM,usSM.N,Sm Energy Company,能源,油气生产,2026-08-31,37.18,16.4,137166398,1.0,uptrend,7/8
+CLYM,usCLYM.OQ,"Climb Bio, Inc.",医疗保健,生物科技：制药,2026-08-31,13.73,16.3,19420381,1.0,uptrend,6/8
+TALO,usTALO.N,"Talos Energy, Inc.",能源,油气生产,2026-08-31,17.26,16.1,29855413,1.0,uptrend,7/8
+P,usP.N,"Everpure, Inc.",科技,电子元器件,2026-08-31,92.95,16.0,382522376,1.0,uptrend,6/8
+BR,usBR.N,Broadridge 金融解决方案,非必需消费,商业服务,2026-08-31,182.38,15.9,238622904,1.0,uptrend,7/8
+PKX,usPKX.N,浦项钢铁,工业,Steel/Iron Ore,2026-08-31,61.35,15.9,14074910,1.0,uptrend,6/8
+VRTX,usVRTX.OQ,福泰制药,医疗保健,生物科技：制药,2026-08-31,544.52,15.7,619176692,1.0,uptrend,7/8
+DASH,usDASH.OQ,"Doordash, Inc.",非必需消费,商业服务,2026-08-31,231.74,15.6,1004472474,1.0,uptrend,7/8
+GMAB,usGMAB.OQ,Genmab As,医疗保健,生物科技：制药,2026-08-31,33.16,15.6,94522952,1.0,uptrend,7/8
+HAL,usHAL.N,哈里伯顿,能源,Oilfield Services/Equipment,2026-08-31,36.85,15.6,373638346,1.0,uptrend,7/8
+MRK,usMRK.N,默沙东,医疗保健,生物科技：制药,2026-08-31,147.76,15.6,1606438237,1.0,uptrend,6/8
+MU,usMU.OQ,美光科技,科技,半导体,2026-08-31,958.73,15.6,27194560536,1.0,uptrend,5/8
+WAY,usWAY.OQ,Waystar Holding Corp.,科技,电子数据处理服务,2026-08-31,26.18,15.5,64971183,1.0,uptrend,8/8
+BIO,usBIO.N,Bio Rad实验室,工业,生物科技：实验室分析仪器,2026-08-31,386.12,15.4,98532685,1.0,uptrend,7/8
+TFPM,usTFPM.N,Triple Flag Precious Metals Corp.,工业,贵金属,2026-08-31,33.7,15.4,21484214,1.0,uptrend,6/8
+BLFS,usBLFS.OQ,"Biolife Solutions, Inc.",医疗保健,生物科技：电子医疗设备,2026-08-31,37.07,15.3,24788160,1.0,uptrend,8/8
+DINO,usDINO.N,霍利辛克莱公司,能源,天然气分销,2026-08-31,101.61,15.3,233014647,1.0,uptrend,7/8
+PRCT,usPRCT.OQ,Procept Biorobotics Corporation,医疗保健,医疗/牙科器械,2026-08-31,21.2,15.3,29951899,1.0,uptrend,5/8
+NVCR,usNVCR.OQ,Novocure Limited,医疗保健,医疗/牙科器械,2026-08-31,17.65,15.2,21864642,1.0,uptrend,5/8
+DXPE,usDXPE.OQ,"Dxp Enterprises, Inc.",工业,工业机械/零部件,2026-08-31,187.73,15.1,27693922,1.0,uptrend,5/8
+KRYS,usKRYS.OQ,"Krystal Biotech, Inc.",医疗保健,生物科技：生物制品,2026-08-31,359.36,15.0,75007191,1.0,uptrend,5/8
+CRSP,usCRSP.OQ,Crispr Therapeutics Ag,医疗保健,生物科技：生物制品,2026-08-31,56.98,14.9,85913489,1.0,uptrend,6/8
+WT,usWT.N,"Wisdomtree, Inc.",金融,投资银行/经纪服务,2026-08-31,24.06,14.8,55631433,1.0,uptrend,8/8
+FOXA,usFOXA.OQ,福克斯公司-A,工业,广播电视,2026-08-31,67.35,14.7,369814741,1.0,uptrend,7/8
+HLNE,usHLNE.OQ,Hamilton Lane Incorporated,金融,投资管理,2026-08-31,108.82,14.7,65387081,1.0,uptrend,7/8
+PRAX,usPRAX.OQ,"Praxis Precision Medicines, Inc.",医疗保健,生物科技：制药,2026-08-31,350.3,14.7,158137869,1.0,uptrend,5/8
+FRHC,usFRHC.OQ,Freedom Holding Corp.,金融,投资银行/经纪服务,2026-08-31,175.01,14.6,21517065,1.0,uptrend,7/8
+NTSK,usNTSK.OQ,"Netskope, Inc.",科技,计算机软件：成品软件,2026-08-31,15.31,14.6,64753257,1.0,uptrend,7/8
+ONC,usONC.OQ,百济神州,医疗保健,生物科技：制药,2026-08-31,359.58,14.6,145191904,1.0,uptrend,7/8
+PCTY,usPCTY.OQ,Paylocity Holding Corporation,科技,计算机软件：成品软件,2026-08-31,160.22,14.6,119128936,1.0,uptrend,7/8
+ACN,usACN.N,埃森哲,非必需消费,商业服务,2026-08-31,189.76,14.5,941697963,1.0,uptrend,6/8
+NTR,usNTR.N,Nutrien Ltd.,工业,Agricultural Chemicals,2026-08-31,75.53,14.5,191868996,1.0,uptrend,6/8
+FOX,usFOX.OQ,福克斯公司-B,工业,广播电视,2026-08-31,60.22,14.4,61541552,1.0,uptrend,8/8
+GIS,usGIS.N,通用磨坊,必需消费,包装食品,2026-08-31,41.2,14.4,315996738,1.0,uptrend,8/8
+SDRL,usSDRL.N,Seadrill Limited,能源,油气生产,2026-08-31,48.72,14.4,29049782,1.0,uptrend,7/8
+HRB,usHRB.N,H & R布洛克税务公司,非必需消费,Other Consumer Services,2026-08-31,51.65,14.3,127686633,1.0,uptrend,7/8
+KSPI,usKSPI.OQ,Kaspi.Kz Jsc Sponsored Ads Each Rep 1 Com Shs,,,2026-08-31,105.14,14.3,67428669,1.0,uptrend,8/8
+AGCO,usAGCO.N,爱科集团,工业,工业机械/零部件,2026-08-31,118.31,14.2,104201267,1.0,uptrend,5/8
+BHVN,usBHVN.N,Biohaven Ltd.,医疗保健,生物科技：制药,2026-08-31,15.27,14.2,45019392,1.0,uptrend,6/8
+AMGN,usAMGN.OQ,安进,医疗保健,生物科技：生物制品,2026-08-31,429.88,14.1,1059599790,1.0,uptrend,7/8
+CRWD,usCRWD.OQ,CrowdStrike,科技,计算机软件：成品软件,2026-08-31,231.0,14.1,2000829162,1.0,uptrend,7/8
+FUTU,usFUTU.OQ,富途控股,金融,投资银行/经纪服务,2026-08-31,122.14,14.1,169918019,1.0,uptrend,7/8
+ABSI,usABSI.OQ,Absci Corporation,医疗保健,生物科技：商业物理与生物研究,2026-08-31,9.04,14.0,25416192,1.0,uptrend,5/8
+DV,usDV.N,"Doubleverify Holdings, Inc.",科技,计算机软件：编程与数据处理,2026-08-31,13.4,14.0,70943488,1.0,uptrend,7/8
+IE,usIE.AM,Ivanhoe Electric Inc.,基础材料,金属矿业,2026-08-31,11.06,14.0,22093756,1.0,uptrend,5/8
+BLMN,usBLMN.OQ,"Bloomin' Brands, Inc.",非必需消费,餐饮,2026-08-31,10.3,13.9,25503272,1.0,uptrend,5/8
+DOX,usDOX.OQ,Amdocs Limited,科技,电子数据处理服务,2026-08-31,63.06,13.9,72205728,1.0,uptrend,7/8
+FIVE,usFIVE.OQ,"Five Below, Inc.",非必需消费,Department/Specialty Retail Stores,2026-08-31,246.84,13.9,241551719,1.0,uptrend,7/8
+ALB,usALB.N,雅保,工业,Major Chemicals,2026-08-31,134.97,13.7,279337528,1.0,uptrend,5/8
+KVYO,usKVYO.N,"Klaviyo, Inc. Series A",科技,计算机软件：成品软件,2026-08-31,20.58,13.7,126434682,1.0,uptrend,7/8
+MNDY,usMNDY.OQ,monday.com,科技,计算机软件：成品软件,2026-08-31,101.14,13.7,137152099,1.0,uptrend,7/8
+PFE,usPFE.N,辉瑞,医疗保健,生物科技：制药,2026-08-31,28.46,13.7,1042344576,1.0,uptrend,7/8
+VCTR,usVCTR.OQ,"Victory Capital Holdings, Inc. Class A Common Stock",金融,投资管理,2026-08-31,118.01,13.7,74007375,1.0,uptrend,8/8
+CRVL,usCRVL.OQ,Corvel Corp.,金融,专业保险,2026-08-31,68.88,13.6,11129026,1.0,uptrend,7/8
+FLYW,usFLYW.OQ,Flywire Corporation - Voting,非必需消费,商业服务,2026-08-31,18.89,13.6,35098953,1.0,uptrend,7/8
+MRX,usMRX.OQ,Marex Group Limited,金融,投资银行/经纪服务,2026-08-31,72.48,13.5,43595642,1.0,uptrend,6/8
+PCOR,usPCOR.N,"Procore Technologies, Inc.",科技,计算机软件：成品软件,2026-08-31,62.72,13.5,212104281,1.0,uptrend,7/8
+PCVX,usPCVX.OQ,"Vaxcyte, Inc.",医疗保健,生物科技：生物制品,2026-08-31,60.74,13.5,57983510,1.0,uptrend,8/8
+RDNT,usRDNT.OQ,"Radnet, Inc.",医疗保健,医疗专科,2026-08-31,75.82,13.5,53712097,1.0,uptrend,7/8
+XPRO,usXPRO.N,Expro Ltd,能源,Oilfield Services/Equipment,2026-08-31,18.12,13.5,14718616,1.0,uptrend,7/8
+NE,usNE.N,Noble Finance,能源,油气生产,2026-08-31,45.83,13.4,48890095,1.0,uptrend,7/8
+IDYA,usIDYA.OQ,IDEAYA生物科学,医疗保健,生物科技：制药,2026-08-31,40.1,13.3,29338969,1.0,uptrend,7/8
+LNG,usLNG.N,"Cheniere Energy, Inc.",公用事业,Oil/Gas Transmission,2026-08-31,291.69,13.3,423714697,1.0,uptrend,8/8
+OTF,usOTF.N,Blue Owl Technology Finance Corp.,,,2026-08-31,11.68,13.3,34078832,1.0,uptrend,7/8
+TBBB,usTBBB.N,Bbb Foods Inc.,必需消费,连锁餐饮/食品零售,2026-08-31,48.57,13.3,41708548,1.0,uptrend,7/8
+TECK,usTECK.N,泰克资源,工业,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2026-08-31,68.12,13.2,196042550,1.0,uptrend,8/8
+MUX,usMUX.N,Mcewen Inc.,基础材料,贵金属,2026-08-31,20.16,13.1,22774939,1.0,uptrend,5/8
+NEO,usNEO.OQ,"Neogenomics, Inc.",医疗保健,Precision Instruments,2026-08-31,17.91,13.1,30318497,1.0,uptrend,8/8
+SPSC,usSPSC.OQ,"Sps Commerce, Inc.",科技,计算机软件：成品软件,2026-08-31,85.4,13.1,40219383,1.0,uptrend,7/8
+CHKP,usCHKP.OQ,Check Point软件科技,科技,计算机软件：成品软件,2026-08-31,138.91,13.0,115971696,1.0,uptrend,5/8
+FTI,usFTI.N,德希尼布FMC,非必需消费,Oil and Gas Field Machinery,2026-08-31,78.15,13.0,216515388,1.0,uptrend,7/8
+GRAL,usGRAL.OQ,"Grail, Inc.",医疗保健,医疗专科,2026-08-31,79.37,13.0,58134129,1.0,uptrend,6/8
+SCCO,usSCCO.N,南方铜业,基础材料,金属矿业,2026-08-31,208.87,13.0,233542447,1.0,uptrend,8/8
+SLDE,usSLDE.OQ,"Slide Insurance Holdings, Inc.",金融,财产意外险,2026-08-31,23.25,13.0,16924032,1.0,uptrend,8/8
+ACAD,usACAD.OQ,阿卡迪亚,医疗保健,生物科技：制药,2026-08-31,28.91,12.9,51763229,1.0,uptrend,5/8
+BOX,usBOX.N,"Box, Inc.",科技,计算机软件：成品软件,2026-08-31,35.78,12.9,110591355,1.0,uptrend,8/8
+STEP,usSTEP.OQ,Stepstone Group Inc.,金融,投资管理,2026-08-31,52.26,12.9,64239272,1.0,uptrend,6/8
+DHT,usDHT.N,DHT控股,非必需消费,海上运输,2026-08-31,19.6,12.8,63181755,1.0,uptrend,7/8
+INTU,usINTU.OQ,财捷,科技,计算机软件：成品软件,2026-08-31,359.3,12.8,1406909223,1.0,uptrend,7/8
+RIG,usRIG.N,越洋钻探,能源,油气生产,2026-08-31,5.81,12.8,228111467,1.0,uptrend,6/8
+RVMD,usRVMD.OQ,"Revolution Medicines, Inc.",医疗保健,生物科技：生物制品,2026-08-31,205.57,12.7,385631019,1.0,uptrend,6/8
+SJM,usSJM.N,斯马克,必需消费,包装食品,2026-08-31,131.16,12.7,154104217,1.0,uptrend,8/8
+VGNT,usVGNT.N,Versigent Plc,非必需消费,Auto Parts:O.E.M.,2026-08-31,47.4,12.7,37838762,1.0,uptrend,6/7
+BVN,usBVN.N,布埃纳文图拉开采,基础材料,金属矿业,2026-08-31,34.3,12.6,42526763,1.0,uptrend,6/8
+DK,usDK.N,Delek美国控股,能源,综合石油公司,2026-08-31,74.34,12.6,105981478,1.0,uptrend,8/8
+DNOW,usDNOW.N,Dnow Inc.,非必需消费,Oil and Gas Field Machinery,2026-08-31,16.03,12.6,42247911,1.0,uptrend,7/8
+BHP,usBHP.N,必和必拓,能源,煤炭开采,2026-08-31,93.92,12.5,253876424,1.0,uptrend,7/8
+CMBT,usCMBT.N,Cmb.Tech Nv,非必需消费,海上运输,2026-08-31,18.28,12.5,17839751,1.0,uptrend,8/8
+CRSR,usCRSR.OQ,"Corsair Gaming, Inc.",科技,Computer peripheral equipment,2026-08-31,12.15,12.5,28106206,1.0,uptrend,5/8
+QCOM,usQCOM.OQ,高通,科技,Radio And Television Broadcasting And Communications Equipment,2026-08-31,170.48,12.5,1571701649,1.0,uptrend,5/8
+CPRT,usCPRT.OQ,科帕特,非必需消费,Retail-Auto Dealers and Gas Stations,2026-08-31,32.99,12.4,325912452,1.0,uptrend,6/8
+PPC,usPPC.OQ,Pilgrim'S Pride Corporation,必需消费,Meat/Poultry/Fish,2026-08-31,31.38,12.4,46870636,1.0,uptrend,5/8
+VAL,usVAL.N,华仕伯,能源,油气生产,2026-08-31,86.37,12.4,87382199,1.0,uptrend,6/8
+NTNX,usNTNX.OQ,路坦力,科技,计算机软件：成品软件,2026-08-31,68.57,12.3,193723026,1.0,uptrend,8/8
+SNPS,usSNPS.OQ,新思科技,科技,计算机软件：成品软件,2026-08-31,439.59,12.1,684569431,1.0,uptrend,5/8
+DEC,usDEC.N,Diversified Energy Company,,,2026-08-31,14.89,12.0,11776746,1.0,uptrend,7/8
+IMCR,usIMCR.OQ,Immunocore Hldgs Plc,医疗保健,生物科技：生物制品,2026-08-31,36.32,12.0,13830339,1.0,uptrend,7/8
+MDGL,usMDGL.OQ,"Madrigal Pharmaceuticals, Inc.",医疗保健,生物科技：制药,2026-08-31,540.03,12.0,145336389,1.0,uptrend,5/8
+COP,usCOP.N,康菲石油,能源,综合石油公司,2026-08-31,132.49,11.9,890857948,1.0,uptrend,7/8
+FSK,usFSK.N,Fs Kkr Capital Corp.,金融,投资管理,2026-08-31,12.41,11.9,26114862,1.0,uptrend,7/8
+IQV,usIQV.N,艾昆纬,医疗保健,生物科技：商业物理与生物研究,2026-08-31,261.19,11.9,306427134,1.0,uptrend,8/8
+RMD,usRMD.N,瑞思迈,医疗保健,医疗/牙科器械,2026-08-31,240.1,11.9,360882041,1.0,uptrend,8/8
+VG,usVG.N,Venture Global,公用事业,Oil/Gas Transmission,2026-08-31,14.64,11.9,186464612,1.0,uptrend,6/8
+OWL,usOWL.N,Blue Owl Capital Inc.,金融,投资管理,2026-08-31,12.24,11.8,215850408,1.0,uptrend,7/8
+SPOT,usSPOT.N,Spotify Technology S.A.,非必需消费,广播电视,2026-08-31,543.62,11.8,974161223,1.0,uptrend,7/8
+PTGX,usPTGX.OQ,"Protagonist Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,147.75,11.7,74720640,1.0,uptrend,5/8
+RVTY,usRVTY.N,"Revvity, Inc.",工业,生物科技：实验室分析仪器,2026-08-31,128.67,11.7,178782718,1.0,uptrend,7/8
+SMTC,usSMTC.OQ,先科电子,科技,半导体,2026-08-31,132.96,11.7,425229181,1.0,uptrend,6/8
+TNK,usTNK.N,帝凯油轮,非必需消费,海上运输,2026-08-31,89.64,11.7,39866235,1.0,uptrend,8/8
+VSNT,usVSNT.OQ,"Versant Media Group, Inc.",工业,广播电视,2026-08-31,41.12,11.7,68884097,1.0,uptrend,6/7
+GILD,usGILD.OQ,吉利德科学,医疗保健,生物科技：生物制品,2026-08-31,146.34,11.6,879302251,1.0,uptrend,7/8
+JJSF,usJJSF.OQ,JJSF食品,必需消费,Specialty Foods,2026-08-31,88.18,11.6,21727620,1.0,uptrend,6/8
+PRGS,usPRGS.OQ,Progress Software Corporation,科技,计算机软件：成品软件,2026-08-31,46.27,11.5,17494213,1.0,uptrend,8/8
+RELY,usRELY.OQ,"Remitly Global, Inc.",非必需消费,商业服务,2026-08-31,26.74,11.5,87727684,1.0,uptrend,7/8
+VIRT,usVIRT.N,Virtu金融,金融,投资银行/经纪服务,2026-08-31,65.64,11.5,94217991,1.0,uptrend,6/8
+PR,usPR.N,Permian Resources Corporation,能源,油气生产,2026-08-31,23.29,11.4,218604945,1.0,uptrend,8/8
+PTC,usPTC.OQ,Ptc Inc.,科技,计算机软件：成品软件,2026-08-31,155.74,11.4,178830062,1.0,uptrend,8/8
+CART,usCART.OQ,枫熊,非必需消费,商业服务,2026-08-31,50.52,11.3,222024201,1.0,uptrend,7/8
+HRTG,usHRTG.N,"Heritage Insurance Holdings, Inc.",金融,财产意外险,2026-08-31,33.62,11.3,10612831,1.0,uptrend,7/8
+AI,usAI.N,C3.ai Inc,科技,计算机软件：成品软件,2026-08-31,10.82,11.2,44529322,1.0,uptrend,8/8
+EXPD,usEXPD.N,康捷国际物流,工业,Integrated Freight & Logistics,2026-08-31,189.65,11.2,172315859,1.0,uptrend,7/8
+EXLS,usEXLS.OQ,伊克赛尔服务控股,非必需消费,商业服务,2026-08-31,38.08,11.2,75246321,1.0,uptrend,7/8
+HLX,usHLX.N,螺旋能源,能源,Oilfield Services/Equipment,2026-08-31,10.3,11.2,14614197,1.0,uptrend,8/8
+MICC,usMICC.N,梦龙,必需消费,Specialty Foods,2026-08-31,20.42,11.2,14443182,1.0,uptrend,6/7
+NBR,usNBR.N,纳伯斯实业,能源,油气生产,2026-08-31,93.64,11.2,20622202,1.0,uptrend,6/8
+SHG,usSHG.N,新韩金融,金融,大型银行,2026-08-31,79.17,11.2,12060063,1.0,uptrend,7/8
+CVNA,usCVNA.N,Carvana Co.,非必需消费,Retail-Auto Dealers and Gas Stations,2026-08-31,73.46,11.1,609562228,1.0,uptrend,7/8
+VET,usVET.N,朱砂能源,能源,油气生产,2026-08-31,12.83,11.1,14668268,1.0,uptrend,7/8
+AXGN,usAXGN.OQ,"Axogen, Inc.",医疗保健,生物科技：电子医疗设备,2026-08-31,50.76,11.0,41842689,1.0,uptrend,7/8
+BG,usBG.N,邦吉,必需消费,包装食品,2026-08-31,116.21,11.0,155578478,1.0,uptrend,5/8
+HTHT,usHTHT.OQ,华住,非必需消费,酒店/度假村,2026-08-31,47.32,11.0,78298066,1.0,uptrend,8/8
+KNTK,usKNTK.N,Kinetik Holdings Inc.,公用事业,天然气分销,2026-08-31,54.83,11.0,59689435,1.0,uptrend,7/8
+MSI,usMSI.N,摩托罗拉解决方案,科技,Radio And Television Broadcasting And Communications Equipment,2026-08-31,485.3,11.0,475868379,1.0,uptrend,7/8
+NRIX,usNRIX.OQ,"Nurix Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,25.78,11.0,28279714,1.0,uptrend,5/8
+TRGP,usTRGP.N,"Targa Resources, Inc.",公用事业,天然气分销,2026-08-31,293.65,11.0,378129799,1.0,uptrend,6/8
+WFRD,usWFRD.OQ,Weatherford国际,非必需消费,Oil and Gas Field Machinery,2026-08-31,97.77,11.0,79517185,1.0,uptrend,8/8
+DAR,usDAR.N,美国达尔令国际,必需消费,包装食品,2026-08-31,66.27,10.9,168665793,1.0,uptrend,7/8
+IBKR,usIBKR.OQ,盈透证券,金融,投资银行/经纪服务,2026-08-31,97.29,10.9,390306683,1.0,uptrend,5/8
+SBLK,usSBLK.OQ,Star Bulk Carriers Corp.,非必需消费,海上运输,2026-08-31,30.87,10.8,44556880,1.0,uptrend,7/8
+GDDY,usGDDY.N,Godaddy Inc.,科技,电子数据处理服务,2026-08-31,97.88,10.7,173265588,1.0,uptrend,6/8
+HPQ,usHPQ.N,惠普,科技,计算机制造,2026-08-31,30.02,10.7,451661148,1.0,uptrend,8/8
+AUPH,usAUPH.OQ,Aurinia Pharmaceuticals Inc,医疗保健,生物科技：制药,2026-08-31,16.11,10.6,18054739,1.0,uptrend,5/8
+HRMY,usHRMY.OQ,"Harmony Biosciences Holdings, Inc.",医疗保健,生物科技：制药,2026-08-31,39.38,10.6,27578920,1.0,uptrend,7/8
+MOS,usMOS.N,美国美盛,工业,Agricultural Chemicals,2026-08-31,24.12,10.6,184717666,1.0,uptrend,6/8
+WAT,usWAT.N,沃特世,工业,生物科技：实验室分析仪器,2026-08-31,414.63,10.6,330755675,1.0,uptrend,7/8
+BDX,usBDX.N,碧迪医疗,医疗保健,医疗/牙科器械,2026-08-31,188.11,10.5,338254193,1.0,uptrend,7/8
+CF,usCF.N,CF工业控股,工业,Agricultural Chemicals,2026-08-31,130.03,10.5,301006899,1.0,uptrend,7/8
+COUR,usCOUR.N,"Coursera, Inc.",科技,计算机软件：成品软件,2026-08-31,6.52,10.5,26494458,1.0,uptrend,8/8
+GEN,usGEN.OQ,Gen Digital Inc.,科技,计算机软件：成品软件,2026-08-31,31.0,10.5,170161611,1.0,uptrend,8/8
+NFLX,usNFLX.OQ,奈飞,非必需消费,Consumer Electronics/Video Chains,2026-08-31,81.05,10.5,2251910389,1.0,uptrend,6/8
+QURE,usQURE.OQ,Uniqure N.V.,医疗保健,生物科技：制药,2026-08-31,48.68,10.5,52037579,1.0,uptrend,8/8
+OMC,usOMC.N,宏盟集团,非必需消费,广告,2026-08-31,87.53,10.4,184607382,1.0,uptrend,7/8
+WHD,usWHD.N,"Cactus, Inc. Class A Common Stock",非必需消费,Oil and Gas Field Machinery,2026-08-31,70.32,10.4,51651665,1.0,uptrend,6/8
+FIG,usFIG.N,"Figma, Inc.",科技,计算机软件：成品软件,2026-08-31,27.49,10.3,541913672,1.0,uptrend,6/8
+LBRX,usLBRX.OQ,Lb Pharmaceuticals Inc,医疗保健,生物科技：制药,2026-08-31,47.26,10.3,14857320,1.0,uptrend,7/8
+S,usS.N,"Sentinelone, Inc.",科技,计算机软件：成品软件,2026-08-31,22.1,10.2,172211717,1.0,uptrend,6/8
+TX,usTX.N,特尔尼翁钢铁,工业,Steel/Iron Ore,2026-08-31,54.82,10.2,35604365,1.0,uptrend,7/8
+WEN,usWEN.OQ,温迪,非必需消费,餐饮,2026-08-31,8.3,10.2,89456177,1.0,uptrend,5/8
+ADSK,usADSK.OQ,欧特克,科技,计算机软件：成品软件,2026-08-31,258.53,10.1,476819745,1.0,uptrend,8/8
+BNTX,usBNTX.OQ,Biontech Se,医疗保健,生物科技：生物制品,2026-08-31,101.61,10.1,194221941,1.0,uptrend,6/8
+CCJ,usCCJ.N,卡梅科,基础材料,Other Metals and Minerals,2026-08-31,98.76,10.1,282121460,1.0,uptrend,5/8
+MORN,usMORN.OQ,晨星,金融,投资管理,2026-08-31,218.94,10.1,62195862,1.0,uptrend,7/8
+PANW,usPANW.OQ,派拓网络,科技,Computer peripheral equipment,2026-08-31,382.13,10.1,2079119716,1.0,uptrend,7/8
+SNAP,usSNAP.N,Snap Inc.,科技,计算机软件：编程与数据处理,2026-08-31,5.55,10.1,227798866,1.0,uptrend,6/8
+IOT,usIOT.N,Samsara Inc.,科技,电子数据处理服务,2026-08-31,40.85,10.0,194214076,1.0,uptrend,8/8
+EPAM,usEPAM.N,"Epam Systems, Inc.",科技,电子数据处理服务,2026-08-31,117.83,9.9,155557438,1.0,uptrend,6/8
+GLIBK,usGLIBK.OQ,Liberty Capital Corporation - Series C Gci Group,Telecommunications,有线及其他付费电视,2026-08-31,26.03,9.9,10239171,1.0,uptrend,6/8
+NWSA,usNWSA.OQ,新闻集团 Class A,非必需消费,报纸/杂志,2026-08-31,30.71,9.9,119501783,1.0,uptrend,8/8
+A,usA.N,安捷伦科技,工业,生物科技：实验室分析仪器,2026-08-31,153.56,9.8,317626745,1.0,uptrend,8/8
+IOSP,usIOSP.OQ,英诺斯派材料,工业,Major Chemicals,2026-08-31,93.86,9.8,17032049,1.0,uptrend,8/8
+USA,usA.N,安捷伦科技,金融,Finance Companies,2026-08-31,153.56,9.8,317626745,1.0,uptrend,8/8
+CLBK,usCLBK.OQ,"Columbia Financial, Inc.",金融,储蓄机构,2026-08-31,11.62,9.7,52299795,1.0,uptrend,7/8
+FRO,usFRO.N,Frontline Plc,非必需消费,海上运输,2026-08-31,43.78,9.7,93284871,1.0,uptrend,8/8
+T,usT.N,美国电话电报,Telecommunications,电信设备,2026-08-31,25.89,9.7,863444648,1.0,uptrend,7/8
+XPEL,usXPEL.OQ,"Xpel, Inc.",工业,工业特种品,2026-08-31,49.26,9.7,11185882,1.0,uptrend,6/8
+CXW,usCXW.N,美国惩教公司,房地产,房地产投资信托(REITs),2026-08-31,33.22,9.6,56071799,1.0,uptrend,7/8
+DIS,usDIS.N,迪士尼,非必需消费,Services-Misc. Amusement & Recreation,2026-08-31,107.55,9.6,985828273,1.0,uptrend,7/8
+FLOC,usFLOC.N,Flowco Holdings Inc.,非必需消费,Oil and Gas Field Machinery,2026-08-31,21.94,9.6,13238424,1.0,uptrend,6/8
+FUBO,usFUBO.N,Fubotv Inc.,非必需消费,电影/娱乐,2026-08-31,10.53,9.6,16313045,1.0,uptrend,6/8
+GLOB,usGLOB.N,Globant S.A.,科技,电子数据处理服务,2026-08-31,40.71,9.6,70277536,1.0,uptrend,6/8
+CNH,usCNH.N,Cnh Industrial N.V.,工业,工程/农用机械/卡车,2026-08-31,11.83,9.5,225524431,1.0,uptrend,7/8
+GPOR,usGPOR.N,格尔夫波特能源,能源,油气生产,2026-08-31,179.45,9.5,54412874,1.0,uptrend,6/8
+ACRS,usACRS.OQ,"Aclaris Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,6.05,9.4,11886298,1.0,uptrend,5/8
+TNDM,usTNDM.OQ,"Tandem Diabetes Care, Inc.",医疗保健,医疗/牙科器械,2026-08-31,22.01,9.4,44247913,1.0,uptrend,5/8
+TSCO,usTSCO.OQ,拖拉机供应公司,非必需消费,RETAIL: Building Materials,2026-08-31,34.9,9.4,380231759,1.0,uptrend,6/8
+WBD,usWBD.OQ,华纳兄弟探索,Telecommunications,有线及其他付费电视,2026-08-31,28.53,9.4,546875860,1.0,uptrend,7/8
+AZTA,usAZTA.OQ,"Azenta, Inc.",科技,工业机械/零部件,2026-08-31,32.65,9.3,24655351,1.0,uptrend,5/8
+NOV,usNOV.N,华高,非必需消费,Oil and Gas Field Machinery,2026-08-31,21.29,9.3,65590486,1.0,uptrend,8/8
+RIO,usRIO.N,力拓,基础材料,金属矿业,2026-08-31,102.5,9.3,231180351,1.0,uptrend,7/8
+SWKS,usSWKS.OQ,思佳讯,科技,半导体,2026-08-31,67.01,9.3,361179346,1.0,uptrend,5/8
+DUOL,usDUOL.OQ,多邻国,科技,计算机软件：成品软件,2026-08-31,148.36,9.2,184888020,1.0,uptrend,7/8
+MRVL,usMRVL.OQ,迈威尔科技,科技,半导体,2026-08-31,211.66,9.2,5646397925,1.0,uptrend,6/8
+UMH,usUMH.N,"Umh Properties, Inc.",房地产,房地产投资信托(REITs),2026-08-31,16.45,9.2,12449362,1.0,uptrend,8/8
+FOXF,usFOXF.OQ,福克斯工厂控股,非必需消费,Motor Vehicles,2026-08-31,20.43,9.1,12142952,1.0,uptrend,5/8
+TENB,usTENB.OQ,"Tenable Holdings, Inc.",科技,计算机软件：成品软件,2026-08-31,38.15,9.1,142931867,1.0,uptrend,5/8
+DAN,usDAN.N,达纳,非必需消费,Auto Parts:O.E.M.,2026-08-31,29.98,9.0,45123404,1.0,uptrend,6/8
+EFX,usEFX.N,艾可菲,金融,金融：消费服务,2026-08-31,189.16,9.0,197496670,1.0,uptrend,7/8
+HOG,usHOG.N,哈雷戴维森,非必需消费,Motor Vehicles,2026-08-31,27.6,9.0,50461571,1.0,uptrend,6/8
+GAP,usGAP.N,"Gap, Inc. (The)",非必需消费,服装/鞋/配饰零售,2026-08-31,22.31,8.9,171697469,1.0,uptrend,7/8
+HUBS,usHUBS.N,"Hubspot, Inc.",科技,计算机软件：成品软件,2026-08-31,261.36,8.9,476190514,1.0,uptrend,6/8
+LPG,usLPG.N,Dorian Lpg Ltd.,非必需消费,海上运输,2026-08-31,50.04,8.9,25581724,1.0,uptrend,7/8
+DVN,usDVN.N,戴文能源,能源,油气生产,2026-08-31,48.51,8.8,486896407,1.0,uptrend,7/8
+EFOR,usEFOR.N,"Everforth, Inc.",非必需消费,专业服务,2026-08-31,32.42,8.8,22477669,1.0,uptrend,6/8
+OKE,usOKE.N,欧尼克(万欧卡),公用事业,油气生产,2026-08-31,96.01,8.8,337060248,1.0,uptrend,6/8
+BMRN,usBMRN.OQ,拜玛林制药,医疗保健,生物科技：制药,2026-08-31,65.23,8.7,150772979,1.0,uptrend,5/8
+CGON,usCGON.OQ,"Cg Oncology, Inc.",医疗保健,生物科技：生物制品,2026-08-31,75.16,8.7,57329002,1.0,uptrend,5/8
+CSTL,usCSTL.OQ,"Castle Biosciences, Inc.",医疗保健,医疗专科,2026-08-31,33.03,8.7,13433044,1.0,uptrend,6/8
+CVE,usCVE.N,Cenovus能源,能源,油气生产,2026-08-31,32.15,8.7,207948982,1.0,uptrend,8/8
+FLR,usFLR.N,福陆,工业,Military/Government/Technical,2026-08-31,54.51,8.7,150880330,1.0,uptrend,7/8
+KEX,usKEX.N,卡比海运,非必需消费,海上运输,2026-08-31,141.86,8.7,59952589,1.0,uptrend,5/8
+MITK,usMITK.OQ,"Mitek Systems, Inc.",科技,Computer peripheral equipment,2026-08-31,18.46,8.7,14278289,1.0,uptrend,5/8
+TRMD,usTRMD.OQ,Torm Plc,非必需消费,海上运输,2026-08-31,32.81,8.7,19264993,1.0,uptrend,8/8
+MATX,usMATX.N,美森,非必需消费,海上运输,2026-08-31,224.81,8.6,57629730,1.0,uptrend,7/8
+ALKT,usALKT.OQ,"Alkami Technology, Inc.",科技,计算机软件：成品软件,2026-08-31,20.4,8.5,24012608,1.0,uptrend,7/8
+LYB,usLYB.N,利安德巴塞尔,工业,Major Chemicals,2026-08-31,65.08,8.5,246631579,1.0,uptrend,7/8
+MEOH,usMEOH.OQ,梅思恩,工业,Major Chemicals,2026-08-31,58.95,8.5,36194123,1.0,uptrend,7/8
+NICE,usNICE.OQ,Nice Ltd Adr-Each Cnv Into 1 Ord Ils1,科技,计算机软件：成品软件,2026-08-31,109.18,8.5,57682189,1.0,uptrend,7/8
+OXY,usOXY.N,西方石油,能源,油气生产,2026-08-31,60.18,8.5,463415274,1.0,uptrend,7/8
+SONY,usSONY.N,索尼,必需消费,消费电子/家电,2026-08-31,24.56,8.5,102674695,1.0,uptrend,7/8
+TGT,usTGT.N,塔吉特,非必需消费,Department/Specialty Retail Stores,2026-08-31,160.88,8.5,777320173,1.0,uptrend,6/8
+TILE,usTILE.OQ,英特飞,非必需消费,Home Furnishings,2026-08-31,37.92,8.5,18844731,1.0,uptrend,6/8
+CMCSA,usCMCSA.OQ,康卡斯特,Telecommunications,有线及其他付费电视,2026-08-31,26.62,8.4,567903760,1.0,uptrend,7/8
+INVX,usINVX.N,"Innovex International, Inc.",非必需消费,Oil and Gas Field Machinery,2026-08-31,30.67,8.4,25820690,1.0,uptrend,6/8
+LH,usLH.N,徕博科,医疗保健,医疗专科,2026-08-31,332.66,8.4,189374679,1.0,uptrend,8/8
+PAR,usPAR.N,Par Technology Corporation,其他,Office Equipment/Supplies/Services,2026-08-31,18.8,8.4,17253375,1.0,uptrend,6/8
+PVLA,usPVLA.OQ,"Palvella Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,152.59,8.4,29114686,1.0,uptrend,7/8
+ALSN,usALSN.N,艾里逊变速箱,非必需消费,Auto Parts:O.E.M.,2026-08-31,125.71,8.3,101981376,1.0,uptrend,6/8
+BCE,usBCE.N,加拿大贝尔,Telecommunications,电信设备,2026-08-31,23.59,8.3,75249667,1.0,uptrend,7/8
+BLKB,usBLKB.OQ,布莱克波特科技,科技,计算机软件：成品软件,2026-08-31,48.06,8.3,21255289,1.0,uptrend,7/8
+CTA,usCTA.AM,管理期货ETF-Simplify,,,2026-08-31,28.27,8.3,12063174,1.0,uptrend,7/8
+EQNR,usEQNR.N,Equinor Asa,能源,综合石油公司,2026-08-31,42.8,8.3,107597428,1.0,uptrend,8/8
+IDCC,usIDCC.OQ,"Interdigital, Inc.",其他,Multi-Sector Companies,2026-08-31,335.03,8.3,65756512,1.0,uptrend,6/8
+RCI,usRCI.N,罗杰斯通信,Telecommunications,有线及其他付费电视,2026-08-31,36.89,8.3,36260505,1.0,uptrend,7/8
+COKE,usCOKE.OQ,可口可乐装瓶,必需消费,饮料（生产/分销）,2026-08-31,195.57,8.2,93080214,1.0,uptrend,8/8
+DE,usDE.N,迪尔股份,工业,工业机械/零部件,2026-08-31,654.91,8.2,732335181,1.0,uptrend,6/8
+NWS,usNWS.OQ,新闻集团 Class B,非必需消费,报纸/杂志,2026-08-31,34.41,8.2,39476765,1.0,uptrend,8/8
+PAYX,usPAYX.OQ,沛齐,工业,Diversified Commercial Services,2026-08-31,127.34,8.2,271621892,1.0,uptrend,7/8
+ROP,usROP.OQ,儒博实业,工业,工业机械/零部件,2026-08-31,424.64,8.2,282022041,1.0,uptrend,8/8
+USDE,usDE.N,迪尔股份,金融,金融：消费服务,2026-08-31,654.91,8.2,732335181,1.0,uptrend,6/8
+DHR,usDHR.N,丹纳赫,工业,工业机械/零部件,2026-08-31,213.56,8.1,704992761,1.0,uptrend,7/8
+FBRT,usFBRT.N,"Franklin Bsp Realty Trust, Inc.",房地产,房地产投资信托(REITs),2026-08-31,8.37,8.1,12286749,1.0,uptrend,7/8
+NUVB,usNUVB.N,Nuvation Bio Inc.,医疗保健,生物科技：制药,2026-08-31,6.66,8.1,36587808,1.0,uptrend,6/8
+RNW,usRNW.OQ,Renew Energy Global Plc,公用事业,电力公用事业,2026-08-31,6.8,8.1,25009723,1.0,uptrend,7/8
+CNQ,usCNQ.N,加拿大自然资源,能源,油气生产,2026-08-31,50.07,8.0,295697133,1.0,uptrend,8/8
+G,usG.N,简伯特,非必需消费,专业服务,2026-08-31,37.98,8.0,94017686,1.0,uptrend,7/8
+GCT,usGCT.OQ,大健云仓,非必需消费,目录/专业分销,2026-08-31,48.53,8.0,34804892,1.0,uptrend,5/8
+HMC,usHMC.N,本田汽车,工业,汽车制造,2026-08-31,31.96,8.0,31973433,1.0,uptrend,7/8
+HTGC,usHTGC.N,海格投资,金融,投资管理,2026-08-31,17.64,8.0,29682580,1.0,uptrend,8/8
+PI,usPI.OQ,"Impinj, Inc.",科技,工业机械/零部件,2026-08-31,174.32,8.0,69324078,1.0,uptrend,6/8
+ERIE,usERIE.OQ,伊瑞保险,金融,专业保险,2026-08-31,255.56,7.9,82718304,1.0,uptrend,7/8
+NET,usNET.N,科赋锐,科技,计算机软件：成品软件,2026-08-31,305.11,7.9,1234119428,1.0,uptrend,5/8
+PBF,usPBF.N,PBF能源,能源,综合石油公司,2026-08-31,72.99,7.9,191392283,1.0,uptrend,7/8
+RPRX,usRPRX.OQ,Royalty Pharma Plc,医疗保健,生物科技：制药,2026-08-31,61.41,7.9,162848146,1.0,uptrend,7/8
+ADPT,usADPT.OQ,Adaptive Biotechnologies Corporation,医疗保健,生物科技：生物制品,2026-08-31,24.92,7.8,52039690,1.0,uptrend,5/8
+DB,usDB.N,德意志银行,金融,大型银行,2026-08-31,40.06,7.8,66504819,1.0,uptrend,8/8
+ILMN,usILMN.OQ,因美纳,医疗保健,医疗专科,2026-08-31,213.63,7.8,396339613,1.0,uptrend,6/8
+SNOW,usSNOW.N,Snowflake Inc.,科技,计算机软件：成品软件,2026-08-31,331.43,7.8,1320874043,1.0,uptrend,7/8
+J,usJ.N,雅各布工程,工业,Military/Government/Technical,2026-08-31,149.05,7.7,133569270,1.0,uptrend,7/8
+NAVI,usNAVI.OQ,Navient Corporation,金融,投资银行/经纪服务,2026-08-31,9.51,7.7,11896565,1.0,uptrend,7/8
+UI,usUI.N,厄比奎蒂,科技,Radio And Television Broadcasting And Communications Equipment,2026-08-31,590.02,7.7,91677500,1.0,uptrend,7/8
+CRK,usCRK.N,康斯托克能源,能源,油气生产,2026-08-31,14.43,7.6,26494169,1.0,uptrend,7/8
+CSWC,usCSWC.OQ,西南资本,非必需消费,Textiles,2026-08-31,25.57,7.6,15156265,1.0,uptrend,7/8
+CVX,usCVX.N,雪佛龙,能源,综合石油公司,2026-08-31,206.14,7.6,1578418144,1.0,uptrend,8/8
+MGY,usMGY.N,Magnolia Oil & Gas Corporation,能源,油气生产,2026-08-31,26.85,7.6,89193024,1.0,uptrend,7/8
+ROKU,usROKU.OQ,"Roku, Inc.",Telecommunications,有线及其他付费电视,2026-08-31,156.93,7.6,364856847,1.0,uptrend,7/8
+TMO,usTMO.N,赛默飞世尔,工业,工业机械/零部件,2026-08-31,617.1,7.5,1013353932,1.0,uptrend,7/8
+CAG,usCAG.N,康尼格拉,必需消费,包装食品,2026-08-31,16.02,7.4,151956509,1.0,uptrend,7/8
+JHX,usJHX.N,詹姆斯哈迪,工业,建筑材料,2026-08-31,29.71,7.4,194942826,1.0,uptrend,6/8
+BIIB,usBIIB.OQ,渤健公司,医疗保健,生物科技：生物制品,2026-08-31,216.65,7.3,159560466,1.0,uptrend,7/8
+CME,usCME.OQ,芝加哥商品交易所,金融,投资银行/经纪服务,2026-08-31,285.5,7.3,513655212,1.0,uptrend,8/8
+JKHY,usJKHY.OQ,杰克亨利,科技,电子数据处理服务,2026-08-31,167.91,7.3,157277875,1.0,uptrend,7/8
+PHVS,usPHVS.OQ,Pharvaris N.V.,医疗保健,生物科技：制药,2026-08-31,34.61,7.3,23899681,1.0,uptrend,5/8
+AVTX,usAVTX.OQ,"Avalo Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,19.34,7.1,14763077,1.0,uptrend,6/8
+BAH,usBAH.N,博思艾伦咨询公司,非必需消费,专业服务,2026-08-31,75.65,7.1,124807315,1.0,uptrend,5/8
+IFF,usIFF.N,国际香料香精,工业,Major Chemicals,2026-08-31,86.33,7.1,132406886,1.0,uptrend,7/8
+KNSA,usKNSA.OQ,"Kiniksa Pharmaceuticals International, Plc",医疗保健,生物科技：制药,2026-08-31,78.63,7.1,33806592,1.0,uptrend,6/8
+KT,usKT.N,韩国电信,Telecommunications,电信设备,2026-08-31,19.68,7.1,29968241,1.0,uptrend,7/8
+WTRG,usWTRG.N,"Essential Utilities, Inc.",公用事业,Water Supply,2026-08-31,41.17,7.1,78993737,1.0,uptrend,8/8
+MCK,usMCK.N,麦克森,医疗保健,Other Pharmaceuticals,2026-08-31,885.32,7.0,881062676,1.0,uptrend,7/8
+SXT,usSXT.N,Sensient Technologies Corporation,工业,Major Chemicals,2026-08-31,134.94,7.0,40450753,1.0,uptrend,7/8
+TTEK,usTTEK.OQ,德照科技,非必需消费,Military/Government/Technical,2026-08-31,36.14,7.0,96226745,1.0,uptrend,7/8
+XP,usXP.OQ,Xp Inc.,金融,投资银行/经纪服务,2026-08-31,18.23,7.0,79806691,1.0,uptrend,7/8
+EHC,usEHC.N,Encompass Health Corporation,医疗保健,医院/护理管理,2026-08-31,120.21,6.9,121438263,1.0,uptrend,6/8
+SSL,usSSL.N,南非萨索尔,能源,油气生产,2026-08-31,12.02,6.9,12667025,1.0,uptrend,7/8
+CSGP,usCSGP.OQ,科斯塔,金融,房地产,2026-08-31,32.07,6.8,220117110,1.0,uptrend,6/8
+NVDA,usNVDA.OQ,英伟达,科技,半导体,2026-08-31,220.78,6.8,27948742517,1.0,uptrend,7/8
+QSR,usQSR.N,餐饮品牌国际,非必需消费,餐饮,2026-08-31,77.88,6.8,186322629,1.0,uptrend,7/8
+TAK,usTAK.N,武田制药,医疗保健,生物科技：制药,2026-08-31,17.98,6.8,50295326,1.0,uptrend,7/8
+DMC,usDMC.N,Del Monte Corporation,必需消费,Farming/Seeds/Milling,2026-08-31,31.68,6.7,10163979,1.0,uptrend,7/8
+GOLD,usGOLD.N,"Gold.Com, Inc.",工业,其他专卖店,2026-08-31,44.97,6.7,19435792,1.0,uptrend,7/8
+IVZ,usIVZ.N,景顺,金融,投资管理,2026-08-31,32.78,6.7,132750146,1.0,uptrend,7/8
+SAIC,usSAIC.OQ,Science Applications International Corporation,科技,电子数据处理服务,2026-08-31,128.22,6.7,60714595,1.0,uptrend,8/8
+CON,usCON.N,"Concentra Group Holdings Parent, Inc.",医疗保健,医疗专科,2026-08-31,33.74,6.6,32318175,1.0,uptrend,5/8
+DAC,usDAC.N,达那俄斯,非必需消费,海上运输,2026-08-31,151.48,6.6,18017768,1.0,uptrend,7/8
+EXPE,usEXPE.OQ,亿客行,非必需消费,Transportation Services,2026-08-31,317.12,6.6,485418804,1.0,uptrend,5/8
+HURN,usHURN.OQ,休伦咨询,非必需消费,专业服务,2026-08-31,159.89,6.6,32974762,1.0,uptrend,5/8
+RDVT,usRDVT.OQ,"Red Violet, Inc.",科技,计算机软件：成品软件,2026-08-31,73.16,6.6,21101052,1.0,uptrend,7/8
+TW,usTW.OQ,Tradeweb Markets Inc.,金融,投资银行/经纪服务,2026-08-31,107.7,6.6,121303581,1.0,uptrend,6/8
+WMB,usWMB.N,威廉姆斯,公用事业,天然气分销,2026-08-31,75.05,6.6,511778015,1.0,uptrend,6/8
+CHRD,usCHRD.OQ,Chord Energy Corporation,能源,油气生产,2026-08-31,147.11,6.5,105038106,1.0,uptrend,7/8
+DBX,usDBX.OQ,"Dropbox, Inc.",科技,计算机软件：成品软件,2026-08-31,35.19,6.5,143872154,1.0,uptrend,7/8
+GENB,usGENB.OQ,"Generate Biomedicines, Inc.",医疗保健,生物科技：制药,2026-08-31,15.27,6.5,22387444,1.0,uptrend,5/7
+SEIC,usSEIC.OQ,Sei Investments Company,金融,投资银行/经纪服务,2026-08-31,110.98,6.5,64314499,1.0,uptrend,8/8
+AVTR,usAVTR.N,"Avantor, Inc.",工业,生物科技：实验室分析仪器,2026-08-31,14.54,6.4,90653443,1.0,uptrend,7/8
+BX,usBX.N,黑石,金融,投资管理,2026-08-31,143.24,6.4,534775986,1.0,uptrend,7/8
+SBAC,usSBAC.OQ,SBA通信公司,房地产,房地产投资信托(REITs),2026-08-31,189.66,6.4,165923210,1.0,uptrend,5/8
+THC,usTHC.N,泰尼特保健,医疗保健,医院/护理管理,2026-08-31,265.91,6.4,202408247,1.0,uptrend,6/8
+VALE,usVALE.N,淡水河谷,基础材料,金属矿业,2026-08-31,15.09,6.4,369765187,1.0,uptrend,7/8
+IBP,usIBP.N,"Installed Building Products, Inc.",非必需消费,住宅建设,2026-08-31,242.83,6.3,74006845,1.0,uptrend,5/8
+NDSN,usNDSN.OQ,诺信,工业,工业机械/零部件,2026-08-31,321.72,6.3,135531047,1.0,uptrend,7/8
+TRI,usTRI.OQ,汤森路透,非必需消费,出版,2026-08-31,107.32,6.3,205662332,1.0,uptrend,7/8
+TRU,usTRU.N,环联,金融,金融：消费服务,2026-08-31,84.91,6.3,139946547,1.0,uptrend,7/8
+WSE,usWSE.OQ,Wise Group Plc,工业,Diversified Commercial Services,2026-08-31,13.11,6.3,13008452,1.0,uptrend,6/7
+BXSL,usBXSL.N,Blackstone Secured Lending Fund,金融,Trusts Except Educational Religious and Charitable,2026-08-31,25.01,6.2,37476771,1.0,uptrend,7/8
+MAIN,usMAIN.N,Main Street Capital Corporation,金融,Finance/Investors Services,2026-08-31,58.92,6.2,32620926,1.0,uptrend,7/8
+MRP,usMRP.N,"Millrose Properties, Inc.",金融,房地产,2026-08-31,30.42,6.2,28776147,1.0,uptrend,7/8
+NAT,usNAT.N,Nordic American Tankers Limited,非必需消费,海上运输,2026-08-31,6.83,6.2,20546298,1.0,uptrend,8/8
+OII,usOII.N,国际海洋工程,能源,Oilfield Services/Equipment,2026-08-31,51.76,6.2,44663890,1.0,uptrend,8/8
+ADP,usADP.OQ,自动数据处理公司,科技,电子数据处理服务,2026-08-31,286.16,6.1,579518414,1.0,uptrend,7/8
+AGYS,usAGYS.OQ,阿吉赛斯,科技,电子数据处理服务,2026-08-31,116.41,6.1,30905575,1.0,uptrend,7/8
+GNL,usGNL.N,"Global Net Lease, Inc.",房地产,房地产投资信托(REITs),2026-08-31,9.18,6.1,24748920,1.0,uptrend,5/8
+MMED,usMMED.OQ,"Minimed Group, Inc.",医疗保健,医疗/牙科器械,2026-08-31,20.26,6.1,24809475,1.0,uptrend,7/7
+OVV,usOVV.N,Ovintiv Inc. (De),能源,油气生产,2026-08-31,65.65,6.1,211957479,1.0,uptrend,7/8
+APO,usAPO.N,阿波罗全球管理,金融,投资管理,2026-08-31,136.58,6.0,453622702,1.0,uptrend,7/8
+AWK,usAWK.N,美国水务,公用事业,Water Supply,2026-08-31,138.23,6.0,296769568,1.0,uptrend,7/8
+AWR,usAWR.N,美洲国家水务,公用事业,Water Supply,2026-08-31,89.29,6.0,18346527,1.0,uptrend,7/8
+IMVT,usIMVT.OQ,"Immunovant, Inc.",医疗保健,生物科技：生物制品,2026-08-31,40.82,6.0,49193954,1.0,uptrend,5/8
+MMSI,usMMSI.OQ,"Merit Medical Systems, Inc.",医疗保健,医疗/牙科器械,2026-08-31,90.66,6.0,79953442,1.0,uptrend,7/8
+RCUS,usRCUS.N,"Arcus Biosciences, Inc.",医疗保健,生物科技：制药,2026-08-31,29.28,6.0,34555707,1.0,uptrend,5/8
+CPB,usCPB.OQ,金宝汤,必需消费,包装食品,2026-08-31,23.68,5.9,123177160,1.0,uptrend,7/8
+FDX,usFDX.N,联邦快递,非必需消费,航空货运/快递,2026-08-31,327.4,5.9,481997504,1.0,uptrend,7/8
+ICFI,usICFI.OQ,ICF国际,非必需消费,专业服务,2026-08-31,89.1,5.9,18729875,1.0,uptrend,6/8
+ICE,usICE.N,洲际交易所,金融,投资银行/经纪服务,2026-08-31,160.7,5.9,519743465,1.0,uptrend,7/8
+NEXA,usNEXA.N,Nexa Resources S.A.,基础材料,金属矿业,2026-08-31,13.61,5.9,11613937,1.0,uptrend,6/8
+UGI,usUGI.N,UGI公用事业,公用事业,天然气分销,2026-08-31,38.45,5.9,95637955,1.0,uptrend,6/8
+AJG,usAJG.N,亚瑟加拉格尔,金融,专业保险,2026-08-31,262.15,5.8,329989466,1.0,uptrend,8/8
+ANET,usANET.N,"Arista Networks, Inc.",Telecommunications,计算机网络设备,2026-08-31,195.69,5.8,1431087144,1.0,uptrend,5/8
+CHTR,usCHTR.OQ,特许通讯,Telecommunications,有线及其他付费电视,2026-08-31,152.44,5.8,390236254,1.0,uptrend,5/8
+JXN,usJXN.N,Jackson Financial Inc.,金融,人寿保险,2026-08-31,133.43,5.8,73236679,1.0,uptrend,7/8
+PJT,usPJT.N,Pjt Partners Inc.,金融,投资管理,2026-08-31,180.39,5.8,71557142,1.0,uptrend,7/8
+ATI,usATI.N,阿勒格尼技术,工业,Steel/Iron Ore,2026-08-31,204.2,5.7,425916607,1.0,uptrend,5/8
+NAVN,usNAVN.OQ,"Navan, Inc.",科技,计算机软件：成品软件,2026-08-31,29.06,5.7,63212079,1.0,uptrend,8/8
+PRCH,usPRCH.OQ,"Porch Group, Inc.",科技,计算机软件：成品软件,2026-08-31,16.99,5.7,19583318,1.0,uptrend,7/8
+UGP,usUGP.N,Ultrapar Participacoes Sa,公用事业,Oil/Gas Transmission,2026-08-31,6.66,5.7,19574866,1.0,uptrend,7/8
+VERX,usVERX.OQ,"Vertex, Inc.",科技,计算机软件：成品软件,2026-08-31,14.16,5.7,28433173,1.0,uptrend,6/8
+APD,usAPD.N,空气产品,基础材料,Major Chemicals,2026-08-31,309.46,5.6,281924601,1.0,uptrend,8/8
+BGC,usBGC.OQ,"Bgc Group, Inc.",金融,投资银行/经纪服务,2026-08-31,12.01,5.6,32014313,1.0,uptrend,5/8
+GPC,usGPC.N,Genuine Parts,非必需消费,Automotive Aftermarket,2026-08-31,135.67,5.6,153309350,1.0,uptrend,8/8
+GPN,usGPN.N,环汇有限公司,非必需消费,商业服务,2026-08-31,91.05,5.6,279185110,1.0,uptrend,7/8
+TM,usTM.N,丰田汽车,工业,汽车制造,2026-08-31,196.54,5.6,66397889,1.0,uptrend,6/8
+UBS,usUBS.N,瑞银,金融,大型银行,2026-08-31,55.72,5.6,83417847,1.0,uptrend,8/8
+VZ,usVZ.N,威瑞森通信,Telecommunications,电信设备,2026-08-31,50.02,5.6,898980906,1.0,uptrend,8/8
+AR,usAR.N,Antero Resources Corporation,能源,油气生产,2026-08-31,38.48,5.5,135480575,1.0,uptrend,7/8
+BZ,usBZ.OQ,BOSS直聘,科技,计算机软件：编程与数据处理,2026-08-31,17.36,5.5,110932453,1.0,uptrend,7/8
+STOK,usSTOK.OQ,"Stoke Therapeutics, Inc.",医疗保健,生物科技：制药,2026-08-31,31.2,5.5,28566754,1.0,uptrend,5/8
+USAR,usAR.N,Antero Resources Corporation,基础材料,金属矿业,2026-08-31,38.48,5.5,135480575,1.0,uptrend,7/8
+REGN,usREGN.OQ,再生元制药公司,医疗保健,生物科技：制药,2026-08-31,799.08,5.4,570666041,1.0,uptrend,6/8
+RSG,usRSG.N,共和废品处理,公用事业,Environmental Services,2026-08-31,220.92,5.4,312547815,1.0,uptrend,6/8
+TRIN,usTRIN.N,Trinity Capital Inc.,金融,金融：消费服务,2026-08-31,18.62,5.4,18996452,1.0,uptrend,7/8
+DSGX,usDSGX.OQ,笛卡尔物流系统集团,科技,计算机软件：成品软件,2026-08-31,80.64,5.3,42897448,1.0,uptrend,8/8
+GLNG,usGLNG.OQ,Golar海运,非必需消费,海上运输,2026-08-31,51.49,5.3,65168097,1.0,uptrend,8/8
+NP,usNP.N,Neptune Insurance Holdings Inc.,金融,专业保险,2026-08-31,33.31,5.3,13618592,1.0,uptrend,5/8
+RACE,usRACE.N,法拉利,工业,汽车制造,2026-08-31,422.6,5.3,171450836,1.0,uptrend,7/8
+MKC,usMKC.N,味好美,必需消费,包装食品,2026-08-31,54.22,5.2,126362246,1.0,uptrend,7/8
+MRAM,usMRAM.OQ,"Everspin Technologies, Inc.",科技,半导体,2026-08-31,16.25,5.2,23734145,1.0,uptrend,5/8
+OPY,usOPY.N,奥本海默控股,金融,投资银行/经纪服务,2026-08-31,118.79,5.2,13812973,1.0,uptrend,7/8
+COR,usCOR.N,"Cencora, Inc.",医疗保健,Other Pharmaceuticals,2026-08-31,323.6,5.1,460547596,1.0,uptrend,7/8
+GKOS,usGKOS.N,Glaukos Corporation,医疗保健,医疗/牙科器械,2026-08-31,179.56,5.1,116242212,1.0,uptrend,5/8
+NEU,usNEU.N,Newmarket Corp,工业,Major Chemicals,2026-08-31,897.7,5.1,116595038,1.0,uptrend,5/8
+ORCL,usORCL.N,甲骨文,科技,计算机软件：成品软件,2026-08-31,149.12,5.1,3463947109,1.0,uptrend,5/8
+SHC,usSHC.OQ,Sotera Health Company,医疗保健,Misc Health and Biotechnology Services,2026-08-31,18.9,5.1,53727578,1.0,uptrend,6/8
+ZIM,usZIM.N,以星航运,非必需消费,海上运输,2026-08-31,27.4,5.1,60056729,1.0,uptrend,7/8
+JNJ,usJNJ.N,强生,医疗保健,生物科技：制药,2026-08-31,265.85,5.0,1698261320,1.0,uptrend,8/8
+KMX,usKMX.N,车美仕,非必需消费,Retail-Auto Dealers and Gas Stations,2026-08-31,61.33,5.0,105728625,1.0,uptrend,7/8
+LECO,usLECO.OQ,林肯电气,工业,工业机械/零部件,2026-08-31,281.23,5.0,127389688,1.0,uptrend,7/8
+OBDC,usOBDC.N,Blue Owl Capital Corporation,金融,多元化金融服务,2026-08-31,11.53,5.0,47552316,1.0,uptrend,6/8
+VOR,usVOR.OQ,Vor Biopharma Inc.,医疗保健,生物科技：生物制品,2026-08-31,22.48,5.0,17283293,1.0,uptrend,5/8
+AAMI,usAAMI.N,Acadian Asset Management Inc.,金融,投资管理,2026-08-31,94.2,4.9,31679906,1.0,uptrend,8/8
+BKR,usBKR.OQ,贝克休斯,非必需消费,Oil and Gas Field Machinery,2026-08-31,63.55,4.9,403889895,1.0,uptrend,7/8
+SPGI,usSPGI.N,标普全球,金融,金融：消费服务,2026-08-31,435.84,4.9,752161876,1.0,uptrend,5/8
+CPAY,usCPAY.N,"Corpay, Inc.",非必需消费,商业服务,2026-08-31,404.3,4.8,206131070,1.0,uptrend,6/8
+PGEN,usPGEN.OQ,"Precigen, Inc.",医疗保健,生物科技：制药,2026-08-31,6.93,4.8,43305068,1.0,uptrend,5/8
+ARCC,usARCC.OQ,阿瑞斯资本,金融,金融：消费服务,2026-08-31,20.07,4.7,78768687,1.0,uptrend,7/8
+CACC,usCACC.OQ,Credit Acceptance Corporation,金融,金融：消费服务,2026-08-31,599.74,4.7,67257288,1.0,uptrend,5/8
+CAKE,usCAKE.OQ,起司工坊,非必需消费,餐饮,2026-08-31,109.49,4.7,203133962,1.0,uptrend,5/8
+CDNA,usCDNA.OQ,"Caredx, Inc.",医疗保健,医疗专科,2026-08-31,50.11,4.7,53562343,1.0,uptrend,8/8
+FTNT,usFTNT.OQ,飞塔信息,科技,Computer peripheral equipment,2026-08-31,170.93,4.7,735676455,1.0,uptrend,7/8
+NDAQ,usNDAQ.OQ,纳斯达克,金融,投资银行/经纪服务,2026-08-31,98.61,4.7,253762168,1.0,uptrend,7/8
+VIST,usVIST.N,Vista Energy S.A.B. De C.V.,能源,油气生产,2026-08-31,71.46,4.7,66108101,1.0,uptrend,7/8
+ABBV,usABBV.N,艾伯维公司,医疗保健,生物科技：制药,2026-08-31,256.42,4.6,1175762106,1.0,uptrend,7/8
+BWIN,usBWIN.OQ,"The Baldwin Insurance Group, Inc.",金融,专业保险,2026-08-31,30.85,4.6,30152658,1.0,uptrend,7/8
+GSHD,usGSHD.OQ,"Goosehead Insurance, Inc.",金融,专业保险,2026-08-31,68.65,4.6,21302087,1.0,uptrend,6/8
+KB,usKB.N,韩国国民银行,金融,商业银行,2026-08-31,124.79,4.6,21384650,1.0,uptrend,7/8
+MCO,usMCO.N,穆迪,金融,金融：消费服务,2026-08-31,504.64,4.6,342019051,1.0,uptrend,6/8
+MDT,usMDT.N,美敦力,医疗保健,生物科技：电子医疗设备,2026-08-31,90.65,4.6,619862502,1.0,uptrend,8/8
+TEVA,usTEVA.N,梯瓦制药,医疗保健,生物科技：制药,2026-08-31,36.05,4.6,184816063,1.0,uptrend,5/8
+ENR,usENR.N,劲量控股,其他,工业机械/零部件,2026-08-31,21.78,4.5,23717898,1.0,uptrend,6/8
+HTO,usHTO.OQ,H2O America,公用事业,Water Supply,2026-08-31,63.37,4.5,20908039,1.0,uptrend,7/8
+RGA,usRGA.N,美国再保险集团,金融,人寿保险,2026-08-31,246.04,4.5,83509358,1.0,uptrend,7/8
+SSNC,usSSNC.OQ,"Ss&C Technologies Holdings, Inc.",科技,计算机软件：成品软件,2026-08-31,82.97,4.5,126929798,1.0,uptrend,7/8
+XOM,usXOM.N,埃克森美孚,能源,综合石油公司,2026-08-31,160.95,4.5,2270721207,1.0,uptrend,8/8
+ASC,usASC.N,Ardmore Shipping Corporation,非必需消费,海上运输,2026-08-31,17.39,4.4,10336171,1.0,uptrend,8/8
+PBR,usPBR.N,巴西石油公司,能源,油气生产,2026-08-31,19.35,4.4,339407539,1.0,uptrend,8/8
+BILL,usBILL.N,"Bill Holdings, Inc.",科技,计算机软件：成品软件,2026-08-31,49.23,4.3,119695346,1.0,uptrend,7/8
+DXCM,usDXCM.OQ,德康医疗,医疗保健,医疗/牙科器械,2026-08-31,91.06,4.3,417149455,1.0,uptrend,7/8
+EXE,usEXE.OQ,Expand Energy Corporation,能源,油气生产,2026-08-31,98.16,4.3,240741715,1.0,uptrend,6/8
+OSK,usOSK.N,Oshkosh Corporation (Holding Company),工业,汽车制造,2026-08-31,154.11,4.3,88030064,1.0,uptrend,7/8
+SOBO,usSOBO.N,South Bow Corporation,能源,天然气分销,2026-08-31,37.77,4.3,18788760,1.0,uptrend,5/8
+AVPT,usAVPT.OQ,"Avepoint, Inc.",科技,计算机软件：成品软件,2026-08-31,13.92,4.2,24585301,1.0,uptrend,7/8
+MSFT,usMSFT.OQ,微软,科技,计算机软件：成品软件,2026-08-31,507.29,4.2,13111413499,1.0,uptrend,7/8
+STT,usSTT.N,道富银行,金融,大型银行,2026-08-31,191.38,4.2,257694050,1.0,uptrend,7/8
+EPC,usEPC.N,Edgewell Personal Care Company,非必需消费,包装商品/化妆品,2026-08-31,28.72,4.1,15891374,1.0,uptrend,6/8
+LTC,usLTC.N,LTC房产,房地产,房地产投资信托(REITs),2026-08-31,40.32,4.1,19959034,1.0,uptrend,5/8
+QTWO,usQTWO.N,"Q2 Holdings, Inc.",科技,计算机软件：成品软件,2026-08-31,65.04,4.1,44642601,1.0,uptrend,7/8
+STVN,usSTVN.N,Stevanato Group S.P.A.,医疗保健,医疗/牙科器械,2026-08-31,21.43,4.1,10530798,1.0,uptrend,6/8
+VNOM,usVNOM.OQ,"Viper Energy, Inc.",能源,油气生产,2026-08-31,44.79,4.1,70464650,1.0,uptrend,6/8
+EXPO,usEXPO.OQ,毅博科技咨询,非必需消费,专业服务,2026-08-31,71.01,4.0,24783299,1.0,uptrend,7/8
+HPE,usHPE.N,慧与,科技,零售：电脑软件及外设,2026-08-31,52.24,4.0,872969643,1.0,uptrend,5/8
+MT,usMT.N,安赛乐米塔尔,工业,Steel/Iron Ore,2026-08-31,74.6,4.0,102205285,1.0,uptrend,6/8
+ROIV,usROIV.OQ,Roivant Sciences Ltd.,医疗保健,生物科技：制药,2026-08-31,34.64,4.0,273508738,1.0,uptrend,6/8
+SCHW,usSCHW.N,嘉信理财,金融,投资银行/经纪服务,2026-08-31,109.82,4.0,817976877,1.0,uptrend,8/8
+TOST,usTOST.N,"Toast, Inc.",科技,电子数据处理服务,2026-08-31,34.09,4.0,352422685,1.0,uptrend,6/8
+VLTO,usVLTO.N,Veralto Corp,工业,Electrical Products,2026-08-31,98.57,4.0,137326757,1.0,uptrend,8/8
+AMN,usAMN.N,AMN医疗保健服务公司,非必需消费,专业服务,2026-08-31,34.28,3.9,24735303,1.0,uptrend,5/8
+DRI,usDRI.N,达登饭店,非必需消费,餐饮,2026-08-31,214.26,3.9,210776185,1.0,uptrend,5/8
+IMO,usIMO.AM,帝国石油,能源,综合石油公司,2026-08-31,131.34,3.9,61383135,1.0,uptrend,7/8
+URBN,usURBN.OQ,都市服饰,非必需消费,服装/鞋/配饰零售,2026-08-31,80.69,3.9,99459169,1.0,uptrend,8/8
+V,usV.N,Visa,非必需消费,商业服务,2026-08-31,379.37,3.9,2514928966,1.0,uptrend,7/8
+CVSA,usCVSA.N,Covista Inc.,房地产,Other Consumer Services,2026-08-31,132.33,3.8,48396700,1.0,uptrend,7/8
+DEO,usDEO.N,帝亚吉欧,必需消费,饮料（生产/分销）,2026-08-31,91.85,3.8,120414371,1.0,uptrend,5/8
+HCI,usHCI.N,HCI集团,金融,财产意外险,2026-08-31,185.73,3.8,27404943,1.0,uptrend,7/8
+HSIC,usHSIC.OQ,亨利香恩服务,医疗保健,医疗专科,2026-08-31,89.8,3.8,99653842,1.0,uptrend,7/8
+KNSL,usKNSL.N,"Kinsale Capital Group, Inc.",金融,财产意外险,2026-08-31,373.9,3.8,78292439,1.0,uptrend,5/8
+RLI,usRLI.N,RLI保险,金融,财产意外险,2026-08-31,63.47,3.8,39084621,1.0,uptrend,6/8
+ZBIO,usZBIO.OQ,"Zenas Biopharma, Inc.",医疗保健,生物科技：制药,2026-08-31,32.32,3.8,22804052,1.0,uptrend,7/8
+DLB,usDLB.N,杜比实验室,其他,Multi-Sector Companies,2026-08-31,61.56,3.7,58124869,1.0,uptrend,6/8
+HELE,usHELE.OQ,海伦特洛伊家电,非必需消费,Home Furnishings,2026-08-31,30.1,3.7,10231196,1.0,uptrend,7/8
+LW,usLW.N,"Lamb Weston Holdings, Inc.",必需消费,包装食品,2026-08-31,54.53,3.7,69011012,1.0,uptrend,8/8
+MFG,usMFG.N,瑞穗金融,金融,大型银行,2026-08-31,10.64,3.7,29122935,1.0,uptrend,6/8
+TIGR,usTIGR.OQ,老虎证券,金融,投资银行/经纪服务,2026-08-31,5.04,3.7,12944253,1.0,uptrend,6/8
+TRMB,usTRMB.OQ,天宝导航公司,工业,工业机械/零部件,2026-08-31,59.94,3.7,232637090,1.0,uptrend,7/8
+UNP,usUNP.N,联合太平洋,工业,铁路运输,2026-08-31,300.67,3.7,720809038,1.0,uptrend,8/8
+ALRM,usALRM.OQ,"Alarm.Com Holdings, Inc.",科技,计算机软件：成品软件,2026-08-31,57.56,3.6,20966061,1.0,uptrend,7/8
+CHWY,usCHWY.N,"Chewy, Inc.",非必需消费,目录/专业分销,2026-08-31,23.8,3.6,151766303,1.0,uptrend,7/8
+DGX,usDGX.N,奎斯特诊疗,医疗保健,医疗专科,2026-08-31,240.3,3.6,193206741,1.0,uptrend,8/8
+HAS,usHAS.OQ,孩之宝,非必需消费,Recreational Games/Products/Toys,2026-08-31,94.1,3.6,140718775,1.0,uptrend,7/8
+INSW,usINSW.N,"International Seaways, Inc.",非必需消费,海上运输,2026-08-31,98.64,3.6,50809680,1.0,uptrend,8/8
+MEDP,usMEDP.OQ,"Medpace Holdings, Inc.",医疗保健,生物科技：商业物理与生物研究,2026-08-31,593.99,3.6,122782104,1.0,uptrend,7/8
+ETD,usETD.N,伊森艾伦室内装饰,非必需消费,Home Furnishings,2026-08-31,23.65,3.5,12808533,1.0,uptrend,8/8
+JOE,usJOE.N,圣乔,房地产,住宅建设,2026-08-31,66.1,3.5,13052183,1.0,uptrend,5/8
+ORC,usORC.N,"Orchid Island Capital, Inc.",房地产,房地产投资信托(REITs),2026-08-31,6.59,3.5,26277534,1.0,uptrend,5/8
+UNM,usUNM.N,尤纳姆集团,金融,Accident &Health Insurance,2026-08-31,93.22,3.5,116063522,1.0,uptrend,8/8
+EPAC,usEPAC.N,Enerpac Tool Group Corp.,科技,工业机械/零部件,2026-08-31,37.32,3.4,10817863,1.0,uptrend,8/8
+SBUX,usSBUX.OQ,星巴克,非必需消费,餐饮,2026-08-31,106.25,3.4,640494825,1.0,uptrend,7/8
+SOLV,usSOLV.N,Solventum Corporation,医疗保健,医疗/牙科器械,2026-08-31,91.06,3.4,102185769,1.0,uptrend,7/8
+ARES,usARES.N,Ares Management Corporation,金融,投资管理,2026-08-31,143.17,3.3,292733782,1.0,uptrend,7/8
+BNY,usBNY.N,纽约梅隆银行,金融,大型银行,2026-08-31,161.28,3.3,399293867,1.0,uptrend,8/8
+DOW,usDOW.N,陶氏化学,工业,Major Chemicals,2026-08-31,30.52,3.3,252855115,1.0,uptrend,5/8
+FLS,usFLS.N,福斯,工业,Fluid Controls,2026-08-31,79.09,3.3,115773137,1.0,uptrend,7/8
+SLG,usSLG.N,Sl Green Realty Corp,房地产,房地产投资信托(REITs),2026-08-31,55.98,3.3,46327489,1.0,uptrend,5/8
+FWONA,usFWONA.OQ,Liberty Media Corporation - Series A Liberty Formula One,工业,广播电视,2026-08-31,92.06,3.2,11432572,1.0,uptrend,5/8
+GIB,usGIB.N,Cgi Inc.,非必需消费,专业服务,2026-08-31,75.25,3.2,26733278,1.0,uptrend,6/8
+KFY,usKFY.N,光辉国际咨询顾问,非必需消费,Diversified Commercial Services,2026-08-31,85.55,3.2,26752988,1.0,uptrend,8/8
+KKR,usKKR.N,Kkr & Co. Inc.,金融,投资管理,2026-08-31,109.72,3.2,504155820,1.0,uptrend,7/8
+LYFT,usLYFT.OQ,"Lyft, Inc.",非必需消费,商业服务,2026-08-31,16.9,3.2,191607736,1.0,uptrend,6/8
+MA,usMA.N,万事达,非必需消费,商业服务,2026-08-31,589.31,3.2,1644628257,1.0,uptrend,8/8
+ZBH,usZBH.N,齐默巴奥米特控股,医疗保健,工业特种品,2026-08-31,100.04,3.2,210219758,1.0,uptrend,7/8
+APAM,usAPAM.N,Artisan Partners Asset Management Inc.,金融,投资管理,2026-08-31,42.57,3.1,32771083,1.0,uptrend,7/8
+CDW,usCDW.OQ,Cdw Corporation,非必需消费,目录/专业分销,2026-08-31,151.58,3.1,283122833,1.0,uptrend,7/8
+GNK,usGNK.N,根科船务贸易,非必需消费,海上运输,2026-08-31,26.23,3.1,15332879,1.0,uptrend,8/8
+IRON,usIRON.OQ,"Disc Medicine, Inc.",医疗保健,生物科技：制药,2026-08-31,78.65,3.1,30558923,1.0,uptrend,7/8
+KDP,usKDP.OQ,胡椒博士集团,必需消费,饮料（生产/分销）,2026-08-31,31.86,3.1,348517926,1.0,uptrend,5/8
+LILAK,usLILAK.OQ,Liberty Latin America Ltd.,Telecommunications,有线及其他付费电视,2026-08-31,8.55,3.1,11977957,1.0,uptrend,7/8
+SIBN,usSIBN.OQ,"Si-Bone, Inc.",医疗保健,医疗/牙科器械,2026-08-31,19.02,3.1,10048541,1.0,uptrend,6/8
+ABT,usABT.N,雅培,医疗保健,生物科技：制药,2026-08-31,110.36,3.0,864111494,1.0,uptrend,6/8
+HLN,usHLN.N,Haleon Plc,非必需消费,包装商品/化妆品,2026-08-31,10.03,3.0,73795019,1.0,uptrend,6/8
+INGR,usINGR.N,宜瑞安,必需消费,包装食品,2026-08-31,103.46,3.0,64841718,1.0,uptrend,5/8
+PAX,usPAX.OQ,Patria Investments Limited,金融,投资管理,2026-08-31,11.34,3.0,13309748,1.0,uptrend,5/8
+LPLA,usLPLA.OQ,LPL投资控股,金融,投资银行/经纪服务,2026-08-31,370.14,2.8,208420140,1.0,uptrend,7/8
+PSUS,usPSUS.N,"Pershing Square Usa, Ltd.",,,2026-08-31,39.4,2.8,13660010,1.0,uptrend,6/7
+TTC,usTTC.N,托罗配件,非必需消费,Tools/Hardware,2026-08-31,97.81,2.8,58684438,1.0,uptrend,7/8
+VOD,usVOD.OQ,沃达丰,Telecommunications,电信设备,2026-08-31,16.04,2.8,55172548,1.0,uptrend,6/8
+DX,usDX.N,德尼克斯投资,房地产,房地产投资信托(REITs),2026-08-31,12.89,2.7,61891864,1.0,uptrend,6/8
+FCFS,usFCFS.OQ,第一富金融服务,非必需消费,其他专卖店,2026-08-31,214.47,2.7,89998508,1.0,uptrend,6/8
+FLNG,usFLNG.N,Flex Lng Ltd.,非必需消费,海上运输,2026-08-31,31.66,2.7,11850314,1.0,uptrend,7/8
+IDT,usIDT.N,万威,Telecommunications,电信设备,2026-08-31,68.22,2.7,10585384,1.0,uptrend,7/8
+KMI,usKMI.N,金德尔摩根,公用事业,天然气分销,2026-08-31,32.24,2.7,335581086,1.0,uptrend,6/8
+ALC,usALC.N,爱尔康,医疗保健,Ophthalmic Goods,2026-08-31,72.06,2.6,120676862,1.0,uptrend,5/8
+BLK,usBLK.N,贝莱德,金融,投资银行/经纪服务,2026-08-31,1155.61,2.6,663583184,1.0,uptrend,8/8
+GSL,usGSL.N,环球租船,非必需消费,海上运输,2026-08-31,44.55,2.6,16788325,1.0,uptrend,7/8
+SMTI,usSMTI.OQ,Sanara Medtech Inc.,医疗保健,工业特种品,2026-08-31,34.88,2.6,11319988,1.0,uptrend,7/8
+WDS,usWDS.N,伍德赛德能源集团,能源,油气生产,2026-08-31,23.28,2.6,11291301,1.0,uptrend,8/8
+EPD,usEPD.N,Enterprise Products Partners L.P.,公用事业,天然气分销,2026-08-31,38.82,2.5,112735161,1.0,uptrend,7/8
+HASI,usHASI.N,"Ha Sustainable Infrastructure Capital, Inc.",金融,Finance/Investors Services,2026-08-31,39.55,2.5,37045073,1.0,uptrend,5/8
+UL,usUL.N,联合利华(英国),非必需消费,包装商品/化妆品,2026-08-31,64.85,2.5,218766817,1.0,uptrend,7/8
+BSY,usBSY.OQ,"Bentley Systems, Incorporated",科技,计算机软件：成品软件,2026-08-31,36.75,2.4,89275972,1.0,uptrend,7/8
+RRC,usRRC.N,山脉资源,能源,油气生产,2026-08-31,41.32,2.4,88331523,1.0,uptrend,7/8
+CP,usCP.N,加拿大太平洋铁路,工业,铁路运输,2026-08-31,92.69,2.3,225592237,1.0,uptrend,6/8
+FWONK,usFWONK.OQ,Liberty Media Corporation - Series C Liberty Formula One,工业,广播电视,2026-08-31,99.95,2.3,197908260,1.0,uptrend,5/8
+HNI,usHNI.N,Hni Corporation,非必需消费,Office Equipment/Supplies/Services,2026-08-31,48.43,2.3,24599867,1.0,uptrend,7/8
+QGEN,usQGEN.N,快而精医药,医疗保健,生物科技：生物制品,2026-08-31,43.29,2.3,145837120,1.0,uptrend,7/8
+ASH,usASH.N,Ashland Inc.,非必需消费,Specialty Chemicals,2026-08-31,73.33,2.2,46808544,1.0,uptrend,6/8
+ATAI,usATAI.OQ,Ataibeckley Inc.,医疗保健,生物科技：制药,2026-08-31,7.34,2.2,45732973,1.0,uptrend,7/8
+GEHC,usGEHC.OQ,GE医疗,医疗保健,Medical Electronics,2026-08-31,71.23,2.2,195332317,1.0,uptrend,5/8
+NSC,usNSC.N,诺福克南方,工业,铁路运输,2026-08-31,342.79,2.2,397971668,1.0,uptrend,7/8
+SR,usSR.N,Spire Inc.,公用事业,Oil/Gas Transmission,2026-08-31,81.84,2.2,39547170,1.0,uptrend,5/8
+SUZ,usSUZ.N,Suzano Sa,基础材料,造纸,2026-08-31,8.72,2.2,32641933,1.0,uptrend,5/8
+BBVA,usBBVA.N,西班牙毕尔巴鄂银行,金融,商业银行,2026-08-31,28.96,2.1,47822238,1.0,uptrend,7/8
+DDS,usDDS.N,狄乐百货,非必需消费,Department/Specialty Retail Stores,2026-08-31,625.97,2.1,99316626,1.0,uptrend,7/8
+KO,usKO.N,可口可乐,必需消费,饮料（生产/分销）,2026-08-31,88.67,2.1,1247225731,1.0,uptrend,8/8
+SE,usSE.N,冬海集团,非必需消费,Other Consumer Services,2026-08-31,113.48,2.1,584716722,1.0,uptrend,5/8
+ZD,usZD.OQ,"Ziff Davis, Inc.",Telecommunications,电信设备,2026-08-31,55.15,2.1,33168848,1.0,uptrend,6/8
+AGNC,usAGNC.OQ,美国资本代理公司,房地产,房地产投资信托(REITs),2026-08-31,10.73,2.0,162710575,1.0,uptrend,5/8
+BMY,usBMY.N,施贵宝,医疗保健,生物科技：制药,2026-08-31,66.81,2.0,626228014,1.0,uptrend,7/8
+EQIX,usEQIX.OQ,易昆尼克斯,房地产,房地产投资信托(REITs),2026-08-31,1046.72,2.0,613770190,1.0,uptrend,5/8
+KGS,usKGS.N,"Kodiak Gas Services, Inc.",公用事业,天然气分销,2026-08-31,58.77,2.0,97944129,1.0,uptrend,5/8
+MELI,usMELI.OQ,美客多,非必需消费,商业服务,2026-08-31,1936.2,2.0,928344196,1.0,uptrend,6/8
+RNR,usRNR.N,Renaissancere Holdings Ltd.,金融,财产意外险,2026-08-31,327.64,2.0,78057968,1.0,uptrend,6/8
+STNG,usSTNG.N,Scorpio Tankers Inc.,非必需消费,海上运输,2026-08-31,78.86,2.0,56435219,1.0,uptrend,5/8
+FSUN,usFSUN.OQ,Firstsun Capital Bancorp,金融,大型银行,2026-08-31,40.01,1.9,10127920,1.0,uptrend,6/8
+HCA,usHCA.N,HCA医疗,医疗保健,医院/护理管理,2026-08-31,414.45,1.9,488957469,1.0,uptrend,6/8
+STN,usSTN.N,斯坦泰克,非必需消费,Military/Government/Technical,2026-08-31,73.0,1.9,28563562,1.0,uptrend,5/8
+TFX,usTFX.N,泰利福,医疗保健,医疗/牙科器械,2026-08-31,142.05,1.9,85952409,1.0,uptrend,7/8
+ESNT,usESNT.N,Essent Group Ltd.,金融,财产意外险,2026-08-31,67.56,1.8,39827427,1.0,uptrend,7/8
+NTRS,usNTRS.OQ,北方信托,金融,大型银行,2026-08-31,185.56,1.8,188974527,1.0,uptrend,6/8
+WEX,usWEX.N,Wex Inc.,非必需消费,商业服务,2026-08-31,190.58,1.8,108792641,1.0,uptrend,6/8
+EE,usEE.N,"Excelerate Energy, Inc.",公用事业,Oil/Gas Transmission,2026-08-31,39.62,1.7,14598227,1.0,uptrend,5/8
+MZTI,usMZTI.OQ,The Marzetti Company,必需消费,包装食品,2026-08-31,112.65,1.7,38826405,1.0,uptrend,6/8
+VOYA,usVOYA.N,Voya金融,金融,人寿保险,2026-08-31,101.32,1.7,98450082,1.0,uptrend,8/8
+AMT,usAMT.N,美国电塔,房地产,房地产投资信托(REITs),2026-08-31,175.7,1.6,367528848,1.0,uptrend,5/8
+BKH,usBKH.N,黑山,公用事业,电力公用事业,2026-08-31,71.68,1.6,58048370,1.0,uptrend,5/8
+CSX,usCSX.OQ,CSX运输,工业,铁路运输,2026-08-31,50.51,1.6,466508922,1.0,uptrend,5/8
+OGN,usOGN.N,Organon & Co.,医疗保健,生物科技：制药,2026-08-31,13.76,1.6,40248843,1.0,uptrend,8/8
+CMG,usCMG.N,奇波雷墨西哥烧烤,非必需消费,餐饮,2026-08-31,38.03,1.5,632242190,1.0,uptrend,6/8
+EQT,usEQT.N,EQT能源,能源,油气生产,2026-08-31,54.18,1.5,333517894,1.0,uptrend,7/8
+GEO,usGEO.N,GEO惩教集团,非必需消费,住宅建设,2026-08-31,31.81,1.5,68712928,1.0,uptrend,7/8
+RELX,usRELX.N,Relx Plc,非必需消费,商业服务,2026-08-31,36.43,1.5,68575532,1.0,uptrend,5/8
+SBH,usSBH.N,莎莉美容控股公司,非必需消费,其他专卖店,2026-08-31,16.38,1.5,21633304,1.0,uptrend,6/8
+CLH,usCLH.N,"Clean Harbors, Inc.",工业,Environmental Services,2026-08-31,315.25,1.4,137466610,1.0,uptrend,5/8
+CRNX,usCRNX.OQ,"Crinetics Pharmaceuticals, Inc.",医疗保健,生物科技：制药,2026-08-31,84.95,1.4,217037951,1.0,uptrend,7/8
+EAT,usEAT.N,布林克国际,非必需消费,餐饮,2026-08-31,228.5,1.4,238622949,1.0,uptrend,5/8
+EFC,usEFC.N,Ellington投资,金融,房地产,2026-08-31,13.38,1.4,14273870,1.0,uptrend,5/8
+FANG,usFANG.OQ,"Diamondback Energy, Inc.",能源,油气生产,2026-08-31,200.48,1.4,370660316,1.0,uptrend,8/8
+BCPC,usBCPC.OQ,拜切,工业,Major Chemicals,2026-08-31,175.89,1.3,29461283,1.0,uptrend,6/8
+BL,usBL.OQ,"Blackline, Inc.",科技,计算机软件：成品软件,2026-08-31,33.22,1.3,37500143,1.0,uptrend,6/8
+CERT,usCERT.OQ,"Certara, Inc.",科技,计算机软件：成品软件,2026-08-31,8.29,1.3,25272136,1.0,uptrend,6/8
+CIGI,usCIGI.OQ,高力国际集团,金融,房地产,2026-08-31,100.66,1.3,21581862,1.0,uptrend,5/8
+ECL,usECL.N,艺康集团,非必需消费,包装商品/化妆品,2026-08-31,283.2,1.3,399330015,1.0,uptrend,6/8
+NWE,usNWE.OQ,"Northwestern Energy Group, Inc.",公用事业,Power Generation,2026-08-31,69.16,1.3,25919052,1.0,uptrend,5/8
+SHEL,usSHEL.N,壳牌,能源,油气生产,2026-08-31,91.45,1.3,507211326,1.0,uptrend,8/8
+SU,usSU.N,森科能源,能源,综合石油公司,2026-08-31,66.82,1.3,286066211,1.0,uptrend,7/8
+TTE,usTTE.N,道达尔,能源,油气生产,2026-08-31,88.31,1.3,122257700,1.0,uptrend,7/7
+ACT,usACT.OQ,"Enact Holdings, Inc.",金融,专业保险,2026-08-31,48.2,1.2,15962211,1.0,uptrend,6/8
+GNW,usGNW.N,通用金融,金融,人寿保险,2026-08-31,9.94,1.2,24936568,1.0,uptrend,6/8
+ING,usING.N,荷兰国际,金融,商业银行,2026-08-31,35.32,1.2,69672039,1.0,uptrend,6/8
+MUFG,usMUFG.N,三菱日联金融,金融,商业银行,2026-08-31,22.75,1.2,57828390,1.0,uptrend,6/8
+PK,usPK.N,Park Hotels & Resorts Inc.,非必需消费,酒店/度假村,2026-08-31,15.3,1.2,62779290,1.0,uptrend,6/8
+AVY,usAVY.N,艾利丹尼森,非必需消费,容器/包装,2026-08-31,174.11,1.1,184849094,1.0,uptrend,6/8
+CHEF,usCHEF.OQ,"The Chefs' Warehouse, Inc.",非必需消费,Food Distributors,2026-08-31,112.47,1.1,71125422,1.0,uptrend,7/8
+KBR,usKBR.N,KBR科技,工业,Military/Government/Technical,2026-08-31,37.5,1.1,44824760,1.0,uptrend,5/8
+JPM,usJPM.N,摩根大通,金融,大型银行,2026-08-31,356.02,1.0,2014375362,1.0,uptrend,5/8
+OTTR,usOTTR.OQ,奥特泰尔,公用事业,电力公用事业,2026-08-31,90.47,1.0,20162129,1.0,uptrend,5/8
+WOR,usWOR.N,"Worthington Enterprises, Inc.",工业,Steel/Iron Ore,2026-08-31,57.44,1.0,11979100,1.0,uptrend,5/8
+YPF,usYPF.N,阿根廷YPF,能源,综合石油公司,2026-08-31,51.58,1.0,55031056,1.0,uptrend,5/8
+CNX,usCNX.N,康索尔能源,能源,油气生产,2026-08-31,36.38,0.9,46418929,1.0,uptrend,6/8
+EMBJ,usEMBJ.N,巴西航空工业,工业,Aerospace,2026-08-31,71.56,0.9,100943582,1.0,uptrend,5/8
+JOYY,usJOYY.OQ,欢聚,科技,电子数据处理服务,2026-08-31,74.64,0.9,25738440,1.0,uptrend,8/8
+SW,usSW.N,Smurfit Westrock Plc,非必需消费,容器/包装,2026-08-31,46.9,0.9,210296949,1.0,uptrend,5/8
+BRO,usBRO.N,布朗保险经纪,金融,专业保险,2026-08-31,72.17,0.8,124502349,1.0,uptrend,6/8
+ECPG,usECPG.OQ,安可资本,金融,Finance Companies,2026-08-31,97.01,0.8,35612515,1.0,uptrend,5/8
+MTG,usMTG.N,Mgic Investment Corporation,金融,财产意外险,2026-08-31,30.65,0.8,47289188,1.0,uptrend,7/8
+NU,usNU.N,Nu Holdings Ltd.,金融,金融：消费服务,2026-08-31,14.55,0.8,1014412590,1.0,uptrend,6/8
+SAN,usSAN.N,桑坦德银行,金融,商业银行,2026-08-31,14.56,0.8,295376406,1.0,uptrend,5/8
+UHS,usUHS.N,环球健康,医疗保健,医院/护理管理,2026-08-31,170.33,0.8,109406780,1.0,uptrend,5/8
+APGE,usAPGE.OQ,"Apogee Therapeutics, Inc.",医疗保健,生物科技：生物制品,2026-08-31,135.08,0.7,175038774,1.0,uptrend,7/8
+GFL,usGFL.N,"Gfl Environmental Inc. Subordinate Voting Shares, No Par Value",公用事业,Environmental Services,2026-08-31,42.29,0.7,73270785,1.0,uptrend,8/8
+LLYVK,usLLYVK.OQ,"Liberty Live Holdings, Inc. - Series C Liberty Live Group",非必需消费,Services-Misc. Amusement & Recreation,2026-08-31,103.52,0.7,27558744,1.0,uptrend,7/8
+MKTX,usMKTX.OQ,"Marketaxess Holdings, Inc.",金融,投资银行/经纪服务,2026-08-31,162.63,0.7,172091551,1.0,uptrend,7/8
+BZH,usBZH.N,贝哲房屋,非必需消费,住宅建设,2026-08-31,33.18,0.6,32429917,1.0,uptrend,5/8
+E,usE.N,埃尼石油,能源,油气生产,2026-08-31,54.8,0.6,19177978,1.0,uptrend,6/8
+EMN,usEMN.N,伊士曼化工,工业,Major Chemicals,2026-08-31,72.44,0.6,65410721,1.0,uptrend,5/8
+FBRX,usFBRX.OQ,Forte Biosciences Inc,医疗保健,生物科技：制药,2026-08-26,76.99,0.6,120735408,1.0,uptrend,8/8
+HESM,usHESM.N,Hess Midstream Lp,能源,油气生产,2026-08-31,40.21,0.6,52877191,1.0,uptrend,7/8
+ITGR,usITGR.N,Integer Holdings Corporation,医疗保健,生物科技：电子医疗设备,2026-08-31,125.25,0.6,131981701,1.0,uptrend,7/8
+MDLZ,usMDLZ.OQ,亿滋,必需消费,包装食品,2026-08-31,62.07,0.6,441650663,1.0,uptrend,5/8
+NLY,usNLY.N,Annaly Capital Management Inc.,房地产,房地产投资信托(REITs),2026-08-31,22.92,0.6,141456580,1.0,uptrend,6/8
+SFL,usSFL.N,Sfl Corporation Ltd,非必需消费,海上运输,2026-08-31,12.45,0.6,14921717,1.0,uptrend,8/8
+ATKR,usATKR.N,Atkore Inc.,其他,工业机械/零部件,2026-08-31,93.69,0.5,98610478,1.0,uptrend,7/8
+CEG,usCEG.OQ,星座能源,公用事业,电力公用事业,2026-08-31,274.77,0.5,710252817,1.0,uptrend,6/8
+CORT,usCORT.OQ,Corcept医疗,医疗保健,生物科技：制药,2026-08-31,113.35,0.5,95665574,1.0,uptrend,6/8
+DBRG,usDBRG.N,"Digitalbridge Group, Inc.",房地产,房地产投资信托(REITs),2026-08-31,15.91,0.5,63459269,1.0,uptrend,7/8
+LXP,usLXP.N,LXP Industrial Trust,房地产,房地产投资信托(REITs),2026-08-31,60.71,0.5,39010171,1.0,uptrend,5/8
+SAFT,usSAFT.OQ,"Safety Insurance Group, Inc.",金融,财产意外险,2026-08-31,103.74,0.5,15813309,1.0,uptrend,7/8
+SLAB,usSLAB.OQ,芯科实验室,科技,半导体,2026-08-31,219.05,0.5,55817251,1.0,uptrend,8/8
+ULTA,usULTA.OQ,犹他美容,非必需消费,其他专卖店,2026-08-31,537.1,0.5,365495950,1.0,uptrend,6/8
+ABR,usABR.N,阿伯房地产信托,房地产,房地产投资信托(REITs),2026-08-31,5.01,0.4,18496242,1.0,uptrend,5/8
+AFG,usAFG.N,美国金融,金融,财产意外险,2026-08-31,142.55,0.4,50936047,1.0,uptrend,5/8
+AXTA,usAXTA.N,艾仕得涂料系统,非必需消费,Paints/Coatings,2026-08-31,36.42,0.4,56843334,1.0,uptrend,5/8
+EC,usEC.N,哥伦比亚国家石油,能源,油气生产,2026-08-31,16.67,0.4,30673642,1.0,uptrend,5/8
+IMAX,usIMAX.N,Imax Corporation,非必需消费,工业机械/零部件,2026-08-31,51.2,0.4,59741570,1.0,uptrend,5/8
+NFG,usNFG.N,National Fuel Gas Company,公用事业,Oil/Gas Transmission,2026-08-31,83.06,0.4,41201691,1.0,uptrend,6/8
+GBTG,usGBTG.N,"Global Business Travel Group, Inc.",非必需消费,Transportation Services,2026-08-31,9.46,0.3,11696353,1.0,uptrend,7/8
+IBN,usIBN.N,印度工业信贷投资银行,金融,商业银行,2026-08-31,30.36,0.3,153584123,1.0,uptrend,7/8
+KEYS,usKEYS.N,是德科技,工业,工业机械/零部件,2026-08-31,322.7,0.3,492154893,1.0,uptrend,5/8
+LLYVA,usLLYVA.OQ,"Liberty Live Holdings, Inc. - Series A Liberty Live Group",非必需消费,Services-Misc. Amusement & Recreation,2026-08-31,99.48,0.3,15066247,1.0,uptrend,5/8
+MC,usMC.N,Moelis & Company,金融,投资管理,2026-08-31,68.07,0.3,49642750,1.0,uptrend,7/8
+MHO,usMHO.N,MI 家居,非必需消费,住宅建设,2026-08-31,148.81,0.3,28355399,1.0,uptrend,5/8
+MTCH,usMTCH.OQ,"Match Group, Inc.",科技,计算机软件：编程与数据处理,2026-08-31,40.65,0.3,132810950,1.0,uptrend,6/8
+RJF,usRJF.N,瑞杰金融,金融,投资银行/经纪服务,2026-08-31,178.17,0.3,177112357,1.0,uptrend,7/8
+TECH,usTECH.OQ,Bio-Techne Corp,医疗保健,生物科技：生物制品,2026-08-31,72.31,0.3,187577794,1.0,uptrend,7/8
+AES,usAES.N,爱依斯电力,工业,电力公用事业,2026-08-31,14.74,0.2,107443844,1.0,uptrend,8/8
+AMP,usAMP.N,阿莫斯莱斯金融,金融,投资管理,2026-08-31,553.11,0.2,214339100,1.0,uptrend,5/8
+UTZ,usUTZ.N,Utz Brands Inc,必需消费,包装食品,2026-08-31,14.2,0.2,32477617,1.0,uptrend,8/8
+CHD,usCHD.N,丘奇&德怀特,非必需消费,包装商品/化妆品,2026-08-31,99.78,0.1,174873325,1.0,uptrend,5/8
+FHI,usFHI.N,"Federated Hermes, Inc.",金融,投资管理,2026-08-31,63.65,0.1,33508259,1.0,uptrend,6/8
+GH,usGH.OQ,"Guardant Health, Inc.",医疗保健,医疗专科,2026-08-31,159.02,0.1,336959367,1.0,uptrend,5/8
+ACA,usACA.N,"Arcosa, Inc.",工业,Metal Fabrications,2026-08-31,145.3,-0.0,82973665,1.0,uptrend,7/8
+ICUI,usICUI.OQ,ICU医疗,医疗保健,医疗/牙科器械,2026-08-31,172.95,0.0,51397022,1.0,uptrend,5/8
+PEN,usPEN.N,"Penumbra, Inc.",医疗保健,医疗/牙科器械,2026-08-31,323.1,0.0,88195570,1.0,uptrend,5/8
+ROG,usROG.N,罗杰斯,工业,Major Chemicals,2026-08-31,125.57,-0.0,26631635,1.0,uptrend,5/8
+STE,usSTE.N,思泰瑞医疗,医疗保健,工业特种品,2026-08-31,232.64,0.0,162221430,1.0,uptrend,5/8
+TXNM,usTXNM.N,"Txnm Energy, Inc.",公用事业,电力公用事业,2026-08-31,57.61,0.0,46410691,1.0,uptrend,5/8
+ZG,usZG.OQ,"Zillow Group, Inc.",非必需消费,商业服务,2026-08-31,35.79,-0.0,42101580,1.0,uptrend,5/8
+JLL,usJLL.N,仲量联行,金融,房地产,2026-08-31,365.87,-0.1,112897768,1.0,uptrend,6/8
+KFRC,usKFRC.N,K力,非必需消费,专业服务,2026-08-31,57.58,-0.1,13840469,1.0,uptrend,5/8
+MD,usMD.N,"Pediatrix Medical Group, Inc.",医疗保健,医院/护理管理,2026-08-31,26.23,-0.1,22199560,1.0,uptrend,6/8
+SCSC,usSCSC.OQ,"Scansource, Inc.",科技,零售：电脑软件及外设,2026-08-31,57.09,-0.1,18376031,1.0,uptrend,5/8
+XYZ,usXYZ.N,"Block, Inc.",科技,计算机软件：成品软件,2026-08-31,82.02,-0.1,398616980,1.0,uptrend,7/8
+CCEP,usCCEP.OQ,可口可乐欧洲太平洋,必需消费,饮料（生产/分销）,2026-08-31,108.02,-0.2,180828236,1.0,uptrend,5/8
+GBDC,usGBDC.OQ,"Golub Capital Bdc, Inc.",金融,金融：消费服务,2026-08-31,13.16,-0.2,14866984,1.0,uptrend,7/8
+TD,usTD.N,多伦多道明银行,金融,商业银行,2026-08-31,120.91,-0.2,248169651,1.0,uptrend,5/8
+RITM,usRITM.N,Rithm Capital Corp.,房地产,房地产投资信托(REITs),2026-08-31,10.03,-0.3,44062850,1.0,uptrend,5/8
+TNET,usTNET.N,"Trinet Group, Inc.",非必需消费,商业服务,2026-08-31,70.29,-0.3,24223290,1.0,uptrend,6/8
+CAH,usCAH.N,卡地纳健康,医疗保健,Other Pharmaceuticals,2026-08-31,234.62,-0.4,434960533,1.0,uptrend,5/8
+JAZZ,usJAZZ.OQ,爵士制药,医疗保健,生物科技：制药,2026-08-31,250.68,-0.4,279357608,1.0,uptrend,5/8
+VTOL,usVTOL.N,"Bristow Group, Inc.",非必需消费,Transportation Services,2026-08-31,45.39,-0.4,11309289,1.0,uptrend,6/8
+ATAT,usATAT.OQ,亚朵集团,非必需消费,酒店/度假村,2026-08-31,34.98,-0.5,37934531,1.0,uptrend,6/8
+BOW,usBOW.N,Bowhead Specialty Holdings Inc.,金融,财产意外险,2026-08-31,33.52,-0.5,15564052,1.0,uptrend,6/8
+EOG,usEOG.N,EOG能源,能源,油气生产,2026-08-31,144.96,-0.5,417785687,1.0,uptrend,5/8
+NMIH,usNMIH.OQ,Nmi Holdings Inc,金融,财产意外险,2026-08-31,44.35,-0.5,18573045,1.0,uptrend,7/8
+NSP,usNSP.N,"Insperity, Inc.",非必需消费,专业服务,2026-08-31,53.35,-0.5,18728405,1.0,uptrend,5/8
+BEKE,usBEKE.N,贝壳,金融,房地产,2026-08-31,17.19,-0.6,72425849,1.0,uptrend,6/8
+NWL,usNWL.OQ,纽威,工业,Plastic Products,2026-08-31,6.25,-0.6,42489442,1.0,uptrend,5/8
+STC,usSTC.N,Stewart Information Services Corporation,金融,专业保险,2026-08-31,68.65,-0.6,12324293,1.0,uptrend,6/8
+SYF,usSYF.N,Synchrony Financial,金融,金融：消费服务,2026-08-31,77.08,-0.6,254666994,1.0,uptrend,7/8
+DG,usDG.N,美国达乐公司,非必需消费,Department/Specialty Retail Stores,2026-08-31,126.75,-0.8,295575058,1.0,uptrend,5/8
+FBNC,usFBNC.OQ,第一银行(卡罗莱纳州),金融,大型银行,2026-08-31,63.43,-0.8,11480585,1.0,uptrend,5/8
+BAC,usBAC.N,美国银行,金融,大型银行,2026-08-31,61.94,-0.9,1813573067,1.0,uptrend,6/8
+CNO,usCNO.N,康塞科,金融,Accident &Health Insurance,2026-08-31,54.79,-0.9,37823432,1.0,uptrend,7/8
+WTW,usWTW.OQ,韦莱韬悦,金融,专业保险,2026-08-31,338.55,-0.9,169278103,1.0,uptrend,6/8
+LYV,usLYV.N,"Live Nation Entertainment, Inc.",非必需消费,Services-Misc. Amusement & Recreation,2026-08-31,179.89,-1.0,316311090,1.0,uptrend,5/8
+BCH,usBCH.N,智利银行,金融,商业银行,2026-08-31,41.11,-1.1,11817713,1.0,uptrend,6/8
+WFC,usWFC.N,富国银行,金融,大型银行,2026-08-31,86.39,-1.1,1012180725,1.0,uptrend,6/8
+KWR,usKWR.N,奎克化学,工业,Major Chemicals,2026-08-31,165.8,-1.2,25542462,1.0,uptrend,5/8
+WLY,usWLY.N,约翰威立-A,非必需消费,Books,2026-08-31,52.39,-1.3,20390891,1.0,uptrend,5/8
+ALV,usALV.N,奥托立夫,非必需消费,Auto Parts:O.E.M.,2026-08-31,121.21,-1.4,62293013,1.0,uptrend,5/8
+AXON,usAXON.OQ,"Axon Enterprise, Inc.",工业,Ordnance And Accessories,2026-08-31,566.56,-1.6,542991433,1.0,uptrend,5/8
+MRSH,usMRSH.N,威达信,金融,专业保险,2026-08-31,189.8,-1.6,360207328,1.0,uptrend,5/8
+ZM,usZM.OQ,Zoom通讯,科技,计算机软件：编程与数据处理,2026-08-31,96.68,-1.6,345489661,1.0,uptrend,5/8
+BBT,usBBT.N,Beacon Financial Corporation,金融,Banks,2026-08-31,31.05,-1.7,22878605,1.0,uptrend,5/8
+IEX,usIEX.N,Idex Corporation,工业,Fluid Controls,2026-08-31,228.64,-1.7,129066551,1.0,uptrend,5/8
+ADUS,usADUS.OQ,爱德斯,医疗保健,医疗/护理服务,2026-08-31,114.67,-1.8,23866984,1.0,uptrend,5/8
+CBRE,usCBRE.N,世邦魏理仕,金融,房地产,2026-08-31,145.81,-1.8,202969876,1.0,uptrend,5/8
+OMF,usOMF.N,"Onemain Holdings, Inc.",金融,金融：消费服务,2026-08-31,62.46,-1.8,56652224,1.0,uptrend,5/8
+BP,usBP.N,英国石油,能源,综合石油公司,2026-08-31,42.87,-2.0,377449869,1.0,uptrend,6/8
+DLTR,usDLTR.OQ,美元树公司,非必需消费,Department/Specialty Retail Stores,2026-08-31,126.59,-2.1,304024797,1.0,uptrend,6/8
+PGY,usPGY.OQ,Pagaya Technologies Ltd.,金融,金融：消费服务,2026-08-31,21.74,-2.2,51789407,1.0,uptrend,6/8
+EDU,usEDU.N,新东方,房地产,Other Consumer Services,2026-08-31,57.7,-2.3,42706375,1.0,uptrend,7/8
+ORKA,usORKA.OQ,"Oruka Therapeutics, Inc.",医疗保健,生物科技：体外/体内诊断,2026-08-31,92.62,-2.3,83267681,1.0,uptrend,5/8
+VRTS,usVRTS.N,维德思投资,金融,投资管理,2026-08-31,165.5,-2.3,18822904,1.0,uptrend,6/8
+NWBI,usNWBI.OQ,西北银行,金融,大型银行,2026-08-31,15.29,-2.5,12163088,1.0,uptrend,5/8
+CTRN,usCTRN.OQ,"Citi Trends, Inc.",非必需消费,服装/鞋/配饰零售,2026-08-31,68.07,-2.6,11442997,1.0,uptrend,5/8
+MSA,usMSA.N,Msa Safety Incorporated,医疗保健,工业特种品,2026-08-31,186.77,-2.7,51385799,1.0,uptrend,5/8
+NBIS,usNBIS.OQ,Nebius集团,科技,计算机软件：编程与数据处理,2026-08-31,206.32,-2.9,5448464681,1.0,uptrend,5/8
+NEOG,usNEOG.OQ,纽勤,医疗保健,生物科技：体外/体内诊断,2026-08-31,11.56,-2.9,20136556,1.0,uptrend,6/8
+VYX,usVYX.N,Ncr Voyix Corporation,其他,Office Equipment/Supplies/Services,2026-08-31,8.38,-3.0,20787390,1.0,uptrend,5/8
+BEN,usBEN.N,富兰克林资源,金融,投资管理,2026-08-31,34.15,-3.1,110815656,1.0,uptrend,6/8
+DLO,usDLO.OQ,Dlocal Limited,非必需消费,商业服务,2026-08-31,14.83,-3.1,38208577,1.0,uptrend,6/8
+GSAT,usGSAT.OQ,全球星,非必需消费,电信设备,2026-08-31,81.55,-3.1,61954333,1.0,uptrend,5/8
+AMG,usAMG.N,Affiliated Managers,金融,投资管理,2026-08-31,368.19,-3.3,91095602,1.0,uptrend,6/8
+VRSN,usVRSN.OQ,威瑞信,科技,电子数据处理服务,2026-08-31,288.28,-3.3,203737263,1.0,uptrend,6/8
+AEG,usAEG.N,荷兰全球保险,金融,人寿保险,2026-08-31,9.14,-3.4,40645069,1.0,uptrend,5/8
+AMH,usAMH.N,American Homes 4 Rent,房地产,房地产投资信托(REITs),2026-08-31,33.3,-3.5,68070945,1.0,uptrend,5/8
+CNMD,usCNMD.N,Conmed Corporation,医疗保健,生物科技：电子医疗设备,2026-08-31,49.85,-3.9,17270461,1.0,uptrend,5/8
+SLM,usSLM.OQ,学贷美,金融,金融：消费服务,2026-08-31,25.97,-4.2,49511357,1.0,uptrend,5/8
+PFG,usPFG.OQ,信安金融,金融,Accident &Health Insurance,2026-08-31,110.16,-4.3,111829103,1.0,uptrend,5/8
+CBRL,usCBRL.OQ,CB乡村店,非必需消费,餐饮,2026-08-31,55.24,-4.4,41513392,1.0,uptrend,5/8
+WSM,usWSM.N,"Williams-Sonoma, Inc.",非必需消费,Home Furnishings,2026-08-31,228.25,-4.8,264792276,1.0,uptrend,5/8
+NVT,usNVT.N,Nvent Electric Plc,工业,工业机械/零部件,2026-08-31,150.75,-5.4,376929262,1.0,uptrend,5/8
+DCO,usDCO.N,杜科蒙,工业,Military/Government/Technical,2026-08-31,171.42,-6.2,42733854,1.0,uptrend,5/8
+HRI,usHRI.N,Herc Holdings Inc.,工业,Misc Corporate Leasing Services,2026-08-31,152.34,-7.1,57749917,1.0,uptrend,5/8
+SXI,usSXI.N,Standex International Corporation,工业,工业机械/零部件,2026-08-31,289.66,-7.1,36021395,1.0,uptrend,5/8
+PYPL,usPYPL.OQ,Paypal,工业,Diversified Commercial Services,2026-08-31,52.67,-9.0,687751636,1.0,uptrend,5/8
+IESC,usIESC.OQ,"Ies Holdings, Inc.",工业,Engineering & Construction,2026-08-31,303.0,-16.4,63667186,1.0,uptrend,5/8

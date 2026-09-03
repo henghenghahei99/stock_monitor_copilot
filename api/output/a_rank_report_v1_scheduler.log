@@ -1,0 +1,2 @@
+nohup: ignoring input
+[2026-09-03 13:48:43] A_rank_report_v1 调度器启动. 规则: 每个交易日 15:35 跑当日报告 + 前一交易日 delta; 非交易日自动跳过.
