@@ -26,7 +26,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import industry_score as isc  # noqa: E402
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # api/
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # v1/
 OUTPUT_DIR = os.path.join(ROOT_DIR, "output")
 
 

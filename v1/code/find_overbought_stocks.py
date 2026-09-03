@@ -103,9 +103,9 @@ MARKET_NAMES = {"us": "美股", "cn": "A股", "hk": "港股"}
 VOLUME_MULT = {"us": 1.0, "cn": 100.0, "hk": 1.0}
 # 目录结构: code/(代码) data/(缓存) output/(结果)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))   # code/
-ROOT_DIR = os.path.dirname(BASE_DIR)                    # api/
-DATA_DIR = os.path.join(ROOT_DIR, "data")               # api/data/
-OUTPUT_DIR = os.path.join(ROOT_DIR, "output")           # api/output/
+ROOT_DIR = os.path.dirname(BASE_DIR)                    # v1/
+DATA_DIR = os.path.join(ROOT_DIR, "data")               # v1/data/
+OUTPUT_DIR = os.path.join(ROOT_DIR, "output")           # v1/output/
 os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

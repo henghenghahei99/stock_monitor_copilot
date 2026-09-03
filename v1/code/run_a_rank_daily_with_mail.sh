@@ -11,8 +11,8 @@ A_rank_report_v1 日报全自动一键: 跑当日榜单 -> 与前一日对比(de
 """
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # .../api/code
-API_DIR="$(dirname "$SCRIPT_DIR")"                            # .../api
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # .../v1/code
+API_DIR="$(dirname "$SCRIPT_DIR")"                            # .../v1
 cd "$API_DIR"
 
 PY="${PY:-/home/sld/miniconda3/envs/py12/bin/python}"

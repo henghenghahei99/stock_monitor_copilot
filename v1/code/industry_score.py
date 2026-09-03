@@ -22,7 +22,7 @@ import sys
 import pandas as pd
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))     # code/
-ROOT_DIR = os.path.dirname(BASE_DIR)                      # api/
+ROOT_DIR = os.path.dirname(BASE_DIR)                      # v1/
 OUTPUT_DIR = os.path.join(ROOT_DIR, "output")
 
 

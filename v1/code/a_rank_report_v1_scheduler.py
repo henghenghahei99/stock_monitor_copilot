@@ -30,7 +30,7 @@ from datetime import datetime, time as dtime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-ROOT = Path(__file__).resolve().parents[1]  # api/
+ROOT = Path(__file__).resolve().parents[1]  # v1/
 sys.path.insert(0, str(ROOT / "code"))
 import cn_trading_days as ctd  # noqa: E402
 

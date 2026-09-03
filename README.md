@@ -4,7 +4,7 @@ A股板块趋势扫描与日报（策略 **A_rank_report_v1**）：每天收盘�
 
 ## 目录
 
-- `api/code/` — 全部源码
+- `v1/code/` — 全部源码
   - `scan_rank.py` / `run_strategy.py` / `find_uptrend.py` — 扫描与 8 条件打分
   - `industry_score.py` — 行业加权汇总 / A_rank 两步排名
   - `a_rank_delta.py` — 前一交易日排名升降对比
@@ -29,11 +29,11 @@ A股板块趋势扫描与日报（策略 **A_rank_report_v1**）：每天收盘�
 # 邮件配置(本地, 勿提交): ~/.mail_sender.json
 #   {"host":"smtp.163.com","port":465,"user":"xxx@163.com","pass":"授权码","to":"收件人1,收件人2"}
 
-cd api
+cd v1
 bash code/run_a_rank_daily.sh                        # 扫当日 + 前一交易日 delta
 bash code/run_a_rank_daily_with_mail.sh              # 同上并发邮件
 nohup /path/to/python code/a_rank_report_v1_scheduler.py >> output/a_rank_report_v1_scheduler.log 2>&1 &  # 常驻调度
 python code/a_rank_report_v1_scheduler.py --status   # 查调度状态
 ```
 
-> 行情数据（腾讯）、A股行业（东方财富）运行时自动拉取并缓存到 `api/data/`；每日产物在 `api/output/`，两者均不入库。
+> 行情数据（腾讯）、A股行业（东方财富）运行时自动拉取并缓存到 `v1/data/`；每日产物在 `v1/output/`，两者均不入库。
