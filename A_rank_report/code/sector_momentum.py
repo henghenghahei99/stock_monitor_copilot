@@ -1,0 +1,329 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+板块合计排名(A_rank_report_v1): 池内 趋势分 50% + 代表股短线动量分 50% 得"总分"; 双口径入池。
+
+个股动量(用户定义): m = 当日% + 近2日% + 近3日%   (三段叠加)
+    当日% = 今收/昨收-1;  近2日% = 今收/2交易日前收-1;  近3日% = 今收/3交易日前收-1
+
+展示口径(池内, "和以前一样"):
+  趋势分 = 加权命中股平均分; 动量分(±10) = 命中代表股前10 的 m 求和按 S/(15%*只数/10)*0.5 归一;
+  总分 = 趋势分×50% + 动量分×50%; 池内按总分降序; 代表股 = 加权分前10 命中股。
+
+双口径入池(2026-09-06 用户口径):
+  动量入池分(每板块) = 该板块"全部成分股"(东财行业, data/cn_sector_members.json)
+    按 m 降序取前10 只的 m 之和(不足按实际只数);
+  动量入池 = 动量入池分 前 top 板块 与 原行业得分前 top 并集(最多 2*top)。
+  入池列: 趋势=按得分入池, 动量=按动量入池分入池, 趋势+动量=双口径。
+全市场动量表 output/cn_momentum_YYYYMMDD.csv 按交易日缓存(行情走本地K线缓存, 缺失才联网)。
+"""
+from __future__ import annotations
+
+import os
+import sys
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date
+
+import pandas as pd
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import find_overbought_stocks as fos  # noqa: E402
+import industry_score as isc  # noqa: E402
+
+DEFAULT_MAP = {8: 8, 7: 6, 6: 4}
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output")
+
+
+def as_of_date(df: pd.DataFrame) -> date:
+    """该结果数据的交易日(取 date 列最大值)。"""
+    return pd.to_datetime(df["date"]).max().date()
+
+
+def stock_momentum(prefixed: str, asof: date) -> float | None:
+    """截至 asof(含)收盘: m = 当日% + 近2日% + 近3日%; 数据不足返回 None。"""
+    try:
+        k = fos.tencent_kline(str(prefixed), 80, use_cache=True)
+        if k is None:
+            return None
+        close, _ = k
+        c = close[close.index <= pd.Timestamp(asof)].astype(float).dropna()
+        if len(c) < 4:
+            return None
+        c0, c1, c2, c3 = c.iloc[-1], c.iloc[-2], c.iloc[-3], c.iloc[-4]
+        if c0 <= 0 or c1 <= 0 or c2 <= 0 or c3 <= 0:
+            return None
+        d1 = (c0 / c1 - 1) * 100
+        d2 = (c0 / c2 - 1) * 100
+        d3 = (c0 / c3 - 1) * 100
+        return round(d1 + d2 + d3, 2)
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _cached_stock_momentum(prefixed: str, asof: date, bars: int = 80) -> float | None:
+    """只读本地缓存算 m(缓存缺失/过期不联网, 返回 None)。供 cache_only 快速扫描。"""
+    cf = os.path.join(fos.KLINE_CACHE_DIR, f"{prefixed.replace('.', '_')}_{bars}.json")
+    try:
+        fresh = os.path.exists(cf) and (
+            time.time() - os.path.getmtime(cf)) < fos.KLINE_CACHE_TTL_DAYS * 86400
+    except Exception:  # noqa: BLE001
+        fresh = False
+    return stock_momentum(prefixed, asof) if fresh else None
+
+
+def market_momentum(asof: date, force: bool = False, workers: int = 10,
+                    cache_only: bool = False) -> pd.DataFrame:
+    """全市场成分股动量表: 板块全部成分股逐只 m=当日%+近2日%+近3日%。
+
+    板块归属来自 data/cn_sector_members.json(东财行业); 行情优先本地K线缓存
+    (当日扫描已预热), 缺失才联网; cache_only=True 时只读缓存、缺失不联网。
+    结果持久化 output/cn_momentum_YYYYMMDD.csv, 同日再次调用直接读缓存。
+    返回列: sector/code6/prefixed/m。
+    """
+    key = pd.Timestamp(asof).strftime("%Y%m%d")
+    path = os.path.join(OUTPUT_DIR, f"cn_momentum_{key}.csv")
+    if (not force) and os.path.exists(path):
+        try:
+            return pd.read_csv(path, encoding="utf-8-sig")
+        except Exception:  # noqa: BLE001
+            pass
+    # 增量: A股K线缓存以"最新交易日"为基准, 已覆盖则复用, 只补缺/过期(仅需联网时取一次)
+    if fos._ASOF_REF is None:
+        try:
+            import cn_trading_days as _ctd  # noqa: PLC0415
+            fos.set_kline_asof_ref(_ctd.last_trade_date())
+        except Exception:  # noqa: BLE001
+            fos.set_kline_asof_ref(None)
+    members = fos.load_cn_sector_members()
+    jobs = [(sec, code6, fos.cn_prefix(code6)) for sec, codes in members.items()
+            for code6 in codes]
+    work = _cached_stock_momentum if cache_only else stock_momentum
+    rows: list[dict] = []
+    done = 0
+    t0 = time.time()
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futs = {pool.submit(work, pref, asof): (sec, code6, pref)
+                for sec, code6, pref in jobs}
+        for fut in as_completed(futs):
+            sec, code6, pref = futs[fut]
+            try:
+                m = fut.result()
+            except Exception:  # noqa: BLE001
+                m = None
+            if m is not None:
+                rows.append({"sector": sec, "code6": code6, "prefixed": pref, "m": m})
+            done += 1
+            if done % 1000 == 0:
+                print(f"[动量] 已算 {done}/{len(jobs)} 只, {time.time() - t0:.0f}s", file=sys.stderr)
+    if not rows:
+        print("[动量] 全市场动量无有效数据!", file=sys.stderr)
+        return pd.DataFrame(columns=["sector", "code6", "prefixed", "m"])
+    df = (pd.DataFrame(rows)
+            .sort_values(["sector", "m"], ascending=[True, False])
+            .reset_index(drop=True))
+    try:
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
+        df.to_csv(path, index=False, encoding="utf-8-sig")
+        print(f"[动量] 全市场动量表 -> {path} ({len(df)} 只, cache_only={cache_only})", file=sys.stderr)
+    except Exception:  # noqa: BLE001
+        pass
+    return df
+
+
+def sector_momentum_entry(asof: date, force: bool = False,
+                          cache_only: bool = False) -> pd.DataFrame:
+    """每板块"动量入池分" = 全部成分股按 m 降序 前10 只 m 之和(不足按实际只数)。
+
+    返回列: sector / 动量入池分 / 动量股数。
+    """
+    df = market_momentum(asof, force=force, cache_only=cache_only)
+    if df.empty:
+        return pd.DataFrame(columns=["sector", "动量入池分", "动量股数"])
+    top = df.sort_values("m", ascending=False).groupby("sector", sort=False).head(10)
+    out = (top.groupby("sector", sort=False)
+              .agg(动量入池分=("m", "sum"), 动量股数=("m", "count"))
+              .reset_index())
+    out["动量入池分"] = out["动量入池分"].round(2)
+    return out
+
+
+def _cn_name(prefixed: str) -> str:
+    """A股中文名: 报价走 tencent_quote(缓存优先, 缺失联网补); 取不到返回空串。"""
+    try:
+        q = fos.tencent_quote("cn", prefixed)
+        return str(q[1]).strip() if q and q[1] else ""
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def _fmt_momentum_rep(prefixed: str, code6: str, m: float) -> str:
+    """动量代表股文本: ◎名字(+m%)  (◎ 供报告端标色)。"""
+    name = _cn_name(prefixed)
+    label = name or prefixed
+    return f"◎{label}({m:+.0f}%)"
+
+
+def _row_momentum(r) -> float | None:
+    """优先用扫描时已存的 chg1/chg2/chg3(=当日/近2日/近3日累计%); 缺失则联网K线回退。"""
+    try:
+        has = all(pd.notna(r.get(k)) for k in ("chg1", "chg2", "chg3"))
+        if has:
+            return round(float(r["chg1"]) + float(r["chg2"]) + float(r["chg3"]), 2)
+    except Exception:  # noqa: BLE001
+        pass
+    # 回退: 联网/缓存取K线按 asof 切片
+    # 需要 asof, 在调用处处理
+    return None
+
+
+def industry_momentum_stats(rep_rows: pd.DataFrame, asof: date) -> tuple[int, float, float]:
+    """某板块代表股动量: 返回 (只数 n, 板块S, 动量分 pts 允许为负, ±10 封顶)。"""
+    n, S = 0, 0.0
+    for _, r in rep_rows.iterrows():
+        m = _row_momentum(r)
+        if m is None:
+            pref = r.get("prefixed") or r.get("ticker")
+            m = stock_momentum(pref, asof) if pref is not None else None
+        if m is not None:
+            n += 1
+            S += m
+    if n == 0:
+        return 0, 0.0, 0.0
+    pts = (S / (15.0 * n / 10.0)) * 0.5  # = S/(3n), 允许为负
+    pts = max(-10.0, min(10.0, pts))
+    return n, round(S, 2), round(pts, 2)
+
+
+def industry_momentum_scores(df: pd.DataFrame, col: str = "uptrend",
+                             mapping: dict | None = None,
+                             cache_only: bool = False) -> pd.DataFrame:
+    """当日"全部有命中股的行业"的分数(供新进/退出评价用)。
+
+    返回列: industry / 趋势分(加权命中平均) / 动量分(±10, 与动量入池分同源归一) / 动量入池分。
+    """
+    mapping = mapping or DEFAULT_MAP
+    agg = isc.aggregate(df, col, mapping)
+    asof = as_of_date(df)
+    entry = sector_momentum_entry(asof, cache_only=cache_only)
+    raw = dict(zip(entry["sector"], entry["动量入池分"])) if not entry.empty else {}
+    cnt = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
+    rows = []
+    for _, a in agg.iterrows():
+        ind = a["industry"]
+        r, c = raw.get(ind), cnt.get(ind)
+        pts = 0.0
+        if r is not None and c is not None and int(c) > 0:
+            pts = round(max(-10.0, min(10.0, (float(r) / (15.0 * int(c) / 10.0)) * 0.5)), 2)
+        rows.append({"industry": ind, "趋势分": float(a["平均分"]),
+                     "动量分": pts, "动量入池分": r})
+    return pd.DataFrame(rows)
+
+
+def combined_rank(df: pd.DataFrame, col: str = "uptrend",
+                  mapping: dict | None = None, top: int = 15,
+                  momentum_force: bool = False, cache_only: bool = False) -> pd.DataFrame:
+    """双口径入池 A_rank 表。
+
+    动量(展示与入池同源, 基于板块全部成分股):
+      板块成分股按 m=当日%+近2日%+近3日% 降序前10(不足按实际只数), S=Σm;
+      动量入池分 = S(原始);  展示动量分(±10) = S ÷ (15×只数/10) × 0.5 归一;
+      入池 = 原行业"得分"前 top ∪ "动量入池分"前 top(并集, 最多 2*top)。
+    池内按 总分 = 趋势分×50% + 动量分×50% 降序。
+    代表股列 = 趋势代表股(加权分前5) + ◎动量代表股(全部成分股按 m 前5, ◎=短线动量, 报告端标色)。
+    列: industry/得分/股票数/趋势分/动量分/总分/动量入池分/代表股/入池
+    """
+    mapping = mapping or DEFAULT_MAP
+    agg = isc.aggregate(df, col, mapping)
+    asof = as_of_date(df)
+    entry = sector_momentum_entry(asof, force=momentum_force, cache_only=cache_only)
+    raw_map = dict(zip(entry["sector"], entry["动量入池分"])) if not entry.empty else {}
+    cnt_map = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
+
+    def _display_pts(raw, cnt) -> float:
+        """动量分(±10) = S/(15*只数/10)*0.5, 与动量入池分同源归一。"""
+        if raw is None or cnt is None or int(cnt) <= 0:
+            return 0.0
+        pts = (float(raw) / (15.0 * int(cnt) / 10.0)) * 0.5
+        return round(max(-10.0, min(10.0, pts)), 2)
+
+    # 1) 趋势代表股(命中股加权分前5)
+    trend_reps = isc.representative_frame(df, col, mapping, 5)
+    trend_by: dict[str, list] = {}
+    if not trend_reps.empty:
+        for ind, g in trend_reps.groupby("industry", sort=False):
+            items = []
+            for _, r in g.iterrows():
+                chg = r.get("chg20")
+                chg_s = f"{chg:+.0f}%" if pd.notna(chg) else ""
+                trend_s = str(r.get(col, "")) if col in r else ""
+                items.append(f"{r['name']}({trend_s},{chg_s})")
+            trend_by[ind] = items
+
+    # 2) 动量代表股(板块全部成分股按 m 前5, ◎标注)
+    mom = market_momentum(asof, force=momentum_force, cache_only=cache_only)
+    mom_by: dict[str, list] = {}
+    if not mom.empty:
+        top5 = mom.sort_values("m", ascending=False).groupby("sector", sort=False).head(5)
+        for ind, g in top5.groupby("sector", sort=False):
+            mom_by[ind] = [_fmt_momentum_rep(r["prefixed"], r["code6"], r["m"])
+                           for _, r in g.iterrows()]
+
+    # 3) 两条入池路径各自取前 top(并列按板块名稳定排序)
+    score_top = set(agg.sort_values("得分", ascending=False).head(top)["industry"])
+    mom_sorted = sorted(raw_map.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+    mom_top = {ind for ind, _ in mom_sorted[:top]}
+
+    # 4) 并集入池, 池内按 总分(趋势50%+动量50%) 降序
+    rows = []
+    for _, a in agg.iterrows():
+        ind = a["industry"]
+        if ind not in score_top and ind not in mom_top:
+            continue
+        src = []
+        if ind in score_top:
+            src.append("趋势")
+        if ind in mom_top:
+            src.append("动量")
+        pts = _display_pts(raw_map.get(ind), cnt_map.get(ind))
+        trend = float(a["平均分"])          # 结构分 => 展示名 趋势分
+        total = round(trend * 0.5 + pts * 0.5, 2)
+        reps = "、".join((trend_by.get(ind, [])[:5]) + (mom_by.get(ind, [])[:5]))
+        rows.append({
+            "industry": ind,
+            "得分": int(a["得分"]),
+            "股票数": int(a["股票数"]),
+            "趋势分": trend,
+            "动量分": pts,
+            "总分": total,
+            "动量入池分": raw_map.get(ind),
+            "代表股": reps or "-",
+            "入池": "+".join(src),
+        })
+    out = pd.DataFrame(rows).sort_values("总分", ascending=False).reset_index(drop=True)
+    return out
+
+
+if __name__ == "__main__":
+    argv = sys.argv[1:]
+    # 构建全市场动量表: python sector_momentum.py --momentum [YYYY-MM-DD|YYYYMMDD] [--force] [--cache-only]
+    if argv and argv[0] == "--momentum":
+        d = argv[1] if len(argv) > 1 else pd.Timestamp.today().strftime("%Y-%m-%d")
+        asof = pd.Timestamp(d).date()
+        tbl = sector_momentum_entry(asof, force="--force" in argv,
+                                    cache_only="--cache-only" in argv)
+        print(f"数据日期: {asof}  板块数: {len(tbl)}")
+        print(tbl.sort_values("动量入池分", ascending=False)
+                .rename(columns={"sector": "板块"})
+                .head(20).to_string(index=False))
+        sys.exit(0)
+    # 自测: python sector_momentum.py <results.csv>
+    f = argv[0] if argv else "output/cn_uptrend_0902.csv"
+    df = pd.read_csv(f, encoding="utf-8-sig")
+    rk = combined_rank(df)
+    rk.insert(0, "排名", range(1, len(rk) + 1))
+    pd.set_option("display.width", 200)
+    pd.set_option("display.max_colwidth", 50)
+    print(f"数据日期: {as_of_date(df)}  (文件 {f})  入池数: {len(rk)}")
+    cols = ["排名", "industry", "得分", "股票数", "趋势分", "动量分", "总分", "动量入池分", "入池"]
+    print(rk[cols].to_string(index=False))
