@@ -39,14 +39,15 @@ def _fmt(v):
 
 UP = "#d93025"      # 红: 上涨/名次上升
 DOWN = "#188038"     # 绿: 下跌/名次下降
-NEW_BLUE = "#1a73e8"  # 新进池
+NEW_BLUE = "#1a73e8"    # 新进池
+NEW_PURPLE = "#7b1fa2"   # 完全新进池
 MOM_COL = "#e65100"    # 代表股: ◎动量代表股(全部成分股短线动量) 橙色
 NUM_COLS = {"排名", "得分", "股票数", "趋势分", "动量分", "总分", "前日排名", "今日排名",
            "排名变化", "趋势分变化", "动量分变化", "总分变化"}
 
 
 def _color(c: str, v):
-    """变化列按正负返回红/绿(涨红跌绿); 状态列 新进池=蓝。"""
+    """变化列按正负返回红/绿(涨红跌绿); 状态列 新进池=蓝, 完全新进池=紫, 退出池=灰。"""
     if c in ("排名变化", "趋势分变化", "动量分变化", "总分变化"):
         try:
             val = float(v)
@@ -58,7 +59,13 @@ def _color(c: str, v):
             return DOWN
         return "#999"
     if c == "状态":
-        return NEW_BLUE if v == "新进池" else ("#666" if v == "退出池" else "")
+        if v == "完全新进池":
+            return NEW_PURPLE
+        if v == "新进池":
+            return NEW_BLUE
+        if v == "退出池":
+            return "#666"
+        return ""
     return ""
 
 
@@ -228,43 +235,6 @@ def _coverage_tag(df: pd.DataFrame) -> str:
         return "仅沪市"
     except Exception:  # noqa: BLE001
         return ""
-
-
-def _recent_pool_series(date_mmdd: str, days: int = 5) -> list[dict]:
-    """近 days 个有结果CSV的交易日(<=报告日, 含报告日本身), 各自"当天池"的合计分。
-
-    口径: 每天用"当天自己的池"(combined_rank 双口径: 得分前15 ∪ 动量入池分前15),
-    池内 趋势分/动量分 各自求和 —— 某板块当天不在池(出池)即不计入当天(贡献中断);
-    当天新进池的板块从当天起计入。返回按日期升序, 有多少天返回多少。
-    """
-    cand = []
-    for fn in os.listdir(OUT):
-        if not fn.startswith("cn_uptrend_") or not fn.endswith(".csv"):
-            continue
-        core = fn[len("cn_uptrend_"):-4]
-        if len(core) == 4 and core.isdigit() and core <= date_mmdd:
-            cand.append(core)
-    cand = sorted(set(cand))[-days:]
-    series = []
-    for core in cand:
-        path = os.path.join(OUT, f"cn_uptrend_{core}.csv")
-        try:
-            dfr = pd.read_csv(path, encoding="utf-8-sig")
-            rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, 15)
-            if rk.empty:
-                continue
-            series.append({
-                "label": f"{core[:2]}-{core[2:]}",
-                "date": core,
-                "n": int(len(rk)),
-                "inds": set(rk["industry"]),
-                "trend": float(rk["趋势分"].sum()),
-                "mom": float(rk["动量分"].sum()),
-                "cov": _coverage_tag(dfr),
-            })
-        except Exception as exc:  # noqa: BLE001
-            print(f"[警告] 近N日走势跳过 {core}: {exc}", file=sys.stderr)
-    return series
 
 
 def _recent_pool_series(date_mmdd: str, days: int = 5) -> list[dict]:
@@ -652,6 +622,16 @@ def main() -> None:
     series = _recent_pool_series(args.date) if (args.results and os.path.exists(today_file)) else []
     order = _active_view(series) if series else []
     chart_parts: list[str] = []
+
+    # 状态细化: 前5日(窗口内除今天)从未入过池的“新进池” → 标记为 完全新进池
+    if delta is not None and series:
+        prev_pool = {str(i).strip() for p in series[:-1] for i in p["pool"]}
+        new_mask = (delta["状态"].astype(str).eq("新进池")
+                    & ~delta["行业"].astype(str).str.strip().isin(prev_pool))
+        delta.loc[new_mask, "状态"] = "完全新进池"
+        _gmap2 = {"完全新进池": 0, "新进池": 0, "池内": 1, "退出池": 2}
+        delta["_g2"] = delta["状态"].astype(str).map(lambda s: _gmap2.get(s, 9))
+        delta = delta.sort_values("_g2", kind="stable").drop(columns=["_g2"]).reset_index(drop=True)
     if series:
         if not order:
             chart_parts.append(f"<h3>板块近{len(series)}日走势 — 今日池板块窗口内无满足条件的走势(太碎或横盘)</h3>")
@@ -715,7 +695,7 @@ def main() -> None:
         parts.append(rank_note)
     delta_note = ("<p class='note'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
                   "(入池=原得分前15 ∪ 动量入池分前15、池内按总分=趋势分×50%+动量分×50% 降序)计算后对比。"
-                  "状态：池内=两日均在池内；新进池=今日新进(前日不在池)；退出池=今日掉出池。"
+                  "状态：池内=两日均在池内；新进池=今日新进(前日不在池)；完全新进池=前5个交易日均未入池、今日首次入池(紫)；退出池=今日掉出池。"
                   "涨红跌绿：排名变化=前日排名−今日排名(正=名次上升)；"
                   "趋势分变化/动量分变化/总分变化=今日−前日(正=升，负=降)。<br>"
                   "评价：池内按 趋势分变化(正=趋势增强/负=趋势减弱) + 动量分变化(≥1.5动量爆发 / 0~1.5动量增强 / -1.5~0动量减弱 / <-1.5动量大幅下滑)；"
@@ -756,7 +736,7 @@ def main() -> None:
         lines.append("== 与前一日排名升降 ==")
         lines.append(_txt_table(delta))
         lines.append("算法: 前一日与今日各自按上方A_rank(入池=原得分前15 ∪ 动量入池分前15, 池内按总分=趋势分*50%+动量分*50%降序)后对比; "
-                     "状态: 池内=两日均在池内, 新进池=今日新进, 退出池=今日掉出; "
+                     "状态: 池内=两日均在池内, 新进池=今日新进(蓝), 完全新进池=前5个交易日均未入池今日首次入池(紫), 退出池=今日掉出(灰); "
                      "涨红跌绿: 排名变化=前日排名-今日排名(正=名次上升); 趋势分变化/动量分变化/总分变化=今日-前日; "
                      "评价: 池内按趋势分变化(正=增强/负=减弱)+动量分变化(>=1.5爆发/0~1.5增强/-1.5~0减弱/<-1.5大幅下滑); "
                      "新进/退出按当日趋势分、动量分在今日池内百分位(趋势前10%很强/动量前10%爆发/10-30%强/30-70%一般/70-100%弱)")
