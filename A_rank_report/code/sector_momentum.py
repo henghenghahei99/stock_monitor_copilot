@@ -61,6 +61,24 @@ def stock_momentum(prefixed: str, asof: date) -> float | None:
         return None
 
 
+def stock_daily_chg(prefixed: str, asof: date) -> float | None:
+    """当日涨幅 = 今收/昨收 - 1(%), 供动量代表股括号展示; 数据不足返回 None。"""
+    try:
+        k = fos.tencent_kline(str(prefixed), 80, use_cache=True)
+        if k is None:
+            return None
+        close, _ = k
+        c = close[close.index <= pd.Timestamp(asof)].astype(float).dropna()
+        if len(c) < 2:
+            return None
+        c0, c1 = c.iloc[-1], c.iloc[-2]
+        if c0 <= 0 or c1 <= 0:
+            return None
+        return round((c0 / c1 - 1) * 100, 2)
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def _cached_stock_momentum(prefixed: str, asof: date, bars: int = 80) -> float | None:
     """只读本地缓存算 m(缓存缺失/过期不联网, 返回 None)。供 cache_only 快速扫描。"""
     cf = os.path.join(fos.KLINE_CACHE_DIR, f"{prefixed.replace('.', '_')}_{bars}.json")
@@ -157,11 +175,11 @@ def _cn_name(prefixed: str) -> str:
         return ""
 
 
-def _fmt_momentum_rep(prefixed: str, code6: str, m: float) -> str:
-    """动量代表股文本: ◎名字(+m%)  (◎ 供报告端标色)。"""
+def _fmt_momentum_rep(prefixed: str, code6: str, chg1: float) -> str:
+    """动量代表股文本: ◎名字(+当日涨幅%)  (◎ 供报告端标色)。"""
     name = _cn_name(prefixed)
     label = name or prefixed
-    return f"◎{label}({m:+.0f}%)"
+    return f"◎{label}({chg1:+.0f}%)"
 
 
 def _row_momentum(r) -> float | None:
@@ -260,14 +278,19 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
                 items.append(f"{r['name']}({trend_s},{chg_s})")
             trend_by[ind] = items
 
-    # 2) 动量代表股(板块全部成分股按 m 前5, ◎标注)
+    # 2) 动量代表股(板块全部成分股按 m 前5, ◎标注; 括号显示当日涨幅)
     mom = market_momentum(asof, force=momentum_force, cache_only=cache_only)
     mom_by: dict[str, list] = {}
     if not mom.empty:
         top5 = mom.sort_values("m", ascending=False).groupby("sector", sort=False).head(5)
         for ind, g in top5.groupby("sector", sort=False):
-            mom_by[ind] = [_fmt_momentum_rep(r["prefixed"], r["code6"], r["m"])
-                           for _, r in g.iterrows()]
+            reps = []
+            for _, r in g.iterrows():
+                chg1 = stock_daily_chg(str(r["prefixed"]), asof)
+                reps.append(_fmt_momentum_rep(
+                    str(r["prefixed"]), str(r["code6"]),
+                    chg1 if chg1 is not None else float(r["m"])))
+            mom_by[ind] = reps
 
     # 3) 两条入池路径各自取前 top(并列按板块名稳定排序)
     score_top = set(agg.sort_values("得分", ascending=False).head(top)["industry"])

@@ -1,0 +1,87 @@
+[
+  {
+    "code": "000001",
+    "name": "上证指数",
+    "market": "a_share"
+  },
+  {
+    "code": "399001",
+    "name": "深证成指",
+    "market": "a_share"
+  },
+  {
+    "code": "399006",
+    "name": "创业板指",
+    "market": "a_share"
+  },
+  {
+    "code": "000688",
+    "name": "科创50",
+    "market": "a_share"
+  },
+  {
+    "code": "899050",
+    "name": "北证50",
+    "market": "a_share"
+  },
+  {
+    "code": "000852",
+    "name": "中证1000",
+    "market": "a_share"
+  },
+  {
+    "code": "932000",
+    "name": "中证2000",
+    "market": "a_share"
+  },
+  {
+    "code": "000905",
+    "name": "中证500",
+    "market": "a_share"
+  },
+  {
+    "code": "000300",
+    "name": "沪深300",
+    "market": "a_share"
+  },
+  {
+    "code": "000016",
+    "name": "上证50",
+    "market": "a_share"
+  },
+  {
+    "code": "HSI",
+    "name": "恒生指数",
+    "market": "hk"
+  },
+  {
+    "code": "HSTECH",
+    "name": "恒生科技",
+    "market": "hk"
+  },
+  {
+    "code": "H30184",
+    "name": "半导体",
+    "market": "a_share"
+  },
+  {
+    "code": "SPX",
+    "name": "标普500",
+    "market": "us"
+  },
+  {
+    "code": "DJIA",
+    "name": "道琼斯",
+    "market": "us"
+  },
+  {
+    "code": "NDX",
+    "name": "纳斯达克100",
+    "market": "us"
+  },
+  {
+    "code": "RUI",
+    "name": "罗素1000",
+    "market": "us"
+  }
+]

@@ -322,8 +322,9 @@ def _dash(i: int) -> str:
     return _DASHES[i % len(_DASHES)]
 
 
-# 近N日走势筛选: 退出的不画; 需有连续在池段, 且趋势·动量整体起伏过小(横盘)的也不画
-CHART_MIN_RUN = 3           # 板块至少要有 连续 >=3 个交易日在池(太碎/孤点不画)
+# 近N日走势筛选: 退出的不画; 需有连续在池段(>=CHART_MIN_RUN); 整体起伏过小(横盘)的也不画。
+# 画图时某日不在池(出池/未入池)的缺点用该板块窗口内最低分代替, 线连续(空心圈标注)。
+CHART_MIN_RUN = 3           # 板块至少要有 连续 >=3 个交易日在池才画
 CHART_MIN_TREND_CHG = 0.4   # 窗口内 趋势分 max-min 至少达此值
 CHART_MIN_MOM_CHG = 1.6     # 窗口内 动量分 max-min 至少达此值
 
@@ -397,7 +398,7 @@ def _run_path(run: list[tuple[int, float]], X, Y, color: str, n_days: int,
 
 def _metric_svg(metric: str, series: list[dict], order: list[tuple[str, int | None]],
                 colors: dict, idx: dict[str, int]) -> str:
-    """每个板块一条折线; 不在池的日期断线(无点)。metric: trend|mom。"""
+    """每个板块一条连续折线; 不在池的日期以该板块窗口内最低分代替(空心圈标记)。metric: trend|mom。"""
     n_days = len(series)
     W, H, pl, pr, pt, pb = 900, 300, 52, 18, 30, 44
     iw, ih = W - pl - pr, H - pt - pb
@@ -441,17 +442,24 @@ def _metric_svg(metric: str, series: list[dict], order: list[tuple[str, int | No
     for ind, _rank in order:
         color = colors[ind]
         dash = _dash(idx[ind])          # 线型按全局序号, 与图例一致
-        run = []
-        for i, p in enumerate(series):
-            s = p["scores"].get(ind)
-            if s is not None:
-                run.append((i, s[metric]))
-            else:
-                if len(run) >= CHART_MIN_RUN:      # 太短的碎段/孤点不画
-                    segs += _run_path(run, X, Y, color, n_days, dash)
-                run = []
-        if len(run) >= CHART_MIN_RUN:
-            segs += _run_path(run, X, Y, color, n_days, dash)
+        vals = [p["scores"].get(ind) for p in series]
+        real = [v[metric] for v in vals if v is not None]
+        if not real:
+            continue
+        mn = min(real)
+        ys = [v[metric] if v is not None else mn for v in vals]  # 出池日以最低分代替
+        d = "M " + " L ".join(f"{X(i):.1f} {Y(ys[i]):.1f}" for i in range(n_days))
+        segs += (f'<path d="{d}" fill="none" stroke="{color}" stroke-width="2.4" '
+                 f'stroke-linejoin="round"'
+                 + (f' stroke-dasharray="{dash}"' if dash else "") + "/>")
+        for i, v in enumerate(vals):
+            x, y = X(i), Y(ys[i])
+            if v is not None:
+                r = 3.6 if i == n_days - 1 else 2.6
+                segs += f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{color}"/>'
+            else:      # 出池替补点: 空心圈, 表示此处为最低点代替
+                segs += (f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.8" fill="#ffffff" '
+                         f'stroke="{color}" stroke-width="1.6"/>')
     return (f'<svg viewBox="0 0 {W} {H}" style="width:100%;max-width:900px;'
             f'font-family:Segoe UI,Microsoft YaHei,sans-serif" xmlns="http://www.w3.org/2000/svg">'
             f'<rect width="{W}" height="{H}" fill="#fff"/>'
@@ -501,24 +509,23 @@ def _chart_png_bytes(metric: str, series: list[dict], order: list[tuple[str, int
     for ind, rank in order:
         color = colors[ind]
         ls = _LS[idx[ind] % len(_LS)]
-        xs, ys = [], []
-        for p in series:
-            s = p["scores"].get(ind)
-            if s is not None:
-                xs.append(labels.index(p["label"]))
-                ys.append(s[metric])
-            else:
-                if len(xs) >= 2:
-                    h, = ax.plot(xs, ys, color=color, linestyle=ls, linewidth=2.2,
-                                 marker="o", markersize=4)
-                    handles.append(h)
-                    names.append(f"{rank}. {ind}" if rank else ind)
-                xs, ys = [], []
-        if len(xs) >= 2:
-            h, = ax.plot(xs, ys, color=color, linestyle=ls, linewidth=2.2,
-                         marker="o", markersize=4)
-            handles.append(h)
-            names.append(f"{rank}. {ind}" if rank else ind)
+        vals = [p["scores"].get(ind) for p in series]
+        real = [v[metric] for v in vals if v is not None]
+        if not real:
+            continue
+        mn = min(real)
+        ys = [v[metric] if v is not None else mn for v in vals]  # 出池日以最低分代替
+        xs = list(range(ndays))
+        h, = ax.plot(xs, ys, color=color, linestyle=ls, linewidth=2.2)
+        handles.append(h)
+        names.append(f"{rank}. {ind}" if rank else ind)
+        real_x = [i for i, v in enumerate(vals) if v is not None]
+        miss_x = [i for i, v in enumerate(vals) if v is None]
+        if real_x:
+            ax.scatter(real_x, [ys[i] for i in real_x], color=color, s=18, zorder=3)
+        if miss_x:     # 出池替补点: 空心圈
+            ax.scatter(miss_x, [ys[i] for i in miss_x], facecolors="none",
+                       edgecolors=color, s=24, linewidths=1.2, zorder=3)
     if handles:
         ax.legend(handles, names, ncol=ncol, fontsize=9, loc="upper center",
                   bbox_to_anchor=(0.5, -0.18), frameon=False)
@@ -613,6 +620,25 @@ def main() -> None:
             keep = [c for c in ["行业", "状态", "排名变化",
                                 "趋势分变化", "动量分变化", "总分变化", "评价"] if c in delta.columns]
             delta = delta[keep]
+            # 分组: 新进池 → 池内 → 退出池; 池内按 动量分变化 降序;
+            # 新进池/退出池无变化基线, 按当日 动量分(绝对值) 降序排列(即动量强度高在前)
+            mom_today = {}
+            if "today_scores" in locals() and today_scores is not None and not today_scores.empty:
+                mom_today = dict(zip(today_scores["industry"],
+                                     pd.to_numeric(today_scores["动量分"], errors="coerce")))
+            _gmap = {"新进池": 0, "池内": 1, "退出池": 2}
+            delta["_g"] = delta["状态"].map(lambda s: _gmap.get(s, 9))
+            if "动量分变化" in delta.columns:
+                delta["_mc"] = delta.apply(
+                    lambda r: (pd.to_numeric(r["动量分变化"], errors="coerce")
+                               if r["状态"] == "池内"
+                               else mom_today.get(r["行业"], -999.0)), axis=1)
+            else:
+                delta["_mc"] = delta["行业"].map(lambda i: mom_today.get(i, -999.0))
+            delta["_mc"] = pd.to_numeric(delta["_mc"], errors="coerce").fillna(-999.0)
+            delta = (delta.sort_values(["_g", "_mc"], ascending=[True, False], kind="stable")
+                          .drop(columns=["_g", "_mc"])
+                          .reset_index(drop=True))
 
     title = f"A_rank 日报 · 2026-{args.date[:2]}-{args.date[2:]} A股板块得分排名"
     head = ("<head><meta charset='utf-8'><title>%s</title><style>"
@@ -633,12 +659,12 @@ def main() -> None:
             colors = {ind: _sector_color(i, len(order)) for i, (ind, _r) in enumerate(order)}
             idx = {ind: i for i, (ind, _r) in enumerate(order)}
             chart_parts.append(
-                f"<h3>板块近{len(series)}日走势 — 今日池中走势明显的板块 (每板块一条线, 连续在池≥{CHART_MIN_RUN}日才画)</h3>")
+                f"<h3>板块近{len(series)}日走势 — 今日池中走势明显的板块 (连续在池≥{CHART_MIN_RUN}日才画, 出池日以最低分代替)</h3>")
             seq = ["①", "②", "③", "④"]
             gi = 0
             chart_no = 0
-            for metric, mname in (("trend", "趋势分走势（每日该板块入池得分）"),
-                                  ("mom", "动量分走势（±10）")):
+            for metric, mname in (("mom", "动量分走势（±10）"),
+                                  ("trend", "趋势分走势（每日该板块入池得分）")):
                 up, down = _direction_groups(order, series, metric)
                 for tag, g in (("整体上升", up), ("整体下降", down)):
                     if not g:
@@ -664,10 +690,10 @@ def main() -> None:
                     chart_no += 1
             note_lines = [
                 "覆盖: " + "、".join(f"{p['label']}({p['cov'] or '?'})" for p in series) + "；x 轴下方数字 = 该日池内板块数。",
-                f"筛选: 退出的不画；窗口内没有连续≥{CHART_MIN_RUN}个交易日在池的板块(零散孤点/频繁进出)也不画，避免断线碎点；",
+                f"筛选: 退出的不画；窗口内无连续≥{CHART_MIN_RUN}个交易日在池的(零散孤点/频繁进出)也不画；",
                 f"整体近乎横盘(趋势起伏<{CHART_MIN_TREND_CHG} 且 动量起伏<{CHART_MIN_MOM_CHG})的也不画。",
                 "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”。",
-                "口径: 每日取当天自己的入池板块(原得分前15 ∪ 动量入池分前15)；仅画在池的交易日，某日不在池则该段断开。",
+                "口径: 每日取当天自己的入池板块(原得分前15 ∪ 动量入池分前15)；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
             ]
             if any(p.get("cov") == "仅沪市" for p in series):
                 note_lines.append("注意: 标“仅沪市”的日期为行情状态码修复前的扫描产物，仅沪市口径，与“沪深北”日期不可直接比绝对值。")
@@ -682,7 +708,7 @@ def main() -> None:
                  "(不足按实际只数)，S=Σ前10的m；动量入池分=S；展示动量分=S÷(5×只数)=前n只平均涨幅÷5 归一(允许为负, ±10封顶)。<br>"
                  "⑤ 总分 = 趋势分×50% + 动量分×50%；入池=原行业得分前15名 ∪ 动量入池分前15名(并集, 最多30个)，"
                  "池内按总分降序排名；入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
-                 "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前5(板块全部成分股按m最强, 橙色◎=短线动量, 记+短线%)。</p>")
+                 "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前5(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日涨幅)。</p>")
     if rk is not None:
         parts.append("<h3>今日板块排名(趋势分50% + 动量分50% → 入池=原得分前15 ∪ 动量前15 → 总分)</h3>")
         parts.append(_html_table(rk.rename(columns={"industry": "行业"})))
@@ -724,7 +750,7 @@ def main() -> None:
                      "(不足按实际只数)S=Σ, 动量入池分=S, 展示动量分=S/(5×只数)=前n只平均涨幅÷5(允许为负, ±10封顶); "
                      "⑤总分=趋势分*50%+动量分*50%, 入池=原得分前15 ∪ 动量入池分前15(并集, 最多30), 池内按总分降序; "
                      "入池列: 趋势=得分入池, 动量=动量入池, 趋势+动量=双口径; "
-                     "⑥代表股=趋势前5(加权分, X/8,+近20日%) + ◎动量前5(板块全部成分股按m最强, 记+短线%)")
+                     "⑥代表股=趋势前5(加权分, X/8,+近20日%) + ◎动量前5(板块全部成分股按m最强, 括号=当日涨幅)")
     if delta is not None:
         lines.append("")
         lines.append("== 与前一日排名升降 ==")

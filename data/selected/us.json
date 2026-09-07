@@ -1,0 +1,846 @@
+[
+  {
+    "code": "SPCXUS",
+    "name": "SpaceX"
+  },
+  {
+    "code": "FJETUS",
+    "name": "Starfighters ..."
+  },
+  {
+    "code": "UAAUS",
+    "name": "安德玛-A"
+  },
+  {
+    "code": "BXDCUS",
+    "name": "Blackstone Di..."
+  },
+  {
+    "code": "CBRSUS",
+    "name": "Cerebras Syst..."
+  },
+  {
+    "code": "REAUS",
+    "name": "Rare Earths A..."
+  },
+  {
+    "code": "BEKEUS",
+    "name": "贝壳"
+  },
+  {
+    "code": "SUJAUS",
+    "name": "Suja Life Inc..."
+  },
+  {
+    "code": "HAWKUS",
+    "name": "HawkEye 360 I..."
+  },
+  {
+    "code": "EBAYUS",
+    "name": "易趣"
+  },
+  {
+    "code": "FCELUS",
+    "name": "燃料电池能源"
+  },
+  {
+    "code": "AMGUS",
+    "name": "AMG资管"
+  },
+  {
+    "code": "AVEXUS",
+    "name": "AEVEX Corp-A"
+  },
+  {
+    "code": "SNDKUS",
+    "name": "闪迪"
+  },
+  {
+    "code": "MKSIUS",
+    "name": "MKS Inc"
+  },
+  {
+    "code": "WINGUS",
+    "name": "Wingstop Inc"
+  },
+  {
+    "code": "NKEUS",
+    "name": "耐克"
+  },
+  {
+    "code": "SNAPUS",
+    "name": "Snap Inc-A"
+  },
+  {
+    "code": "VNETUS",
+    "name": "世纪互联"
+  },
+  {
+    "code": "ORCLUS",
+    "name": "甲骨文"
+  },
+  {
+    "code": "SMCIUS",
+    "name": "超微电脑"
+  },
+  {
+    "code": "PLTRUS",
+    "name": "Palantir Tech..."
+  },
+  {
+    "code": "INTCUS",
+    "name": "英特尔"
+  },
+  {
+    "code": "AMCUS",
+    "name": "AMC院线"
+  },
+  {
+    "code": "SYFUS",
+    "name": "Synchrony Fin..."
+  },
+  {
+    "code": "UPSTUS",
+    "name": "Upstart Holdi..."
+  },
+  {
+    "code": "AGQUS",
+    "name": "二倍做多白银E..."
+  },
+  {
+    "code": "MRNAUS",
+    "name": "Moderna Inc"
+  },
+  {
+    "code": "ZTSUS",
+    "name": "硕腾"
+  },
+  {
+    "code": "FLUTUS",
+    "name": "Flutter Enter..."
+  },
+  {
+    "code": "EWYUS",
+    "name": "韩国ETF-iShar..."
+  },
+  {
+    "code": "SYUS",
+    "name": "新氧"
+  },
+  {
+    "code": "NBISUS",
+    "name": "Nebius Group ..."
+  },
+  {
+    "code": "KORUUS",
+    "name": "三倍做多韩国E..."
+  },
+  {
+    "code": "INIOUS",
+    "name": "INNIO NV"
+  },
+  {
+    "code": "ARMUS",
+    "name": "Arm Holdings ..."
+  },
+  {
+    "code": "CHTRUS",
+    "name": "特许通讯"
+  },
+  {
+    "code": "DDLUS",
+    "name": "叮咚买菜"
+  },
+  {
+    "code": "ENPHUS",
+    "name": "Enphase Energ..."
+  },
+  {
+    "code": "SEDGUS",
+    "name": "SolarEdge Tec..."
+  },
+  {
+    "code": "GFSUS",
+    "name": "GLOBALFOUNDRI..."
+  },
+  {
+    "code": "POETUS",
+    "name": "POET Technolo..."
+  },
+  {
+    "code": "TSEMUS",
+    "name": "Tower半导体"
+  },
+  {
+    "code": "VCXUS",
+    "name": "Fundrise Inno..."
+  },
+  {
+    "code": "PLUGUS",
+    "name": "普拉格能源"
+  },
+  {
+    "code": "KEYSUS",
+    "name": "是德科技"
+  },
+  {
+    "code": "VIAVUS",
+    "name": "Viavi Solutio..."
+  },
+  {
+    "code": "RMBSUS",
+    "name": "Rambus Inc"
+  },
+  {
+    "code": "OKLOUS",
+    "name": "Oklo Inc-A"
+  },
+  {
+    "code": "CARUS",
+    "name": "安飞士"
+  },
+  {
+    "code": "ARXSUS",
+    "name": "Arxis Inc-A"
+  },
+  {
+    "code": "SPYUS",
+    "name": "标普500ETF-SP..."
+  },
+  {
+    "code": "TEAMUS",
+    "name": "Atlassian Cor..."
+  },
+  {
+    "code": "FNMA",
+    "name": "房利美"
+  },
+  {
+    "code": "BSXUS",
+    "name": "波士顿科学"
+  },
+  {
+    "code": "ANETUS",
+    "name": "Arista Networ..."
+  },
+  {
+    "code": "GLWUS",
+    "name": "康宁"
+  },
+  {
+    "code": "HMHUS",
+    "name": "HMH Holding I..."
+  },
+  {
+    "code": "SWMRUS",
+    "name": "Swarmer Inc"
+  },
+  {
+    "code": "AAUS",
+    "name": "美国铝业"
+  },
+  {
+    "code": "CENXUS",
+    "name": "世纪铝业"
+  },
+  {
+    "code": "PLTDUS",
+    "name": "做空PLTR ETF-..."
+  },
+  {
+    "code": "CYDUS",
+    "name": "玉柴国际"
+  },
+  {
+    "code": "AESUS",
+    "name": "爱依斯电力"
+  },
+  {
+    "code": "ZEPPUS",
+    "name": "华米科技"
+  },
+  {
+    "code": "QUS",
+    "name": "Qnity Electro..."
+  },
+  {
+    "code": "CCUS",
+    "name": "The Chemours ..."
+  },
+  {
+    "code": "PWRUS",
+    "name": "广达服务"
+  },
+  {
+    "code": "VICRUS",
+    "name": "Vicor Corp"
+  },
+  {
+    "code": "MPWRUS",
+    "name": "Monolithic Po..."
+  },
+  {
+    "code": "VRTUS",
+    "name": "Vertiv Holdin..."
+  },
+  {
+    "code": "EQTUS",
+    "name": "EQT能源"
+  },
+  {
+    "code": "TERUS",
+    "name": "泰瑞达"
+  },
+  {
+    "code": "AMRUS",
+    "name": "Alpha Metallu..."
+  },
+  {
+    "code": "FLYUS",
+    "name": "Firefly Aeros..."
+  },
+  {
+    "code": "LUNRUS",
+    "name": "Intuitive Mac..."
+  },
+  {
+    "code": "AMATUS",
+    "name": "应用材料"
+  },
+  {
+    "code": "LRCXUS",
+    "name": "拉姆研究"
+  },
+  {
+    "code": "METCUS",
+    "name": "Ramaco Resour..."
+  },
+  {
+    "code": "DOWUS",
+    "name": "陶氏"
+  },
+  {
+    "code": "CEUS",
+    "name": "塞拉尼斯"
+  },
+  {
+    "code": "TTANUS",
+    "name": "ServiceTitan ..."
+  },
+  {
+    "code": "CRDOUS",
+    "name": "Credo Technol..."
+  },
+  {
+    "code": "CDNSUS",
+    "name": "铿腾电子"
+  },
+  {
+    "code": "HLUS",
+    "name": "赫克拉矿业"
+  },
+  {
+    "code": "AGUS",
+    "name": "First Majesti..."
+  },
+  {
+    "code": "AMKRUS",
+    "name": "艾马克技术"
+  },
+  {
+    "code": "TALUS",
+    "name": "好未来"
+  },
+  {
+    "code": "AXTIUS",
+    "name": "AXT Inc"
+  },
+  {
+    "code": "AVAVUS",
+    "name": "AeroVironment..."
+  },
+  {
+    "code": "INODUS",
+    "name": "Innodata Inc"
+  },
+  {
+    "code": "STMUS",
+    "name": "意法半导体"
+  },
+  {
+    "code": "IRDMUS",
+    "name": "铱星通讯"
+  },
+  {
+    "code": "CDEUS",
+    "name": "科尔黛伦矿业"
+  },
+  {
+    "code": "ISRGUS",
+    "name": "直觉外科"
+  },
+  {
+    "code": "ONDSUS",
+    "name": "Ondas Inc"
+  },
+  {
+    "code": "DOVUS",
+    "name": "都福"
+  },
+  {
+    "code": "SIDUUS",
+    "name": "Sidus Space I..."
+  },
+  {
+    "code": "ORAUS",
+    "name": "奥玛特科技"
+  },
+  {
+    "code": "CATUS",
+    "name": "卡特彼勒"
+  },
+  {
+    "code": "APLDUS",
+    "name": "Applied Digit..."
+  },
+  {
+    "code": "DJTUS",
+    "name": "特朗普媒体科..."
+  },
+  {
+    "code": "TLRYUS",
+    "name": "Tilray Brands..."
+  },
+  {
+    "code": "CGCUS",
+    "name": "Canopy Growth..."
+  },
+  {
+    "code": "FRMIUS",
+    "name": "Fermi Inc"
+  },
+  {
+    "code": "MRVLUS",
+    "name": "迈威尔科技"
+  },
+  {
+    "code": "PSIXUS",
+    "name": "国际电力解决..."
+  },
+  {
+    "code": "TFXUS",
+    "name": "泰利福"
+  },
+  {
+    "code": "TEUS",
+    "name": "T1 Energy Inc"
+  },
+  {
+    "code": "SLIUS",
+    "name": "Standard Lith..."
+  },
+  {
+    "code": "USARUS",
+    "name": "USA Rare Eart..."
+  },
+  {
+    "code": "SNOWUS",
+    "name": "Snowflake Inc"
+  },
+  {
+    "code": "RDWUS",
+    "name": "Redwire Corp"
+  },
+  {
+    "code": "TXNUS",
+    "name": "德州仪器"
+  },
+  {
+    "code": "SNPSUS",
+    "name": "新思科技"
+  },
+  {
+    "code": "FLNCUS",
+    "name": "Fluence Energ..."
+  },
+  {
+    "code": "QBTSUS",
+    "name": "D-Wave Quantu..."
+  },
+  {
+    "code": "UBERUS",
+    "name": "优步"
+  },
+  {
+    "code": "BBAIUS",
+    "name": "BigBear.ai Ho..."
+  },
+  {
+    "code": "BRKRUS",
+    "name": "布鲁克"
+  },
+  {
+    "code": "LULUUS",
+    "name": "lululemon ath..."
+  },
+  {
+    "code": "CNCUS",
+    "name": "康西哥"
+  },
+  {
+    "code": "WMTUS",
+    "name": "沃尔玛"
+  },
+  {
+    "code": "NCLHUS",
+    "name": "挪威邮轮"
+  },
+  {
+    "code": "GOOGLUS",
+    "name": "谷歌-A"
+  },
+  {
+    "code": "MOHUS",
+    "name": "Molina Health..."
+  },
+  {
+    "code": "CIENUS",
+    "name": "Ciena科技"
+  },
+  {
+    "code": "UALUS",
+    "name": "联合航空"
+  },
+  {
+    "code": "STXUS",
+    "name": "希捷科技"
+  },
+  {
+    "code": "LITEUS",
+    "name": "Lumentum Hold..."
+  },
+  {
+    "code": "UNHUS",
+    "name": "联合健康"
+  },
+  {
+    "code": "BRK_BUS",
+    "name": "伯克希尔哈撒..."
+  },
+  {
+    "code": "NIOUS",
+    "name": "蔚来"
+  },
+  {
+    "code": "MRKUS",
+    "name": "默沙东"
+  },
+  {
+    "code": "CZRUS",
+    "name": "凯撒娱乐"
+  },
+  {
+    "code": "HEIUS",
+    "name": "海科航空"
+  },
+  {
+    "code": "JNJUS",
+    "name": "强生"
+  },
+  {
+    "code": "NTESUS",
+    "name": "网易"
+  },
+  {
+    "code": "SGMLUS",
+    "name": "Sigma Lithium..."
+  },
+  {
+    "code": "LACUS",
+    "name": "Lithium Ameri..."
+  },
+  {
+    "code": "SQMUS",
+    "name": "智利矿业化工"
+  },
+  {
+    "code": "ALBUS",
+    "name": "美国雅保"
+  },
+  {
+    "code": "ABTUS",
+    "name": "雅培"
+  },
+  {
+    "code": "FNUS",
+    "name": "Fabrinet"
+  },
+  {
+    "code": "CRWVUS",
+    "name": "CoreWeave Inc..."
+  },
+  {
+    "code": "CSCOUS",
+    "name": "思科"
+  },
+  {
+    "code": "QUBTUS",
+    "name": "Quantum Compu..."
+  },
+  {
+    "code": "WDCUS",
+    "name": "西部数据"
+  },
+  {
+    "code": "PFEUS",
+    "name": "辉瑞"
+  },
+  {
+    "code": "YINNUS",
+    "name": "三倍做多富时..."
+  },
+  {
+    "code": "TELUS",
+    "name": "泰科电子"
+  },
+  {
+    "code": "GLDUS",
+    "name": "黄金ETF-SPDR"
+  },
+  {
+    "code": "CSIQUS",
+    "name": "阿特斯太阳能"
+  },
+  {
+    "code": "IONQUS",
+    "name": "IonQ Inc"
+  },
+  {
+    "code": "NETUS",
+    "name": "Cloudflare In..."
+  },
+  {
+    "code": "BEUS",
+    "name": "Bloom Energy ..."
+  },
+  {
+    "code": "UPSUS",
+    "name": "联合包裹服务"
+  },
+  {
+    "code": "REGNUS",
+    "name": "再生元制药"
+  },
+  {
+    "code": "QCOMUS",
+    "name": "高通"
+  },
+  {
+    "code": "JOBYUS",
+    "name": "Joby Aviation..."
+  },
+  {
+    "code": "MPUS",
+    "name": "MP Materials ..."
+  },
+  {
+    "code": "UUUUUS",
+    "name": "Energy Fuels ..."
+  },
+  {
+    "code": "BIDUUS",
+    "name": "百度"
+  },
+  {
+    "code": "RKLBUS",
+    "name": "Rocket Lab Co..."
+  },
+  {
+    "code": "SPCEUS",
+    "name": "维珍银河"
+  },
+  {
+    "code": "WOLFUS",
+    "name": "Wolfspeed Inc"
+  },
+  {
+    "code": "APHUS",
+    "name": "安费诺"
+  },
+  {
+    "code": "KCUS",
+    "name": "金山云"
+  },
+  {
+    "code": "ZDUS",
+    "name": "Ziff Davis In..."
+  },
+  {
+    "code": "UVIXUS",
+    "name": "二倍做多恐慌..."
+  },
+  {
+    "code": "CANUS",
+    "name": "嘉楠科技"
+  },
+  {
+    "code": "RLXUS",
+    "name": "雾芯科技"
+  },
+  {
+    "code": "TDOCUS",
+    "name": "Teladoc Healt..."
+  },
+  {
+    "code": "AAOIUS",
+    "name": "应用光电"
+  },
+  {
+    "code": "RGCUS",
+    "name": "脑再生科技"
+  },
+  {
+    "code": "FNGDUS",
+    "name": "MicroSectors ..."
+  },
+  {
+    "code": "BERZUS",
+    "name": "MicroSectors ..."
+  },
+  {
+    "code": "FNGUUS",
+    "name": "三倍做多FANG+..."
+  },
+  {
+    "code": "PSQUS",
+    "name": "做空纳斯达克1..."
+  },
+  {
+    "code": "AVGOUS",
+    "name": "博通"
+  },
+  {
+    "code": "CRCLUS",
+    "name": "Circle Intern..."
+  },
+  {
+    "code": "XNETUS",
+    "name": "迅雷"
+  },
+  {
+    "code": "NVOUS",
+    "name": "诺和诺德"
+  },
+  {
+    "code": "LLYUS",
+    "name": "礼来"
+  },
+  {
+    "code": "DXYZUS",
+    "name": "Destiny Tech1..."
+  },
+  {
+    "code": "METAUS",
+    "name": "Meta Platform..."
+  },
+  {
+    "code": "VIXYUS",
+    "name": "恐慌指数期货..."
+  },
+  {
+    "code": "TMEUS",
+    "name": "腾讯音乐"
+  },
+  {
+    "code": "VSATUS",
+    "name": "卫讯公司"
+  },
+  {
+    "code": "ASTSUS",
+    "name": "AST SpaceMobi..."
+  },
+  {
+    "code": "AMZNUS",
+    "name": "亚马逊"
+  },
+  {
+    "code": "NXPIUS",
+    "name": "恩智浦半导体"
+  },
+  {
+    "code": "CRWDUS",
+    "name": "CrowdStrike H..."
+  },
+  {
+    "code": "AMDUS",
+    "name": "超威半导体"
+  },
+  {
+    "code": "TSMUS",
+    "name": "台积电"
+  },
+  {
+    "code": "TQQQUS",
+    "name": "三倍做多纳斯..."
+  },
+  {
+    "code": "ASMLUS",
+    "name": "阿斯麦"
+  },
+  {
+    "code": "DPZUS",
+    "name": "达美乐比萨"
+  },
+  {
+    "code": "NFLXUS",
+    "name": "奈飞"
+  },
+  {
+    "code": "TSLAUS",
+    "name": "特斯拉"
+  },
+  {
+    "code": "CMGUS",
+    "name": "墨式烧烤"
+  },
+  {
+    "code": "LOGIUS",
+    "name": "罗技"
+  },
+  {
+    "code": "CRCTUS",
+    "name": "Cricut Inc-A"
+  },
+  {
+    "code": "MSFTUS",
+    "name": "微软"
+  },
+  {
+    "code": "MUUS",
+    "name": "美光科技"
+  },
+  {
+    "code": "SQQQUS",
+    "name": "三倍做空纳斯..."
+  },
+  {
+    "code": "ADBEUS",
+    "name": "奥多比"
+  },
+  {
+    "code": "DELLUS",
+    "name": "戴尔科技"
+  },
+  {
+    "code": "NVDAUS",
+    "name": "英伟达"
+  },
+  {
+    "code": "YANGUS",
+    "name": "三倍做空富时..."
+  },
+  {
+    "code": "BABAUS",
+    "name": "阿里巴巴"
+  }
+]
