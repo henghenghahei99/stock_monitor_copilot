@@ -7,7 +7,7 @@
     当日% = 今收/昨收-1;  近2日% = 今收/2交易日前收-1;  近3日% = 今收/3交易日前收-1
 
 展示口径(池内, "和以前一样"):
-  趋势分 = 加权命中股平均分; 动量分(±10) = 命中代表股前10 的 m 求和按 S/(15%*只数/10)*0.5 归一;
+  趋势分 = 加权命中股平均分; 动量分(±10) = 前n只代表股 m 求和按 S/(5×只数)=平均/5 归一;
   总分 = 趋势分×50% + 动量分×50%; 池内按总分降序; 代表股 = 加权分前10 命中股。
 
 双口径入池(2026-09-06 用户口径):
@@ -190,7 +190,7 @@ def industry_momentum_stats(rep_rows: pd.DataFrame, asof: date) -> tuple[int, fl
             S += m
     if n == 0:
         return 0, 0.0, 0.0
-    pts = (S / (15.0 * n / 10.0)) * 0.5  # = S/(3n), 允许为负
+    pts = S / (5.0 * n)      # = 平均涨幅/5, 允许为负, ±10 封顶
     pts = max(-10.0, min(10.0, pts))
     return n, round(S, 2), round(pts, 2)
 
@@ -214,7 +214,7 @@ def industry_momentum_scores(df: pd.DataFrame, col: str = "uptrend",
         r, c = raw.get(ind), cnt.get(ind)
         pts = 0.0
         if r is not None and c is not None and int(c) > 0:
-            pts = round(max(-10.0, min(10.0, (float(r) / (15.0 * int(c) / 10.0)) * 0.5)), 2)
+            pts = round(max(-10.0, min(10.0, float(r) / (5.0 * int(c)))), 2)
         rows.append({"industry": ind, "趋势分": float(a["平均分"]),
                      "动量分": pts, "动量入池分": r})
     return pd.DataFrame(rows)
@@ -227,7 +227,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
 
     动量(展示与入池同源, 基于板块全部成分股):
       板块成分股按 m=当日%+近2日%+近3日% 降序前10(不足按实际只数), S=Σm;
-      动量入池分 = S(原始);  展示动量分(±10) = S ÷ (15×只数/10) × 0.5 归一;
+      动量入池分 = S(原始);  展示动量分(±10) = S ÷ (5×只数) = 前n只平均涨幅÷5;
       入池 = 原行业"得分"前 top ∪ "动量入池分"前 top(并集, 最多 2*top)。
     池内按 总分 = 趋势分×50% + 动量分×50% 降序。
     代表股列 = 趋势代表股(加权分前5) + ◎动量代表股(全部成分股按 m 前5, ◎=短线动量, 报告端标色)。
@@ -241,10 +241,10 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     cnt_map = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
 
     def _display_pts(raw, cnt) -> float:
-        """动量分(±10) = S/(15*只数/10)*0.5, 与动量入池分同源归一。"""
+        """动量分(±10) = S/(5×只数) = 前n只平均涨幅÷5, 与动量入池分同源归一。"""
         if raw is None or cnt is None or int(cnt) <= 0:
             return 0.0
-        pts = (float(raw) / (15.0 * int(cnt) / 10.0)) * 0.5
+        pts = float(raw) / (5.0 * int(cnt))
         return round(max(-10.0, min(10.0, pts)), 2)
 
     # 1) 趋势代表股(命中股加权分前5)

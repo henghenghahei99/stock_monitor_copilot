@@ -25,6 +25,7 @@ import re
 import smtplib
 import sys
 from email.header import Header
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formataddr
@@ -77,12 +78,42 @@ def main() -> None:
     with open(args.file, encoding="utf-8") as f:
         html = f.read()
 
-    msg = MIMEMultipart("alternative")
+    # 邮件客户端(QQ/163)不渲染内嵌 SVG 图表: 报告里的走势图已由 make_a_rank_report
+    # 导出为 a_rank_report_MMDD_charts/chart_N.png; 这里把 <!--CHART:N--><!--/CHART-->
+    # 段替换成 <img src=cid:chartN.png>, 并把 PNG 作为内联附件(Content-ID)发出。
+    charts_dir = os.path.splitext(args.file)[0] + "_charts"
+    chart_re = re.compile(r"<!--CHART:(\d+)-->.*?<!--/CHART-->", re.S)
+    matches = list(chart_re.finditer(html))
+
+    def _img_repl(m) -> str:
+        k = int(m.group(1))
+        p = os.path.join(charts_dir, f"chart_{k}.png")
+        if os.path.exists(p):
+            return (f'<div style="text-align:center;margin:8px 0">'
+                    f'<img src="cid:chart{k}.png" alt="走势图" '
+                    f'style="max-width:100%;height:auto"/></div>')
+        return ""
+
+    html_mail = chart_re.sub(_img_repl, html)
+
+    msg = MIMEMultipart("related")
     msg["From"] = formataddr((str(Header("A_rank日报", "utf-8")), c["user"]))
     msg["To"] = ", ".join(recipients)
     msg["Subject"] = Header(args.subject, "utf-8")
-    msg.attach(MIMEText("详见HTML附件内容(请用支持HTML的邮件客户端查看)。", "plain", "utf-8"))
-    msg.attach(MIMEText(html, "html", "utf-8"))
+    alt = MIMEMultipart("alternative")
+    alt.attach(MIMEText("详见HTML邮件正文(图若未显示请以HTML方式查看)。", "plain", "utf-8"))
+    alt.attach(MIMEText(html_mail, "html", "utf-8"))
+    msg.attach(alt)
+    for m in matches:
+        k = int(m.group(1))
+        p = os.path.join(charts_dir, f"chart_{k}.png")
+        if not os.path.exists(p):
+            continue
+        with open(p, "rb") as fh:
+            part = MIMEImage(fh.read(), _subtype="png")
+        part.add_header("Content-ID", f"<chart{k}.png>")
+        part.add_header("Content-Disposition", "inline", filename=f"chart_{k}.png")
+        msg.attach(part)
 
     print(f"连接 {c['host']}:{c['port']} 发送给 {', '.join(recipients)} ...")
     if c.get("port") == 465:

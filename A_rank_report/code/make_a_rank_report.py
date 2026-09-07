@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import argparse
+import colorsys
 import os
 import sys
 
@@ -167,13 +168,13 @@ def _mom_word(chg):
     return "动量大幅下滑"
 
 
-def _pct_level(val, refs):
-    """val 在 refs(越高越好)中的百分位等级: 前10%很强 / 10-30%强 / 30-70%一般 / 70-100%弱。"""
+def _pct_level(val, refs, top="很强"):
+    """val 在 refs(越高越好)中的百分位等级: 前10% {top} / 10-30%强 / 30-70%一般 / 70-100%弱。"""
     if val is None or not refs:
         return "弱"
     pct = sum(1 for x in refs if x > val) / len(refs)
     if pct <= 0.10:
-        return "很强"
+        return top
     if pct <= 0.30:
         return "强"
     if pct <= 0.70:
@@ -183,8 +184,9 @@ def _pct_level(val, refs):
 
 def _add_eval_col(delta, today_scores, pool_inds):
     """给 delta 加“评价”列:
-    池内  -> 按 趋势分变化(增强/减弱) + 动量分变化(爆发/增强/减弱/大幅下滑);
-    新进/退出 -> 按该板块当日 动量分/趋势分 在今日池内百分位: 前10%很强/前10-30%强/30-70%一般/70-100%弱。
+    池内  -> 趋势分变化(增强/减弱/平稳) + 动量分变化(≥1.5爆发/0~1.5增强/-1.5~0减弱/<-1.5大幅下滑);
+    新进/退出(新上榜) -> 按该板块当日 趋势分/动量分 在今日池内百分位:
+        趋势 前10%很强 / 动量 前10%爆发; 10-30%强 / 30-70%一般 / 70-100%弱。
     """
     pool_df = today_scores[today_scores["industry"].isin(pool_inds)]
     mom_refs = list(pool_df["动量分"])
@@ -204,8 +206,8 @@ def _add_eval_col(delta, today_scores, pool_inds):
         tv = float(sub["趋势分"].iloc[0])
         mv = float(sub["动量分"].iloc[0])
         in_pool = ind in pool_inds
-        evals.append("趋势" + _pct_level(tv, tr_refs if in_pool else tr_refs + [tv])
-                     + "、动量" + _pct_level(mv, mom_refs if in_pool else mom_refs + [mv]))
+        evals.append("趋势" + _pct_level(tv, tr_refs if in_pool else tr_refs + [tv], "很强")
+                     + "、动量" + _pct_level(mv, mom_refs if in_pool else mom_refs + [mv], "爆发"))
     delta["评价"] = evals
 
 
@@ -308,10 +310,11 @@ _DASHES = ("", "6 4", "2 3", "9 4 2 4")   # 实线/短虚线/点线/长短短线
 
 
 def _sector_color(i: int, total: int) -> str:
-    """按序分色: 均匀色相 + 明度 27%/45% 两档交替(深色系), 两张图/图例共用。"""
-    h = (i * 360.0 / total) if total else 0.0
-    l = 27 + 18 * (i % 2)
-    return f"hsl({h:.0f}, 62%, {l}%)"
+    """按序分色: 均匀色相 + 明度 27%/45% 两档交替(深色系), 返回 hex(SVG/PNG 通用)。"""
+    hue = ((i * 360.0 / total) if total else 0.0) / 360.0
+    light = (27 + 18 * (i % 2)) / 100.0
+    r, g, b = colorsys.hls_to_rgb(hue, 0.62, light)
+    return "#%02x%02x%02x" % (round(r * 255), round(g * 255), round(b * 255))
 
 
 def _dash(i: int) -> str:
@@ -455,6 +458,80 @@ def _metric_svg(metric: str, series: list[dict], order: list[tuple[str, int | No
             f'{grid}{segs}{xlab}</svg>')
 
 
+def _chart_png_bytes(metric: str, series: list[dict], order: list[tuple[str, int | None]],
+                     colors: dict, idx: dict[str, int], title: str) -> bytes:
+    """把某张走势图渲染成 PNG bytes(含中文标题/图例), 供邮件内嵌(QQ/163 不渲染内嵌SVG)。"""
+    import io
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt  # noqa: PLC0415
+    plt.rcParams["font.sans-serif"] = [
+        # 注意: 必须选覆盖中文+数字+①±·→等全符号的字体(如 Noto Sans CJK);
+        # Droid Sans Fallback 缺数字/±/①/·等字形会渲染成方块
+        "Noto Sans CJK JP", "Noto Sans CJK KR", "Noto Sans CJK HK",
+        "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback"]
+    plt.rcParams["axes.unicode_minus"] = False
+
+    labels = [p["label"] for p in series]
+    ndays = len(series)
+    drawn = {ind for ind, _r in order}
+    vals = [p["scores"][ind][metric] for p in series
+            for ind in p["scores"] if ind in drawn]
+    if not vals:
+        return b""
+    lo, hi = min(vals), max(vals)
+    if metric == "mom":
+        lo, hi = min(lo, 0.0), max(hi, 0.0)
+    if hi <= lo:
+        hi = lo + 1.0
+    pad = (hi - lo) * 0.12
+    lo, hi = lo - pad, hi + pad
+
+    ncol = max(1, (len(order) + 2) // 3)
+    rows = (len(order) + ncol - 1) // ncol
+    fig, ax = plt.subplots(figsize=(12.5, 3.4 + 0.32 * rows), dpi=120)
+    ax.set_ylim(lo, hi)
+    ax.set_xlim(-0.25, ndays - 0.75)
+    ax.set_xticks(range(ndays))
+    ax.set_xticklabels(labels, fontsize=11)
+    ax.grid(True, axis="y", linestyle="--", alpha=0.4)
+    if metric == "mom":
+        ax.axhline(0, color="#c9c9c9", linewidth=1, linestyle=":")
+    handles, names = [], []
+    for ind, rank in order:
+        color = colors[ind]
+        ls = _LS[idx[ind] % len(_LS)]
+        xs, ys = [], []
+        for p in series:
+            s = p["scores"].get(ind)
+            if s is not None:
+                xs.append(labels.index(p["label"]))
+                ys.append(s[metric])
+            else:
+                if len(xs) >= 2:
+                    h, = ax.plot(xs, ys, color=color, linestyle=ls, linewidth=2.2,
+                                 marker="o", markersize=4)
+                    handles.append(h)
+                    names.append(f"{rank}. {ind}" if rank else ind)
+                xs, ys = [], []
+        if len(xs) >= 2:
+            h, = ax.plot(xs, ys, color=color, linestyle=ls, linewidth=2.2,
+                         marker="o", markersize=4)
+            handles.append(h)
+            names.append(f"{rank}. {ind}" if rank else ind)
+    if handles:
+        ax.legend(handles, names, ncol=ncol, fontsize=9, loc="upper center",
+                  bbox_to_anchor=(0.5, -0.18), frameon=False)
+    fig.suptitle(title, fontsize=14, y=0.99)
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", bbox_inches="tight")
+    plt.close(fig)
+    return buf.getvalue()
+
+
+_LS = ["-", "--", ":", "-."]          # matplotlib 线型(与 _DASHES 顺序对应)
+
+
 def _legend_html(order: list[tuple[str, int | None]], colors: dict,
                  idx: dict[str, int], min_col: int = 150) -> str:
     """小图例: 每个板块画一段与图中同色同线型的线段样本(色+线型可辨)。"""
@@ -559,6 +636,7 @@ def main() -> None:
                 f"<h3>板块近{len(series)}日走势 — 今日池中走势明显的板块 (每板块一条线, 连续在池≥{CHART_MIN_RUN}日才画)</h3>")
             seq = ["①", "②", "③", "④"]
             gi = 0
+            chart_no = 0
             for metric, mname in (("trend", "趋势分走势（每日该板块入池得分）"),
                                   ("mom", "动量分走势（±10）")):
                 up, down = _direction_groups(order, series, metric)
@@ -566,11 +644,24 @@ def main() -> None:
                     if not g:
                         continue
                     title = f"{seq[gi]} {mname} · {tag} {len(g)}条"
+                    # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
+                    png_dir = os.path.join(OUT, f"a_rank_report_{args.date}_charts")
+                    try:
+                        os.makedirs(png_dir, exist_ok=True)
+                        png = _chart_png_bytes(metric, series, g, colors, idx, title)
+                        if png:
+                            with open(os.path.join(png_dir, f"chart_{chart_no}.png"), "wb") as fp:
+                                fp.write(png)
+                    except Exception as exc:  # noqa: BLE001
+                        print(f"[警告] 图表PNG生成失败(chart_{chart_no}): {exc}", file=sys.stderr)
+                    chart_parts.append(f"<!--CHART:{chart_no}-->")
                     chart_parts.append(
                         f"<div style='font-weight:600;color:#444;margin:8px 0 2px'>{title}</div>")
                     chart_parts.append(_metric_svg(metric, series, g, colors, idx))
                     chart_parts.append(_legend_html(g, colors, idx))   # 该图自己的小图例
+                    chart_parts.append("<!--/CHART-->")
                     gi += 1
+                    chart_no += 1
             note_lines = [
                 "覆盖: " + "、".join(f"{p['label']}({p['cov'] or '?'})" for p in series) + "；x 轴下方数字 = 该日池内板块数。",
                 f"筛选: 退出的不画；窗口内没有连续≥{CHART_MIN_RUN}个交易日在池的板块(零散孤点/频繁进出)也不画，避免断线碎点；",
@@ -588,7 +679,7 @@ def main() -> None:
                  "② 行业加权：8/8→8分、7/8→6分、6/8→4分；6分以下(如5/8)命中但计0分。<br>"
                  "③ 行业得分=该行业成员加权分之和；趋势分=得分/计入股票数。<br>"
                  "④ 动量分(±10)与动量入池分同源：取板块全部成分股按 m=当日%+近2日%+近3日%(三段叠加) 降序前10"
-                 "(不足按实际只数)，S=Σ前10的m；动量入池分=S；展示动量分=S÷(15%×只数/10)×0.5 归一(允许为负)。<br>"
+                 "(不足按实际只数)，S=Σ前10的m；动量入池分=S；展示动量分=S÷(5×只数)=前n只平均涨幅÷5 归一(允许为负, ±10封顶)。<br>"
                  "⑤ 总分 = 趋势分×50% + 动量分×50%；入池=原行业得分前15名 ∪ 动量入池分前15名(并集, 最多30个)，"
                  "池内按总分降序排名；入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前5(板块全部成分股按m最强, 橙色◎=短线动量, 记+短线%)。</p>")
@@ -602,7 +693,7 @@ def main() -> None:
                   "涨红跌绿：排名变化=前日排名−今日排名(正=名次上升)；"
                   "趋势分变化/动量分变化/总分变化=今日−前日(正=升，负=降)。<br>"
                   "评价：池内按 趋势分变化(正=趋势增强/负=趋势减弱) + 动量分变化(≥1.5动量爆发 / 0~1.5动量增强 / -1.5~0动量减弱 / <-1.5动量大幅下滑)；"
-                  "新进/退出按该板块当日动量分、趋势分在今日池内百分位：前10%很强 / 前10-30%强 / 30-70%一般 / 70-100%弱。</p>")
+                  "新进/退出按该板块当日趋势分、动量分在今日池内百分位：趋势 前10%很强 / 动量 前10%爆发；10-30%强 / 30-70%一般 / 70-100%弱。</p>")
     if delta is not None:
         parts.append("<h3>与前一交易日排名升降 (排名变化: 正=名次上升)</h3>")
         d = delta.copy()
@@ -630,7 +721,7 @@ def main() -> None:
                      "近60日新高/放量)满足个数(1个1分, >=5命中; 历史不足按比例折到/8, 如5/7->6/8); "
                      "②行业加权 8/8->8分、7/8->6分、6/8->4分(6以下计0); ③行业得分=成员加权分之和, "
                      "趋势分=得分/股票数; ④动量分(±10)与动量入池分同源: 板块全部成分股按 m=当日%+近2日%+近3日% 降序前10"
-                     "(不足按实际只数)S=Σ, 动量入池分=S, 展示动量分=S/(15%*只数/10)*0.5(允许为负); "
+                     "(不足按实际只数)S=Σ, 动量入池分=S, 展示动量分=S/(5×只数)=前n只平均涨幅÷5(允许为负, ±10封顶); "
                      "⑤总分=趋势分*50%+动量分*50%, 入池=原得分前15 ∪ 动量入池分前15(并集, 最多30), 池内按总分降序; "
                      "入池列: 趋势=得分入池, 动量=动量入池, 趋势+动量=双口径; "
                      "⑥代表股=趋势前5(加权分, X/8,+近20日%) + ◎动量前5(板块全部成分股按m最强, 记+短线%)")
@@ -642,7 +733,7 @@ def main() -> None:
                      "状态: 池内=两日均在池内, 新进池=今日新进, 退出池=今日掉出; "
                      "涨红跌绿: 排名变化=前日排名-今日排名(正=名次上升); 趋势分变化/动量分变化/总分变化=今日-前日; "
                      "评价: 池内按趋势分变化(正=增强/负=减弱)+动量分变化(>=1.5爆发/0~1.5增强/-1.5~0减弱/<-1.5大幅下滑); "
-                     "新进/退出按当日动量分·趋势分在今日池内百分位(前10%很强/前10-30%强/30-70%一般/70-100%弱)")
+                     "新进/退出按当日趋势分、动量分在今日池内百分位(趋势前10%很强/动量前10%爆发/10-30%强/30-70%一般/70-100%弱)")
     if series:
         lines.append("")
         lines.append("== 附: 板块近%d日走势 (今日池中走势明显的板块; 不在池日为 -) ==" % len(series))

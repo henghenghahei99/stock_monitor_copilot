@@ -529,12 +529,17 @@ def is_shell_name(name: str) -> bool:
     return any(k in n for k in SHELL_KEYWORDS)
 
 
-_PROXY_CONF = os.path.expanduser("~/.gtimg_proxy.json")   # 可选: {"http":"..","https":"..","api":"取IP池URL"}
+_PROXY_CONF = os.path.expanduser("~/.gtimg_proxy.json")
+# 可选配置: {"http":"..","https":"..","api":"取IP池URL","num":10,"ttl":180}
+#   api: 一次取一批代理的URL(支持 num= 参数; 若 URL 没带 num= 会自动补 num)
+#   num: 每批取的IP个数, 默认 10
+#   ttl: 刷新周期(秒), 默认 180 —— 每个IP有效期约3分钟, 提前一点点刷新避免用失效IP
+_POOL_DEFAULT_TTL = 180.0
+_POOL_DEFAULT_NUM = 10
 _opener: Optional[urllib.request.OpenerDirector] = None
 _pool_lock = threading.Lock()
 _pool: list = []
 _pool_ts = 0.0
-_pool_ttl = 120.0     # 代理池有效期(秒), 到点重新拉取
 
 
 def _proxy_config() -> dict:
@@ -557,23 +562,38 @@ def _load_proxies() -> dict:
 
 
 def _fetch_proxy_pool() -> list:
-    """从配置的取IP池 API 拉一次代理(txt, 每行 ip:port), 结果缓存 _pool_ttl 秒。"""
+    """从配置的取IP池 API 拉一批代理(txt, 每行 ip:port), 缓存一个刷新周期。
+
+    配置 ~/.gtimg_proxy.json:
+      {"api":"...取IP池URL(支持 num= 参数)", "num":10, "ttl":180}
+    - num: 每次取的IP个数, 默认10; api 里没带 num= 时自动补 num=10
+    - ttl: 刷新周期(秒), 默认180; IP有效期一般3分钟, 到期前刷新避免用失效IP
+    """
     global _pool, _pool_ts
-    url = _proxy_config().get("api")
+    cfg = _proxy_config()
+    url = cfg.get("api")
     if not url:
         return []
+    ttl = float(cfg.get("ttl", _POOL_DEFAULT_TTL))
+    num = int(cfg.get("num", _POOL_DEFAULT_NUM))
+    if "num=" not in url:
+        url += ("&" if "?" in url else "?") + f"num={num}"
     with _pool_lock:
-        if _pool and (time.time() - _pool_ts) < _pool_ttl:
+        if _pool and (time.time() - _pool_ts) < ttl:
             return list(_pool)
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=15) as resp:
+            with urllib.request.urlopen(req, timeout=20) as resp:
                 txt = resp.read().decode("utf-8", "ignore")
-            _pool = [ln.strip() for ln in txt.splitlines()
-                     if ln.strip() and ":" in ln and not ln.strip().startswith("{")]
-            _pool_ts = time.time()
-            if _pool:
-                print(f"[代理] 取到 {len(_pool)} 个IP代理", file=sys.stderr)
+            got = [ln.strip() for ln in txt.splitlines()
+                   if ln.strip() and ":" in ln and not ln.strip().startswith("{")]
+            if got:
+                _pool = got
+                _pool_ts = time.time()
+                print(f"[代理] 取到 {len(_pool)} 个IP代理 (刷新周期~{ttl / 60:.1f}分钟)",
+                      file=sys.stderr)
+            elif not _pool:
+                print("[代理] 取IP池返回为空", file=sys.stderr)
         except Exception as exc:  # noqa: BLE001
             print(f"[代理] 拉取失败: {exc}", file=sys.stderr)
         return list(_pool)
@@ -614,7 +634,7 @@ def http_get(url: str, timeout: int = 15) -> bytes:
     cands = _candidate_proxies()
     if cands:
         start = next(_rr) % len(cands)
-        tries = [cands[(start + i) % len(cands)] for i in range(min(len(cands), 8))]
+        tries = [cands[(start + i) % len(cands)] for i in range(min(len(cands), 10))]
         last_exc: Optional[Exception] = None
         for proxy in tries:
             try:
