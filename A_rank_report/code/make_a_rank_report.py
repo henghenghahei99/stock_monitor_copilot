@@ -209,6 +209,288 @@ def _add_eval_col(delta, today_scores, pool_inds):
     delta["评价"] = evals
 
 
+# ---------- 近N日走势: 每个板块一条线 ----------
+
+
+def _coverage_tag(df: pd.DataFrame) -> str:
+    """结果CSV覆盖口径: 按 prefixed 前2位判断 仅沪/沪深北 等。"""
+    try:
+        if "prefixed" not in df.columns:
+            return ""
+        pref = set(str(x)[:2] for x in df["prefixed"].dropna())
+        have = {p for p in pref if p in ("sh", "sz", "bj")}
+        if not have:
+            return ""
+        if {"sz", "bj"} & have:
+            return "沪深北"
+        return "仅沪市"
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+def _recent_pool_series(date_mmdd: str, days: int = 5) -> list[dict]:
+    """近 days 个有结果CSV的交易日(<=报告日, 含报告日本身), 各自"当天池"的合计分。
+
+    口径: 每天用"当天自己的池"(combined_rank 双口径: 得分前15 ∪ 动量入池分前15),
+    池内 趋势分/动量分 各自求和 —— 某板块当天不在池(出池)即不计入当天(贡献中断);
+    当天新进池的板块从当天起计入。返回按日期升序, 有多少天返回多少。
+    """
+    cand = []
+    for fn in os.listdir(OUT):
+        if not fn.startswith("cn_uptrend_") or not fn.endswith(".csv"):
+            continue
+        core = fn[len("cn_uptrend_"):-4]
+        if len(core) == 4 and core.isdigit() and core <= date_mmdd:
+            cand.append(core)
+    cand = sorted(set(cand))[-days:]
+    series = []
+    for core in cand:
+        path = os.path.join(OUT, f"cn_uptrend_{core}.csv")
+        try:
+            dfr = pd.read_csv(path, encoding="utf-8-sig")
+            rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, 15)
+            if rk.empty:
+                continue
+            series.append({
+                "label": f"{core[:2]}-{core[2:]}",
+                "date": core,
+                "n": int(len(rk)),
+                "inds": set(rk["industry"]),
+                "trend": float(rk["趋势分"].sum()),
+                "mom": float(rk["动量分"].sum()),
+                "cov": _coverage_tag(dfr),
+            })
+        except Exception as exc:  # noqa: BLE001
+            print(f"[警告] 近N日走势跳过 {core}: {exc}", file=sys.stderr)
+    return series
+
+
+def _recent_pool_series(date_mmdd: str, days: int = 5) -> list[dict]:
+    """近 days 个有结果CSV的交易日(<=报告日, 含报告日本身), 各自"当天池"的每板块分数。
+
+    每天用当天自己的池(combined_rank 双口径: 得分前15 ∪ 动量入池分前15),
+    记录 池内每板块 趋势分/动量分。某板块某天不在池则当天无分数(=出池, 画图时断线)。
+    返回按日期升序, 有多少天返回多少。
+    """
+    cand = []
+    for fn in os.listdir(OUT):
+        if not fn.startswith("cn_uptrend_") or not fn.endswith(".csv"):
+            continue
+        core = fn[len("cn_uptrend_"):-4]
+        if len(core) == 4 and core.isdigit() and core <= date_mmdd:
+            cand.append(core)
+    cand = sorted(set(cand))[-days:]
+    series = []
+    for core in cand:
+        path = os.path.join(OUT, f"cn_uptrend_{core}.csv")
+        try:
+            dfr = pd.read_csv(path, encoding="utf-8-sig")
+            rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, 15)
+            if rk.empty:
+                continue
+            series.append({
+                "label": f"{core[:2]}-{core[2:]}",
+                "date": core,
+                "n": int(len(rk)),
+                "pool": [str(x) for x in rk["industry"]],
+                "scores": {str(r["industry"]): {"trend": float(r["趋势分"]),
+                                              "mom": float(r["动量分"])}
+                           for _, r in rk.iterrows()},
+                "cov": _coverage_tag(dfr),
+            })
+        except Exception as exc:  # noqa: BLE001
+            print(f"[警告] 近N日走势跳过 {core}: {exc}", file=sys.stderr)
+    return series
+
+
+# 近N日走势 配色/线型: 均匀色相 + 深/浅两档明度交替 + 4 种线型, 提升区分度
+_DASHES = ("", "6 4", "2 3", "9 4 2 4")   # 实线/短虚线/点线/长短短线
+
+
+def _sector_color(i: int, total: int) -> str:
+    """按序分色: 均匀色相 + 明度 27%/45% 两档交替(深色系), 两张图/图例共用。"""
+    h = (i * 360.0 / total) if total else 0.0
+    l = 27 + 18 * (i % 2)
+    return f"hsl({h:.0f}, 62%, {l}%)"
+
+
+def _dash(i: int) -> str:
+    """按序取线型(实线/短虚/点/长短短), 相邻板块线型不同。"""
+    return _DASHES[i % len(_DASHES)]
+
+
+# 近N日走势筛选: 退出的不画; 需有连续在池段, 且趋势·动量整体起伏过小(横盘)的也不画
+CHART_MIN_RUN = 3           # 板块至少要有 连续 >=3 个交易日在池(太碎/孤点不画)
+CHART_MIN_TREND_CHG = 0.4   # 窗口内 趋势分 max-min 至少达此值
+CHART_MIN_MOM_CHG = 1.6     # 窗口内 动量分 max-min 至少达此值
+
+
+def _active_view(series: list[dict]) -> list[tuple[str, int]]:
+    """只画今日池中"窗口内有实际走势"的板块: 有 连续>=CHART_MIN_RUN 日在池, 且 趋势/动量 起伏达标。
+
+    返回 [(行业, 今日排名)] (按今日池总分序, 排名=下标+1)。
+    """
+    today_pool = [str(x) for x in series[-1]["pool"]]
+    out: list[tuple[str, int]] = []
+    for i, ind in enumerate(today_pool, start=1):
+        present = [k for k, p in enumerate(series) if ind in p["scores"]]
+        maxrun = cur = 0
+        last = None
+        for k in present:
+            cur = cur + 1 if (last is not None and k == last + 1) else 1
+            maxrun = max(maxrun, cur)
+            last = k
+        if maxrun < CHART_MIN_RUN:
+            continue
+        pts = [p["scores"][ind] for p in series if ind in p["scores"]]
+        tr = [s["trend"] for s in pts]
+        mo = [s["mom"] for s in pts]
+        if (max(tr) - min(tr) < CHART_MIN_TREND_CHG
+                and max(mo) - min(mo) < CHART_MIN_MOM_CHG):
+            continue
+        out.append((ind, i))
+    return out
+
+
+def _direction_groups(order: list[tuple[str, int]], series: list[dict],
+                      metric: str) -> tuple[list[tuple[str, int]], list[tuple[str, int]]]:
+    """按某指标窗口内 首在池日->末在池日 净变化, 把板块分为 整体上升 / 整体下降 两组。
+
+    返回 (上升组, 下降组), 各保持今日排名顺序。
+    """
+    up: list[tuple[str, int]] = []
+    down: list[tuple[str, int]] = []
+    for ind, rank in order:
+        pts = [p["scores"][ind][metric] for p in series if ind in p["scores"]]
+        net = (pts[-1] - pts[0]) if len(pts) >= 2 else 0.0
+        (up if net >= 0 else down).append((ind, rank))
+    return up, down
+
+
+def _fmt_axis(v: float, span: float) -> str:
+    if span >= 8:
+        return f"{v:.0f}"
+    if span >= 0.8:
+        return f"{v:.1f}"
+    return f"{v:.2f}"
+
+
+def _run_path(run: list[tuple[int, float]], X, Y, color: str, n_days: int,
+              dash: str = "") -> str:
+    """一段连续在池日期 -> 折线段(带线型) + 圆点(今日点加大)。"""
+    if not run:
+        return ""
+    out = ""
+    if len(run) >= 2:
+        d = "M " + " L ".join(f"{X(i):.1f} {Y(v):.1f}" for i, v in run)
+        out += (f'<path d="{d}" fill="none" stroke="{color}" stroke-width="2.4" '
+                f'stroke-linejoin="round"'
+                + (f' stroke-dasharray="{dash}"' if dash else "") + "/>")
+    for i, v in run:
+        r = 3.6 if i == n_days - 1 else 2.4
+        out += (f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="{r}" fill="{color}"/>')
+    return out
+
+
+def _metric_svg(metric: str, series: list[dict], order: list[tuple[str, int | None]],
+                colors: dict, idx: dict[str, int]) -> str:
+    """每个板块一条折线; 不在池的日期断线(无点)。metric: trend|mom。"""
+    n_days = len(series)
+    W, H, pl, pr, pt, pb = 900, 300, 52, 18, 30, 44
+    iw, ih = W - pl - pr, H - pt - pb
+    drawn = {ind for ind, _rank in order}
+    vals = [p["scores"][ind][metric] for p in series
+            for ind in p["scores"] if ind in drawn]
+    if not vals:
+        return ""
+    lo, hi = min(vals), max(vals)
+    if metric == "mom":
+        lo, hi = min(lo, 0.0), max(hi, 0.0)
+    if hi <= lo:
+        hi = lo + 1.0
+    pad = (hi - lo) * 0.12
+    lo, hi = lo - pad, hi + pad
+
+    def X(i): return pl + iw * (i / (n_days - 1) if n_days > 1 else 0.0)
+
+    def Y(v): return pt + ih - (v - lo) / (hi - lo) * ih
+
+    span = hi - lo
+    grid = ""
+    for k in range(5):
+        v = lo + span * k / 4
+        y = Y(v)
+        grid += (f'<line x1="{pl}" y1="{y:.1f}" x2="{W - pr}" y2="{y:.1f}" '
+                 f'stroke="#ececec" stroke-width="1"/>'
+                 f'<text x="{pl - 7}" y="{y + 4:.1f}" text-anchor="end" '
+                 f'font-size="11" fill="#888">{_fmt_axis(v, span)}</text>')
+    if metric == "mom" and lo < 0 < hi:
+        grid += (f'<line x1="{pl}" y1="{Y(0.0):.1f}" x2="{W - pr}" y2="{Y(0.0):.1f}" '
+                 f'stroke="#c9c9c9" stroke-width="1" stroke-dasharray="4 3"/>')
+    xlab = ""
+    for i, p in enumerate(series):
+        x = X(i)
+        xlab += (f'<text x="{x:.1f}" y="{pt + ih + 18}" text-anchor="middle" '
+                 f'font-size="12" fill="#444">{p["label"]}</text>'
+                 f'<text x="{x:.1f}" y="{pt + ih + 32}" text-anchor="middle" '
+                 f'font-size="10" fill="#999">{p["n"]}池</text>')
+    segs = ""
+    for ind, _rank in order:
+        color = colors[ind]
+        dash = _dash(idx[ind])          # 线型按全局序号, 与图例一致
+        run = []
+        for i, p in enumerate(series):
+            s = p["scores"].get(ind)
+            if s is not None:
+                run.append((i, s[metric]))
+            else:
+                if len(run) >= CHART_MIN_RUN:      # 太短的碎段/孤点不画
+                    segs += _run_path(run, X, Y, color, n_days, dash)
+                run = []
+        if len(run) >= CHART_MIN_RUN:
+            segs += _run_path(run, X, Y, color, n_days, dash)
+    return (f'<svg viewBox="0 0 {W} {H}" style="width:100%;max-width:900px;'
+            f'font-family:Segoe UI,Microsoft YaHei,sans-serif" xmlns="http://www.w3.org/2000/svg">'
+            f'<rect width="{W}" height="{H}" fill="#fff"/>'
+            f'{grid}{segs}{xlab}</svg>')
+
+
+def _legend_html(order: list[tuple[str, int | None]], colors: dict,
+                 idx: dict[str, int], min_col: int = 150) -> str:
+    """小图例: 每个板块画一段与图中同色同线型的线段样本(色+线型可辨)。"""
+    items = []
+    for ind, rank in order:
+        c = colors[ind]
+        dash = _dash(idx[ind])
+        da = f' stroke-dasharray="{dash}"' if dash else ""
+        tag = f"{rank}. " if rank else ""
+        suffix = "" if rank else "<span style='color:#999'>（窗口内出池）</span>"
+        sample = (f'<svg width="40" height="14" style="flex:none;margin-right:6px">'
+                  f'<line x1="2" y1="8" x2="38" y2="8" stroke="{c}" stroke-width="3"{da}/></svg>')
+        items.append(
+            f'<div style="display:flex;align-items:center;white-space:nowrap">'
+            f'{sample}{tag}{ind}{suffix}</div>')
+    return ('<div style="display:grid;grid-template-columns:repeat(auto-fill,'
+            f'minmax({min_col}px,1fr));gap:2px 12px;font-size:11px;color:#444;'
+            f'margin:4px 0 2px">{"".join(items)}</div>')
+
+
+def _view_txt(order: list[tuple[str, int | None]], series: list[dict]) -> list[str]:
+    """文本版: 每个板块一行的近N日序列(出池日为 -)。"""
+    out = []
+    for ind, rank in order:
+        head = f"{rank}. {ind}" if rank else f"{ind}(出池)"
+        cells = []
+        for p in series:
+            s = p["scores"].get(ind)
+            if s is None:
+                cells.append(f"{p['label']}: -")
+            else:
+                cells.append(f"{p['label']}: 趋{s['trend']:.1f}/动{s['mom']:.1f}")
+        out.append(head + "  " + "  ".join(cells))
+    return out
+
+
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--date", required=True, help="报告日期, 如 0902")
@@ -261,6 +543,45 @@ def main() -> None:
             "h2{color:#2b579a}h3{color:#444}.note{color:#999;font-size:12px}"
             "</style></head>" % title)
     parts = [f"<html>{head}<body style='padding:16px'>", f"<h2>{title}</h2>"]
+
+    # 近N日走势图(放在报告末尾): 每个板块一条线(趋势分/动量分各一组方向图); 太碎短线不画
+    today_file = os.path.join(OUT, f"cn_uptrend_{args.date}.csv")
+    series = _recent_pool_series(args.date) if (args.results and os.path.exists(today_file)) else []
+    order = _active_view(series) if series else []
+    chart_parts: list[str] = []
+    if series:
+        if not order:
+            chart_parts.append(f"<h3>板块近{len(series)}日走势 — 今日池板块窗口内无满足条件的走势(太碎或横盘)</h3>")
+        else:
+            colors = {ind: _sector_color(i, len(order)) for i, (ind, _r) in enumerate(order)}
+            idx = {ind: i for i, (ind, _r) in enumerate(order)}
+            chart_parts.append(
+                f"<h3>板块近{len(series)}日走势 — 今日池中走势明显的板块 (每板块一条线, 连续在池≥{CHART_MIN_RUN}日才画)</h3>")
+            seq = ["①", "②", "③", "④"]
+            gi = 0
+            for metric, mname in (("trend", "趋势分走势（每日该板块入池得分）"),
+                                  ("mom", "动量分走势（±10）")):
+                up, down = _direction_groups(order, series, metric)
+                for tag, g in (("整体上升", up), ("整体下降", down)):
+                    if not g:
+                        continue
+                    title = f"{seq[gi]} {mname} · {tag} {len(g)}条"
+                    chart_parts.append(
+                        f"<div style='font-weight:600;color:#444;margin:8px 0 2px'>{title}</div>")
+                    chart_parts.append(_metric_svg(metric, series, g, colors, idx))
+                    chart_parts.append(_legend_html(g, colors, idx))   # 该图自己的小图例
+                    gi += 1
+            note_lines = [
+                "覆盖: " + "、".join(f"{p['label']}({p['cov'] or '?'})" for p in series) + "；x 轴下方数字 = 该日池内板块数。",
+                f"筛选: 退出的不画；窗口内没有连续≥{CHART_MIN_RUN}个交易日在池的板块(零散孤点/频繁进出)也不画，避免断线碎点；",
+                f"整体近乎横盘(趋势起伏<{CHART_MIN_TREND_CHG} 且 动量起伏<{CHART_MIN_MOM_CHG})的也不画。",
+                "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”。",
+                "口径: 每日取当天自己的入池板块(原得分前15 ∪ 动量入池分前15)；仅画在池的交易日，某日不在池则该段断开。",
+            ]
+            if any(p.get("cov") == "仅沪市" for p in series):
+                note_lines.append("注意: 标“仅沪市”的日期为行情状态码修复前的扫描产物，仅沪市口径，与“沪深北”日期不可直接比绝对值。")
+            chart_parts.append("<p class='note'>" + "<br>".join(note_lines) + "</p>")
+
     rank_note = ("<p class='note'>表后注(今日板块排名算法)：<br>"
                  "① 个股分=上涨趋势8个条件(多头排列/站上年线/MA20上行/低点抬高/高点抬高/斜率向上/"
                  "近60日新高/放量)中满足的个数，满足1个记1分，≥5分命中；历史K线不足只评得部分条件时按比例折算到 /8(如 5/7→6/8)。<br>"
@@ -290,6 +611,9 @@ def main() -> None:
                 d[c] = d[c].where(d[c].notna(), "-")
         parts.append(_html_table(d))
         parts.append(delta_note)
+    if chart_parts:
+        parts.append("<hr style='border:none;border-top:1px solid #e3e9f2;margin:24px 0'/>")
+        parts += chart_parts
     parts.append("<p class='note'>AI生成，仅供研究，不构成投资建议</p>")
     parts.append("</body></html>")
     html = "".join(parts)
@@ -319,6 +643,15 @@ def main() -> None:
                      "涨红跌绿: 排名变化=前日排名-今日排名(正=名次上升); 趋势分变化/动量分变化/总分变化=今日-前日; "
                      "评价: 池内按趋势分变化(正=增强/负=减弱)+动量分变化(>=1.5爆发/0~1.5增强/-1.5~0减弱/<-1.5大幅下滑); "
                      "新进/退出按当日动量分·趋势分在今日池内百分位(前10%很强/前10-30%强/30-70%一般/70-100%弱)")
+    if series:
+        lines.append("")
+        lines.append("== 附: 板块近%d日走势 (今日池中走势明显的板块; 不在池日为 -) ==" % len(series))
+        if order:
+            lines += _view_txt(order, series)
+        else:
+            lines.append("(今日池板块窗口内无满足条件的走势)")
+        if any(p.get("cov") == "仅沪市" for p in series):
+            lines.append("注: 标'仅沪市'的日期为修复前扫描产物, 仅沪市口径, 与'沪深北'日期不可直接比绝对值。")
     with open(base + ".txt", "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 
