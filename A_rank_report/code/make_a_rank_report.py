@@ -237,10 +237,10 @@ def _coverage_tag(df: pd.DataFrame) -> str:
         return ""
 
 
-def _recent_pool_series(date_mmdd: str, days: int = 5) -> list[dict]:
+def _recent_pool_series(date_mmdd: str, days: int = 5, top: int = 15) -> list[dict]:
     """近 days 个有结果CSV的交易日(<=报告日, 含报告日本身), 各自"当天池"的每板块分数。
 
-    每天用当天自己的池(combined_rank 双口径: 得分前15 ∪ 动量入池分前15),
+    每天用当天自己的池(combined_rank 双口径: 得分前 top ∪ 动量入池分前 top),
     记录 池内每板块 趋势分/动量分。某板块某天不在池则当天无分数(=出池, 画图时断线)。
     返回按日期升序, 有多少天返回多少。
     """
@@ -257,7 +257,7 @@ def _recent_pool_series(date_mmdd: str, days: int = 5) -> list[dict]:
         path = os.path.join(OUT, f"cn_uptrend_{core}.csv")
         try:
             dfr = pd.read_csv(path, encoding="utf-8-sig")
-            rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, 15)
+            rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, top)
             if rk.empty:
                 continue
             series.append({
@@ -550,12 +550,13 @@ def main() -> None:
     p.add_argument("--date", required=True, help="报告日期, 如 0902")
     p.add_argument("--results", default=None, help="命中结果CSV(用于算今日榜单)")
     p.add_argument("--delta", default=None, help="delta CSV(可选)")
+    p.add_argument("--top", type=int, default=15, help="趋势/动量各入池数(默认15)")
     args = p.parse_args()
 
     # 今日 A_rank 榜单
     dfr = pd.read_csv(args.results) if args.results else None
     if dfr is not None:
-        rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, 15)
+        rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, args.top)
         # 榜单不展示: 行业得分/股票数/动量入池分(原始分, 只看归一后的动量分)
         rk = rk.drop(columns=["得分", "股票数", "动量入池分"], errors="ignore")
         rk.insert(0, "排名", range(1, len(rk) + 1))
@@ -619,7 +620,8 @@ def main() -> None:
 
     # 近N日走势图(放在报告末尾): 每个板块一条线(趋势分/动量分各一组方向图); 太碎短线不画
     today_file = os.path.join(OUT, f"cn_uptrend_{args.date}.csv")
-    series = _recent_pool_series(args.date) if (args.results and os.path.exists(today_file)) else []
+    series = (_recent_pool_series(args.date, top=args.top)
+              if (args.results and os.path.exists(today_file)) else [])
     order = _active_view(series) if series else []
     chart_parts: list[str] = []
 
@@ -673,7 +675,7 @@ def main() -> None:
                 f"筛选: 退出的不画；窗口内无连续≥{CHART_MIN_RUN}个交易日在池的(零散孤点/频繁进出)也不画；",
                 f"整体近乎横盘(趋势起伏<{CHART_MIN_TREND_CHG} 且 动量起伏<{CHART_MIN_MOM_CHG})的也不画。",
                 "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”。",
-                "口径: 每日取当天自己的入池板块(原得分前15 ∪ 动量入池分前15)；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
+                f"口径: 每日取当天自己的入池板块(原得分前{args.top} ∪ 动量入池分前{args.top})；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
             ]
             if any(p.get("cov") == "仅沪市" for p in series):
                 note_lines.append("注意: 标“仅沪市”的日期为行情状态码修复前的扫描产物，仅沪市口径，与“沪深北”日期不可直接比绝对值。")
@@ -686,15 +688,15 @@ def main() -> None:
                  "③ 行业得分=该行业成员加权分之和；趋势分=得分/计入股票数。<br>"
                  "④ 动量分(±10)与动量入池分同源：取板块全部成分股按 m=当日%+近2日%+近3日%(三段叠加) 降序前10"
                  "(不足按实际只数)，S=Σ前10的m；动量入池分=S；展示动量分=S÷(5×只数)=前n只平均涨幅÷5 归一(允许为负, ±10封顶)。<br>"
-                 "⑤ 总分 = 趋势分×50% + 动量分×50%；入池=原行业得分前15名 ∪ 动量入池分前15名(并集, 最多30个)，"
+                 f"⑤ 总分 = 趋势分×50% + 动量分×50%；入池=原行业得分前{args.top}名 ∪ 动量入池分前{args.top}名(并集, 最多{2 * args.top}个)，"
                  "池内按总分降序排名；入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前5(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日涨幅)。</p>")
     if rk is not None:
-        parts.append("<h3>今日板块排名(趋势分50% + 动量分50% → 入池=原得分前15 ∪ 动量前15 → 总分)</h3>")
+        parts.append(f"<h3>今日板块排名(趋势分50% + 动量分50% → 入池=原得分前{args.top} ∪ 动量前{args.top} → 总分)</h3>")
         parts.append(_html_table(rk.rename(columns={"industry": "行业"})))
         parts.append(rank_note)
-    delta_note = ("<p class='note'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
-                  "(入池=原得分前15 ∪ 动量入池分前15、池内按总分=趋势分×50%+动量分×50% 降序)计算后对比。"
+    delta_note = (f"<p class='note'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
+                  f"(入池=原得分前{args.top} ∪ 动量入池分前{args.top}、池内按总分=趋势分×50%+动量分×50% 降序)计算后对比。"
                   "状态：池内=两日均在池内；新进池=今日新进(前日不在池)；完全新进池=前5个交易日均未入池、今日首次入池(紫)；退出池=今日掉出池。"
                   "涨红跌绿：排名变化=前日排名−今日排名(正=名次上升)；"
                   "趋势分变化/动量分变化/总分变化=今日−前日(正=升，负=降)。<br>"
