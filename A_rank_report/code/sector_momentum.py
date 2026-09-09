@@ -19,6 +19,7 @@
 """
 from __future__ import annotations
 
+import json
 import os
 import sys
 import time
@@ -144,6 +145,91 @@ def market_momentum(asof: date, force: bool = False, workers: int = 10,
         os.makedirs(OUTPUT_DIR, exist_ok=True)
         df.to_csv(path, index=False, encoding="utf-8-sig")
         print(f"[动量] 全市场动量表 -> {path} ({len(df)} 只, cache_only={cache_only})", file=sys.stderr)
+    except Exception:  # noqa: BLE001
+        pass
+    return df
+
+
+def ensure_momentum_offline(asof, workers: int = 30) -> pd.DataFrame:
+    """缺 cn_momentum_YYYYMMDD.csv 时, 从已预热的 320 根K线缓存离线生成并持久化。
+
+    动量只需近4日收盘; 若 80 根缓存新鲜则直接读, 否则用 320 缓存截断生成 80 并写回
+    (全程 0 联网)。供 delta/报告前兑底, 避免现场全市场联网重算卡死。
+    返回与 market_momentum 同构的 DataFrame(sector/code6/prefixed/m)。
+    """
+    key = pd.Timestamp(asof).strftime("%Y%m%d")
+    path = os.path.join(OUTPUT_DIR, f"cn_momentum_{key}.csv")
+    if os.path.exists(path):
+        try:
+            return pd.read_csv(path, encoding="utf-8-sig")
+        except Exception:  # noqa: BLE001
+            pass
+    members = fos.load_cn_sector_members()
+    jobs = [(sec, code6, fos.cn_prefix(code6))
+            for sec, codes in members.items() for code6 in codes]
+    kdir = fos.KLINE_CACHE_DIR
+
+    def _offline(pref: str) -> float | None:
+        f80 = os.path.join(kdir, f"{pref.replace('.', '_')}_80.json")
+        f320 = os.path.join(kdir, f"{pref.replace('.', '_')}_320.json")
+        rows = None
+        if os.path.exists(f80) and (time.time() - os.path.getmtime(f80)) < fos.KLINE_CACHE_TTL_DAYS * 86400:
+            try:
+                with open(f80, encoding="utf-8") as f:
+                    rows = json.load(f)
+            except Exception:  # noqa: BLE001
+                rows = None
+        if rows is None and os.path.exists(f320):
+            try:
+                with open(f320, encoding="utf-8") as f:
+                    rows = json.load(f)[-80:]
+                with open(f80, "w", encoding="utf-8") as f:
+                    json.dump(rows, f, ensure_ascii=False)
+            except Exception:  # noqa: BLE001
+                rows = None
+        if not rows:
+            return None
+        try:
+            close = (pd.Series([float(r[2]) for r in rows],
+                               index=pd.to_datetime([r[0] for r in rows]))
+                     .astype(float).dropna())
+            c = close[close.index <= pd.Timestamp(asof)]
+            if len(c) < 4:
+                return None
+            c0, c1, c2, c3 = c.iloc[-1], c.iloc[-2], c.iloc[-3], c.iloc[-4]
+            if c0 <= 0 or c1 <= 0 or c2 <= 0 or c3 <= 0:
+                return None
+            return round((c0 / c1 - 1) * 100 + (c0 / c2 - 1) * 100 + (c0 / c3 - 1) * 100, 2)
+        except Exception:  # noqa: BLE001
+            return None
+
+    rows_out: list[dict] = []
+    done = 0
+    t0 = time.time()
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futs = {pool.submit(_offline, pref): (sec, code6, pref)
+                for sec, code6, pref in jobs}
+        for fut in as_completed(futs):
+            sec, code6, pref = futs[fut]
+            try:
+                m = fut.result()
+            except Exception:  # noqa: BLE001
+                m = None
+            if m is not None:
+                rows_out.append({"sector": sec, "code6": code6, "prefixed": pref, "m": m})
+            done += 1
+            if done % 1000 == 0:
+                print(f"[动量离线] {done}/{len(jobs)} 只, {time.time() - t0:.0f}s", file=sys.stderr)
+    if not rows_out:
+        print("[动量离线] 320缓存缺失严重, 无有效数据!", file=sys.stderr)
+        return pd.DataFrame(columns=["sector", "code6", "prefixed", "m"])
+    df = (pd.DataFrame(rows_out)
+            .sort_values(["sector", "m"], ascending=[True, False])
+            .reset_index(drop=True))
+    try:
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
+        df.to_csv(path, index=False, encoding="utf-8-sig")
+        print(f"[动量离线] -> {path} ({len(df)} 只)", file=sys.stderr)
     except Exception:  # noqa: BLE001
         pass
     return df
@@ -333,6 +419,11 @@ if __name__ == "__main__":
     if argv and argv[0] == "--momentum":
         d = argv[1] if len(argv) > 1 else pd.Timestamp.today().strftime("%Y-%m-%d")
         asof = pd.Timestamp(d).date()
+        if "--offline" in argv:
+            tbl = ensure_momentum_offline(asof, workers=30)
+            print(f"数据日期: {asof}  离线动量表 {len(tbl)} 只")
+            print(tbl.groupby("sector")["m"].count().rename("只数").head(20).to_string())
+            sys.exit(0)
         tbl = sector_momentum_entry(asof, force="--force" in argv,
                                     cache_only="--cache-only" in argv)
         print(f"数据日期: {asof}  板块数: {len(tbl)}")

@@ -6,7 +6,7 @@
 #   bash code/run_a_rank_daily_with_mail.sh 20260903      # 指定日期 YYYYMMDD
 # 说明:
 #   发信用 ~/.mail_sender.json 里的 SMTP 凭据(163授权码), 收件人默认 lx20010@163.com,17530737@qq.com
-#   WORKERS/DELAY 可用环境变量覆盖(默认 12 线程 / 0.05s, 代理池每批约20个IP轮换)
+#   TOP/WORKERS/DELAY 可用环境变量覆盖(默认 TOP=10、workers=30、delay=0.02; 代理池每批约50个IP轮换)
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # .../A_rank_report/code
@@ -16,6 +16,7 @@ cd "$API_DIR"
 PY="${PY:-/home/sld/miniconda3/envs/py12/bin/python}"
 DATE="${1:-$(date +%m%d)}"   # MMDD, 如 0903
 MM="${DATE:0:2}"; DD="${DATE:2:2}"
+TOP="${TOP:-10}"         # 趋势/动量各入池数(默认10, 与美股/A股最新日报一致)
 WORKERS="${WORKERS:-30}"   # 线程数(代理池每批约50个IP轮换, 默认30)
 DELAY="${DELAY:-0.02}"    # 单只请求前节流(秒)
 NEW="output/cn_uptrend_${DATE}.csv"
@@ -26,10 +27,19 @@ echo "========== A_rank_report_v1 日报全自动 ${DATE} =========="
 if [[ -f "$NEW" ]]; then
   echo "[1/4] 今日结果已存在, 跳过扫描: $NEW"
 else
-  echo "[1/4] 扫描 A股上涨趋势 + A_rank 排名 (workers=$WORKERS, delay=$DELAY) ..."
+  echo "[1/4] 扫描 A股上涨趋势 + A_rank 排名 (top=$TOP, workers=$WORKERS, delay=$DELAY) ..."
   "$PY" -u code/scan_rank.py --strategies a_rank_report_v1 \
-    --workers "$WORKERS" --delay "$DELAY" --top 15 \
+    --workers "$WORKERS" --delay "$DELAY" --top "$TOP" \
     --results-out "$NEW" --rank-out "output/a_rank_${DATE}.csv"
+fi
+
+# 1.5) 确保当日全市场动量表就绪: 缺失时从320根K线缓存离线生成(0联网), 避免 delta/报告现场全市场联网卡死
+ASOF=$("$PY" -c "import pandas as pd;print(pd.to_datetime(pd.read_csv('output/cn_uptrend_${DATE}.csv',encoding='utf-8-sig')['date']).max().strftime('%Y%m%d'))" 2>/dev/null || echo "20$(date +%y)${DATE}")
+if [[ -n "$ASOF" && ! -f "output/cn_momentum_${ASOF}.csv" ]]; then
+  echo "[动量] 生成 cn_momentum_${ASOF}.csv (离线, 从320缓存) ..."
+  "$PY" -u code/sector_momentum.py --momentum "$ASOF" --offline || echo "[动量] 离线生成失败, 继续(联网兜底)"
+else
+  [[ -n "$ASOF" ]] && echo "[动量] cn_momentum_${ASOF}.csv 已就绪"
 fi
 
 # 2) 找"前一交易日"(按交易日历, 跳过周末/节假日)的结果文件; 不存在则退回最新一份
@@ -46,17 +56,16 @@ else
   [[ -n "$OLD" ]] && echo "[2/4] 无前一交易日 ${PREV:-?} 的结果文件, 退回用 $(basename "$OLD")"
 fi
 if [[ -n "$OLD" ]]; then
-  echo "[2/4] delta: $(basename "$OLD") -> $(basename "$NEW")"
-  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW" >/dev/null
+  echo "[2/4] delta: $(basename "$OLD") -> $(basename "$NEW") (top=$TOP)"
+  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW" --top "$TOP" >/dev/null
 else
   echo "[2/4] 未找到前一交易日, 跳过 delta"
 fi
 
 # 3) 生成 HTML/文本报告
-echo "[3/4] 生成报告 ..."
+echo "[3/4] 生成报告 (top=$TOP) ..."
 "$PY" -u code/make_a_rank_report.py --date "$DATE" \
-  --results "$NEW" --delta "output/cn_uptrend_${DATE}_delta.csv" >/dev/null
-
+  --results "$NEW" --delta "output/cn_uptrend_${DATE}_delta.csv" --top "$TOP" >/dev/null
 # 4) 发邮件(收件人取 ~/.mail_sender.json 的 to, 默认两个邮箱)
 echo "[4/4] 发送邮件 ..."
 "$PY" -u code/send_report.py \

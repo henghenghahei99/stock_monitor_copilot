@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8 -*-
-"""
-A_rank_report_v1 日报一键脚本(不发邮件):
-  1) 跑当天 A_rank: A股上涨趋势 -> 8/7/6行业加权 -> 总分前15池 -> 平均分排名
-     (今日结果已存在则跳过扫描, 只做 delta)
-  2) 自动找"前一日"结果, 跑 A_rank_delta 输出板块排名升降榜单
-
-用法:
-  bash code/run_a_rank_daily.sh            # 扫今天 + 与前一日对比
-  bash code/run_a_rank_daily.sh 20260903   # 指定日期(回补历史某日)
-"""
+# A_rank_report_v1 日报一键脚本(不发邮件):
+#   1) 跑当天 A_rank: A股上涨趋势 -> 8/7/6行业加权 -> 双口径前10池 -> 总分排名
+#      (今日结果已存在则跳过扫描, 只做 delta)
+#   2) 自动找"前一日"结果, 跑 A_rank_delta 输出板块排名升降榜单
+# 用法:
+#   bash code/run_a_rank_daily.sh            # 扫今天 + 与前一日对比
+#   bash code/run_a_rank_daily.sh 20260903   # 指定日期(回补历史某日)
+#   TOP/WORKERS/DELAY 可用环境变量覆盖(默认 TOP=10、workers=30、delay=0.02)
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # .../A_rank_report/code
@@ -18,16 +16,19 @@ cd "$API_DIR"
 
 PY="${PY:-/home/sld/miniconda3/envs/py12/bin/python}"
 DATE="${1:-$(date +%m%d)}"   # MMDD, 如 0903
+TOP="${TOP:-10}"         # 趋势/动量各入池数(默认10)
+WORKERS="${WORKERS:-30}"   # 线程数(默认30, 代理池每批约50个IP轮换)
+DELAY="${DELAY:-0.02}"    # 单只请求前节流(秒)
 NEW="output/cn_uptrend_${DATE}.csv"
 
-echo "=== A_rank_report_v1 日报 ${DATE} ==="
+echo "=== A_rank_report_v1 日报 ${DATE} (top=$TOP) ==="
 
 if [[ -f "$NEW" ]]; then
   echo "[跳过扫描] 今日结果已存在: $NEW"
 else
   echo "[1/2] 运行 A_rank_report_v1 扫描 (A股上涨趋势 -> 行业加权排名) ..."
   "$PY" -u code/scan_rank.py --strategies a_rank_report_v1 \
-    --workers 6 --delay 0.15 --top 15 \
+    --workers "$WORKERS" --delay "$DELAY" --top "$TOP" \
     --results-out "$NEW" \
     --rank-out "output/a_rank_${DATE}.csv"
 fi
@@ -47,8 +48,8 @@ else
 fi
 if [[ -n "$OLD" ]]; then
   echo ""
-  echo "[2/2] A_rank_delta: $(basename "$OLD") -> $(basename "$NEW")"
-  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW"
+  echo "[2/2] A_rank_delta (top=$TOP): $(basename "$OLD") -> $(basename "$NEW")"
+  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW" --top "$TOP"
 else
   echo ""
   echo "[提示] 未找到前一交易日结果, 本日只生成 A_rank 榜单, 无 delta 对比。"

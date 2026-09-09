@@ -550,7 +550,8 @@ def main() -> None:
     p.add_argument("--date", required=True, help="报告日期, 如 0902")
     p.add_argument("--results", default=None, help="命中结果CSV(用于算今日榜单)")
     p.add_argument("--delta", default=None, help="delta CSV(可选)")
-    p.add_argument("--top", type=int, default=15, help="趋势/动量各入池数(默认15)")
+    p.add_argument("--top", type=int, default=10,
+                   help="趋势/动量各入池数(默认10)")
     args = p.parse_args()
 
     # 今日 A_rank 榜单

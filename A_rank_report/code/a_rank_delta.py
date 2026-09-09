@@ -48,7 +48,7 @@ def main() -> None:
     p.add_argument("--col", default="uptrend", help="策略列名(默认 uptrend)")
     p.add_argument("--score-map", default="8:8,7:6,6:4",
                    help="得分->加权分(默认 8:8,7:6,6:4)")
-    p.add_argument("--top", type=int, default=15, help="池大小(默认15)")
+    p.add_argument("--top", type=int, default=10, help="池大小(默认10)")
     p.add_argument("--sort", default="平均分", help="池内排序字段(默认平均分)")
     p.add_argument("-o2", "--output", default=None, help="输出CSV路径")
     args = p.parse_args()
