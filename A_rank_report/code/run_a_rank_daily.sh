@@ -19,6 +19,7 @@ DATE="${1:-$(date +%m%d)}"   # MMDD, 如 0903
 TOP="${TOP:-10}"         # 趋势/动量各入池数(默认10)
 WORKERS="${WORKERS:-30}"   # 线程数(默认30, 代理池每批约50个IP轮换)
 DELAY="${DELAY:-0.02}"    # 单只请求前节流(秒)
+MIN_PRICE="${MIN_PRICE:-1.0}"  # A股参与价格门槛(元), 默认≥1元
 NEW="output/cn_uptrend_${DATE}.csv"
 
 echo "=== A_rank_report_v1 日报 ${DATE} (top=$TOP) ==="
@@ -26,9 +27,9 @@ echo "=== A_rank_report_v1 日报 ${DATE} (top=$TOP) ==="
 if [[ -f "$NEW" ]]; then
   echo "[跳过扫描] 今日结果已存在: $NEW"
 else
-  echo "[1/2] 运行 A_rank_report_v1 扫描 (A股上涨趋势 -> 行业加权排名) ..."
+  echo "[1/2] 运行 A_rank_report_v1 扫描 (A股上涨趋势 -> 行业加权排名, min_price=$MIN_PRICE) ..."
   "$PY" -u code/scan_rank.py --strategies a_rank_report_v1 \
-    --workers "$WORKERS" --delay "$DELAY" --top "$TOP" \
+    --workers "$WORKERS" --delay "$DELAY" --top "$TOP" --min-price "$MIN_PRICE" \
     --results-out "$NEW" \
     --rank-out "output/a_rank_${DATE}.csv"
 fi
