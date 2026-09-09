@@ -37,10 +37,10 @@ OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 
 
 def size_factor(n: int) -> float:
-    """板块数量因子: 从 0 只起按 0.06/20/只(=0.003/只) 连续线性递减;
-    n>=120 封底 = 1 - 0.003×120 = 0.64, 之后不再减。乘到 趋势分/动量分/动量入池分/入池资格。"""
+    """板块数量因子: 从 0 只起按 0.004/只 连续线性递减;
+    n>=120 封底 = 1 - 0.004×120 = 0.52, 之后不再减。乘到 趋势分/动量分/动量入池分/入池资格。"""
     n = int(n or 0)
-    return round(max(0.64, 1.0 - 0.003 * n), 4)
+    return round(max(0.52, 1.0 - 0.004 * n), 4)
 
 
 _mem_sz: dict[str, int] | None = None
