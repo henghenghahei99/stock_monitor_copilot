@@ -297,6 +297,15 @@ def _name(prefixed: str) -> str:
     return prefixed
 
 
+def size_factor(n: int) -> float:
+    """板块数量因子: 股票数<=20 因子=1; 每多20 减0.06; >=120 后不再减(下限0.70)。"""
+    n = int(n or 0)
+    if n <= 20:
+        return 1.0
+    dec = 0.06 * ((n - 20 + 19) // 20)
+    return round(max(0.70, 1.0 - dec), 4)
+
+
 def aggregate_trend(hits: pd.DataFrame) -> pd.DataFrame:
     """命中 -> 每行业 得分/股票数/平均分(趋势分)。6分以下不计。"""
     d = hits.copy()
@@ -386,8 +395,14 @@ def build_rank(day_key: str, top: int = 15) -> pd.DataFrame:
                                       str(r["prefixed"]), r.get("chg1"))
                             for _, r in g.iterrows()]
 
-    score_top = set(agg.sort_values("得分", ascending=False).head(top)["industry"])
-    mom_sorted = sorted(raw_map.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+    # 数量因子: 板块计入股票数<=20因子=1; 每多20减0.06; >=120封底0.70(入围与排序均乘)
+    fmap = {str(a["industry"]): size_factor(int(a["股票数"])) for _, a in agg.iterrows()}
+    score_top = set(agg.assign(_f=agg["股票数"].map(size_factor))
+                    .assign(_s=lambda d: d["得分"] * d["_f"])
+                    .sort_values("_s", ascending=False).head(top)["industry"])
+    mom_sorted = sorted(raw_map.items(),
+                        key=lambda kv: (kv[1] * fmap.get(kv[0], 1.0), kv[0]),
+                        reverse=True)
     mom_top = {ind for ind, _ in mom_sorted[:top]}
 
     rows = []
@@ -400,16 +415,18 @@ def build_rank(day_key: str, top: int = 15) -> pd.DataFrame:
             src.append("趋势")
         if ind in mom_top:
             src.append("动量")
-        trend = float(a["平均分"])
-        pts = _pts(ind)
+        f = size_factor(int(a["股票数"]))
+        rawv = raw_map.get(ind)
+        trend = round(float(a["平均分"]) * f, 2)      # 趋势分 ×数量因子
+        pts = round(_pts(ind) * f, 2)                   # 动量分 ×数量因子
         rows.append({
             "industry": ind,
             "得分": int(a["得分"]),
             "股票数": int(a["股票数"]),
-            "趋势分": round(trend, 2),
+            "趋势分": trend,
             "动量分": pts,
             "总分": round(trend * 0.5 + pts * 0.5, 2),
-            "动量入池分": raw_map.get(ind),
+            "动量入池分": round(rawv * f, 2) if rawv is not None else None,
             "代表股": "、".join(trep_by.get(ind, [])[:5] + mrep_by.get(ind, [])[:5]) or "-",
             "入池": "+".join(src),
         })

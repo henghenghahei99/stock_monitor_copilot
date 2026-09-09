@@ -36,6 +36,15 @@ DEFAULT_MAP = {8: 8, 7: 6, 6: 4}
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output")
 
 
+def size_factor(n: int) -> float:
+    """板块数量因子: 股票数<=20 因子=1; 每多20 减0.06; >=120 后不再减(下限0.70)。"""
+    n = int(n or 0)
+    if n <= 20:
+        return 1.0
+    dec = 0.06 * ((n - 20 + 19) // 20)
+    return round(max(0.70, 1.0 - dec), 4)
+
+
 def as_of_date(df: pd.DataFrame) -> date:
     """该结果数据的交易日(取 date 列最大值)。"""
     return pd.to_datetime(df["date"]).max().date()
@@ -315,12 +324,14 @@ def industry_momentum_scores(df: pd.DataFrame, col: str = "uptrend",
     rows = []
     for _, a in agg.iterrows():
         ind = a["industry"]
+        f = size_factor(int(a["股票数"]))
         r, c = raw.get(ind), cnt.get(ind)
         pts = 0.0
         if r is not None and c is not None and int(c) > 0:
-            pts = round(max(-10.0, min(10.0, float(r) / (5.0 * int(c)))), 2)
-        rows.append({"industry": ind, "趋势分": float(a["平均分"]),
-                     "动量分": pts, "动量入池分": r})
+            pts = round(max(-10.0, min(10.0, float(r) / (5.0 * int(c)))) * f, 2)
+        raw_adj = round(float(r) * f, 2) if r is not None else None
+        rows.append({"industry": ind, "趋势分": round(float(a["平均分"]) * f, 2),
+                     "动量分": pts, "动量入池分": raw_adj})
     return pd.DataFrame(rows)
 
 
@@ -378,9 +389,16 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
                     chg1 if chg1 is not None else float(r["m"])))
             mom_by[ind] = reps
 
-    # 3) 两条入池路径各自取前 top(并列按板块名稳定排序)
-    score_top = set(agg.sort_values("得分", ascending=False).head(top)["industry"])
-    mom_sorted = sorted(raw_map.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+    # 数量因子: 板块计入股票数<=20因子=1; 每多20减0.06; >=120封底0.70(入围与排序均乘)
+    fmap = {str(a["industry"]): size_factor(int(a["股票数"])) for _, a in agg.iterrows()}
+
+    # 3) 两条入池路径各自取前 top(入围也乘数量因子; 并列按板块名稳定排序)
+    score_top = set(agg.assign(_f=agg["股票数"].map(size_factor))
+                    .assign(_s=lambda d: d["得分"] * d["_f"])
+                    .sort_values("_s", ascending=False).head(top)["industry"])
+    mom_sorted = sorted(raw_map.items(),
+                        key=lambda kv: (kv[1] * fmap.get(kv[0], 1.0), kv[0]),
+                        reverse=True)
     mom_top = {ind for ind, _ in mom_sorted[:top]}
 
     # 4) 并集入池, 池内按 总分(趋势50%+动量50%) 降序
@@ -395,7 +413,10 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
         if ind in mom_top:
             src.append("动量")
         pts = _display_pts(raw_map.get(ind), cnt_map.get(ind))
-        trend = float(a["平均分"])          # 结构分 => 展示名 趋势分
+        f = size_factor(int(a["股票数"]))
+        rawv = raw_map.get(ind)
+        pts = round(pts * f, 2)
+        trend = round(float(a["平均分"]) * f, 2)      # 结构分=>趋势分, 乘数量因子
         total = round(trend * 0.5 + pts * 0.5, 2)
         reps = "、".join((trend_by.get(ind, [])[:5]) + (mom_by.get(ind, [])[:5]))
         rows.append({
@@ -405,7 +426,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
             "趋势分": trend,
             "动量分": pts,
             "总分": total,
-            "动量入池分": raw_map.get(ind),
+            "动量入池分": round(rawv * f, 2) if rawv is not None else None,
             "代表股": reps or "-",
             "入池": "+".join(src),
         })
