@@ -309,6 +309,71 @@ def _chart_svg(metric: str, series: list[dict], order: list[str], colors: dict) 
             f'{out}</svg>')
 
 
+def _chart_png_bytes(metric: str, series: list[dict], order: list[str],
+                     colors: dict, title: str) -> bytes:
+    """走势图渲染成 PNG bytes(含中文标题/图例), 供邮件内嵌(QQ/163 不渲染内嵌SVG)。"""
+    import io
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt  # noqa: PLC0415
+    plt.rcParams["font.sans-serif"] = [
+        "Noto Sans CJK JP", "Noto Sans CJK KR", "Noto Sans CJK HK",
+        "Noto Sans CJK SC", "WenQuanYi Zen Hei", "Droid Sans Fallback"]
+    plt.rcParams["axes.unicode_minus"] = False
+    ndays = len(series)
+    labels = [p["label"] for p in series]
+    drawn = set(order)
+    vals = [p["scores"][ind][metric] for p in series
+            for ind in p["scores"] if ind in drawn]
+    if not vals:
+        return b""
+    lo, hi = min(vals), max(vals)
+    if metric == "mom":
+        lo, hi = min(lo, 0.0), max(hi, 0.0)
+    if hi <= lo:
+        hi = lo + 1.0
+    pad = (hi - lo) * 0.12
+    lo, hi = lo - pad, hi + pad
+    ncol = max(1, (len(order) + 2) // 3)
+    rows = (len(order) + ncol - 1) // ncol
+    fig, ax = plt.subplots(figsize=(12.5, 3.4 + 0.32 * rows), dpi=120)
+    ax.set_ylim(lo, hi)
+    ax.set_xlim(-0.25, ndays - 0.75)
+    ax.set_xticks(range(ndays))
+    ax.set_xticklabels(labels, fontsize=11)
+    ax.grid(True, axis="y", linestyle="--", alpha=0.4)
+    if metric == "mom":
+        ax.axhline(0, color="#c9c9c9", linewidth=1, linestyle=":")
+    handles, names = [], []
+    for ind in order:
+        color = colors[ind]
+        vals = [p["scores"].get(ind) for p in series]
+        real = [v[metric] for v in vals if v is not None]
+        if not real:
+            continue
+        mn = min(real)
+        ys = [v[metric] if v is not None else mn for v in vals]  # 出池日以最低分代替
+        xs = list(range(ndays))
+        h, = ax.plot(xs, ys, color=color, linewidth=2.2)
+        handles.append(h)
+        names.append(ind)
+        real_x = [i for i, v in enumerate(vals) if v is not None]
+        miss_x = [i for i, v in enumerate(vals) if v is None]
+        if real_x:
+            ax.scatter(real_x, [ys[i] for i in real_x], color=color, s=18, zorder=3)
+        if miss_x:     # 出池替补点: 空心圈
+            ax.scatter(miss_x, [ys[i] for i in miss_x], facecolors="none",
+                       edgecolors=color, s=24, linewidths=1.2, zorder=3)
+    if handles:
+        ax.legend(handles, names, ncol=ncol, fontsize=9, loc="upper center",
+                  bbox_to_anchor=(0.5, -0.18), frameon=False)
+    fig.suptitle(title, fontsize=14, y=0.99)
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", bbox_inches="tight")
+    plt.close(fig)
+    return buf.getvalue()
+
+
 def _chart_legend(order: list[str], colors: dict) -> str:
     items = []
     for ind in order:
@@ -409,16 +474,30 @@ def main() -> None:
             colors[ind] = "#%02x%02x%02x" % (round(r * 255), round(g * 255), round(b * 255))
         seq = ["①", "②", "③", "④"]
         gi = 0
+        chart_no = 0
+        png_dir = os.path.join(OUT, f"us_rank_report_{tag}_charts")
         for metric, mname in (("mom", "动量分走势"), ("trend", "趋势分走势")):
             up, down = _direction_groups(series, today_pool, metric)
             for tag2, g in (("整体上升", up), ("整体下降", down)):
                 if not g:
                     continue
-                t = f"{seq[gi]} {mname} · {tag2} {len(g)}条"
-                chart_parts.append(f"<div style='font-weight:600;color:#444;margin:14px 0 4px'>{t}</div>")
+                title = f"{seq[gi]} {mname} · {tag2} {len(g)}条"
+                # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
+                try:
+                    os.makedirs(png_dir, exist_ok=True)
+                    png = _chart_png_bytes(metric, series, g, colors, title)
+                    if png:
+                        with open(os.path.join(png_dir, f"chart_{chart_no}.png"), "wb") as fp:
+                            fp.write(png)
+                except Exception as exc:  # noqa: BLE001
+                    print(f"[警告] 图表PNG生成失败(chart_{chart_no}): {exc}", file=sys.stderr)
+                chart_parts.append(f"<!--CHART:{chart_no}-->")
+                chart_parts.append(f"<div style='font-weight:600;color:#444;margin:14px 0 4px'>{title}</div>")
                 chart_parts.append(_chart_svg(metric, series, g, colors))
                 chart_parts.append(_chart_legend(g, colors))
+                chart_parts.append("<!--/CHART-->")
                 gi += 1
+                chart_no += 1
     if chart_parts:
         chart_parts.insert(0, "<h3>板块近{}个交易日走势 — 今日池板块 (仅选5日中≥{}日在池者; 空心圈=出池/未入池以最低分代替)</h3>".format(len(series), CHART_MIN_POOL_DAYS))
 
