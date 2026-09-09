@@ -565,8 +565,9 @@ def _fetch_proxy_pool() -> list:
     """从配置的取IP池 API 拉一批代理(txt, 每行 ip:port), 缓存一个刷新周期。
 
     配置 ~/.gtimg_proxy.json:
-      {"api":"...取IP池URL(支持 num= 参数)", "num":10, "ttl":180}
-    - num: 每次取的IP个数, 默认10; api 里没带 num= 时自动补 num=10
+      {"api":"...取IP池URL", "num":10, "ttl":180}
+    - api: 支持 tianqiip(num=) 或 58ip(number=) 等; txt 格式每行 ip:port
+    - num: 每次取的IP个数(仅当 URL 没带 num=/number= 时补), 默认10
     - ttl: 刷新周期(秒), 默认180; IP有效期一般3分钟, 到期前刷新避免用失效IP
     """
     global _pool, _pool_ts
@@ -576,7 +577,8 @@ def _fetch_proxy_pool() -> list:
         return []
     ttl = float(cfg.get("ttl", _POOL_DEFAULT_TTL))
     num = int(cfg.get("num", _POOL_DEFAULT_NUM))
-    if "num=" not in url:
+    # 58ip 等取IP池用 number= 参数; 只有 URL 里 num=/number= 都没有时才自动补 num=
+    if "num=" not in url and "number=" not in url:
         url += ("&" if "?" in url else "?") + f"num={num}"
     with _pool_lock:
         if _pool and (time.time() - _pool_ts) < ttl:
