@@ -298,12 +298,10 @@ def _name(prefixed: str) -> str:
 
 
 def size_factor(n: int) -> float:
-    """板块数量因子: 股票数<=20 因子=1; 每多20 减0.06; >=120 后不再减(下限0.70)。"""
+    """板块数量因子: 从 0 只起按 0.06/20/只(=0.003/只) 连续线性递减;
+    n>=120 封底 = 1 - 0.003×120 = 0.64, 之后不再减。乘到 趋势分/动量分/动量入池分/入池资格。"""
     n = int(n or 0)
-    if n <= 20:
-        return 1.0
-    dec = 0.06 * ((n - 20 + 19) // 20)
-    return round(max(0.70, 1.0 - dec), 4)
+    return round(max(0.64, 1.0 - 0.003 * n), 4)
 
 
 def aggregate_trend(hits: pd.DataFrame) -> pd.DataFrame:
@@ -374,7 +372,15 @@ def build_rank(day_key: str, top: int = 15) -> pd.DataFrame:
         return round(max(-10.0, min(10.0, pts)), 2)
 
     # 趋势代表股: 命中加权分前5(同分按 chg20) —— 名字用名单/命中英文全名(离线, 不联网)
-    uni_names = {r["prefixed"]: (r.get("name") or r["prefixed"]) for r in ensure_universe()}
+    _uni = ensure_universe()
+    uni_names = {r["prefixed"]: (r.get("name") or r["prefixed"]) for r in _uni}
+    # 板块全部成分股总数(us_universe 同行业计数)=数量因子 N; 缺失退回今日命中数
+    _uni_sz: dict[str, int] = {}
+    for r in _uni:
+        _uni_sz[str(r["industry"])] = _uni_sz.get(str(r["industry"]), 0) + 1
+
+    def _fsz(ind: str, fallback: int) -> float:
+        return size_factor(_uni_sz.get(str(ind)) or int(fallback))
     h = hits.copy()
     h["加权分"] = h["uptrend"].map(lambda s: SCORE_MAP.get(int(str(s).split("/")[0]), 0))
     h = h[h["加权分"] > 0]
@@ -395,11 +401,12 @@ def build_rank(day_key: str, top: int = 15) -> pd.DataFrame:
                                       str(r["prefixed"]), r.get("chg1"))
                             for _, r in g.iterrows()]
 
-    # 数量因子: 板块计入股票数<=20因子=1; 每多20减0.06; >=120封底0.70(入围与排序均乘)
-    fmap = {str(a["industry"]): size_factor(int(a["股票数"])) for _, a in agg.iterrows()}
-    score_top = set(agg.assign(_f=agg["股票数"].map(size_factor))
-                    .assign(_s=lambda d: d["得分"] * d["_f"])
-                    .sort_values("_s", ascending=False).head(top)["industry"])
+    # 数量因子(不对称, N=板块全部成分股总数): <20轻度加成, >20每多20减0.06, >=120封底0.70(入围与排序均乘)
+    fmap = {str(a["industry"]): _fsz(str(a["industry"]), int(a["股票数"])) for _, a in agg.iterrows()}
+    _agg = agg.copy()
+    _agg["_f"] = _agg.apply(lambda r: _fsz(str(r["industry"]), int(r["股票数"])), axis=1)
+    _agg["_s"] = _agg["得分"] * _agg["_f"]
+    score_top = set(_agg.sort_values("_s", ascending=False).head(top)["industry"])
     mom_sorted = sorted(raw_map.items(),
                         key=lambda kv: (kv[1] * fmap.get(kv[0], 1.0), kv[0]),
                         reverse=True)
@@ -415,7 +422,7 @@ def build_rank(day_key: str, top: int = 15) -> pd.DataFrame:
             src.append("趋势")
         if ind in mom_top:
             src.append("动量")
-        f = size_factor(int(a["股票数"]))
+        f = _fsz(str(ind), int(a["股票数"]))
         rawv = raw_map.get(ind)
         trend = round(float(a["平均分"]) * f, 2)      # 趋势分 ×数量因子
         pts = round(_pts(ind) * f, 2)                   # 动量分 ×数量因子

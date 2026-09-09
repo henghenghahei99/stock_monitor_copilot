@@ -37,12 +37,22 @@ OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 
 
 def size_factor(n: int) -> float:
-    """板块数量因子: 股票数<=20 因子=1; 每多20 减0.06; >=120 后不再减(下限0.70)。"""
+    """板块数量因子: 从 0 只起按 0.06/20/只(=0.003/只) 连续线性递减;
+    n>=120 封底 = 1 - 0.003×120 = 0.64, 之后不再减。乘到 趋势分/动量分/动量入池分/入池资格。"""
     n = int(n or 0)
-    if n <= 20:
-        return 1.0
-    dec = 0.06 * ((n - 20 + 19) // 20)
-    return round(max(0.70, 1.0 - dec), 4)
+    return round(max(0.64, 1.0 - 0.003 * n), 4)
+
+
+_mem_sz: dict[str, int] | None = None
+
+
+def _sector_size(ind: str, fallback: int) -> int:
+    """板块全部成分股总数(cn_sector_members 同行业计数)=数量因子N; 缺失退回 fallback。"""
+    global _mem_sz
+    if _mem_sz is None:
+        _mem_sz = {k: len(v) for k, v in fos.load_cn_sector_members().items()}
+    n = _mem_sz.get(ind)
+    return int(n if n else int(fallback))
 
 
 def as_of_date(df: pd.DataFrame) -> date:
@@ -324,7 +334,7 @@ def industry_momentum_scores(df: pd.DataFrame, col: str = "uptrend",
     rows = []
     for _, a in agg.iterrows():
         ind = a["industry"]
-        f = size_factor(int(a["股票数"]))
+        f = size_factor(_sector_size(str(ind), int(a["股票数"])))
         r, c = raw.get(ind), cnt.get(ind)
         pts = 0.0
         if r is not None and c is not None and int(c) > 0:
@@ -389,13 +399,15 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
                     chg1 if chg1 is not None else float(r["m"])))
             mom_by[ind] = reps
 
-    # 数量因子: 板块计入股票数<=20因子=1; 每多20减0.06; >=120封底0.70(入围与排序均乘)
-    fmap = {str(a["industry"]): size_factor(int(a["股票数"])) for _, a in agg.iterrows()}
+    # 数量因子(不对称, N=板块全部成分股总数): <20轻度加成, >20每多20减0.06, >=120封底0.70(入围与排序均乘)
+    fmap = {str(a["industry"]): size_factor(_sector_size(str(a["industry"]), int(a["股票数"])))
+            for _, a in agg.iterrows()}
 
     # 3) 两条入池路径各自取前 top(入围也乘数量因子; 并列按板块名稳定排序)
-    score_top = set(agg.assign(_f=agg["股票数"].map(size_factor))
-                    .assign(_s=lambda d: d["得分"] * d["_f"])
-                    .sort_values("_s", ascending=False).head(top)["industry"])
+    _agg = agg.copy()
+    _agg["_f"] = _agg.apply(lambda r: size_factor(_sector_size(str(r["industry"]), int(r["股票数"]))), axis=1)
+    _agg["_s"] = _agg["得分"] * _agg["_f"]
+    score_top = set(_agg.sort_values("_s", ascending=False).head(top)["industry"])
     mom_sorted = sorted(raw_map.items(),
                         key=lambda kv: (kv[1] * fmap.get(kv[0], 1.0), kv[0]),
                         reverse=True)
@@ -413,7 +425,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
         if ind in mom_top:
             src.append("动量")
         pts = _display_pts(raw_map.get(ind), cnt_map.get(ind))
-        f = size_factor(int(a["股票数"]))
+        f = size_factor(_sector_size(str(ind), int(a["股票数"])))
         rawv = raw_map.get(ind)
         pts = round(pts * f, 2)
         trend = round(float(a["平均分"]) * f, 2)      # 结构分=>趋势分, 乘数量因子
