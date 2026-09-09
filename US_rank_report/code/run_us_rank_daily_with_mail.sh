@@ -13,10 +13,11 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 PY="/home/sld/miniconda3/envs/py12/bin/python"
 DAY="${1:-auto}"
-TOP="${TOP:-10}"      # 趋势/动量各入池数(默认10)
+TOP="${TOP:-10}"          # 趋势/动量各入池数(默认10)
+WORKERS="${WORKERS:-30}"  # 线程数(代理池每批约50个IP轮换, 默认30)
 
-echo "=== 美股板块 A_rank ${DAY} (top=${TOP}) ==="
-"$PY" -u code/us_rank.py --scan --day "$DAY" --workers 8
+echo "=== 美股板块 A_rank ${DAY} (top=${TOP}, workers=${WORKERS}) ==="
+"$PY" -u code/us_rank.py --scan --day "$DAY" --workers "$WORKERS"
 # 反查实际日期(scan 输出按K线最新交易日命名)
 DAY=$("$PY" -c "import glob,os;fs=sorted(glob.glob('output/us_uptrend_*.csv'));print(os.path.basename(fs[-1]).replace('us_uptrend_','').replace('.csv',''))")
 echo "=== 实际日期 $DAY ==="

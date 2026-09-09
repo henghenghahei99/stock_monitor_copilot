@@ -213,7 +213,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--window", type=int, default=DEFAULT_WINDOW, help="交叉信号窗口(交易日)")
     ap.add_argument("--bars", type=int, default=DEFAULT_BARS)
-    ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--workers", type=int, default=16)
     a = ap.parse_args()
 
     watch = mus.load_watch()

@@ -494,7 +494,7 @@ def main() -> None:
     p.add_argument("--rank", action="store_true")
     p.add_argument("--delta", action="store_true")
     p.add_argument("--day", default="auto", help="YYYYMMDD 日期键(默认取K线最新交易日)")
-    p.add_argument("--workers", type=int, default=8)
+    p.add_argument("--workers", type=int, default=30)
     p.add_argument("--no-cache", action="store_true")
     p.add_argument("--limit", type=int, default=0, help="只扫前N只(联调用)")
     p.add_argument("--top", type=int, default=15)

@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8 -*-
-"""
-A_rank_report_v1 日报全自动一键: 跑当日榜单 -> 与前一日对比(delta) -> 生成HTML报告 -> 发邮件。
-
-用法:
-  bash code/run_a_rank_daily_with_mail.sh               # 今天(收盘后跑, 建议15:00后)
-  bash code/run_a_rank_daily_with_mail.sh 20260903      # 指定日期 YYYYMMDD
-说明:
-  发信用 ~/.mail_sender.json 里的 SMTP 凭据(163授权码), 收件人默认 lx20010@163.com,17530737@qq.com
-"""
+# A_rank_report_v1 日报全自动一键: 跑当日榜单 -> 与前一日对比(delta) -> 生成HTML报告 -> 发邮件。
+# 用法:
+#   bash code/run_a_rank_daily_with_mail.sh               # 今天(收盘后跑, 建议15:00后)
+#   bash code/run_a_rank_daily_with_mail.sh 20260903      # 指定日期 YYYYMMDD
+# 说明:
+#   发信用 ~/.mail_sender.json 里的 SMTP 凭据(163授权码), 收件人默认 lx20010@163.com,17530737@qq.com
+#   WORKERS/DELAY 可用环境变量覆盖(默认 12 线程 / 0.05s, 代理池每批约20个IP轮换)
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # .../A_rank_report/code
@@ -18,6 +16,8 @@ cd "$API_DIR"
 PY="${PY:-/home/sld/miniconda3/envs/py12/bin/python}"
 DATE="${1:-$(date +%m%d)}"   # MMDD, 如 0903
 MM="${DATE:0:2}"; DD="${DATE:2:2}"
+WORKERS="${WORKERS:-30}"   # 线程数(代理池每批约50个IP轮换, 默认30)
+DELAY="${DELAY:-0.02}"    # 单只请求前节流(秒)
 NEW="output/cn_uptrend_${DATE}.csv"
 
 echo "========== A_rank_report_v1 日报全自动 ${DATE} =========="
@@ -26,9 +26,9 @@ echo "========== A_rank_report_v1 日报全自动 ${DATE} =========="
 if [[ -f "$NEW" ]]; then
   echo "[1/4] 今日结果已存在, 跳过扫描: $NEW"
 else
-  echo "[1/4] 扫描 A股上涨趋势 + A_rank 排名 ..."
+  echo "[1/4] 扫描 A股上涨趋势 + A_rank 排名 (workers=$WORKERS, delay=$DELAY) ..."
   "$PY" -u code/scan_rank.py --strategies a_rank_report_v1 \
-    --workers 6 --delay 0.15 --top 15 \
+    --workers "$WORKERS" --delay "$DELAY" --top 15 \
     --results-out "$NEW" --rank-out "output/a_rank_${DATE}.csv"
 fi
 

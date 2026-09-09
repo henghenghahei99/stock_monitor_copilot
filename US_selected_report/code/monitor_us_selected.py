@@ -189,7 +189,7 @@ def main() -> None:
     ap.add_argument("--period", type=int, default=DEFAULT_PERIOD)
     ap.add_argument("--over", type=float, default=DEFAULT_OVER, help="超买阈值(默认83)")
     ap.add_argument("--under", type=float, default=DEFAULT_UNDER, help="超卖阈值(默认26)")
-    ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--workers", type=int, default=16)
     args = ap.parse_args()
 
     watch = load_watch()
