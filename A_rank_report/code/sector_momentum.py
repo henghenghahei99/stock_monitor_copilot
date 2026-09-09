@@ -46,11 +46,22 @@ def size_factor(n: int) -> float:
 _mem_sz: dict[str, int] | None = None
 
 
+# 细分并入主板块(A股报告聚合口径): 焦炭Ⅱ 并入 煤炭开采(按用户口径把焦炭都算煤炭)
+INDUSTRY_MERGE = {"焦炭Ⅱ": "煤炭开采"}
+
+
+def _merge_ind(ind) -> str:
+    return INDUSTRY_MERGE.get(str(ind), str(ind))
+
+
 def _sector_size(ind: str, fallback: int) -> int:
-    """板块全部成分股总数(cn_sector_members 同行业计数)=数量因子N; 缺失退回 fallback。"""
+    """板块全部成分股总数(合并后计数, cn_sector_members)=数量因子N; 缺失退回 fallback。"""
     global _mem_sz
     if _mem_sz is None:
-        _mem_sz = {k: len(v) for k, v in fos.load_cn_sector_members().items()}
+        _mem_sz = {}
+        for k, v in fos.load_cn_sector_members().items():
+            t = _merge_ind(k)
+            _mem_sz[t] = _mem_sz.get(t, 0) + len(v)
     n = _mem_sz.get(ind)
     return int(n if n else int(fallback))
 
@@ -326,9 +337,17 @@ def industry_momentum_scores(df: pd.DataFrame, col: str = "uptrend",
     返回列: industry / 趋势分(加权命中平均) / 动量分(±10, 与动量入池分同源归一) / 动量入池分。
     """
     mapping = mapping or DEFAULT_MAP
+    df = df.copy()
+    if "industry" in df.columns:
+        df["industry"] = df["industry"].astype(str).map(_merge_ind)
     agg = isc.aggregate(df, col, mapping)
     asof = as_of_date(df)
     entry = sector_momentum_entry(asof, cache_only=cache_only)
+    if not entry.empty:
+        entry = (entry.assign(sector=entry["sector"].astype(str).map(_merge_ind))
+                     .groupby("sector", sort=False)
+                     .agg(动量入池分=("动量入池分", "sum"), 动量股数=("动量股数", "sum"))
+                     .reset_index())
     raw = dict(zip(entry["sector"], entry["动量入池分"])) if not entry.empty else {}
     cnt = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
     rows = []
@@ -359,9 +378,17 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     列: industry/得分/股票数/趋势分/动量分/总分/动量入池分/代表股/入池
     """
     mapping = mapping or DEFAULT_MAP
+    df = df.copy()
+    if "industry" in df.columns:
+        df["industry"] = df["industry"].astype(str).map(_merge_ind)
     agg = isc.aggregate(df, col, mapping)
     asof = as_of_date(df)
     entry = sector_momentum_entry(asof, force=momentum_force, cache_only=cache_only)
+    if not entry.empty:
+        entry = (entry.assign(sector=entry["sector"].astype(str).map(_merge_ind))
+                     .groupby("sector", sort=False)
+                     .agg(动量入池分=("动量入池分", "sum"), 动量股数=("动量股数", "sum"))
+                     .reset_index())
     raw_map = dict(zip(entry["sector"], entry["动量入池分"])) if not entry.empty else {}
     cnt_map = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
 
@@ -387,6 +414,8 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
 
     # 2) 动量代表股(板块全部成分股按 m 前5, ◎标注; 括号显示当日涨幅)
     mom = market_momentum(asof, force=momentum_force, cache_only=cache_only)
+    if not mom.empty:
+        mom = mom.assign(sector=mom["sector"].astype(str).map(_merge_ind))
     mom_by: dict[str, list] = {}
     if not mom.empty:
         top5 = mom.sort_values("m", ascending=False).groupby("sector", sort=False).head(5)
