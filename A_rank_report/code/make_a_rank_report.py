@@ -297,15 +297,15 @@ def _dash(i: int) -> str:
     return _DASHES[i % len(_DASHES)]
 
 
-# 近N日走势筛选: 退出的不画; 需有连续在池段(>=CHART_MIN_RUN); 整体起伏过小(横盘)的也不画。
+# 近N日走势筛选: 退出的不画; 需在池 >=CHART_MIN_RUN 日(不要求连续); 整体起伏过小(横盘)的也不画。
 # 画图时某日不在池(出池/未入池)的缺点用该板块窗口内最低分代替, 线连续(空心圈标注)。
-CHART_MIN_RUN = 3           # 板块至少要有 连续 >=3 个交易日在池才画
+CHART_MIN_RUN = 3           # 板块在窗口内至少要有 3 个交易日在池(累计, 不要求连续)才画
 CHART_MIN_TREND_CHG = 0.4   # 窗口内 趋势分 max-min 至少达此值
 CHART_MIN_MOM_CHG = 1.6     # 窗口内 动量分 max-min 至少达此值
 
 
 def _active_view(series: list[dict]) -> list[tuple[str, int]]:
-    """只画今日池中"窗口内有实际走势"的板块: 有 连续>=CHART_MIN_RUN 日在池, 且 趋势/动量 起伏达标。
+    """只画今日池中"窗口内有实际走势"的板块: 在池天数 >=CHART_MIN_RUN(可非连续), 且 趋势/动量 起伏达标。
 
     返回 [(行业, 今日排名)] (按今日池总分序, 排名=下标+1)。
     """
@@ -313,13 +313,7 @@ def _active_view(series: list[dict]) -> list[tuple[str, int]]:
     out: list[tuple[str, int]] = []
     for i, ind in enumerate(today_pool, start=1):
         present = [k for k, p in enumerate(series) if ind in p["scores"]]
-        maxrun = cur = 0
-        last = None
-        for k in present:
-            cur = cur + 1 if (last is not None and k == last + 1) else 1
-            maxrun = max(maxrun, cur)
-            last = k
-        if maxrun < CHART_MIN_RUN:
+        if len(present) < CHART_MIN_RUN:      # 在池天数(累计)不足
             continue
         pts = [p["scores"][ind] for p in series if ind in p["scores"]]
         tr = [s["trend"] for s in pts]
@@ -665,7 +659,7 @@ def main() -> None:
             colors = {ind: _sector_color(i, len(order)) for i, (ind, _r) in enumerate(order)}
             idx = {ind: i for i, (ind, _r) in enumerate(order)}
             chart_parts.append(
-                f"<h3>板块近{len(series)}日走势 — 今日池中走势明显的板块 (连续在池≥{CHART_MIN_RUN}日才画, 出池日以最低分代替)</h3>")
+                f"<h3>板块近{len(series)}日走势 — 今日池中走势明显的板块 (在池≥{CHART_MIN_RUN}日即画, 出池日以最低分代替)</h3>")
             seq = ["①", "②", "③", "④"]
             gi = 0
             chart_no = 0
@@ -679,6 +673,11 @@ def main() -> None:
                     g = dirs[metric][di]
                     if not g:
                         empty_groups.append(f"{short}·{dname}")
+                        # 空组按位占一个序号(不画图), 使 ①↑ ②↓ ③↑ ④↓ 的序号不乱
+                        chart_parts.append(
+                            f"<div style='font-weight:600;color:#888;margin:8px 0 2px'>"
+                            f"{seq[gi]} {mname} · {dname} 0条 —— 本组无板块(不画图)</div>")
+                        gi += 1
                         continue
                     title = f"{seq[gi]} {mname} · {dname} {len(g)}条"
                     # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
@@ -701,14 +700,14 @@ def main() -> None:
                     chart_no += 1
             note_lines = [
                 "覆盖: " + "、".join(f"{p['label']}({p['cov'] or '?'})" for p in series) + "；x 轴下方数字 = 该日池内板块数。",
-                f"筛选: 退出的不画；窗口内无连续≥{CHART_MIN_RUN}个交易日在池的(零散孤点/频繁进出)也不画；",
+                f"筛选: 退出的不画；窗口内在池天数<{CHART_MIN_RUN}日的(零散孤点)不画；",
                 f"整体近乎横盘(趋势起伏<{CHART_MIN_TREND_CHG} 且 动量起伏<{CHART_MIN_MOM_CHG})的也不画。",
                 "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”；排序=先动量(上升→下降)，再趋势(上升→下降)。",
                 f"口径: 每日取当天自己的入池板块(原得分前{args.top} ∪ 动量入池分前{args.top})；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
             ]
             if empty_groups:
                 note_lines.append("本日无满足条件的分组(因此不画图): " + "、".join(empty_groups)
-                                 + "（共4个分组=动量↑/动量↓/趋势↑/趋势↓）。")
+                                 + "（共4个分组=动量↑/动量↓/趋势↑/趋势↓，空组仍占用序号）。")
             if any(p.get("cov") == "仅沪市" for p in series):
                 note_lines.append("注意: 标“仅沪市”的日期为行情状态码修复前的扫描产物，仅沪市口径，与“沪深北”日期不可直接比绝对值。")
             chart_parts.append("<p class='note'>" + "<br>".join(note_lines) + "</p>")

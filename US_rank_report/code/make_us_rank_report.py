@@ -516,6 +516,11 @@ def main() -> None:
                 g = dirs[metric][di]
                 if not g:
                     empty_groups.append(f"{short}·{dname}")
+                    # 空组按位占一个序号(不画图), 使序号不乱
+                    chart_parts.append(
+                        f"<div style='font-weight:600;color:#888;margin:14px 0 4px'>"
+                        f"{seq[gi]} {mname} · {dname} 0条 —— 本组无板块(不画图)</div>")
+                    gi += 1
                     continue
                 title = f"{seq[gi]} {mname} · {dname} {len(g)}条"
                 # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
@@ -535,7 +540,7 @@ def main() -> None:
                 gi += 1
                 chart_no += 1
     if chart_parts:
-        chart_parts.insert(0, "<h3>板块近{}个交易日走势 — 今日池板块 (仅选5日中≥{}日在池者; 空心圈=出池/未入池以最低分代替)</h3>".format(len(series), CHART_MIN_POOL_DAYS))
+        chart_parts.insert(0, "<h3>板块近{}个交易日走势 — 今日池板块 (在池≥{}日即画; 空心圈=出池/未入池以最低分代替)</h3>".format(len(series), CHART_MIN_POOL_DAYS))
         if empty_groups:
             chart_parts.insert(1, "<p class='note'>本日无满足条件的分组(因此不画图): "
                                   + "、".join(empty_groups)
