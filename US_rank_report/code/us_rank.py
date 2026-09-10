@@ -63,8 +63,22 @@ MIN_MARKET_CAP = 500_000_000.0      # 5 亿美金
 EXCLUDE_INDUSTRY = {"空白支票公司(壳)"}
 UNIVERSE_FILE = os.path.join(DATA, "us_universe.json")
 EM_INDUSTRY_FILE = os.path.join(DATA, "us_em_industry.json")   # 东财美股行业(中文)
+IND_MAP_FILE = os.path.join(DATA, "us_industry_map.json")      # 东财美股行业 -> A股东财二级(中文)
 
 _em_map: dict[str, str] | None = None
+_ind_map: dict[str, str] | None = None
+
+
+def _load_ind_map() -> dict[str, str]:
+    """东财美股行业名 -> A股东财二级行业名(与A股同口径, 便于跳市场比较)。"""
+    global _ind_map
+    if _ind_map is None:
+        try:
+            with open(IND_MAP_FILE, encoding="utf-8") as f:
+                _ind_map = json.load(f)
+        except Exception:  # noqa: BLE001
+            _ind_map = {}
+    return _ind_map
 
 
 def _load_em_industry() -> dict[str, str]:
@@ -99,6 +113,8 @@ def ensure_universe(force: bool = False) -> list[dict]:
     recs: list[dict] = []
     seen: set[str] = set()
     em = _load_em_industry()
+    imap = _load_ind_map()
+    unmapped: set[str] = set()
     n_em = 0
     for fname, suf in files:
         path = os.path.join(DATA, fname)
@@ -127,6 +143,12 @@ def ensure_universe(force: bool = False) -> list[dict]:
                 if em_ind:
                     ind_zh = em_ind
                     n_em += 1
+                # 统一到 A股 东财二级口径
+                mapped = imap.get(ind_zh)
+                if mapped:
+                    ind_zh = mapped
+                else:
+                    unmapped.add(ind_zh)
                 seen.add(sym)
                 recs.append({
                     "symbol": sym,
@@ -139,6 +161,9 @@ def ensure_universe(force: bool = False) -> list[dict]:
     with open(UNIVERSE_FILE, "w", encoding="utf-8") as f:
         json.dump(recs, f, ensure_ascii=False)
     print(f"[universe] 美股池 {len(recs)} 只(东财行业覆盖 {n_em}) -> {UNIVERSE_FILE}", file=sys.stderr)
+    if unmapped:
+        print(f"[universe] 未映射到A股二级的行业 {len(unmapped)} 个: "
+              + "、".join(sorted(unmapped)[:10]), file=sys.stderr)
     return recs
 
 
