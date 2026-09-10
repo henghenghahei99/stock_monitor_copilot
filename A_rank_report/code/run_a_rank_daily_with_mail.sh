@@ -34,9 +34,15 @@ else
     --results-out "$NEW" --rank-out "output/a_rank_${DATE}.csv"
 fi
 
-# 1.5) 确保当日全市场动量表就绪: 缺失时从320根K线缓存离线生成(0联网), 避免 delta/报告现场全市场联网卡死
+# 1.5) 确保当日全市场动量表就绪: 缺失 或 只是盘中快照(早于当日A股收盘确认 15:05) -> 从320缓存离线重算(0联网)
 ASOF=$("$PY" -c "import pandas as pd;print(pd.to_datetime(pd.read_csv('output/cn_uptrend_${DATE}.csv',encoding='utf-8-sig')['date']).max().strftime('%Y%m%d'))" 2>/dev/null || echo "20$(date +%y)${DATE}")
-if [[ -n "$ASOF" && ! -f "output/cn_momentum_${ASOF}.csv" ]]; then
+MOM="output/cn_momentum_${ASOF}.csv"
+STALE=0
+if [[ -z "$ASOF" ]]; then STALE=0
+elif [[ ! -f "$MOM" ]]; then STALE=1
+elif [[ "$ASOF" == "$(date +%Y%m%d)" && "$(stat -c %Y "$MOM")" -lt "$(date -d 'today 15:05' +%s)" ]]; then STALE=1
+fi
+if [[ "$STALE" == 1 ]]; then
   echo "[动量] 生成 cn_momentum_${ASOF}.csv (离线, 从320缓存) ..."
   "$PY" -u code/sector_momentum.py --momentum "$ASOF" --offline || echo "[动量] 离线生成失败, 继续(联网兜底)"
 else
@@ -58,7 +64,7 @@ else
 fi
 if [[ -n "$OLD" ]]; then
   echo "[2/4] delta: $(basename "$OLD") -> $(basename "$NEW") (top=$TOP)"
-  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW" --top "$TOP" >/dev/null
+  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW" --top "$TOP" --col uptrend7 >/dev/null
 else
   echo "[2/4] 未找到前一交易日, 跳过 delta"
 fi

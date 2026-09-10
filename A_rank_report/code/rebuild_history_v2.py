@@ -19,6 +19,7 @@ V2 = 与 run_strategy.eval_uptrend_7d 完全相同的 9 个条件:
 
 用法: python rebuild_history_v2.py 0901 0902 0903 0904 0907 0908
       (每个 MMDD 的 asof 取该日现有 CSV 的 date 列最大值, 即其真实数据日)
+      python rebuild_history_v2.py 0909 --asof 2026-09-09   # 强制数据日(文件被盘中数据覆盖过时用)
 输出: 覆盖 A_rank_report/output/cn_uptrend_<MMDD>.csv, 并留 .v1.bak 备份(仅首次)
 """
 from __future__ import annotations
@@ -132,6 +133,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("mmdd", nargs="+", help="要重建的日期标签(如 0901 0902 ...)")
     ap.add_argument("--workers", type=int, default=16)
+    ap.add_argument("--asof", default="", help="强制数据日 YYYY-MM-DD(默认取该文件 date 列最大值)")
     a = ap.parse_args()
 
     with open(os.path.join(DATA, "cn_tickers.txt"), encoding="utf-8") as f:
@@ -147,7 +149,8 @@ def main() -> None:
             print(f"[跳过] {mmdd}: 无原文件 {path}")
             continue
         old = pd.read_csv(path, encoding="utf-8-sig")
-        asof = pd.to_datetime(old["date"]).max().date()
+        asof = (pd.Timestamp(a.asof).date() if a.asof
+                else pd.to_datetime(old["date"]).max().date())
         rows: list[dict] = []
         with ThreadPoolExecutor(max_workers=a.workers) as pool:
             futs = {pool.submit(_eval_one, t, asof, names, inds): t for t in tickers}

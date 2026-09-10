@@ -34,6 +34,21 @@ else
     --rank-out "output/a_rank_${DATE}.csv"
 fi
 
+# 当日全市场动量表: 缺失 或 只是盘中快照(早于当日A股收盘确认 15:05) -> 从320根K线缓存离线重算(0联网)
+ASOF=$("$PY" -c "import pandas as pd;print(pd.to_datetime(pd.read_csv('output/cn_uptrend_${DATE}.csv',encoding='utf-8-sig')['date']).max().strftime('%Y%m%d'))" 2>/dev/null || echo "20$(date +%y)${DATE}")
+MOM="output/cn_momentum_${ASOF}.csv"
+STALE=0
+if [[ -z "$ASOF" ]]; then STALE=0
+elif [[ ! -f "$MOM" ]]; then STALE=1
+elif [[ "$ASOF" == "$(date +%Y%m%d)" && "$(stat -c %Y "$MOM")" -lt "$(date -d 'today 15:05' +%s)" ]]; then STALE=1
+fi
+if [[ "$STALE" == 1 ]]; then
+  echo "[动量] 生成 cn_momentum_${ASOF}.csv (离线, 从320缓存) ..."
+  "$PY" -u code/sector_momentum.py --momentum "$ASOF" --offline || echo "[动量] 离线生成失败, 继续(联网兜底)"
+else
+  [[ -n "$ASOF" ]] && echo "[动量] cn_momentum_${ASOF}.csv 已就绪"
+fi
+
 # 找"前一交易日"(按交易日历, 跳过周末/节假日)的结果文件; 不存在则退回最新一份
 PREV=$("$PY" -u code/cn_trading_days.py --prev --mmdd 2>/dev/null || true)
 OLD=""
@@ -50,7 +65,7 @@ fi
 if [[ -n "$OLD" ]]; then
   echo ""
   echo "[2/2] A_rank_delta (top=$TOP): $(basename "$OLD") -> $(basename "$NEW")"
-  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW" --top "$TOP"
+  "$PY" -u code/a_rank_delta.py -o "$OLD" -n "$NEW" --top "$TOP" --col uptrend7
 else
   echo ""
   echo "[提示] 未找到前一交易日结果, 本日只生成 A_rank 榜单, 无 delta 对比。"

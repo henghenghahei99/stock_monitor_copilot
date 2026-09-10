@@ -49,7 +49,7 @@ import time
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import date
+from datetime import date, datetime, time as _clock_time
 from typing import Optional
 
 import pandas as pd
@@ -116,7 +116,8 @@ KLINE_CACHE_DIR = os.path.join(DATA_DIR, "kline_cache")
 KLINE_CACHE_TTL_DAYS = 1
 # 报价本地缓存(全量扫描时报价请求量巨大, 一天一拉避免反复触发限流)
 QUOTE_CACHE_DIR = os.path.join(DATA_DIR, "quote_cache")
-QUOTE_CACHE_TTL_DAYS = 1
+QUOTE_CACHE_TTL_DAYS = 7   # 报价(仅取 规范代码+名称, 不含价格)7天一拉: 名称极少变,
+                           # TTL=1天会让日报里"代表股名称"逐个走代理联网(单线程, 极慢)。
 _REQUEST_DELAY = 0.0  # 每个标的请求前延时(秒), 用 --delay 控制, 首次全量时建议设 0.1~0.3
 _USE_CACHE = True      # K线本地缓存开关, 用 --no-cache 关闭
 CN_TICKER_FILE = os.path.join(DATA_DIR, "cn_tickers.txt")
@@ -721,19 +722,56 @@ def set_kline_asof_ref(d) -> None:
     _ASOF_REF = d
 
 
-def _kline_cache_fresh(path: str, rows) -> bool:
-    """K线缓存是否可用(增量): 设了 _ASOF_REF 时看"末根K线日期>=基准";
-    否则退回 mtime < 1天(TTL)。"""
-    if _ASOF_REF is not None:
-        try:
-            last = pd.to_datetime(rows[-1][0]).date()
-            return last >= _ASOF_REF
-        except Exception:  # noqa: BLE001
-            return False
+# 各市场"当日K线收盘确认时刻"(服务器本地时区=北京时间): (跨天数, 时, 分)
+#   cn 15:00 收盘 / hk 16:00 收盘 / us 次日 05:00(美东16:00, 取宽一点覆盖冬夏令时)
+_MARKET_FINAL = {"cn": (0, 15, 5), "hk": (0, 16, 5), "us": (1, 5, 5)}
+
+
+def market_of_prefixed(prefixed: str) -> str:
+    """由证券代码前缀判断市场(cn/hk/us)。"""
+    p = str(prefixed).lower()
+    if p.startswith("us"):
+        return "us"
+    if p.startswith("hk"):
+        return "hk"
+    return "cn"
+
+
+def bar_final_ts(market: str, d) -> float:
+    """该市场某交易日的K线"收盘确认"本地时间戳——缓存文件写入时间晚于它才算完整数据。"""
+    off, hh, mm = _MARKET_FINAL.get(market, _MARKET_FINAL["cn"])
+    base = datetime.combine(d, _clock_time(hh, mm)).timestamp()
+    return base + off * 86400.0
+
+
+def _kline_bar_closed(path: str, last) -> bool:
+    """缓存里末根K线是否"已收盘确认"。盘中写入的快照(如早盘 10:49)不算,
+    否则收盘后跑日报时会一直复用早盘数据(量价都是残缺的)。"""
+    if last is None:
+        return False
     try:
-        return (time.time() - os.path.getmtime(path)) < KLINE_CACHE_TTL_DAYS * 86400
+        mtime = os.path.getmtime(path)
     except Exception:  # noqa: BLE001
         return False
+    prefixed = os.path.basename(path).rsplit("_", 1)[0]
+    return mtime >= bar_final_ts(market_of_prefixed(prefixed), last)
+
+
+def _kline_cache_fresh(path: str, rows) -> bool:
+    """K线缓存是否可用(增量): 设了 _ASOF_REF 时看"末根K线日期>=基准";
+    否则退回 mtime < 1天(TTL)。两种情况下都额外要求末根K线已收盘确认(见上)。"""
+    try:
+        last = pd.to_datetime(rows[-1][0]).date()
+    except Exception:  # noqa: BLE001
+        return False
+    if _ASOF_REF is not None:
+        return last >= _ASOF_REF and _kline_bar_closed(path, last)
+    try:
+        if not (time.time() - os.path.getmtime(path)) < KLINE_CACHE_TTL_DAYS * 86400:
+            return False
+    except Exception:  # noqa: BLE001
+        return False
+    return _kline_bar_closed(path, last)
 
 
 def tencent_kline(

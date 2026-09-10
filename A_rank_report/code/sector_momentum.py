@@ -89,14 +89,21 @@ def as_of_date(df: pd.DataFrame) -> date:
 
 
 def stock_momentum(prefixed: str, asof: date) -> float | None:
-    """截至 asof(含)收盘: m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20; 数据不足返回 None。"""
+    """截至 asof(含)收盘: m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20; 数据不足返回 None。
+
+    必须“K线覆盖到 asof”: 缓存末根早于 asof(如缓存停在上一交易日)时, 强刷一次再算;
+    否则会把上一交易日当成 asof 静默算出错值。
+    """
     try:
-        k = fos.tencent_kline(str(prefixed), 80, use_cache=True)
-        if k is None:
-            return None
-        close, _ = k
-        c = close[close.index <= pd.Timestamp(asof)].astype(float).dropna()
-        if len(c) < 4:
+        for force in (False, True):
+            k = fos.tencent_kline(str(prefixed), 80, use_cache=not force)
+            if k is None:
+                continue
+            close, _ = k
+            c = close[close.index <= pd.Timestamp(asof)].astype(float).dropna()
+            if len(c) >= 4 and c.index[-1].date() >= pd.Timestamp(asof).date():
+                break
+        if k is None or len(c) < 4:
             return None
         c0, c1, c2, c3 = c.iloc[-1], c.iloc[-2], c.iloc[-3], c.iloc[-4]
         if c0 <= 0 or c1 <= 0 or c2 <= 0 or c3 <= 0:
@@ -127,12 +134,25 @@ def stock_daily_chg(prefixed: str, asof: date) -> float | None:
         return None
 
 
+def _momentum_file_final(path: str, asof) -> bool:
+    """当日动量表是否可信: 历史日期直接可信; 当日文件要求生成于A股收盘确认之后,
+    否则是盘中快照(与当日K线缓存同理), 必须重算。"""
+    try:
+        d = pd.Timestamp(asof).date()
+        if d < date.today():
+            return True
+        return os.path.getmtime(path) >= fos.bar_final_ts("cn", d)
+    except Exception:  # noqa: BLE001
+        return True
+
+
 def _cached_stock_momentum(prefixed: str, asof: date, bars: int = 80) -> float | None:
-    """只读本地缓存算 m(缓存缺失/过期不联网, 返回 None)。供 cache_only 快速扫描。"""
+    """只读本地缓存算 m(缓存缺失/过期/盘中快照不联网, 返回 None)。供 cache_only 快速扫描。"""
     cf = os.path.join(fos.KLINE_CACHE_DIR, f"{prefixed.replace('.', '_')}_{bars}.json")
     try:
-        fresh = os.path.exists(cf) and (
-            time.time() - os.path.getmtime(cf)) < fos.KLINE_CACHE_TTL_DAYS * 86400
+        with open(cf, encoding="utf-8") as f:
+            rows = json.load(f)
+        fresh = bool(rows) and fos._kline_cache_fresh(cf, rows)
     except Exception:  # noqa: BLE001
         fresh = False
     return stock_momentum(prefixed, asof) if fresh else None
@@ -149,7 +169,7 @@ def market_momentum(asof: date, force: bool = False, workers: int = 10,
     """
     key = pd.Timestamp(asof).strftime("%Y%m%d")
     path = os.path.join(OUTPUT_DIR, f"cn_momentum_{key}.csv")
-    if (not force) and os.path.exists(path):
+    if (not force) and os.path.exists(path) and _momentum_file_final(path, asof):
         try:
             return pd.read_csv(path, encoding="utf-8-sig")
         except Exception:  # noqa: BLE001
@@ -206,7 +226,7 @@ def ensure_momentum_offline(asof, workers: int = 30) -> pd.DataFrame:
     """
     key = pd.Timestamp(asof).strftime("%Y%m%d")
     path = os.path.join(OUTPUT_DIR, f"cn_momentum_{key}.csv")
-    if os.path.exists(path):
+    if os.path.exists(path) and _momentum_file_final(path, asof):
         try:
             return pd.read_csv(path, encoding="utf-8-sig")
         except Exception:  # noqa: BLE001
@@ -219,19 +239,32 @@ def ensure_momentum_offline(asof, workers: int = 30) -> pd.DataFrame:
     def _offline(pref: str) -> float | None:
         f80 = os.path.join(kdir, f"{pref.replace('.', '_')}_80.json")
         f320 = os.path.join(kdir, f"{pref.replace('.', '_')}_320.json")
+
+        def _covers(rs) -> bool:
+            """缓存末根K线必须 >= asof, 否则会把上一交易日当成 asof 算出错值。"""
+            try:
+                return bool(rs) and pd.to_datetime(rs[-1][0]).date() >= pd.Timestamp(asof).date()
+            except Exception:  # noqa: BLE001
+                return False
+
         rows = None
-        if os.path.exists(f80) and (time.time() - os.path.getmtime(f80)) < fos.KLINE_CACHE_TTL_DAYS * 86400:
+        if os.path.exists(f80):
             try:
                 with open(f80, encoding="utf-8") as f:
                     rows = json.load(f)
+                if not rows or not fos._kline_cache_fresh(f80, rows) or not _covers(rows):
+                    rows = None
             except Exception:  # noqa: BLE001
                 rows = None
         if rows is None and os.path.exists(f320):
             try:
                 with open(f320, encoding="utf-8") as f:
                     rows = json.load(f)[-80:]
-                with open(f80, "w", encoding="utf-8") as f:
-                    json.dump(rows, f, ensure_ascii=False)
+                if not _covers(rows):
+                    rows = None
+                else:
+                    with open(f80, "w", encoding="utf-8") as f:
+                        json.dump(rows, f, ensure_ascii=False)
             except Exception:  # noqa: BLE001
                 rows = None
         if not rows:
