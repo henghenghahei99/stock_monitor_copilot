@@ -507,14 +507,17 @@ def main() -> None:
         gi = 0
         chart_no = 0
         png_dir = os.path.join(OUT, f"us_rank_report_{tag}_charts")
-        for metric, mname, short in (("mom", "动量分走势(未加权原始值, ±10)", "动量分"),
-                                     ("trend", "趋势分走势(未加权原始值)", "趋势分")):
-            up, down = _direction_groups(series, today_pool, metric)
-            for tag2, g in (("整体上升", up), ("整体下降", down)):
+        metrics = (("mom", "动量分走势(未加权原始值, ±10)", "动量分"),
+                   ("trend", "趋势分走势(未加权原始值)", "趋势分"))
+        # 分组顺序: **先整体上升、后整体下降**; 同一方向内 动量分 在前、趋势分 在后
+        dirs = {m: _direction_groups(series, today_pool, m) for m, _, _ in metrics}
+        for di, dname in enumerate(("整体上升", "整体下降")):
+            for metric, mname, short in metrics:
+                g = dirs[metric][di]
                 if not g:
-                    empty_groups.append(f"{short}·{tag2}")
+                    empty_groups.append(f"{short}·{dname}")
                     continue
-                title = f"{seq[gi]} {mname} · {tag2} {len(g)}条"
+                title = f"{seq[gi]} {mname} · {dname} {len(g)}条"
                 # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
                 try:
                     os.makedirs(png_dir, exist_ok=True)

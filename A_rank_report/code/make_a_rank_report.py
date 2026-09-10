@@ -670,14 +670,17 @@ def main() -> None:
             gi = 0
             chart_no = 0
             del empty_groups[:]
-            for metric, mname, short in (("mom", "动量分走势（未加权原始值, ±10）", "动量分"),
-                                         ("trend", "趋势分走势(未加权原始值, 每日该板块入池得分)", "趋势分")):
-                up, down = _direction_groups(order, series, metric)
-                for tag, g in (("整体上升", up), ("整体下降", down)):
+            metrics = (("mom", "动量分走势（未加权原始值, ±10）", "动量分"),
+                       ("trend", "趋势分走势(未加权原始值, 每日该板块入池得分)", "趋势分"))
+            # 分组顺序: **先整体上升、后整体下降**; 同一方向内 动量分 在前、趋势分 在后
+            dirs = {m: _direction_groups(order, series, m) for m, _, _ in metrics}
+            for di, dname in enumerate(("整体上升", "整体下降")):
+                for metric, mname, short in metrics:
+                    g = dirs[metric][di]
                     if not g:
-                        empty_groups.append(f"{short}·{tag}")
+                        empty_groups.append(f"{short}·{dname}")
                         continue
-                    title = f"{seq[gi]} {mname} · {tag} {len(g)}条"
+                    title = f"{seq[gi]} {mname} · {dname} {len(g)}条"
                     # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
                     png_dir = os.path.join(OUT, f"a_rank_report_{args.date}_charts")
                     try:
@@ -700,7 +703,7 @@ def main() -> None:
                 "覆盖: " + "、".join(f"{p['label']}({p['cov'] or '?'})" for p in series) + "；x 轴下方数字 = 该日池内板块数。",
                 f"筛选: 退出的不画；窗口内无连续≥{CHART_MIN_RUN}个交易日在池的(零散孤点/频繁进出)也不画；",
                 f"整体近乎横盘(趋势起伏<{CHART_MIN_TREND_CHG} 且 动量起伏<{CHART_MIN_MOM_CHG})的也不画。",
-                "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”。",
+                "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”；排序=先整体上升(动量→趋势)，再整体下降(动量→趋势)。",
                 f"口径: 每日取当天自己的入池板块(原得分前{args.top} ∪ 动量入池分前{args.top})；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
             ]
             if empty_groups:
