@@ -62,6 +62,10 @@ MAX_STALE_DAYS = 7
 MIN_MARKET_CAP = 500_000_000.0      # 5 亿美金
 # 动量 m 权重(加强当日): 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20, 和为1
 MOM_W1, MOM_W2, MOM_W3 = 0.50, 0.30, 0.20
+# 动量代表股个数(◎橙色); 相比前一日新进入名单的用 ◆(报告端标紫)
+MOM_REPS = 7
+NEW_MOM_MARK = "◆"
+OLD_MOM_MARK = "◎"
 # 动量分归一除数: 权重和已由 3 变 1(加权 m 变小), 用 1.4(=7/5) 标定,
 # 使动量分均值与"等权三条叠加+除5"的旧口径一致(美股实测 ~1.00×, A股 ~1.02×), 保持 ±10 量级
 MOM_NORM = 1.4
@@ -385,9 +389,10 @@ def _rep_trend(name: str, prefixed: str, uptrend: str, chg20) -> str:
     return f"{_short(name, prefixed)}({uptrend},{chg})"
 
 
-def _rep_mom(name: str, prefixed: str, chg1) -> str:
+def _rep_mom(name: str, prefixed: str, chg1, new: bool = False) -> str:
     chg = f"{float(chg1):+.0f}%" if chg1 == chg1 and chg1 is not None else ""
-    return f"◎{_short(name, prefixed)}({chg})"
+    mark = NEW_MOM_MARK if new else OLD_MOM_MARK
+    return f"{mark}{_short(name, prefixed)}({chg})"
 
 
 def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
@@ -430,14 +435,18 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
             trep_by[ind] = [_rep_trend(str(r.get("name") or uni_names.get(str(r["prefixed"]), str(r["prefixed"]))),
                                        str(r["prefixed"]), str(r["uptrend"]),
                                        r.get("chg20")) for _, r in g.iterrows()]
-    # 动量代表股: 全部成分股按 m 前5
+    # 动量代表股: 全部成分股按 m 前 MOM_REPS(◆=相比前日新进入)
     mrep_by: dict[str, list] = {}
     if not mom.empty:
-        m5 = mom.sort_values("m", ascending=False).groupby("industry", sort=False).head(5)
-        for ind, g in m5.groupby("industry", sort=False):
-            mrep_by[ind] = [_rep_mom(uni_names.get(str(r["prefixed"]), str(r["prefixed"])),
-                                      str(r["prefixed"]), r.get("chg1"))
-                            for _, r in g.iterrows()]
+        prev_reps = _prev_mrep_index(day_key)
+        m_top = mom.sort_values("m", ascending=False).groupby("industry", sort=False).head(MOM_REPS)
+        for ind, g in m_top.groupby("industry", sort=False):
+            reps = []
+            for _, r in g.iterrows():
+                pref = str(r["prefixed"])
+                is_new = bool(prev_reps) and pref not in prev_reps.get(str(ind), set())
+                reps.append(_rep_mom(uni_names.get(pref, pref), pref, r.get("chg1"), new=is_new))
+            mrep_by[ind] = reps
 
     # 数量因子(不对称, N=板块全部成分股总数): <20轻度加成, >20每多20减0.06, >=120封底0.70(入围与排序均乘)
     fmap = {str(a["industry"]): _fsz(str(a["industry"]), int(a["股票数"])) for _, a in agg.iterrows()}
@@ -472,7 +481,7 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
             "动量分": pts,
             "总分": round(trend * 0.5 + pts * 0.5, 2),
             "动量入池分": round(rawv * f, 2) if rawv is not None else None,
-            "代表股": "、".join(trep_by.get(ind, [])[:5] + mrep_by.get(ind, [])[:5]) or "-",
+            "代表股": "、".join(trep_by.get(ind, [])[:5] + mrep_by.get(ind, [])[:MOM_REPS]) or "-",
             "入池": "+".join(src),
         })
     rk = pd.DataFrame(rows).sort_values("总分", ascending=False).reset_index(drop=True)
@@ -481,6 +490,28 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
     rk.to_csv(out, index=False, encoding="utf-8-sig")
     print(f"[rank] {day_key} 入池 {len(rk)} 板块 -> {out}", file=sys.stderr)
     return rk
+
+
+def _prev_mrep_index(day_key: str) -> dict[str, set[str]]:
+    """前一交易日各板块动量代表股(prefixed 集合, m 前 MOM_REPS), 供标记今日新进。
+
+    直接读已缓存的 us_momentum_<前一交易日>.csv; 无则返回 {}。
+    """
+    import glob as _glob
+    keys = [os.path.basename(p)[len("us_momentum_"):-4]
+            for p in sorted(_glob.glob(os.path.join(OUT, "us_momentum_*.csv")))]
+    prev = [k for k in keys if k < day_key]
+    if not prev:
+        return {}
+    try:
+        df = pd.read_csv(os.path.join(OUT, f"us_momentum_{prev[-1]}.csv"), encoding="utf-8-sig")
+    except Exception:  # noqa: BLE001
+        return {}
+    if df.empty or "m" not in df.columns:
+        return {}
+    top = df.sort_values("m", ascending=False).groupby("industry", sort=False).head(MOM_REPS)
+    return {str(i): set(g["prefixed"].astype(str))
+            for i, g in top.groupby("industry", sort=False)}
 
 
 def _rank_index(day_key: str) -> dict[str, int]:

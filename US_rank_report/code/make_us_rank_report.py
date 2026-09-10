@@ -25,6 +25,7 @@ DOWN = "#188038"
 NEW_BLUE = "#1a73e8"
 NEW_PURPLE = "#7b1fa2"
 MOM_COL = "#e65100"
+NEW_MOM_COL = "#6a1b9a"   # ◆动量代表股中相比前日新进入的 紫色
 NAVY = "#2b579a"
 NAVY_D = "#1d3f6e"
 ROW_BD = "#e3e9f2"
@@ -182,7 +183,9 @@ def _html_table(df: pd.DataFrame) -> str:
                     if s:
                         seg = []
                         for it in items[start:start + s]:
-                            if it.startswith("◎"):
+                            if it.startswith("◆"):
+                                seg.append(f'<span style="color:{NEW_MOM_COL};font-weight:600">◆{_esc(it[1:])}</span>')
+                            elif it.startswith("◎"):
                                 seg.append(f'<span style="color:{MOM_COL};font-weight:600">◎{_esc(it[1:])}</span>')
                             else:
                                 seg.append(f"<span>{_esc(it)}</span>")
@@ -516,7 +519,8 @@ def main() -> None:
                  "动量入池分=S；展示动量分=S÷(1.4×动量股数) 归一(允许为负, ±10封顶)。<br>"
                  f"⑤ 总分=趋势分×50%+动量分×50%；入池=原行业得分前{top} ∪ 动量入池分前{top}(并集, 最多{2 * top})，池内按总分降序排名；"
                  "入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
-                 "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日%) + ◎动量前5(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日%)。<br>"
+                 "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日%) + ◎动量前7(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日%); "
+                 "◆紫=相比前日新进入动量前7。<br>"
                  "⑦ 板块=东财二级行业(与A股日报同口径)：东财美股F10行业经 data/us_industry_map.json 映射统一到A股二级名称；"
                  "全市场口径(市值>5亿美元、剔除空壳)。<br>"
                  "⑧ 数量因子f(美股口径): 从0只起按0.00037/只连续线性递减，n≥541封底0.80不再减(如100只≈0.963、300只≈0.889、500只=0.80)；"

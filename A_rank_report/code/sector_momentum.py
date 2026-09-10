@@ -19,6 +19,7 @@
 """
 from __future__ import annotations
 
+import glob
 import json
 import os
 import sys
@@ -40,6 +41,11 @@ MOM_W1, MOM_W2, MOM_W3 = 0.50, 0.30, 0.20
 # 动量分归一除数: 权重和已由 3 变 1(加权 m 变小), 用 1.4(=7/5) 标定,
 # 使动量分均值与"等权三条叠加+除5"的旧口径一致(A股实测 ~1.02×, 美股 ~1.00×), 保持 ±10 量级
 MOM_NORM = 1.4
+
+# 动量代表股个数(◎橙色); 相比前一日新进入名单的用 ◆(报告端标紫)
+MOM_REPS = 7
+NEW_MOM_MARK = "◆"
+OLD_MOM_MARK = "◎"
 
 
 def _weighted_m(d1: float, d2: float, d3: float) -> float:
@@ -303,11 +309,35 @@ def _cn_name(prefixed: str) -> str:
         return ""
 
 
-def _fmt_momentum_rep(prefixed: str, code6: str, chg1: float) -> str:
-    """动量代表股文本: ◎名字(+当日涨幅%)  (◎ 供报告端标色)。"""
+def _fmt_momentum_rep(prefixed: str, code6: str, chg1: float, new: bool = False) -> str:
+    """动量代表股文本: ◎名字(+当日涨幅%) / ◆名字(相比前日新进入动量代表股)。"""
     name = _cn_name(prefixed)
     label = name or prefixed
-    return f"◎{label}({chg1:+.0f}%)"
+    mark = NEW_MOM_MARK if new else OLD_MOM_MARK
+    return f"{mark}{label}({chg1:+.0f}%)"
+
+
+def _prev_momentum_reps(asof: date) -> dict[str, set[str]]:
+    """前一交易日各板块的动量代表股(prefixed 集合, 按 m 前 MOM_REPS), 供标记今日新进。
+
+    直接读已缓存的 cn_momentum_<前一交易日>.csv(离线, 0 联网); 无缓存返回 {}。
+    """
+    key = pd.Timestamp(asof).strftime("%Y%m%d")
+    cands = sorted(glob.glob(os.path.join(OUTPUT_DIR, "cn_momentum_*.csv")))
+    prev = [p for p in cands
+            if os.path.basename(p)[len("cn_momentum_"):-4] < key]
+    if not prev:
+        return {}
+    try:
+        df = pd.read_csv(prev[-1], encoding="utf-8-sig")
+    except Exception:  # noqa: BLE001
+        return {}
+    if df.empty or "m" not in df.columns:
+        return {}
+    df = df.assign(sector=df["sector"].astype(str).map(_merge_ind))
+    top = df.sort_values("m", ascending=False).groupby("sector", sort=False).head(MOM_REPS)
+    return {str(i): set(g["prefixed"].astype(str))
+            for i, g in top.groupby("sector", sort=False)}
 
 
 def _row_momentum(r) -> float | None:
@@ -424,20 +454,23 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
                 items.append(f"{r['name']}({trend_s},{chg_s})")
             trend_by[ind] = items
 
-    # 2) 动量代表股(板块全部成分股按 m 前5, ◎标注; 括号显示当日涨幅)
+    # 2) 动量代表股(板块全部成分股按 m 前 MOM_REPS, ◎标注; ◆=相比前日新进入)
     mom = market_momentum(asof, force=momentum_force, cache_only=cache_only)
     if not mom.empty:
         mom = mom.assign(sector=mom["sector"].astype(str).map(_merge_ind))
+    prev_reps = _prev_momentum_reps(asof)
     mom_by: dict[str, list] = {}
     if not mom.empty:
-        top5 = mom.sort_values("m", ascending=False).groupby("sector", sort=False).head(5)
-        for ind, g in top5.groupby("sector", sort=False):
+        top_n = mom.sort_values("m", ascending=False).groupby("sector", sort=False).head(MOM_REPS)
+        for ind, g in top_n.groupby("sector", sort=False):
             reps = []
             for _, r in g.iterrows():
                 chg1 = stock_daily_chg(str(r["prefixed"]), asof)
+                pref = str(r["prefixed"])
+                is_new = bool(prev_reps) and pref not in prev_reps.get(str(ind), set())
                 reps.append(_fmt_momentum_rep(
-                    str(r["prefixed"]), str(r["code6"]),
-                    chg1 if chg1 is not None else float(r["m"])))
+                    pref, str(r["code6"]),
+                    chg1 if chg1 is not None else float(r["m"]), new=is_new))
             mom_by[ind] = reps
 
     # 数量因子(不对称, N=板块全部成分股总数): <20轻度加成, >20每多20减0.06, >=120封底0.70(入围与排序均乘)
@@ -471,7 +504,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
         pts = round(pts * f, 2)
         trend = round(float(a["平均分"]) * f, 2)      # 结构分=>趋势分, 乘数量因子
         total = round(trend * 0.5 + pts * 0.5, 2)
-        reps = "、".join((trend_by.get(ind, [])[:5]) + (mom_by.get(ind, [])[:5]))
+        reps = "、".join((trend_by.get(ind, [])[:5]) + (mom_by.get(ind, [])[:MOM_REPS]))
         rows.append({
             "industry": ind,
             "得分": int(a["得分"]),
