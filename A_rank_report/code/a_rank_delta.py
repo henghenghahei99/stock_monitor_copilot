@@ -7,7 +7,7 @@ A_rank_delta: A_rank 板块得分排名的"前一日对比"榜单。
   1) 对 [昨日结果CSV] 和 [今日结果CSV] 各自做 A_rank(双口径入池):
      上涨趋势 -> 8/8=8分 7/8=6分 6/8=4分(6分以下不计) -> 行业加权总分
      -> 趋势分=得分/股票数; 动量分=代表股前10的 1/2/3日动量(±10)
-     -> 入池 = 原得分前 top ∪ 动量分前 top; 池内按 总分=趋势分*50%+动量分*50% 排序得排名
+     -> 入池 = 原得分前 top ∪ 动量分前 top; 池内按 总分=趋势分/动量分动态配平 排序得排名
   2) 对比两日排名, 输出: 前日排名 / 今日排名 / 排名变化(正=上升)
      / 状态(池内·新进池·退出池) / 趋势分·动量分·总分 及其变化
 
@@ -33,7 +33,7 @@ OUTPUT_DIR = os.path.join(ROOT_DIR, "output")
 
 def a_rank(path: str, col: str, mapping: dict[int, int], top: int,
            sort_by: str = "总分") -> pd.DataFrame:
-    """对一份命中结果CSV计算 A_rank(结构分50%+代表股动量50%), 返回带 '排名'(1..top) 的行业表。"""
+    """对一份命中结果CSV计算 A_rank(结构分/代表股动量 按当日池内量级动态配平), 返回带 '排名'(1..top) 的行业表。"""
     import sector_momentum as sm  # noqa: PLC0415
     df = pd.read_csv(path)
     rk = sm.combined_rank(df, col, mapping, top).reset_index(drop=True)
@@ -82,7 +82,7 @@ def main() -> None:
     m["总分变化"] = m["今日总分"].fillna(0) - m["前日总分"].fillna(0)
     m = m.sort_values(["今日排名", "前日排名"], na_position="last").reset_index(drop=True)
 
-    print(f"=== A_rank_delta: 前一日({args.old}) vs 今日({args.new}) 排名升降 (总分=趋势分*50%+动量分*50%) ===")
+    print(f"=== A_rank_delta: 前一日({args.old}) vs 今日({args.new}) 排名升降 (总分=趋势分/动量分动态配平) ===")
     show_cols = ["行业", "状态", "前日排名", "今日排名", "排名变化",
                  "前日趋势分", "今日趋势分", "趋势分变化",
                  "前日动量分", "今日动量分", "动量分变化",

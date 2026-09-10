@@ -31,6 +31,23 @@ NAVY_D = "#1d3f6e"
 ROW_BD = "#e3e9f2"
 
 
+def _dynamic_weights(trend, mom, lo: float = 0.35, hi: float = 0.65) -> tuple[float, float]:
+    """池内动态权重(与 us_rank.dynamic_weights 同一规则): 按两分量平均绝对量级取反比,
+    使趋势分/动量分对总分的平均贡献相等; 返回 (趋势权重, 动量权重)。
+
+    直接由排名表的两列重算, 免得把权重存进 CSV。
+    """
+    try:
+        base_t = float(pd.to_numeric(pd.Series(trend), errors="coerce").abs().mean())
+        base_m = float(pd.to_numeric(pd.Series(mom), errors="coerce").abs().mean())
+    except Exception:  # noqa: BLE001
+        return 0.5, 0.5
+    if not (base_t > 0 and base_m > 0):
+        return 0.5, 0.5
+    w_m = min(hi, max(lo, base_t / (base_t + base_m)))
+    return round(1.0 - w_m, 4), round(w_m, 4)
+
+
 def _esc(s) -> str:
     return html.escape(str(s))
 
@@ -413,6 +430,8 @@ def main() -> None:
 
     rk = rank.drop(columns=["得分", "股票数", "动量入池分"], errors="ignore")
     rk = rk.rename(columns={"industry": "行业"})
+    _wt, _wm = _dynamic_weights(rank["趋势分"], rank["动量分"]) if "趋势分" in rank else (0.5, 0.5)
+    w_txt = f"趋势{_wt:.0%}/动量{_wm:.0%}"
 
     delta_html = ""
     delta_txt_lines: list[str] = []
@@ -457,7 +476,7 @@ def main() -> None:
             delta_txt_lines = ["", "== 与前一交易日排名升降 ==", _txt_table(d)]
             delta_note = ("<p class='note' style='color:#555;background:#f5f7fa;border-radius:8px;"
                           "padding:10px 14px;font-size:12px;line-height:1.8'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
-                          f"(入池=原得分前{top} ∪ 动量入池分前{top}、池内按总分=趋势分×50%+动量分×50% 降序)计算后对比。"
+                          f"(入池=原得分前{top} ∪ 动量入池分前{top}、池内按总分=趋势分/动量分按当日池内量级动态配平 降序)计算后对比。"
                           "状态：池内=两日均在池内；新进池=今日新进(前日不在池)；完全新进池=此前几日均未入池、今日首次入池(紫)；退出池=今日掉出池。"
                           "本表全量列出(排序: 完全新进池 → 新进池 → 池内按动量分变化降序[提高多→没变→降低少→降低多] → 退出池; 组内按当日动量分降序)。"
                           "涨红跌绿：排名变化=前日排名−今日排名(正=名次上升)；"
@@ -507,7 +526,7 @@ def main() -> None:
         chart_parts.insert(0, "<h3>板块近{}个交易日走势 — 今日池板块 (仅选5日中≥{}日在池者; 空心圈=出池/未入池以最低分代替)</h3>".format(len(series), CHART_MIN_POOL_DAYS))
 
     parts = [f"<h2>{title}</h2>"]
-    parts.append(f"<h3>今日板块排名(趋势分50% + 动量分50% → 入池=原得分前{top} ∪ 动量前{top} → 总分)</h3>")
+    parts.append(f"<h3>今日板块排名(趋势分/动量分动态配平 {w_txt} → 入池=原得分前{top} ∪ 动量前{top} → 总分)</h3>")
     parts.append(_html_table(rk))
     rank_note = ("<p class='note' style='color:#555;background:#f5f7fa;border-radius:8px;padding:10px 14px;font-size:12px;line-height:1.8'>"
                  "表后注(今日板块排名算法)：<br>"
@@ -518,7 +537,8 @@ def main() -> None:
                  "③ 行业得分=该行业成员加权分之和；趋势分=得分/计入股票数。<br>"
                  "④ 动量分(±10)与动量入池分同源：取板块全部成分股按 m=当日%×50% + 近2日%×30% + 近3日%×20%(加强当日)降序前10(不足按实际只数)，S=Σ前10的m；"
                  "动量入池分=S；展示动量分=S÷(1.4×动量股数) 归一(允许为负, ±10封顶)。<br>"
-                 f"⑤ 总分=趋势分×50%+动量分×50%；入池=原行业得分前{top} ∪ 动量入池分前{top}(并集, 最多{2 * top})，池内按总分降序排名；"
+                 f"⑤ 总分=趋势分×w_T + 动量分×w_M（**池内动态配平**：以当日池内两分量的平均绝对量级取反比定权，使两者对总分的平均贡献相等，"
+                 f"w_M 限[35%,65%]；今日 {w_txt}）；入池=原行业得分前{top} ∪ 动量入池分前{top}(并集, 最多{2 * top})，池内按总分降序排名；"
                  "入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日%) + ◎动量前7(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日%); "
                  "◆紫=相比前日新进入动量前7。<br>"

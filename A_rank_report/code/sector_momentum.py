@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-板块合计排名(A_rank_report_v1): 池内 趋势分 50% + 代表股短线动量分 50% 得"总分"; 双口径入池。
+板块合计排名(A_rank_report_v1): 池内 趋势分/代表股短线动量分 按当日池内量级动态配平 得"总分"; 双口径入池。
 
 个股动量(用户定义, 2026-09-10 起加强当日): m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20
     当日% = 今收/昨收-1;  近2日% = 今收/2交易日前收-1;  近3日% = 今收/3交易日前收-1
 
 展示口径(池内, "和以前一样"):
   趋势分 = 加权命中股平均分; 动量分(±10) = 前n只代表股 m 求和按 S/(1.4×只数) 归一;
-  总分 = 趋势分×50% + 动量分×50%; 池内按总分降序; 代表股 = 加权分前10 命中股。
+  总分 = 趋势分×w_T + 动量分×w_M (动态配平, 见 dynamic_weights); 池内按总分降序; 代表股 = 加权分前10 命中股。
 
 双口径入池(2026-09-06 用户口径):
   动量入池分(每板块) = 该板块"全部成分股"(东财行业, data/cn_sector_members.json)
@@ -41,6 +41,30 @@ MOM_W1, MOM_W2, MOM_W3 = 0.50, 0.30, 0.20
 # 动量分归一除数: 权重和已由 3 变 1(加权 m 变小), 用 1.4(=7/5) 标定,
 # 使动量分均值与"等权三条叠加+除5"的旧口径一致(A股实测 ~1.02×, 美股 ~1.00×), 保持 ±10 量级
 MOM_NORM = 1.4
+
+# 池内动态权重(2026-09-10 起): 固定 50/50 时, 两分量量级差太大(如趋势分均值 4.5 vs 动量分 2.8)
+# -> 动量分实际只占总分约 39%, 等于白给。改为按当日池内两分量的量级动态配平:
+#   以池内"平均绝对值"为量级基准(base-T / base-M), 权重取反比 -> 两分量对总分的**平均贡献相等**;
+#   动量整体接近0的极端日按 [MOM_W_MIN, MOM_W_MAX] 截断, 避免权重失真。
+MOM_W_MIN, MOM_W_MAX = 0.35, 0.65
+LAST_WEIGHTS: tuple[float, float] = (0.5, 0.5)   # (趋势权重, 动量权重), 供报告脚注展示当日实际值
+
+
+def dynamic_weights(trend, mom) -> tuple[float, float]:
+    """按池内两分量量级动态配平: 返回 (趋势权重, 动量权重), 使两者的平均贡献相等。
+
+    base-T = mean(|趋势分|), base-M = mean(|动量分|);  w_m = base-T/(base-T+base-M)。
+    量级缺失/异常时退回 50/50。
+    """
+    try:
+        base_t = float(pd.to_numeric(pd.Series(trend), errors="coerce").abs().mean())
+        base_m = float(pd.to_numeric(pd.Series(mom), errors="coerce").abs().mean())
+    except Exception:  # noqa: BLE001
+        return 0.5, 0.5
+    if not (base_t > 0 and base_m > 0):
+        return 0.5, 0.5
+    w_m = min(MOM_W_MAX, max(MOM_W_MIN, base_t / (base_t + base_m)))
+    return round(1.0 - w_m, 4), round(w_m, 4)
 
 # 动量代表股个数(◎橙色); 相比前一日新进入名单的用 ◆(报告端标紫)
 MOM_REPS = 7
@@ -448,7 +472,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
       板块成分股按 m=当日%×50%+近2日%×30%+近3日%×20% 降序前10(不足按实际只数), S=Σm;
       动量入池分 = S(原始);  展示动量分(±10) = S ÷ (1.4×动量股数);
       入池 = 原行业"得分"前 top ∪ "动量入池分"前 top(并集, 最多 2*top)。
-    池内按 总分 = 趋势分×50% + 动量分×50% 降序。
+    池内按 总分 = 趋势分/动量分 动态配平(w_T/w_M 由当日池内两分量平均量级取反比) 降序。
     代表股列 = 趋势代表股(加权分前5) + ◎动量代表股(全部成分股按 m 前5, ◎=短线动量, 报告端标色)。
     列: industry/得分/股票数/趋势分/动量分/总分/动量入池分/代表股/入池
     """
@@ -520,7 +544,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
                         reverse=True)
     mom_top = {ind for ind, _ in mom_sorted[:top]}
 
-    # 4) 并集入池, 池内按 总分(趋势50%+动量50%) 降序
+    # 4) 并集入池, 池内按 总分(趋势/动量动态配平) 降序
     rows = []
     for _, a in agg.iterrows():
         ind = a["industry"]
@@ -544,13 +568,20 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
             "股票数": int(a["股票数"]),
             "趋势分": trend,
             "动量分": pts,
-            "总分": total,
             "动量入池分": round(rawv * f, 2) if rawv is not None else None,
             "代表股": reps or "-",
             "入池": "+".join(src),
         })
-    out = pd.DataFrame(rows).sort_values("总分", ascending=False).reset_index(drop=True)
-    return out
+    out = pd.DataFrame(rows)
+    # 池内动态配权: 趋势/动量的平均贡献相等(当天池子有多大差异就配多重)
+    global LAST_WEIGHTS
+    if out.empty:
+        LAST_WEIGHTS = (0.5, 0.5)
+        return out
+    wt, wm = dynamic_weights(out["趋势分"], out["动量分"])
+    LAST_WEIGHTS = (wt, wm)
+    out["总分"] = (out["趋势分"] * wt + out["动量分"] * wm).round(2)
+    return out.sort_values("总分", ascending=False).reset_index(drop=True)
 
 
 if __name__ == "__main__":

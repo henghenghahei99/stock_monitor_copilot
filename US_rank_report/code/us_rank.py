@@ -11,7 +11,7 @@ US_rank: 美股板块 A_rank（照搬 A股日报口径，按细分 industry 分�
   - 动量入池分(每板块) = 全部成分股按 m 降序前10 只 m 之和(不足按实际只数)
   - 展示动量分(±10) = S/(1.4×动量股数) (允许为负, ±10封顶; 1.4 为标定回旧口径量级的除数)
   - 入池 = 原行业得分前 top ∪ 动量入池分前 top(并集, 最多 2*top)
-  - 池内按 总分 = 趋势分×50% + 动量分×50% 降序
+  - 池内按 总分 = 趋势分/动量分 动态配平(按当日池内量级) 降序
   - 代表股 = 趋势代表股(加权分前5, name(8/8,+20日%)) + ◎动量代表股(全部成分股按m前5, ◎name(+当日%))
 
 数据源: 本地 nasdaq/nyse/amex full 名单(symbol→行业/市值/代码后缀) + 腾讯美股日K(320根, qfq)。
@@ -69,6 +69,24 @@ OLD_MOM_MARK = "◎"
 # 动量分归一除数: 权重和已由 3 变 1(加权 m 变小), 用 1.4(=7/5) 标定,
 # 使动量分均值与"等权三条叠加+除5"的旧口径一致(美股实测 ~1.00×, A股 ~1.02×), 保持 ±10 量级
 MOM_NORM = 1.4
+
+# 池内动态权重(与A股同一套, 2026-09-10 起): 固定 50/50 会让量级小的一侧形同虚设,
+# 改为按当日池内两分量"平均绝对值"取反比权重, 使两者对总分的平均贡献相等。
+MOM_W_MIN, MOM_W_MAX = 0.35, 0.65
+LAST_WEIGHTS: tuple[float, float] = (0.5, 0.5)   # (趋势权重, 动量权重)
+
+
+def dynamic_weights(trend, mom) -> tuple[float, float]:
+    """按池内两分量量级动态配平: 返回 (趋势权重, 动量权重), 使两者的平均贡献相等。"""
+    try:
+        base_t = float(pd.to_numeric(pd.Series(trend), errors="coerce").abs().mean())
+        base_m = float(pd.to_numeric(pd.Series(mom), errors="coerce").abs().mean())
+    except Exception:  # noqa: BLE001
+        return 0.5, 0.5
+    if not (base_t > 0 and base_m > 0):
+        return 0.5, 0.5
+    w_m = min(MOM_W_MAX, max(MOM_W_MIN, base_t / (base_t + base_m)))
+    return round(1.0 - w_m, 4), round(w_m, 4)
 EXCLUDE_INDUSTRY = {"空白支票公司(壳)"}
 UNIVERSE_FILE = os.path.join(DATA, "us_universe.json")
 EM_INDUSTRY_FILE = os.path.join(DATA, "us_em_industry.json")   # 东财美股行业(中文)
@@ -479,12 +497,17 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
             "股票数": int(a["股票数"]),
             "趋势分": trend,
             "动量分": pts,
-            "总分": round(trend * 0.5 + pts * 0.5, 2),
             "动量入池分": round(rawv * f, 2) if rawv is not None else None,
             "代表股": "、".join(trep_by.get(ind, [])[:5] + mrep_by.get(ind, [])[:MOM_REPS]) or "-",
             "入池": "+".join(src),
         })
-    rk = pd.DataFrame(rows).sort_values("总分", ascending=False).reset_index(drop=True)
+    rk = pd.DataFrame(rows)
+    # 池内动态配权(与A股同一套): 趋势/动量按当日池内量级取反比权重, 平均贡献相等
+    global LAST_WEIGHTS
+    wt, wm = dynamic_weights(rk["趋势分"], rk["动量分"])
+    LAST_WEIGHTS = (wt, wm)
+    rk["总分"] = (rk["趋势分"] * wt + rk["动量分"] * wm).round(2)
+    rk = rk.sort_values("总分", ascending=False).reset_index(drop=True)
     rk.insert(0, "排名", range(1, len(rk) + 1))
     out = os.path.join(OUT, f"us_rank_{day_key}.csv")
     rk.to_csv(out, index=False, encoding="utf-8-sig")
