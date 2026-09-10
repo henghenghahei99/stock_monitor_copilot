@@ -423,8 +423,7 @@ def main() -> None:
             if c in d.columns:
                 d[c] = d[c].apply(lambda v: "-" if pd.isna(v) else f"{float(v):.2f}")
         if "排名变化" in d.columns and "状态" in d.columns:
-            rc = pd.to_numeric(d["排名变化"], errors="coerce").fillna(0)
-            d = d[(d["状态"] != "池内") | (rc != 0)].reset_index(drop=True)
+            d = d.reset_index(drop=True)   # 池内全列(不再按名次变化过滤)
             for c in ["排名变化", "趋势分变化", "动量分变化", "总分变化"]:
                 if c in d.columns:
                     d.loc[d["状态"] != "池内", c] = "-"
@@ -455,6 +454,7 @@ def main() -> None:
                           "padding:10px 14px;font-size:12px;line-height:1.8'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
                           f"(入池=原得分前{top} ∪ 动量入池分前{top}、池内按总分=趋势分×50%+动量分×50% 降序)计算后对比。"
                           "状态：池内=两日均在池内；新进池=今日新进(前日不在池)；完全新进池=此前几日均未入池、今日首次入池(紫)；退出池=今日掉出池。"
+                          "本表全量列出今日池内板块与今日退出池的板块(名次未变但分数变动的也会列出)。"
                           "涨红跌绿：排名变化=前日排名−今日排名(正=名次上升)；"
                           "趋势分变化/动量分变化/总分变化=今日−前日(正=升，负=降)。<br>"
                           "评价：池内按 趋势分变化(正=趋势增强/负=趋势减弱) + 动量分变化(≥1.5动量爆发 / 0~1.5动量增强 / -1.5~0动量减弱 / <-1.5动量大幅下滑)；"
