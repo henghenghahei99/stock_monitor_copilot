@@ -105,7 +105,7 @@ def _html_table(df: pd.DataFrame) -> str:
         h += f'<tr style="background:{bg}">'
         for c, v in zip(cols, r):
             if c == "代表股":
-                # 代表股: 趋势前5(常规色) + ◎动量前5(橙色标色); 小号字体均分3行
+                # 代表股: 趋势前5(常规色) + 动量前7(◎橙/◆紫); 小号字体均分3行, 每行 nowrap 保证不换行
                 items = [x for x in str(v).split("、") if x]
                 n = len(items)
                 base, rem = divmod(n, 3)
@@ -121,10 +121,10 @@ def _html_table(df: pd.DataFrame) -> str:
                                 seg.append(f'<span style="color:{MOM_COL};font-weight:600">◎{it[1:]}</span>')
                             else:
                                 seg.append(f"<span>{it}</span>")
-                        parts.append("、".join(seg))
+                        parts.append(f'<span style="white-space:nowrap">{"、".join(seg)}</span>')
                         start += s
-                h += (f'<td style="padding:6px 14px;border:1px solid #e3e9f2;'
-                      f'font-size:12px;color:#444;line-height:1.7">{"<br>".join(parts)}</td>')
+                h += (f'<td style="padding:5px 10px;border:1px solid #e3e9f2;'
+                      f'font-size:10.5px;color:#444;line-height:1.65">{"<br>".join(parts)}</td>')
                 continue
             if c == "评价":
                 txt = _fmt(v)
