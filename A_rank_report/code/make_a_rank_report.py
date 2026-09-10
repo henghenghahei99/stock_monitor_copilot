@@ -240,12 +240,14 @@ def _coverage_tag(df: pd.DataFrame) -> str:
         return ""
 
 
-def _recent_pool_series(date_mmdd: str, days: int = 5, top: int = 15) -> list[dict]:
+def _recent_pool_series(date_mmdd: str, days: int = 5, top: int = 15,
+                        col: str = "uptrend") -> list[dict]:
     """近 days 个有结果CSV的交易日(<=报告日, 含报告日本身), 各自"当天池"的每板块分数。
 
     每天用当天自己的池(combined_rank 双口径: 得分前 top ∪ 动量入池分前 top),
     记录 池内每板块 趋势分/动量分。某板块某天不在池则当天无分数(=出池, 画图时断线)。
     返回按日期升序, 有多少天返回多少。
+    注意: 历史CSV的口径列必须与报告一致(V1=uptrend, V2=uptrend7), 否则取不到分数。
     """
     cand = []
     for fn in os.listdir(OUT):
@@ -260,7 +262,7 @@ def _recent_pool_series(date_mmdd: str, days: int = 5, top: int = 15) -> list[di
         path = os.path.join(OUT, f"cn_uptrend_{core}.csv")
         try:
             dfr = pd.read_csv(path, encoding="utf-8-sig")
-            rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, top)
+            rk = sm.combined_rank(dfr, col, {8: 8, 7: 6, 6: 4}, top)
             if rk.empty:
                 continue
             series.append({
@@ -616,7 +618,7 @@ def main() -> None:
 
     # 近N日走势图(放在报告末尾): 每个板块一条线(趋势分/动量分各一组方向图); 太碎短线不画
     today_file = os.path.join(OUT, f"cn_uptrend_{args.date}.csv")
-    series = (_recent_pool_series(args.date, top=args.top)
+    series = (_recent_pool_series(args.date, top=args.top, col=args.col)
               if (args.results and os.path.exists(today_file)) else [])
     order = _active_view(series) if series else []
     chart_parts: list[str] = []
@@ -707,7 +709,7 @@ def main() -> None:
             "表后注(今日板块排名算法)：<br>",
             "表后注(今日板块排名算法)：<br><b style='color:#6a1b9a'>口径 V2 = 趋势分用【7交易日窗口】的9个条件"
             "(站上MA7 / MA7上行 / 低点抬高 / 高点抬高 / 斜率向上 / 近7日新高 / 放量 / "
-            "7窗口持续性[7日为窗逐日前移共7窗, ≥5窗涨幅>0 且 ≥4窗涨幅>2%] / "
+            "7窗口持续性[7日为窗逐日前移共7窗, ≥6窗涨幅>0 且 ≥4窗涨幅>2%] / "
             "7窗口量能放大[7窗累计成交量回归斜率>0 且 最新窗量>最老窗量]), 满足≥6命中, 展示折算到 /8</b><br>")
     elif args.col != "uptrend":
         rank_note = rank_note.replace(

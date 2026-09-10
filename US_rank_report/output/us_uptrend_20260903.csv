@@ -1,705 +1,700 @@
 ﻿ticker,prefixed,name,sector,industry,date,close,chg20,m,chg1,uptrend,market_cap
-AEP,usAEP.OQ,American Electric Power Company Inc. Common Stock,公用事业,电力,2026-09-03,124.71,0.3,1.26,0.92,5/8,67156857343.0
-ACHV,usACHV.OQ,Achieve Life Sciences Inc. Common Shares,医疗保健,生物医药,2026-09-03,8.31,26.9,0.15,-2.0,6/8,851003592.0
-AAPL,usAAPL.OQ,Apple Inc. Common Stock,科技,计算机硬件,2026-09-03,328.21,5.2,1.5,1.0,7/8,4574545721000.0
 ADBE,usADBE.OQ,Adobe Inc. Common Stock,科技,计算机软件,2026-09-03,285.75,9.8,0.55,2.13,5/8,108704325000.0
+AAPL,usAAPL.OQ,Apple Inc. Common Stock,科技,计算机硬件,2026-09-03,328.21,5.2,1.5,1.0,7/8,4574545721000.0
+ACHV,usACHV.OQ,Achieve Life Sciences Inc. Common Shares,医疗保健,生物医药,2026-09-03,8.31,26.9,0.15,-2.0,5/8,851003592.0
+AEP,usAEP.OQ,American Electric Power Company Inc. Common Stock,公用事业,电力,2026-09-03,124.71,0.3,1.26,0.92,5/8,67156857343.0
 AHCO,usAHCO.OQ,AdaptHealth Corp. Common Stock,医疗保健,医药商业,2026-09-03,6.42,6.1,11.07,6.29,5/8,773071591.0
-ALT,usALT.OQ,Altimmune Inc. Common Stock,医疗保健,生物医药,2026-09-03,3.23,7.3,1.37,-1.52,6/8,612730758.0
 ALNY,usALNY.OQ,Alnylam Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,264.5,22.4,3.68,-1.08,8/8,31980379202.0
+ALT,usALT.OQ,Altimmune Inc. Common Stock,医疗保健,生物医药,2026-09-03,3.23,7.3,1.37,-1.52,5/8,612730758.0
+AMRX,usAMRX.OQ,Amneal Pharmaceuticals Inc. Class A Common Stock,医疗保健,化学制药,2026-09-03,17.87,-1.1,0.25,-1.05,5/8,6265845346.0
 AMGN,usAMGN.OQ,Amgen Inc. Common Stock,医疗保健,生物医药,2026-09-03,444.12,10.3,1.22,0.29,5/8,238061897082.0
-APGE,usAPGE.OQ,Apogee Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-02,135.07,0.6,0.01,-0.01,7/8,10214059838.0
 ANDE,usANDE.OQ,Andersons Inc. (The) Common Stock,工业,贸易,2026-09-03,69.49,2.3,1.41,-2.02,6/8,2216566187.0
 APP,usAPP.OQ,Applovin Corporation Class A Common Stock,科技,互联网服务,2026-09-03,313.58,-6.6,-0.58,-1.71,5/8,103109319610.0
-AQST,usAQST.OQ,Aquestive Therapeutics Inc. Common Stock,医疗保健,化学制药,2026-09-03,5.35,36.5,1.29,-0.56,5/8,676507783.0
-ARCC,usARCC.OQ,Ares Capital Corporation Common Stock,金融,非银行金融,2026-09-03,20.01,2.0,0.07,-0.05,6/8,14288654616.0
 APA,usAPA.OQ,APA Corporation Common Stock,能源,石油天然气,2026-09-03,44.18,20.9,-0.19,-1.16,6/8,14430978697.0
-ASMB,usASMB.OQ,Assembly Biosciences Inc. Common Stock,医疗保健,化学制药,2026-09-03,36.13,36.6,1.49,-1.61,7/8,721172310.0
-AMRX,usAMRX.OQ,Amneal Pharmaceuticals Inc. Class A Common Stock,医疗保健,化学制药,2026-09-03,17.87,-1.1,0.25,-1.05,5/8,6265845346.0
-ASND,usASND.OQ,Ascendis Pharma A/S Ordinary Share,医疗保健,生物医药,2026-09-03,271.12,8.5,2.58,1.43,8/8,16434739321.0
+ARCC,usARCC.OQ,Ares Capital Corporation Common Stock,金融,非银行金融,2026-09-03,20.01,2.0,0.07,-0.05,6/8,14288654616.0
 ASST,usASST.OQ,Strive Inc. Class A Common Stock,科技,非银行金融,2026-09-03,26.82,117.9,10.81,10.28,8/8,1928193595.0
-AVBP,usAVBP.OQ,ArriVent BioPharma Inc. Common Stock,医疗保健,化学制药,2026-09-03,31.03,0.1,2.38,1.7,5/8,1535442681.0
-BCRX,usBCRX.OQ,BioCryst Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,10.09,8.5,0.92,-0.79,7/8,2511910082.0
-AYA,usAYA.OQ,Aya Gold & Silver Inc. Common Shares,基础材料,贵金属,2026-09-03,29.82,18.3,7.88,5.19,7/8,3999884385.0
+APGE,usAPGE.OQ,Apogee Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-02,135.07,0.6,0.01,-0.01,7/8,10214059838.0
+ASND,usASND.OQ,Ascendis Pharma A/S Ordinary Share,医疗保健,生物医药,2026-09-03,271.12,8.5,2.58,1.43,8/8,16434739321.0
+AQST,usAQST.OQ,Aquestive Therapeutics Inc. Common Stock,医疗保健,化学制药,2026-09-03,5.35,36.5,1.29,-0.56,5/8,676507783.0
+ASMB,usASMB.OQ,Assembly Biosciences Inc. Common Stock,医疗保健,化学制药,2026-09-03,36.13,36.6,1.49,-1.61,7/8,721172310.0
 ATRC,usATRC.OQ,AtriCure Inc. Common Stock,医疗保健,医疗器械,2026-09-03,52.46,32.8,3.75,-0.25,8/8,2450229382.0
+AVBP,usAVBP.OQ,ArriVent BioPharma Inc. Common Stock,医疗保健,化学制药,2026-09-03,31.03,0.1,2.38,1.7,5/8,1535442681.0
+AYA,usAYA.OQ,Aya Gold & Silver Inc. Common Shares,基础材料,贵金属,2026-09-03,29.82,18.3,7.88,5.19,7/8,3999884385.0
 AXSM,usAXSM.OQ,Axsome Therapeutics Inc. Common Stock,医疗保健,化学制药,2026-09-03,208.35,-0.8,1.43,-0.75,6/8,10850686449.0
-BLKB,usBLKB.OQ,Blackbaud Inc. Common Stock,科技,计算机软件,2026-09-03,48.46,4.5,1.64,2.09,6/8,2137419668.0
-BLTE,usBLTE.OQ,Belite Bio Inc American Depositary Shares,医疗保健,化学制药,2026-09-03,171.09,6.5,7.98,6.49,7/8,6310242243.0
-BBNX,usBBNX.OQ,Beta Bionics Inc. Common Stock,医疗保健,医疗器械,2026-09-03,19.92,41.2,2.59,2.57,5/8,870100566.0
 BIIB,usBIIB.OQ,Biogen Inc. Common Stock,医疗保健,生物医药,2026-09-03,224.51,8.8,2.31,0.83,6/8,32663976338.0
-BGC,usBGC.OQ,BGC Group Inc. Class A Common Stock,金融,非银行金融,2026-09-03,12.15,15.8,1.9,2.53,5/8,5658051612.0
-BPOP,usBPOP.OQ,Popular Inc. Common Stock,金融,银行,2026-09-03,171.33,-2.7,1.33,0.45,6/8,10826400545.0
-BL,usBL.OQ,BlackLine Inc. Common Stock,科技,互联网服务,2026-09-03,33.23,10.8,2.59,3.26,6/8,1820483456.0
+BLTE,usBLTE.OQ,Belite Bio Inc American Depositary Shares,医疗保健,化学制药,2026-09-03,171.09,6.5,7.98,6.49,7/8,6310242243.0
 BLBD,usBLBD.OQ,Blue Bird Corporation Common Stock,非必需消费,化学制品,2026-09-03,63.66,-3.6,5.02,3.16,7/8,1916400360.0
-BKR,usBKR.OQ,Baker Hughes Company Class A Common Stock,非必需消费,石油天然气,2026-09-03,63.64,1.8,-0.75,-1.53,6/8,61545792402.0
-BUSE,usBUSE.OQ,First Busey Corporation Class A Common Stock,金融,银行,2026-09-03,30.68,-1.3,1.53,0.72,6/8,2488043684.0
+BLKB,usBLKB.OQ,Blackbaud Inc. Common Stock,科技,计算机软件,2026-09-03,48.46,4.5,1.64,2.09,6/8,2137419668.0
+BGC,usBGC.OQ,BGC Group Inc. Class A Common Stock,金融,非银行金融,2026-09-03,12.15,15.8,1.9,2.53,5/8,5658051612.0
 BRKR,usBRKR.OQ,Bruker Corporation Common Stock,工业,医疗器械,2026-09-03,59.41,15.9,2.62,0.66,5/8,8693622571.0
-BWMN,usBWMN.OQ,Bowman Consulting Group Ltd. Common Stock,非必需消费,非银行金融,2026-09-03,42.61,58.1,0.03,0.02,6/8,737105970.0
-CACC,usCACC.OQ,Credit Acceptance Corporation Common Stock,金融,非银行金融,2026-09-03,601.58,3.5,-0.07,-1.02,6/8,6162327511.0
-BWIN,usBWIN.OQ,The Baldwin Insurance Group Inc. Class A Common Stock,金融,非银行金融,2026-09-03,31.22,9.2,1.53,0.68,6/8,4242144337.0
-BULL,usBULL.OQ,Webull Corporation Class A Ordinary Shares,金融,非银行金融,2026-09-03,10.0,38.5,9.51,11.11,6/8,4651331529.0
-BTDR,usBTDR.OQ,Bitdeer Technologies Group Class A Ordinary Shares,金融,非银行金融,2026-09-03,11.91,13.2,11.92,10.89,6/8,2899916554.0
-CABA,usCABA.OQ,Cabaletta Bio Inc. Common Stock,医疗保健,生物医药,2026-09-03,3.48,26.1,2.76,-2.52,6/8,551022696.0
+BCRX,usBCRX.OQ,BioCryst Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,10.09,8.5,0.92,-0.79,7/8,2511910082.0
+BL,usBL.OQ,BlackLine Inc. Common Stock,科技,互联网服务,2026-09-03,33.23,10.8,2.59,3.26,6/8,1820483456.0
+BTDR,usBTDR.OQ,Bitdeer Technologies Group Class A Ordinary Shares,金融,非银行金融,2026-09-03,11.91,13.2,11.92,10.89,5/8,2899916554.0
 BMRN,usBMRN.OQ,BioMarin Pharmaceutical Inc. Common Stock,医疗保健,生物医药,2026-09-03,66.43,8.1,0.7,-0.81,7/8,12700374328.0
-CBLL,usCBLL.OQ,CeriBell Inc. Common Stock,医疗保健,医疗器械,2026-09-03,24.57,34.6,-0.0,-0.97,6/8,899966468.0
-CECO,usCECO.OQ,CECO Environmental Corp. Common Stock,工业,环保,2026-09-03,74.35,8.4,4.78,4.56,6/8,4119216144.0
-CEG,usCEG.OQ,Constellation Energy Corporation Common Stock,公用事业,电力,2026-09-03,285.05,9.3,0.4,-1.72,7/8,99035998578.0
-CCB,usCCB.OQ,Coastal Financial Corporation Common Stock,金融,银行,2026-09-03,49.19,12.0,2.86,1.38,7/8,716317283.0
+BWIN,usBWIN.OQ,The Baldwin Insurance Group Inc. Class A Common Stock,金融,非银行金融,2026-09-03,31.22,9.2,1.53,0.68,6/8,4242144337.0
+CABA,usCABA.OQ,Cabaletta Bio Inc. Common Stock,医疗保健,生物医药,2026-09-03,3.48,26.1,2.76,-2.52,6/8,551022696.0
+BULL,usBULL.OQ,Webull Corporation Class A Ordinary Shares,金融,非银行金融,2026-09-03,10.0,38.5,9.51,11.11,6/8,4651331529.0
+BUSE,usBUSE.OQ,First Busey Corporation Class A Common Stock,金融,银行,2026-09-03,30.68,-1.3,1.53,0.72,6/8,2488043684.0
+CACC,usCACC.OQ,Credit Acceptance Corporation Common Stock,金融,非银行金融,2026-09-03,601.58,3.5,-0.07,-1.02,5/8,6162327511.0
+BKR,usBKR.OQ,Baker Hughes Company Class A Common Stock,非必需消费,石油天然气,2026-09-03,63.64,1.8,-0.75,-1.53,6/8,61545792402.0
 CATY,usCATY.OQ,Cathay General Bancorp Common Stock,金融,银行,2026-09-03,62.58,-1.2,1.83,0.94,5/8,4138925393.0
+BWMN,usBWMN.OQ,Bowman Consulting Group Ltd. Common Stock,非必需消费,非银行金融,2026-09-03,42.61,58.1,0.03,0.02,6/8,737105970.0
+BPOP,usBPOP.OQ,Popular Inc. Common Stock,金融,银行,2026-09-03,171.33,-2.7,1.33,0.45,6/8,10826400545.0
 CART,usCART.OQ,Maplebear Inc. Common Stock,非必需消费,专业服务,2026-09-03,51.72,14.9,1.66,0.37,5/8,11753258402.0
-CHKP,usCHKP.OQ,Check Point Software Technologies Ltd. Ordinary Shares,科技,计算机软件,2026-09-03,137.41,9.7,1.75,2.63,6/8,13176086818.0
+CEG,usCEG.OQ,Constellation Energy Corporation Common Stock,公用事业,电力,2026-09-03,285.05,9.3,0.4,-1.72,7/8,99035998578.0
+CECO,usCECO.OQ,CECO Environmental Corp. Common Stock,工业,环保,2026-09-03,74.35,8.4,4.78,4.56,6/8,4119216144.0
+CDW,usCDW.OQ,CDW Corporation Common Stock,非必需消费,电子器件,2026-09-03,153.92,8.9,2.8,3.53,6/8,17684965082.0
+CCB,usCCB.OQ,Coastal Financial Corporation Common Stock,金融,银行,2026-09-03,49.19,12.0,2.86,1.38,6/8,716317283.0
 CHEF,usCHEF.OQ,The Chefs' Warehouse Inc. Common Stock,非必需消费,贸易,2026-09-03,114.21,4.6,0.31,0.69,8/8,4569569257.0
 CELC,usCELC.OQ,Celcuity Inc. Common Stock,医疗保健,计算机软件,2026-09-03,96.43,3.4,3.23,0.24,7/8,4652445813.0
-CENX,usCENX.OQ,Century Aluminum Company Common Stock,工业,基本金属,2026-09-03,47.51,3.4,1.47,0.49,7/8,4350755315.0
-CLMT,usCLMT.OQ,Calumet Inc. Common Stock,能源,石油天然气,2026-09-03,53.5,27.7,3.07,0.81,7/8,4200656603.0
-CDW,usCDW.OQ,CDW Corporation Common Stock,非必需消费,电子器件,2026-09-03,153.92,8.9,2.8,3.53,6/8,17684965082.0
-CINF,usCINF.OQ,Cincinnati Financial Corporation Common Stock,金融,非银行金融,2026-09-03,174.72,-2.4,2.21,1.76,7/8,26456545397.0
 CHDN,usCHDN.OQ,Churchill Downs Incorporated Common Stock,非必需消费,休闲服务,2026-09-03,90.28,3.9,2.51,1.23,6/8,6103650280.0
-CNXN,usCNXN.OQ,PC Connection Inc. Common Stock,非必需消费,电子器件,2026-09-03,83.53,-3.3,3.79,3.16,7/8,2003652680.0
+CENX,usCENX.OQ,Century Aluminum Company Common Stock,工业,基本金属,2026-09-03,47.51,3.4,1.47,0.49,7/8,4350755315.0
 CHRD,usCHRD.OQ,Chord Energy Corporation Common Stock,能源,石油天然气,2026-09-03,148.0,12.7,-0.89,-1.06,5/8,7665359782.0
-CHYM,usCHYM.OQ,Chime Financial Inc. Class A Common Stock,金融,非银行金融,2026-09-03,33.65,7.7,2.57,0.72,6/8,12550096430.0
-CNXC,usCNXC.OQ,Concentrix Corporation Common Stock,科技,互联网服务,2026-09-03,32.85,24.7,3.1,1.48,8/8,1699971231.0
-CLOV,usCLOV.OQ,Clover Health Investments Corp. Class A Common Stock,医疗保健,医疗服务,2026-09-03,4.26,-8.6,-0.21,-0.93,6/8,2257414118.0
 CHA,usCHA.OQ,Chagee Holdings Limited American Depositary Shares,非必需消费,休闲服务,2026-09-03,11.36,11.8,-2.97,-2.15,6/8,2027814155.0
-CRMD,usCRMD.OQ,CorMedix Inc. Common Stock,医疗保健,生物医药,2026-09-03,8.47,12.8,0.02,-1.63,6/8,653952878.0
-COKE,usCOKE.OQ,Coca-Cola Consolidated Inc. Common Stock,必需消费,饮料,2026-09-03,197.4,4.9,1.39,1.1,5/8,12914804322.0
-CRNX,usCRNX.OQ,Crinetics Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-08-31,84.95,1.4,0.13,0.13,6/8,8998574028.0
-CRWD,usCRWD.OQ,CrowdStrike Holdings Inc. Class A Common Stock,科技,计算机软件,2026-09-03,214.97,3.7,1.44,5.68,5/8,192634290590.0
+CNXN,usCNXN.OQ,PC Connection Inc. Common Stock,非必需消费,电子器件,2026-09-03,83.53,-3.3,3.79,3.16,7/8,2003652680.0
+CBLL,usCBLL.OQ,CeriBell Inc. Common Stock,医疗保健,医疗器械,2026-09-03,24.57,34.6,-0.0,-0.97,6/8,899966468.0
+CHKP,usCHKP.OQ,Check Point Software Technologies Ltd. Ordinary Shares,科技,计算机软件,2026-09-03,137.41,9.7,1.75,2.63,6/8,13176086818.0
+CINF,usCINF.OQ,Cincinnati Financial Corporation Common Stock,金融,非银行金融,2026-09-03,174.72,-2.4,2.21,1.76,7/8,26456545397.0
+CHYM,usCHYM.OQ,Chime Financial Inc. Class A Common Stock,金融,非银行金融,2026-09-03,33.65,7.7,2.57,0.72,6/8,12550096430.0
+CLOV,usCLOV.OQ,Clover Health Investments Corp. Class A Common Stock,医疗保健,医疗服务,2026-09-03,4.26,-8.6,-0.21,-0.93,6/8,2257414118.0
+CLMT,usCLMT.OQ,Calumet Inc. Common Stock,能源,石油天然气,2026-09-03,53.5,27.7,3.07,0.81,7/8,4200656603.0
 CRSR,usCRSR.OQ,Corsair Gaming Inc. Common Stock,科技,计算机硬件,2026-09-03,12.77,20.4,6.76,5.54,5/8,1280815195.0
-CTMX,usCTMX.OQ,CytomX Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,3.68,9.2,1.45,-1.08,8/8,723425623.0
+CNXC,usCNXC.OQ,Concentrix Corporation Common Stock,科技,互联网服务,2026-09-03,32.85,24.7,3.1,1.48,8/8,1699971231.0
+CRNX,usCRNX.OQ,Crinetics Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-08-31,84.95,1.4,0.13,0.13,6/8,8998574028.0
+COKE,usCOKE.OQ,Coca-Cola Consolidated Inc. Common Stock,必需消费,饮料,2026-09-03,197.4,4.9,1.39,1.1,5/8,12914804322.0
+CRWD,usCRWD.OQ,CrowdStrike Holdings Inc. Class A Common Stock,科技,计算机软件,2026-09-03,214.97,3.7,1.44,5.68,5/8,192634290590.0
+CTMX,usCTMX.OQ,CytomX Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,3.68,9.2,1.45,-1.08,7/8,723425623.0
 CRUS,usCRUS.OQ,Cirrus Logic Inc. Common Stock,科技,半导体,2026-09-03,113.13,-8.4,1.81,0.06,6/8,5529971681.0
-DAVE,usDAVE.OQ,Dave Inc. Class A Common Stock,金融,计算机软件,2026-09-03,390.86,7.0,8.58,4.83,7/8,4748875256.0
-CTSH,usCTSH.OQ,Cognizant Technology Solutions Corporation Class A Common Stock,科技,计算机软件,2026-09-03,64.64,14.3,1.59,1.96,7/8,27968080937.0
+CRMD,usCRMD.OQ,CorMedix Inc. Common Stock,医疗保健,生物医药,2026-09-03,8.47,12.8,0.02,-1.63,6/8,653952878.0
 CWST,usCWST.OQ,Casella Waste Systems Inc. Class A Common Stock,公用事业,环保,2026-09-03,95.96,6.1,3.25,2.74,6/8,5965617912.0
-DOX,usDOX.OQ,Amdocs Limited Ordinary Shares,科技,计算机软件,2026-09-03,63.28,7.0,1.05,1.31,7/8,6719858803.0
+CTSH,usCTSH.OQ,Cognizant Technology Solutions Corporation Class A Common Stock,科技,计算机软件,2026-09-03,64.64,14.3,1.59,1.96,7/8,27968080937.0
+DLO,usDLO.OQ,DLocal Limited Class A Common Shares,非必需消费,计算机软件,2026-09-03,15.78,6.8,3.88,1.35,6/8,4530154844.0
+DRVN,usDRVN.OQ,Driven Brands Holdings Inc. Common Stock,非必需消费,汽车,2026-09-03,13.58,4.8,6.41,5.43,5/8,2144737608.0
+DAVE,usDAVE.OQ,Dave Inc. Class A Common Stock,金融,计算机软件,2026-09-03,390.86,7.0,8.58,4.83,7/8,4748875256.0
+DOCU,usDOCU.OQ,DocuSign Inc. Common Stock,科技,互联网服务,2026-09-03,65.97,15.9,0.97,0.89,6/8,11328743593.0
+DUOL,usDUOL.OQ,Duolingo Inc. Class A Common Stock,科技,教育,2026-09-03,158.82,29.6,1.73,0.61,8/8,6591249577.0
 DOO,usDOO.OQ,BRP Inc. Common Subordinate Voting Shares,非必需消费,文娱用品,2026-09-03,64.22,0.6,2.7,1.45,6/8,4447782706.0
+DSGX,usDSGX.OQ,Descartes Systems Group Inc. (The) Common Stock,科技,计算机软件,2026-09-03,80.75,3.8,1.59,2.88,6/8,6640182184.0
+DOX,usDOX.OQ,Amdocs Limited Ordinary Shares,科技,计算机软件,2026-09-03,63.28,7.0,1.05,1.31,7/8,6719858803.0
 EBAY,usEBAY.OQ,eBay Inc. Common Stock,非必需消费,互联网服务,2026-09-03,105.86,-3.6,0.3,-0.79,5/8,46369000000.0
 EFSC,usEFSC.OQ,Enterprise Financial Services Corporation Common Stock,金融,银行,2026-09-03,64.44,-2.9,1.79,1.26,6/8,2292796142.0
-DRVN,usDRVN.OQ,Driven Brands Holdings Inc. Common Stock,非必需消费,汽车,2026-09-03,13.58,4.8,6.41,5.43,5/8,2144737608.0
-EEFT,usEEFT.OQ,Euronet Worldwide Inc. Common Stock,金融,计算机软件,2026-09-03,73.28,0.3,3.56,0.42,6/8,2638823627.0
-DSGX,usDSGX.OQ,Descartes Systems Group Inc. (The) Common Stock,科技,计算机软件,2026-09-03,80.75,3.8,1.59,2.88,6/8,6640182184.0
-DOCU,usDOCU.OQ,DocuSign Inc. Common Stock,科技,互联网服务,2026-09-03,65.97,15.9,0.97,0.89,6/8,11328743593.0
-DLO,usDLO.OQ,DLocal Limited Class A Common Shares,非必需消费,计算机软件,2026-09-03,15.78,6.8,3.88,1.35,6/8,4530154844.0
-ESQ,usESQ.OQ,Esquire Financial Holdings Inc. Common Stock,金融,银行,2026-09-03,121.24,-7.5,7.26,5.91,6/8,1363702321.0
-EVRG,usEVRG.OQ,Evergy Inc. Common Stock,公用事业,电力,2026-09-03,81.93,-0.5,1.09,1.44,5/8,18959538554.0
 ECHO,usECHO.OQ,EchoStar  Corporation Common Stock,非必需消费,通信设备,2026-09-03,89.79,3.2,3.87,3.58,6/8,24868909512.0
-EXEL,usEXEL.OQ,Exelixis Inc. Common Stock,医疗保健,生物医药,2026-09-03,59.13,13.3,3.34,1.03,8/8,13900552921.0
-EXC,usEXC.OQ,Exelon Corporation Common Stock,公用事业,电力,2026-09-03,44.11,-1.7,1.48,1.26,6/8,45873366293.0
+EEFT,usEEFT.OQ,Euronet Worldwide Inc. Common Stock,金融,计算机软件,2026-09-03,73.28,0.3,3.56,0.42,6/8,2638823627.0
 ETOR,usETOR.OQ,eToro Group Ltd. Class A Common Shares,金融,非银行金融,2026-09-03,32.75,-7.7,2.78,2.83,6/8,2457468620.0
+EVRG,usEVRG.OQ,Evergy Inc. Common Stock,公用事业,电力,2026-09-03,81.93,-0.5,1.09,1.44,5/8,18959538554.0
+ESTA,usESTA.OQ,Establishment Labs Holdings Inc. Common Shares,医疗保健,医疗器械,2026-09-03,72.3,-8.5,0.29,-3.5,5/8,2159147003.0
+EXEL,usEXEL.OQ,Exelixis Inc. Common Stock,医疗保健,生物医药,2026-09-03,59.13,13.3,3.34,1.03,8/8,13900552921.0
 ERIC,usERIC.OQ,Ericsson American Depositary Shares,科技,通信设备,2026-09-03,10.13,-0.3,0.74,0.9,5/8,33915798454.0
-FFBC,usFFBC.OQ,First Financial Bancorp. Common Stock,金融,银行,2026-09-03,32.83,-2.0,1.29,0.49,5/8,3439832164.0
+EXC,usEXC.OQ,Exelon Corporation Common Stock,公用事业,电力,2026-09-03,44.11,-1.7,1.48,1.26,6/8,45873366293.0
+FANG,usFANG.OQ,Diamondback Energy Inc. Common Stock,能源,石油天然气,2026-09-03,202.94,7.6,0.09,-0.24,5/8,55960066704.0
+ESQ,usESQ.OQ,Esquire Financial Holdings Inc. Common Stock,金融,银行,2026-09-03,121.24,-7.5,7.26,5.91,6/8,1363702321.0
 FBRX,usFBRX.OQ,Forte Biosciences Inc. Common Stock,医疗保健,生物医药,2026-08-26,76.99,0.6,0.05,0.03,6/8,1634427408.0
 EXE,usEXE.OQ,Expand Energy Corporation Common Stock,能源,石油天然气,2026-09-03,99.05,8.4,-0.23,-0.27,6/8,22356320904.0
-DUOL,usDUOL.OQ,Duolingo Inc. Class A Common Stock,科技,教育,2026-09-03,158.82,29.6,1.73,0.61,8/8,6591249577.0
-ESTA,usESTA.OQ,Establishment Labs Holdings Inc. Common Shares,医疗保健,医疗器械,2026-09-03,72.3,-8.5,0.29,-3.5,5/8,2159147003.0
-FIVN,usFIVN.OQ,Five9 Inc. Common Stock,科技,互联网服务,2026-09-03,34.1,20.2,0.55,1.52,5/8,2391152992.0
-FANG,usFANG.OQ,Diamondback Energy Inc. Common Stock,能源,石油天然气,2026-09-03,202.94,7.6,0.09,-0.24,5/8,55960066704.0
-FRVO,usFRVO.OQ,Fervo Energy Company Class A common stock,公用事业,电力,2026-09-03,17.16,-25.4,-3.9,-4.56,6/8,4551143793.0
+FFBC,usFFBC.OQ,First Financial Bancorp. Common Stock,金融,银行,2026-09-03,32.83,-2.0,1.29,0.49,5/8,3439832164.0
 FRME,usFRME.OQ,First Merchants Corporation Common Stock,金融,银行,2026-09-03,41.73,-1.6,1.7,1.04,5/8,2617563311.0
+FRVO,usFRVO.OQ,Fervo Energy Company Class A common stock,公用事业,电力,2026-09-03,17.16,-25.4,-3.9,-4.56,6/8,4551143793.0
+FIVN,usFIVN.OQ,Five9 Inc. Common Stock,科技,互联网服务,2026-09-03,34.1,20.2,0.55,1.52,5/8,2391152992.0
 FRNM,usFRNM.OQ,Freenome Inc. Common stock,医疗保健,生物医药,2026-09-03,16.9,54.9,9.08,5.96,8/8,1513925609.0
-GGAL,usGGAL.OQ,Grupo Financiero Galicia S.A. American Depositary Shares,金融,银行,2026-09-03,44.63,-4.4,0.21,-0.84,5/8,7053060128.0
-GEN,usGEN.OQ,Gen Digital Inc. Common Stock,科技,计算机软件,2026-09-03,31.33,12.0,2.63,2.22,7/8,17742119628.0
 FSUN,usFSUN.OQ,FirstSun Capital Bancorp Common Stock,金融,银行,2026-09-03,40.64,2.2,1.86,1.17,5/8,1879663311.0
-GLXY,usGLXY.OQ,Galaxy Digital Inc. Class A Common Stock,金融,非银行金融,2026-09-03,26.5,35.6,10.55,10.14,6/8,9631507178.0
-GPRE,usGPRE.OQ,Green Plains Inc. Common Stock,工业,石油天然气,2026-09-03,14.96,-1.6,0.28,-1.71,5/8,1043018481.0
+GEN,usGEN.OQ,Gen Digital Inc. Common Stock,科技,计算机软件,2026-09-03,31.33,12.0,2.63,2.22,7/8,17742119628.0
 GO,usGO.OQ,Grocery Outlet Holding Corp. Common Stock,必需消费,零售,2026-09-03,12.3,26.9,2.26,2.41,8/8,1209821647.0
+GILD,usGILD.OQ,Gilead Sciences Inc. Common Stock,医疗保健,生物医药,2026-09-03,151.22,15.6,1.47,1.08,6/8,183624958904.0
 GMAB,usGMAB.OQ,Genmab A/S ADS,医疗保健,化学制药,2026-09-03,34.41,15.4,2.04,0.56,5/8,4336092540.0
-GTM,usGTM.OQ,ZoomInfo Technologies Inc Common Stock,科技,互联网服务,2026-09-03,4.12,-0.5,-0.2,0.73,5/8,1106218175.0
+GLXY,usGLXY.OQ,Galaxy Digital Inc. Class A Common Stock,金融,非银行金融,2026-09-03,26.5,35.6,10.55,10.14,6/8,9631507178.0
 GTLB,usGTLB.OQ,GitLab Inc. Class A Common Stock,科技,计算机软件,2026-09-03,49.31,38.2,3.72,-0.56,8/8,6977259000.0
 GLNG,usGLNG.OQ,Golar Lng Ltd,非必需消费,石油天然气,2026-09-03,51.99,2.4,-1.07,-2.15,5/8,5200354629.0
-GILD,usGILD.OQ,Gilead Sciences Inc. Common Stock,医疗保健,生物医药,2026-09-03,151.22,15.6,1.47,1.08,6/8,183624958904.0
-GTX,usGTX.OQ,Garrett Motion Inc. Common Stock,非必需消费,汽车,2026-09-03,27.33,-10.0,1.76,1.18,6/8,5046511783.0
-HNST,usHNST.OQ,The Honest Company Inc. Common Stock,非必需消费,其他轻工,2026-09-03,5.85,7.9,2.76,2.27,6/8,613666648.0
 HALO,usHALO.OQ,Halozyme Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,110.76,29.2,2.15,1.0,6/8,12151095880.0
-HTFL,usHTFL.OQ,Heartflow Inc. Common Stock,医疗保健,医疗器械,2026-09-03,49.71,82.8,-0.99,-0.58,6/8,4255510505.0
-HOOD,usHOOD.OQ,Robinhood Markets Inc. Class A Common Stock,金融,非银行金融,2026-09-03,124.72,37.5,18.23,16.57,6/8,97586389911.0
-IEP,usIEP.OQ,Icahn Enterprises L.P. Common Stock,能源,综合,2026-09-03,6.94,-2.5,2.01,2.06,6/8,4841331783.0
+GTX,usGTX.OQ,Garrett Motion Inc. Common Stock,非必需消费,汽车,2026-09-03,27.33,-10.0,1.76,1.18,6/8,5046511783.0
+GPRE,usGPRE.OQ,Green Plains Inc. Common Stock,工业,石油天然气,2026-09-03,14.96,-1.6,0.28,-1.71,5/8,1043018481.0
+GTM,usGTM.OQ,ZoomInfo Technologies Inc Common Stock,科技,互联网服务,2026-09-03,4.12,-0.5,-0.2,0.73,5/8,1106218175.0
+HNST,usHNST.OQ,The Honest Company Inc. Common Stock,非必需消费,其他轻工,2026-09-03,5.85,7.9,2.76,2.27,6/8,613666648.0
 HTO,usHTO.OQ,H2O America Common Stock,公用事业,水务,2026-09-03,64.56,5.2,1.61,1.75,6/8,2665441279.0
+GGAL,usGGAL.OQ,Grupo Financiero Galicia S.A. American Depositary Shares,金融,银行,2026-09-03,44.63,-4.4,0.21,-0.84,5/8,7053060128.0
 HRMY,usHRMY.OQ,Harmony Biosciences Holdings Inc. Common Stock,医疗保健,化学制药,2026-09-03,41.86,8.0,0.54,-2.33,7/8,2309655346.0
-IBOC,usIBOC.OQ,International Bancshares Corporation Common Stock,金融,银行,2026-09-03,71.54,-3.8,1.86,1.3,5/8,4401293446.0
+HWKN,usHWKN.OQ,Hawkins Inc. Common Stock,非必需消费,化学原料,2026-09-03,129.33,-0.4,3.82,2.34,7/8,2475162623.0
+IEP,usIEP.OQ,Icahn Enterprises L.P. Common Stock,能源,综合,2026-09-03,6.94,-2.5,2.01,2.06,6/8,4841331783.0
 HTZ,usHTZ.OQ,Hertz Global Holdings Inc Common Stock,非必需消费,物流,2026-09-03,2.27,12.4,-0.46,-1.73,5/8,744983411.0
 INCY,usINCY.OQ,Incyte Corp. Common Stock,医疗保健,生物医药,2026-09-03,128.0,8.1,1.17,-0.64,6/8,25969635218.0
-HWKN,usHWKN.OQ,Hawkins Inc. Common Stock,非必需消费,化学原料,2026-09-03,129.33,-0.4,3.82,2.34,7/8,2475162623.0
-IMCR,usIMCR.OQ,Immunocore Holdings plc American Depositary Shares,医疗保健,生物医药,2026-09-03,37.57,8.9,1.53,0.54,6/8,1911628663.0
-INTA,usINTA.OQ,Intapp Inc. Common Stock,科技,计算机软件,2026-09-03,43.11,18.6,2.46,3.9,5/8,3091050379.0
-JANX,usJANX.OQ,Janux Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,19.8,23.0,3.43,0.51,8/8,1154873642.0
-IREN,usIREN.OQ,IREN Limited Ordinary Shares,金融,计算机软件,2026-09-03,41.65,9.8,8.96,5.18,5/8,14145047917.0
-INSM,usINSM.OQ,Insmed Incorporated Common Stock,医疗保健,生物医药,2026-09-03,126.68,-4.4,2.09,0.04,6/8,27164475158.0
+HTFL,usHTFL.OQ,Heartflow Inc. Common Stock,医疗保健,医疗器械,2026-09-03,49.71,82.8,-0.99,-0.58,5/8,4255510505.0
+IBOC,usIBOC.OQ,International Bancshares Corporation Common Stock,金融,银行,2026-09-03,71.54,-3.8,1.86,1.3,5/8,4401293446.0
+HOOD,usHOOD.OQ,Robinhood Markets Inc. Class A Common Stock,金融,非银行金融,2026-09-03,124.72,37.5,18.23,16.57,6/8,97586389911.0
 INTR,usINTR.OQ,Inter & Co. Inc. Class A Common Shares,金融,银行,2026-09-03,5.8,1.4,1.89,-1.36,7/8,2440508796.0
 INVA,usINVA.OQ,Innoviva Inc. Common Stock,医疗保健,化学制药,2026-09-03,21.35,1.1,0.94,0.0,7/8,1534494101.0
-IOVA,usIOVA.OQ,Iovance Biotherapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,8.7,40.1,3.28,0.93,7/8,3660009171.0
+IMCR,usIMCR.OQ,Immunocore Holdings plc American Depositary Shares,医疗保健,生物医药,2026-09-03,37.57,8.9,1.53,0.54,6/8,1911628663.0
 IRTC,usIRTC.OQ,iRhythm Holdings Inc. Common Stock,医疗保健,医疗器械,2026-09-03,123.43,-3.7,1.4,0.77,5/8,3927541807.0
-KNSA,usKNSA.OQ,Kiniksa Pharmaceuticals International plc Class A Ordinary Shares,医疗保健,生物医药,2026-09-03,80.47,5.2,1.28,0.73,6/8,6138929343.0
-KRYS,usKRYS.OQ,Krystal Biotech Inc. Common Stock,医疗保健,生物医药,2026-09-03,371.47,15.1,1.61,0.61,7/8,10648477239.0
-KURA,usKURA.OQ,Kura Oncology Inc. Common Stock,医疗保健,生物医药,2026-09-03,13.15,41.7,1.55,0.31,5/8,1161825684.0
-LILAK,usLILAK.OQ,Liberty Latin America Ltd. Class C Common Stock,Telecommunications,广播电视,2026-09-03,8.68,1.4,1.34,0.58,5/8,1678863000.0
+INTA,usINTA.OQ,Intapp Inc. Common Stock,科技,计算机软件,2026-09-03,43.11,18.6,2.46,3.9,5/8,3091050379.0
+IOVA,usIOVA.OQ,Iovance Biotherapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,8.7,40.1,3.28,0.93,6/8,3660009171.0
+INSM,usINSM.OQ,Insmed Incorporated Common Stock,医疗保健,生物医药,2026-09-03,126.68,-4.4,2.09,0.04,6/8,27164475158.0
+JANX,usJANX.OQ,Janux Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,19.8,23.0,3.43,0.51,8/8,1154873642.0
 KDP,usKDP.OQ,Keurig Dr Pepper Inc. Common Stock,必需消费,饮料,2026-09-03,32.88,8.3,2.02,0.89,6/8,43825402554.0
-LFST,usLFST.OQ,LifeStance Health Group Inc. Common Stock,医疗保健,医疗服务,2026-09-03,12.83,20.4,1.08,-0.47,7/8,4641975649.0
+KNSA,usKNSA.OQ,Kiniksa Pharmaceuticals International plc Class A Ordinary Shares,医疗保健,生物医药,2026-09-03,80.47,5.2,1.28,0.73,6/8,6138929343.0
+KURA,usKURA.OQ,Kura Oncology Inc. Common Stock,医疗保健,生物医药,2026-09-03,13.15,41.7,1.55,0.31,5/8,1161825684.0
+IREN,usIREN.OQ,IREN Limited Ordinary Shares,金融,计算机软件,2026-09-03,41.65,9.8,8.96,5.18,5/8,14145047917.0
+KRYS,usKRYS.OQ,Krystal Biotech Inc. Common Stock,医疗保健,生物医药,2026-09-03,371.47,15.1,1.61,0.61,7/8,10648477239.0
 LGND,usLGND.OQ,Ligand Pharmaceuticals Incorporated Common Stock,医疗保健,生物医药,2026-09-03,289.74,-3.5,1.47,0.98,6/8,5738465051.0
 LEGN,usLEGN.OQ,Legend Biotech Corporation American Depositary Shares,医疗保健,生物医药,2026-09-03,21.75,12.8,1.49,-0.64,6/8,4022020381.0
 LMB,usLMB.OQ,Limbach Holdings Inc. Common Stock,非必需消费,非银行金融,2026-09-03,49.55,3.4,8.23,2.0,7/8,505858203.0
-LNTH,usLNTH.OQ,Lantheus Holdings Inc. Common Stock,医疗保健,医疗器械,2026-09-03,100.98,-0.1,0.12,0.17,5/8,6580760243.0
-LULU,usLULU.OQ,lululemon athletica inc. Common Stock,非必需消费,服装家纺,2026-09-03,121.77,-2.4,1.92,1.42,6/8,12616756297.0
 LMAT,usLMAT.OQ,LeMaitre Vascular Inc. Common Stock,医疗保健,医疗器械,2026-09-03,80.49,-0.1,-0.92,-1.51,6/8,1820621550.0
+LULU,usLULU.OQ,lululemon athletica inc. Common Stock,非必需消费,服装家纺,2026-09-03,121.77,-2.4,1.92,1.42,6/8,12616756297.0
+LFST,usLFST.OQ,LifeStance Health Group Inc. Common Stock,医疗保健,医疗服务,2026-09-03,12.83,20.4,1.08,-0.47,7/8,4641975649.0
+LILAK,usLILAK.OQ,Liberty Latin America Ltd. Class C Common Stock,Telecommunications,广播电视,2026-09-03,8.68,1.4,1.34,0.58,5/8,1678863000.0
 LOGI,usLOGI.OQ,Logitech International S.A. Ordinary Shares,科技,计算机硬件,2026-09-03,101.71,-1.2,3.02,2.59,6/8,14346038983.0
-LZ,usLZ.OQ,LegalZoom.com Inc. Common Stock,科技,专业服务,2026-09-03,6.4,12.9,0.9,-1.84,7/8,1010462391.0
-LOPE,usLOPE.OQ,Grand Canyon Education Inc. Common Stock,房地产,教育,2026-09-03,152.45,2.5,2.01,1.91,6/8,3877695554.0
 LIVN,usLIVN.OQ,LivaNova PLC Ordinary Shares,医疗保健,医疗器械,2026-09-03,81.2,7.2,0.01,-1.46,7/8,4405827755.0
+LOPE,usLOPE.OQ,Grand Canyon Education Inc. Common Stock,房地产,教育,2026-09-03,152.45,2.5,2.01,1.91,6/8,3877695554.0
+LNTH,usLNTH.OQ,Lantheus Holdings Inc. Common Stock,医疗保健,医疗器械,2026-09-03,100.98,-0.1,0.12,0.17,5/8,6580760243.0
 MDLN,usMDLN.OQ,Medline Inc. Class A Common Stock,医疗保健,医疗器械,2026-09-03,36.59,6.0,2.55,0.8,8/8,45462585073.0
 METC,usMETC.OQ,Ramaco Resources Inc. Class A Common Stock,能源,煤炭,2026-09-03,12.35,28.8,-13.36,-14.3,5/8,805030635.0
-MDGL,usMDGL.OQ,Madrigal Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,542.61,6.3,-0.08,-0.79,6/8,12450351419.0
-MEOH,usMEOH.OQ,Methanex Corporation Common Stock,工业,化学原料,2026-09-03,59.35,9.1,-1.26,-2.01,5/8,4404347493.0
-META,usMETA.OQ,Meta Platforms Inc. Class A Common Stock,科技,互联网服务,2026-09-03,610.68,3.5,4.51,3.01,7/8,1467720236472.0
-MIRM,usMIRM.OQ,Mirum Pharmaceuticals Inc. Common Stock,医疗保健,化学制药,2026-09-03,100.63,6.9,1.63,0.8,5/8,6396471318.0
-MLAB,usMLAB.OQ,Mesa Laboratories Inc. Common Stock,工业,电子设备制造,2026-09-03,128.53,27.4,0.02,-1.62,5/8,711514743.0
 MELI,usMELI.OQ,MercadoLibre Inc. Common Stock,非必需消费,互联网服务,2026-09-03,1991.06,8.8,0.6,-0.77,7/8,98881070493.0
-MGNI,usMGNI.OQ,Magnite Inc. Common Stock,科技,计算机软件,2026-09-03,24.63,1.3,2.75,-1.0,6/8,3353256791.0
+MIRM,usMIRM.OQ,Mirum Pharmaceuticals Inc. Common Stock,医疗保健,化学制药,2026-09-03,100.63,6.9,1.63,0.8,5/8,6396471318.0
+MEOH,usMEOH.OQ,Methanex Corporation Common Stock,工业,化学原料,2026-09-03,59.35,9.1,-1.26,-2.01,5/8,4404347493.0
 MLYS,usMLYS.OQ,Mineralys Therapeutics Inc. Common Stock,医疗保健,化学制药,2026-09-03,28.27,4.7,3.87,-2.65,5/8,2288854253.0
+META,usMETA.OQ,Meta Platforms Inc. Class A Common Stock,科技,互联网服务,2026-09-03,610.68,3.5,4.51,3.01,7/8,1467720236472.0
+LZ,usLZ.OQ,LegalZoom.com Inc. Common Stock,科技,专业服务,2026-09-03,6.4,12.9,0.9,-1.84,7/8,1010462391.0
+MGNI,usMGNI.OQ,Magnite Inc. Common Stock,科技,计算机软件,2026-09-03,24.63,1.3,2.75,-1.0,6/8,3353256791.0
+MDGL,usMDGL.OQ,Madrigal Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,542.61,6.3,-0.08,-0.79,6/8,12450351419.0
+MMED,usMMED.OQ,MiniMed Group Inc. Common Stock,医疗保健,医疗器械,2026-09-03,23.84,29.4,5.6,0.34,7/8,5483510155.0
+MNPR,usMNPR.OQ,Monopar Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,118.55,-1.4,2.41,1.95,6/8,763308200.0
+MLAB,usMLAB.OQ,Mesa Laboratories Inc. Common Stock,工业,电子设备制造,2026-09-03,128.53,27.4,0.02,-1.62,5/8,711514743.0
+MKTX,usMKTX.OQ,MarketAxess Holdings Inc. Common Stock,金融,非银行金融,2026-09-03,163.34,0.9,0.37,0.31,6/8,5719548645.0
+MU,usMU.OQ,Micron Technology Inc. Common Stock,科技,半导体,2026-09-03,958.16,8.7,0.89,0.22,5/8,1059822532898.0
 MSTR,usMSTR.OQ,Strategy Inc Common Stock Class A,科技,计算机软件,2026-09-03,144.82,49.5,15.36,17.56,5/8,47332770266.0
+MRX,usMRX.OQ,Marex Group Limited Ordinary Shares,金融,非银行金融,2026-09-03,75.65,21.6,4.9,5.55,7/8,5346460204.0
 MTCH,usMTCH.OQ,Match Group Inc. Common Stock,科技,互联网服务,2026-09-03,42.43,15.9,1.24,-0.02,8/8,9657209939.0
 MQ,usMQ.OQ,Marqeta Inc. Class A Common Stock,科技,互联网服务,2026-09-03,16.98,1.7,2.66,0.95,8/8,1673909251.0
-MKTX,usMKTX.OQ,MarketAxess Holdings Inc. Common Stock,金融,非银行金融,2026-09-03,163.34,0.9,0.37,0.31,6/8,5719548645.0
-MMED,usMMED.OQ,MiniMed Group Inc. Common Stock,医疗保健,医疗器械,2026-09-03,23.84,29.4,5.6,0.34,7/8,5483510155.0
-MU,usMU.OQ,Micron Technology Inc. Common Stock,科技,半导体,2026-09-03,958.16,8.7,0.89,0.22,5/8,1059822532898.0
-MSFT,usMSFT.OQ,Microsoft Corporation Common Stock,科技,计算机软件,2026-09-03,510.12,2.2,1.99,2.68,6/8,3685818015368.0
-MRX,usMRX.OQ,Marex Group Limited Ordinary Shares,金融,非银行金融,2026-09-03,75.65,21.6,4.9,5.55,7/8,5346460204.0
-NBTB,usNBTB.OQ,NBT Bancorp Inc. Common Stock,金融,银行,2026-09-03,51.63,-1.7,1.44,0.82,5/8,2676462742.0
+NAVI,usNAVI.OQ,Navient Corporation Common Stock,金融,非银行金融,2026-09-03,9.32,-0.1,0.17,-0.85,5/8,878754468.0
 NBIX,usNBIX.OQ,Neurocrine Biosciences Inc. Common Stock,医疗保健,生物医药,2026-09-03,158.35,-0.9,1.04,0.35,5/8,15917245253.0
-MRNA,usMRNA.OQ,Moderna Inc. Common Stock,医疗保健,生物医药,2026-09-03,148.87,176.4,-0.48,-1.29,5/8,59749643148.0
-MNPR,usMNPR.OQ,Monopar Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,118.55,-1.4,2.41,1.95,6/8,763308200.0
+MSFT,usMSFT.OQ,Microsoft Corporation Common Stock,科技,计算机软件,2026-09-03,510.12,2.2,1.99,2.68,6/8,3685818015368.0
+NFLX,usNFLX.OQ,Netflix Inc. Common Stock,非必需消费,影视动漫,2026-09-03,82.67,12.2,1.05,-0.07,5/8,339194526007.0
 NCNO,usNCNO.OQ,nCino Inc. Common Stock,科技,计算机软件,2026-09-03,23.63,24.4,4.16,2.92,7/8,2356483955.0
-NICE,usNICE.OQ,NICE Ltd American Depositary Shares,科技,计算机软件,2026-09-03,108.31,11.5,1.0,1.36,6/8,6005701938.0
-NUAI,usNUAI.OQ,New Era Energy & Digital Inc. Common Stock,能源,石油天然气,2026-09-03,5.27,2.1,6.05,2.53,6/8,526403135.0
+NBTB,usNBTB.OQ,NBT Bancorp Inc. Common Stock,金融,银行,2026-09-03,51.63,-1.7,1.44,0.82,5/8,2676462742.0
 NOVT,usNOVT.OQ,Novanta Inc. Common Stock,其他,电子设备制造,2026-09-03,147.24,-9.8,1.83,1.88,5/8,5444246169.0
 NKTR,usNKTR.OQ,Nektar Therapeutics  Common Stock,医疗保健,化学制药,2026-09-03,76.37,4.0,5.83,4.99,5/8,2518728667.0
-NUTX,usNUTX.OQ,Nutex Health Inc. Common Stock,非必需消费,互联网服务,2026-09-03,197.68,30.1,4.08,2.96,6/8,1341654870.0
-NWBI,usNWBI.OQ,Northwest Bancshares Inc. Common Stock,金融,非银行金融,2026-09-03,15.51,-0.9,1.28,0.52,5/8,2243753749.0
-NWL,usNWL.OQ,Newell Brands Inc. Common Stock,工业,其他家电,2026-09-03,6.07,2.0,0.83,1.51,5/8,2538364000.0
-NSIT,usNSIT.OQ,Insight Enterprises Inc. Common Stock,非必需消费,电子器件,2026-09-03,159.15,6.7,3.59,4.66,6/8,4456035896.0
-NAVI,usNAVI.OQ,Navient Corporation Common Stock,金融,非银行金融,2026-09-03,9.32,-0.1,0.17,-0.85,6/8,878754468.0
+NICE,usNICE.OQ,NICE Ltd American Depositary Shares,科技,计算机软件,2026-09-03,108.31,11.5,1.0,1.36,6/8,6005701938.0
 NVAX,usNVAX.OQ,Novavax Inc. Common Stock,医疗保健,生物医药,2026-09-03,10.34,33.6,2.82,0.19,7/8,1519150136.0
-NFLX,usNFLX.OQ,Netflix Inc. Common Stock,非必需消费,影视动漫,2026-09-03,82.67,12.2,1.05,-0.07,5/8,339194526007.0
-OCTV,usOCTV.OQ,Octave Intelligence plc Class B Ordinary Shares,科技,计算机软件,2026-09-03,19.98,2.9,3.3,5.16,7/8,4992942857.0
-OKTA,usOKTA.OQ,Okta Inc. Class A Common Stock,科技,互联网服务,2026-09-03,170.42,18.8,2.64,4.46,6/8,23363186003.0
+NSIT,usNSIT.OQ,Insight Enterprises Inc. Common Stock,非必需消费,电子器件,2026-09-03,159.15,6.7,3.59,4.66,6/8,4456035896.0
+NUTX,usNUTX.OQ,Nutex Health Inc. Common Stock,非必需消费,互联网服务,2026-09-03,197.68,30.1,4.08,2.96,6/8,1341654870.0
+NUAI,usNUAI.OQ,New Era Energy & Digital Inc. Common Stock,能源,石油天然气,2026-09-03,5.27,2.1,6.05,2.53,6/8,526403135.0
 NVDA,usNVDA.OQ,NVIDIA Corporation Common Stock,科技,半导体,2026-09-03,228.45,4.3,3.11,1.8,6/8,5073772000000.0
+OCTV,usOCTV.OQ,Octave Intelligence plc Class B Ordinary Shares,科技,计算机软件,2026-09-03,19.98,2.9,3.3,5.16,7/8,4992942857.0
+NWL,usNWL.OQ,Newell Brands Inc. Common Stock,工业,其他家电,2026-09-03,6.07,2.0,0.83,1.51,5/8,2538364000.0
 NXPI,usNXPI.OQ,NXP Semiconductors N.V. Common Stock,科技,半导体,2026-09-03,224.99,-2.9,-0.39,-1.54,5/8,56270435428.0
 OABI,usOABI.OQ,OmniAb Inc. Common Stock,医疗保健,非银行金融,2026-09-03,4.75,112.1,0.91,-5.75,6/8,699327814.0
-OMCL,usOMCL.OQ,Omnicell Inc. Common Stock ($0.001 par value),科技,计算机软件,2026-09-03,34.82,-3.7,0.23,0.32,5/8,1525817870.0
-PAYO,usPAYO.OQ,Payoneer Global Inc. Common Stock,非必需消费,计算机软件,2026-09-03,7.18,1.0,0.96,0.84,5/8,2412617952.0
-PCVX,usPCVX.OQ,Vaxcyte Inc. Common Stock,医疗保健,生物医药,2026-09-03,61.17,3.9,-0.01,-0.67,6/8,9090514433.0
-OZK,usOZK.OQ,Bank OZK Common Stock,金融,银行,2026-09-03,50.17,-2.8,2.42,1.72,5/8,5596844450.0
-PEGA,usPEGA.OQ,Pegasystems Inc. Common Stock,科技,计算机软件,2026-09-03,37.72,19.4,1.88,1.07,8/8,5561819289.0
-PAYP,usPAYP.OQ,PayPay Corporation American Depository Shares,非必需消费,计算机软件,2026-09-03,16.93,9.9,10.08,7.63,6/8,10583747200.0
-PBLS,usPBLS.OQ,Parabilis Medicines Inc. Common Stock,医疗保健,化学制药,2026-09-03,40.75,14.5,2.66,1.6,6/8,4787836698.0
-PCRX,usPCRX.OQ,Pacira BioSciences Inc. Common Stock,医疗保健,化学制药,2026-09-03,26.6,4.0,0.73,0.08,8/8,1032422847.0
 OLMA,usOLMA.OQ,Olema Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,10.73,-9.1,0.6,-0.92,5/8,949349036.0
-PFG,usPFG.OQ,Principal Financial Group Inc Common Stock,金融,非银行金融,2026-09-03,118.51,3.5,8.07,7.27,6/8,24024681767.0
-OPCH,usOPCH.OQ,Option Care Health Inc. Common Stock,医疗保健,医疗服务,2026-09-03,24.46,3.5,3.18,2.56,7/8,3600837242.0
-PI,usPI.OQ,Impinj Inc. Common Stock,科技,电子元件,2026-09-03,175.11,1.9,1.34,0.03,8/8,4865790270.0
-PLUS,usPLUS.OQ,ePlus inc. Common Stock,科技,计算机软件,2026-09-03,90.87,0.9,4.21,4.13,6/8,2247950415.0
-PODD,usPODD.OQ,Insulet Corporation Common Stock,医疗保健,医疗器械,2026-09-03,150.58,8.1,1.53,1.65,6/8,9944005053.0
-PLMR,usPLMR.OQ,Palomar Holdings Inc. Common stock,金融,非银行金融,2026-09-03,136.12,-0.2,3.02,3.03,7/8,3469196973.0
-PLSE,usPLSE.OQ,Pulse Biosciences Inc Common Stock (DE),医疗保健,医疗器械,2026-09-03,54.71,43.1,5.18,3.85,8/8,3430617397.0
-PRCT,usPRCT.OQ,PROCEPT BioRobotics Corporation Common Stock,医疗保健,医疗器械,2026-09-03,21.37,6.7,-0.55,-2.73,5/8,1206755995.0
+OMCL,usOMCL.OQ,Omnicell Inc. Common Stock ($0.001 par value),科技,计算机软件,2026-09-03,34.82,-3.7,0.23,0.32,5/8,1525817870.0
+NWBI,usNWBI.OQ,Northwest Bancshares Inc. Common Stock,金融,非银行金融,2026-09-03,15.51,-0.9,1.28,0.52,5/8,2243753749.0
+OPCH,usOPCH.OQ,Option Care Health Inc. Common Stock,医疗保健,医疗服务,2026-09-03,24.46,3.5,3.18,2.56,6/8,3600837242.0
+OKTA,usOKTA.OQ,Okta Inc. Class A Common Stock,科技,互联网服务,2026-09-03,170.42,18.8,2.64,4.46,6/8,23363186003.0
+OZK,usOZK.OQ,Bank OZK Common Stock,金融,银行,2026-09-03,50.17,-2.8,2.42,1.72,5/8,5596844450.0
+PAYP,usPAYP.OQ,PayPay Corporation American Depository Shares,非必需消费,计算机软件,2026-09-03,16.93,9.9,10.08,7.63,6/8,10583747200.0
+PEGA,usPEGA.OQ,Pegasystems Inc. Common Stock,科技,计算机软件,2026-09-03,37.72,19.4,1.88,1.07,8/8,5561819289.0
+PBLS,usPBLS.OQ,Parabilis Medicines Inc. Common Stock,医疗保健,化学制药,2026-09-03,40.75,14.5,2.66,1.6,6/8,4787836698.0
 PGNY,usPGNY.OQ,Progyny Inc. Common Stock,医疗保健,医疗服务,2026-09-03,26.61,-11.9,2.52,1.22,5/8,2023285663.0
+PAYO,usPAYO.OQ,Payoneer Global Inc. Common Stock,非必需消费,计算机软件,2026-09-03,7.18,1.0,0.96,0.84,5/8,2412617952.0
+PI,usPI.OQ,Impinj Inc. Common Stock,科技,电子元件,2026-09-03,175.11,1.9,1.34,0.03,7/8,4865790270.0
+PFG,usPFG.OQ,Principal Financial Group Inc Common Stock,金融,非银行金融,2026-09-03,118.51,3.5,8.07,7.27,6/8,24024681767.0
+PCVX,usPCVX.OQ,Vaxcyte Inc. Common Stock,医疗保健,生物医药,2026-09-03,61.17,3.9,-0.01,-0.67,6/8,9090514433.0
+PLUS,usPLUS.OQ,ePlus inc. Common Stock,科技,计算机软件,2026-09-03,90.87,0.9,4.21,4.13,6/8,2247950415.0
+PLSE,usPLSE.OQ,Pulse Biosciences Inc Common Stock (DE),医疗保健,医疗器械,2026-09-03,54.71,43.1,5.18,3.85,8/8,3430617397.0
+PCRX,usPCRX.OQ,Pacira BioSciences Inc. Common Stock,医疗保健,化学制药,2026-09-03,26.6,4.0,0.73,0.08,8/8,1032422847.0
+PODD,usPODD.OQ,Insulet Corporation Common Stock,医疗保健,医疗器械,2026-09-03,150.58,8.1,1.53,1.65,6/8,9944005053.0
+PRCT,usPRCT.OQ,PROCEPT BioRobotics Corporation Common Stock,医疗保健,医疗器械,2026-09-03,21.37,6.7,-0.55,-2.73,5/8,1206755995.0
+PLMR,usPLMR.OQ,Palomar Holdings Inc. Common stock,金融,非银行金融,2026-09-03,136.12,-0.2,3.02,3.03,7/8,3469196973.0
 PSKY,usPSKY.OQ,Paramount Skydance Corporation Class B Common Stock,工业,影视动漫,2026-09-03,11.04,21.9,1.95,0.64,7/8,12049697666.0
 PRCH,usPRCH.OQ,Porch Group Inc. Common Stock,科技,计算机软件,2026-09-03,18.06,17.0,3.37,1.8,8/8,2275421079.0
 PUBM,usPUBM.OQ,PubMatic Inc. Class A Common Stock,科技,营销服务,2026-09-03,16.96,25.8,0.46,-2.42,6/8,740188491.0
 PTEN,usPTEN.OQ,Patterson-UTI Energy Inc. Common Stock,能源,石油天然气,2026-09-03,12.55,25.9,-2.83,-4.56,6/8,4481272270.0
 QCOM,usQCOM.OQ,QUALCOMM Incorporated Common Stock,科技,通信设备,2026-09-03,168.57,5.7,0.26,-0.28,6/8,171944297546.0
-QMCO,usQMCO.OQ,Quantum Corporation Common Stock,科技,计算机硬件,2026-09-03,24.3,108.0,3.47,6.67,5/8,914706123.0
 QCRH,usQCRH.OQ,QCR Holdings Inc. Common Stock,金融,银行,2026-09-03,102.83,-1.4,2.54,1.4,5/8,1650498135.0
-QRVO,usQRVO.OQ,Qorvo Inc. Common Stock,科技,半导体,2026-09-03,100.38,5.3,2.01,-0.25,7/8,8392965055.0
 PVLA,usPVLA.OQ,Palvella Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,155.47,0.3,2.18,1.65,6/8,2223649452.0
+QRVO,usQRVO.OQ,Qorvo Inc. Common Stock,科技,半导体,2026-09-03,100.38,5.3,2.01,-0.25,7/8,8392965055.0
+QMCO,usQMCO.OQ,Quantum Corporation Common Stock,科技,计算机硬件,2026-09-03,24.3,108.0,3.47,6.67,5/8,914706123.0
 RDVT,usRDVT.OQ,Red Violet Inc. Common Stock,科技,专业服务,2026-09-03,76.43,13.6,4.71,6.94,8/8,1115264763.0
-REGN,usREGN.OQ,Regeneron Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,843.47,9.4,1.32,-1.0,5/8,83886694673.0
-RELY,usRELY.OQ,Remitly Global Inc. Common Stock,非必需消费,互联网服务,2026-09-03,26.92,3.8,1.73,0.37,6/8,5450864391.0
-RIGL,usRIGL.OQ,Rigel Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,48.5,23.7,0.71,-1.86,6/8,868240079.0
 ROP,usROP.OQ,Roper Technologies Inc. Common Stock,工业,综合,2026-09-03,422.35,6.4,0.97,1.58,6/8,40873753207.0
+REGN,usREGN.OQ,Regeneron Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,843.47,9.4,1.32,-1.0,5/8,83886694673.0
+RELY,usRELY.OQ,Remitly Global Inc. Common Stock,非必需消费,互联网服务,2026-09-03,26.92,3.8,1.73,0.37,5/8,5450864391.0
+RIGL,usRIGL.OQ,Rigel Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,48.5,23.7,0.71,-1.86,6/8,868240079.0
 RPRX,usRPRX.OQ,Royalty Pharma plc Class A Ordinary Shares,医疗保健,化学制药,2026-09-03,63.88,12.0,2.17,1.22,8/8,35535074407.0
+SDGR,usSDGR.OQ,Schrodinger Inc. Common Stock,医疗保健,化学制药,2026-09-03,20.71,16.3,0.65,-0.81,6/8,1456465577.0
+SBAC,usSBAC.OQ,SBA Communications Corporation Class A Common Stock,房地产,房地产开发,2026-09-03,191.52,5.6,1.99,2.74,8/8,19730266698.0
+SBLK,usSBLK.OQ,Star Bulk Carriers Corp. Common Shares,非必需消费,港口航运,2026-09-03,31.87,14.9,1.52,0.16,7/8,3299061837.0
 SAFT,usSAFT.OQ,Safety Insurance Group Inc. Common Stock,金融,非银行金融,2026-09-03,103.1,0.5,0.03,-0.02,6/8,1521485154.0
+SBET,usSBET.OQ,Sharplink Inc. Common Stock,科技,计算机软件,2026-09-03,8.98,42.8,9.3,10.86,6/8,1807300385.0
 SCSC,usSCSC.OQ,ScanSource Inc. Common Stock,科技,电子器件,2026-09-03,57.86,1.6,2.21,2.15,5/8,1131421750.0
 SBRA,usSBRA.OQ,Sabra Health Care REIT Inc. Common Stock,房地产,房地产开发,2026-09-03,20.93,1.6,0.68,0.34,5/8,5367272504.0
-SBLK,usSBLK.OQ,Star Bulk Carriers Corp. Common Shares,非必需消费,港口航运,2026-09-03,31.87,14.9,1.52,0.16,7/8,3299061837.0
-SBAC,usSBAC.OQ,SBA Communications Corporation Class A Common Stock,房地产,房地产开发,2026-09-03,191.52,5.6,1.99,2.74,8/8,19730266698.0
-SBET,usSBET.OQ,Sharplink Inc. Common Stock,科技,计算机软件,2026-09-03,8.98,42.8,9.3,10.86,6/8,1807300385.0
-SDGR,usSDGR.OQ,Schrodinger Inc. Common Stock,医疗保健,化学制药,2026-09-03,20.71,16.3,0.65,-0.81,7/8,1456465577.0
-SEDG,usSEDG.OQ,SolarEdge Technologies Inc. Common Stock,科技,电子设备制造,2026-09-03,33.8,3.5,1.94,-0.53,6/8,2035271744.0
-SGMT,usSGMT.OQ,Sagimet Biosciences Inc. Series A Common Stock,医疗保健,化学制药,2026-09-03,10.92,24.9,2.17,-0.64,7/8,668879987.0
 SGML,usSGML.OQ,Sigma Lithium Corporation Common Shares,基础材料,基本金属,2026-09-03,12.77,18.5,1.14,-0.62,7/8,1373333419.0
+SGMT,usSGMT.OQ,Sagimet Biosciences Inc. Series A Common Stock,医疗保健,化学制药,2026-09-03,10.92,24.9,2.17,-0.64,7/8,668879987.0
 SIGI,usSIGI.OQ,Selective Insurance Group Inc. Common Stock,金融,非银行金融,2026-09-03,93.2,-3.2,1.6,1.05,5/8,5502995213.0
-SIRI,usSIRI.OQ,SiriusXM Holdings Inc. Common Stock,非必需消费,广播电视,2026-09-03,29.77,0.5,3.59,0.24,6/8,9609777062.0
-SLAB,usSLAB.OQ,Silicon Laboratories Inc. Common Stock,科技,半导体,2026-09-03,220.71,1.0,0.48,0.22,7/8,7301648310.0
-SLN,usSLN.OQ,Silence Therapeutics Plc American Depository Share,医疗保健,生物医药,2026-09-03,14.79,26.2,1.96,0.0,6/8,633204000.0
-SLDE,usSLDE.OQ,Slide Insurance Holdings Inc. Common Stock,金融,非银行金融,2026-09-03,24.73,16.3,4.27,2.27,8/8,2727553639.0
-SNDX,usSNDX.OQ,Syndax Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,20.68,4.7,2.07,-0.48,7/8,1793978458.0
-SMPL,usSMPL.OQ,The Simply Good Foods Company Common Stock,必需消费,食品,2026-09-03,11.49,2.9,1.29,1.86,6/8,932374144.0
-SMMT,usSMMT.OQ,Summit Therapeutics Inc. Common Stock,医疗保健,化学制药,2026-09-03,17.13,26.5,20.11,17.33,7/8,11351976836.0
-SOLS,usSOLS.OQ,Solstice Advanced Materials Inc. Common Stock,工业,航空航天装备,2026-09-03,61.37,-1.2,-0.5,0.62,5/8,8954226191.0
+SEDG,usSEDG.OQ,SolarEdge Technologies Inc. Common Stock,科技,电子设备制造,2026-09-03,33.8,3.5,1.94,-0.53,6/8,2035271744.0
 SONO,usSONO.OQ,Sonos Inc. Common Stock,必需消费,消费电子设备,2026-09-03,16.16,4.6,3.3,1.13,7/8,1813446698.0
-SPSC,usSPSC.OQ,SPS Commerce Inc. Common Stock,科技,互联网服务,2026-09-03,84.21,17.0,1.02,1.68,7/8,2897294004.0
-STLD,usSTLD.OQ,Steel Dynamics Inc.,工业,钢铁,2026-09-03,246.03,-5.9,2.36,-0.65,7/8,33811095959.0
-SSNC,usSSNC.OQ,SS&C Technologies Holdings Inc. Common Stock,科技,计算机软件,2026-09-03,84.63,6.4,2.73,2.52,6/8,19488097418.0
+SIRI,usSIRI.OQ,SiriusXM Holdings Inc. Common Stock,非必需消费,广播电视,2026-09-03,29.77,0.5,3.59,0.24,6/8,9609777062.0
+SLN,usSLN.OQ,Silence Therapeutics Plc American Depository Share,医疗保健,生物医药,2026-09-03,14.79,26.2,1.96,0.0,6/8,633204000.0
+SMMT,usSMMT.OQ,Summit Therapeutics Inc. Common Stock,医疗保健,化学制药,2026-09-03,17.13,26.5,20.11,17.33,7/8,11351976836.0
+SLAB,usSLAB.OQ,Silicon Laboratories Inc. Common Stock,科技,半导体,2026-09-03,220.71,1.0,0.48,0.22,7/8,7301648310.0
+SMPL,usSMPL.OQ,The Simply Good Foods Company Common Stock,必需消费,食品,2026-09-03,11.49,2.9,1.29,1.86,6/8,932374144.0
 SPT,usSPT.OQ,Sprout Social Inc Class A Common Stock,科技,计算机软件,2026-09-03,11.37,38.8,-0.15,0.26,7/8,644701136.0
-STAA,usSTAA.OQ,STAAR Surgical Company Common Stock,医疗保健,医疗器械,2026-09-03,23.58,2.0,1.97,2.03,6/8,1146291474.0
-SRPT,usSRPT.OQ,Sarepta Therapeutics Inc. Common Stock (DE),医疗保健,生物医药,2026-09-03,22.99,37.0,3.72,-0.95,7/8,2055501829.0
+SSNC,usSSNC.OQ,SS&C Technologies Holdings Inc. Common Stock,科技,计算机软件,2026-09-03,84.63,6.4,2.73,2.52,6/8,19488097418.0
+STLD,usSTLD.OQ,Steel Dynamics Inc.,工业,钢铁,2026-09-03,246.03,-5.9,2.36,-0.65,6/8,33811095959.0
+SLDE,usSLDE.OQ,Slide Insurance Holdings Inc. Common Stock,金融,非银行金融,2026-09-03,24.73,16.3,4.27,2.27,8/8,2727553639.0
 STNE,usSTNE.OQ,StoneCo Ltd. Class A Common Shares,科技,计算机软件,2026-09-03,10.32,-6.9,3.09,-0.48,7/8,2398066563.0
+SPSC,usSPSC.OQ,SPS Commerce Inc. Common Stock,科技,互联网服务,2026-09-03,84.21,17.0,1.02,1.68,7/8,2897294004.0
+STAA,usSTAA.OQ,STAAR Surgical Company Common Stock,医疗保健,医疗器械,2026-09-03,23.58,2.0,1.97,2.03,6/8,1146291474.0
 STEP,usSTEP.OQ,StepStone Group Inc. Class A Common Stock,金融,非银行金融,2026-09-03,50.91,1.8,0.63,0.81,6/8,6007284533.0
-SWKS,usSWKS.OQ,Skyworks Solutions Inc. Common Stock,科技,半导体,2026-09-03,71.5,7.0,3.04,-0.24,6/8,10024496737.0
+SNDX,usSNDX.OQ,Syndax Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,20.68,4.7,2.07,-0.48,7/8,1793978458.0
 SYNA,usSYNA.OQ,Synaptics Incorporated Common Stock $0.001 Par Value,科技,半导体,2026-09-03,97.68,-4.3,1.87,1.76,6/8,3742538560.0
-TARS,usTARS.OQ,Tarsus Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,83.21,27.4,6.4,0.54,7/8,3100333667.0
+SWKS,usSWKS.OQ,Skyworks Solutions Inc. Common Stock,科技,半导体,2026-09-03,71.5,7.0,3.04,-0.24,6/8,10024496737.0
 TEAM,usTEAM.OQ,Atlassian Corporation Class A Common Stock,科技,计算机软件,2026-09-03,194.68,76.7,3.49,4.42,7/8,42646296163.0
-TGTX,usTGTX.OQ,TG Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,56.71,14.5,1.05,-0.33,7/8,8423389987.0
+SRPT,usSRPT.OQ,Sarepta Therapeutics Inc. Common Stock (DE),医疗保健,生物医药,2026-09-03,22.99,37.0,3.72,-0.95,7/8,2055501829.0
 TH,usTH.OQ,Target Hospitality Corp. Common Stock,非必需消费,休闲服务,2026-09-03,18.54,15.9,1.21,0.82,5/8,1671681038.0
+TARS,usTARS.OQ,Tarsus Pharmaceuticals Inc. Common Stock,医疗保健,生物医药,2026-09-03,83.21,27.4,6.4,0.54,7/8,3100333667.0
 TMUS,usTMUS.OQ,T-Mobile US Inc. Common Stock,Telecommunications,通信运营,2026-09-03,188.02,5.1,2.0,0.38,6/8,192662548411.0
-TRI,usTRI.OQ,Thomson Reuters Corporation Common Shares,非必需消费,平面媒体,2026-09-03,111.76,12.3,5.14,5.56,6/8,44381340000.0
 TRMD,usTRMD.OQ,TORM plc Class A Common Stock,非必需消费,港口航运,2026-09-03,34.18,15.9,2.2,0.97,7/8,3048087827.0
-TSLA,usTSLA.OQ,Tesla Inc. Common Stock,工业,汽车,2026-09-03,376.37,17.8,4.88,5.42,8/8,1365832479793.0
-TTD,usTTD.OQ,The Trade Desk Inc. Class A Common Stock,科技,互联网服务,2026-09-03,15.09,-14.6,6.7,3.71,8/8,6122538928.0
-ULTA,usULTA.OQ,Ulta Beauty Inc. Common Stock,非必需消费,零售,2026-09-03,557.11,3.4,1.86,0.97,7/8,23351363842.0
+TGTX,usTGTX.OQ,TG Therapeutics Inc. Common Stock,医疗保健,生物医药,2026-09-03,56.71,14.5,1.05,-0.33,7/8,8423389987.0
+TRI,usTRI.OQ,Thomson Reuters Corporation Common Shares,非必需消费,平面媒体,2026-09-03,111.76,12.3,5.14,5.56,6/8,44381340000.0
+TSLA,usTSLA.OQ,Tesla Inc. Common Stock,工业,汽车,2026-09-03,376.37,17.8,4.88,5.42,7/8,1365832479793.0
+TTD,usTTD.OQ,The Trade Desk Inc. Class A Common Stock,科技,互联网服务,2026-09-03,15.09,-14.6,6.7,3.71,7/8,6122538928.0
 UPWK,usUPWK.OQ,Upwork Inc. Common Stock,科技,计算机软件,2026-09-03,9.19,-2.4,1.24,1.77,8/8,1079165074.0
-VCYT,usVCYT.OQ,Veracyte Inc. Common Stock,医疗保健,医疗器械,2026-09-03,44.67,-3.2,1.31,-0.47,6/8,3560505476.0
+ULTA,usULTA.OQ,Ulta Beauty Inc. Common Stock,非必需消费,零售,2026-09-03,557.11,3.4,1.86,0.97,7/8,23351363842.0
 VERA,usVERA.OQ,Vera Therapeutics Inc. Class A Common Stock,医疗保健,生物医药,2026-09-03,34.99,9.3,0.26,-1.88,5/8,2653371995.0
-VOR,usVOR.OQ,Vor Biopharma Inc. Common Stock,医疗保健,生物医药,2026-09-03,24.24,2.3,2.64,-2.1,5/8,1400371499.0
 VIR,usVIR.OQ,Vir Biotechnology Inc. Common Stock,医疗保健,生物医药,2026-09-03,11.45,30.6,0.25,-0.43,8/8,1874912815.0
-VRNS,usVRNS.OQ,Varonis Systems Inc. Common Stock,科技,计算机软件,2026-09-03,46.51,9.6,3.93,-0.53,8/8,4755224079.0
-VNOM,usVNOM.OQ,Viper Energy Inc. Class A Common Stock,能源,石油天然气,2026-09-03,44.89,10.2,-0.54,-0.51,5/8,15887190117.0
-VOD,usVOD.OQ,Vodafone Group Plc American Depositary Shares,Telecommunications,通信运营,2026-09-03,16.58,3.6,3.25,3.17,7/8,37871859358.0
-VRSN,usVRSN.OQ,VeriSign Inc. Common Stock,科技,互联网服务,2026-09-03,293.35,0.6,1.45,1.17,6/8,26456997000.0
-VRSK,usVRSK.OQ,Verisk Analytics Inc. Common Stock,科技,专业服务,2026-09-03,190.6,0.4,-0.26,1.3,5/8,24452409974.0
-VRTX,usVRTX.OQ,Vertex Pharmaceuticals Incorporated Common Stock,医疗保健,生物医药,2026-09-03,557.96,15.3,1.17,0.22,6/8,138716629096.0
+VCYT,usVCYT.OQ,Veracyte Inc. Common Stock,医疗保健,医疗器械,2026-09-03,44.67,-3.2,1.31,-0.47,6/8,3560505476.0
+VOR,usVOR.OQ,Vor Biopharma Inc. Common Stock,医疗保健,生物医药,2026-09-03,24.24,2.3,2.64,-2.1,5/8,1400371499.0
+VRSN,usVRSN.OQ,VeriSign Inc. Common Stock,科技,互联网服务,2026-09-03,293.35,0.6,1.45,1.17,5/8,26456997000.0
 VSNT,usVSNT.OQ,Versant Media Group Inc. Class A Common Stock,工业,影视动漫,2026-09-03,40.97,7.2,-0.26,-1.35,7/8,5450373739.0
-VSTM,usVSTM.OQ,Verastem Inc. Common Stock,医疗保健,生物医药,2026-09-03,7.98,35.0,3.31,-0.5,8/8,669263829.0
-WDAY,usWDAY.OQ,Workday Inc. Class A Common Stock,科技,计算机软件,2026-09-03,206.92,21.5,3.76,3.01,6/8,47115250000.0
+VOD,usVOD.OQ,Vodafone Group Plc American Depositary Shares,Telecommunications,通信运营,2026-09-03,16.58,3.6,3.25,3.17,7/8,37871859358.0
+VRSK,usVRSK.OQ,Verisk Analytics Inc. Common Stock,科技,专业服务,2026-09-03,190.6,0.4,-0.26,1.3,5/8,24452409974.0
+VNOM,usVNOM.OQ,Viper Energy Inc. Class A Common Stock,能源,石油天然气,2026-09-03,44.89,10.2,-0.54,-0.51,5/8,15887190117.0
+VSTM,usVSTM.OQ,Verastem Inc. Common Stock,医疗保健,生物医药,2026-09-03,7.98,35.0,3.31,-0.5,7/8,669263829.0
+VRTX,usVRTX.OQ,Vertex Pharmaceuticals Incorporated Common Stock,医疗保健,生物医药,2026-09-03,557.96,15.3,1.17,0.22,6/8,138716629096.0
+VRNS,usVRNS.OQ,Varonis Systems Inc. Common Stock,科技,计算机软件,2026-09-03,46.51,9.6,3.93,-0.53,8/8,4755224079.0
 WAY,usWAY.OQ,Waystar Holding Corp. Common Stock,科技,电子设备制造,2026-09-03,26.08,11.6,1.0,1.4,5/8,4634559215.0
-VTRS,usVTRS.OQ,Viatris Inc. Common Stock,医疗保健,化学制药,2026-09-03,16.94,4.8,0.64,-0.88,7/8,19353756058.0
-WMG,usWMG.OQ,Warner Music Group Corp. Class A Common Stock,非必需消费,影视动漫,2026-09-03,29.55,12.6,4.76,4.23,7/8,14610455848.0
-WFRD,usWFRD.OQ,Weatherford International plc Ordinary Shares,非必需消费,石油天然气,2026-09-03,96.43,8.4,-0.32,-1.31,6/8,6308318984.0
 WLDN,usWLDN.OQ,Willdan Group Inc. Common Stock,非必需消费,建筑施工,2026-09-03,87.07,18.2,-0.57,-0.56,5/8,1309045901.0
-WMT,usWMT.OQ,Walmart Inc. Common Stock,非必需消费,零售,2026-09-03,108.42,-3.0,2.48,2.2,5/8,830345979033.0
+WDAY,usWDAY.OQ,Workday Inc. Class A Common Stock,科技,计算机软件,2026-09-03,206.92,21.5,3.76,3.01,6/8,47115250000.0
+VTRS,usVTRS.OQ,Viatris Inc. Common Stock,医疗保健,化学制药,2026-09-03,16.94,4.8,0.64,-0.88,7/8,19353756058.0
+WFRD,usWFRD.OQ,Weatherford International plc Ordinary Shares,非必需消费,石油天然气,2026-09-03,96.43,8.4,-0.32,-1.31,5/8,6308318984.0
 WLFC,usWLFC.OQ,Willis Lease Finance Corporation Common Stock,非必需消费,贸易,2026-09-03,55.51,-13.0,1.89,1.11,6/8,1161023135.0
+WMT,usWMT.OQ,Walmart Inc. Common Stock,非必需消费,零售,2026-09-03,108.42,-3.0,2.48,2.2,5/8,830345979033.0
 XP,usXP.OQ,XP Inc. Class A Common Stock,金融,非银行金融,2026-09-03,20.0,19.9,4.02,0.05,8/8,9231135634.0
-XRAY,usXRAY.OQ,DENTSPLY SIRONA Inc. Common Stock,医疗保健,医疗器械,2026-09-03,11.43,-13.2,2.95,1.24,6/8,2178937865.0
-ZBIO,usZBIO.OQ,Zenas BioPharma Inc. Common Stock,医疗保健,化学制药,2026-09-03,32.92,2.3,0.94,-0.63,6/8,2153438928.0
-ZLAB,usZLAB.OQ,Zai Lab Limited American Depositary Shares,医疗保健,生物医药,2026-09-03,27.0,29.3,4.21,1.96,5/8,2922289915.0
-ZD,usZD.OQ,Ziff Davis Inc. Common Stock,Telecommunications,营销服务,2026-09-03,56.31,10.5,0.67,-0.67,7/8,1906711637.0
-ZION,usZION.OQ,Zions Bancorporation N.A. Common Stock,金融,银行,2026-09-03,69.31,-1.1,3.07,1.9,5/8,9971533214.0
+ZBIO,usZBIO.OQ,Zenas BioPharma Inc. Common Stock,医疗保健,化学制药,2026-09-03,32.92,2.3,0.94,-0.63,5/8,2153438928.0
 ZYME,usZYME.OQ,Zymeworks Inc. Common Stock,医疗保健,化学制药,2026-09-03,29.9,29.3,-1.29,-3.7,5/8,2079460558.0
-AA,usAA.N,Alcoa Corporation Common Stock,工业,基本金属,2026-09-03,51.05,7.7,0.53,0.0,5/8,13121577605.0
-ABEV,usABEV.N,Ambev S.A. American Depositary Shares (Each representing 1 Common Share),必需消费,饮料,2026-09-03,3.04,1.0,3.58,1.67,6/8,45708752392.0
+ZD,usZD.OQ,Ziff Davis Inc. Common Stock,Telecommunications,营销服务,2026-09-03,56.31,10.5,0.67,-0.67,7/8,1906711637.0
+WMG,usWMG.OQ,Warner Music Group Corp. Class A Common Stock,非必需消费,影视动漫,2026-09-03,29.55,12.6,4.76,4.23,7/8,14610455848.0
+XRAY,usXRAY.OQ,DENTSPLY SIRONA Inc. Common Stock,医疗保健,医疗器械,2026-09-03,11.43,-13.2,2.95,1.24,6/8,2178937865.0
 ACI,usACI.N,Albertsons Companies Inc. Class A Common Stock,必需消费,贸易,2026-09-03,12.59,4.2,1.14,0.88,7/8,6018038469.0
+ACM,usACM.N,AECOM Common Stock,非必需消费,建筑施工,2026-09-03,66.83,-10.8,0.37,0.56,5/8,8379424232.0
+AA,usAA.N,Alcoa Corporation Common Stock,工业,基本金属,2026-09-03,51.05,7.7,0.53,0.0,5/8,13121577605.0
+ZION,usZION.OQ,Zions Bancorporation N.A. Common Stock,金融,银行,2026-09-03,69.31,-1.1,3.07,1.9,5/8,9971533214.0
 ACA,usACA.N,Arcosa Inc. Common Stock,工业,建筑施工,2026-09-03,145.48,0.4,0.04,0.02,5/8,7133255075.0
 ACN,usACN.N,Accenture plc Class A Ordinary Shares (Ireland),非必需消费,计算机软件,2026-09-03,193.12,12.9,2.61,2.9,6/8,121073001890.0
-ACM,usACM.N,AECOM Common Stock,非必需消费,建筑施工,2026-09-03,66.83,-10.8,0.37,0.56,5/8,8379424232.0
 AEG,usAEG.N,Aegon Ltd. New York Registry Shares,金融,非银行金融,2026-09-03,9.2,-0.5,2.26,1.77,6/8,17581434197.0
-ADM,usADM.N,Archer-Daniels-Midland Company Common Stock,必需消费,农业,2026-09-03,84.38,9.6,0.11,-1.17,5/8,38600143002.0
+ABEV,usABEV.N,Ambev S.A. American Depositary Shares (Each representing 1 Common Share),必需消费,饮料,2026-09-03,3.04,1.0,3.58,1.67,6/8,45708752392.0
 AESI,usAESI.N,Atlas Energy Solutions Inc. Common Stock,工业,石油天然气,2026-09-03,13.17,19.0,1.8,1.07,6/8,1508791654.0
+ZLAB,usZLAB.OQ,Zai Lab Limited American Depositary Shares,医疗保健,生物医药,2026-09-03,27.0,29.3,4.21,1.96,5/8,2922289915.0
 AES,usAES.N,The AES Corporation Common Stock,工业,电力,2026-09-03,14.78,0.5,0.01,-0.14,5/8,10508951020.0
-AFL,usAFL.N,AFLAC Incorporated Common Stock,金融,非银行金融,2026-09-03,118.36,-6.1,1.52,0.96,6/8,58882770350.0
-AGCO,usAGCO.N,AGCO Corporation Common Stock,工业,专用设备,2026-09-03,125.82,24.2,1.78,-0.69,8/8,7812739687.0
 AGRO,usAGRO.N,Adecoagro S.A. Common Shares,必需消费,食品,2026-09-03,11.6,23.9,-1.43,-1.53,6/8,1598937803.0
-AI,usAI.N,C3.ai Inc. Class A Common Stock,科技,计算机软件,2026-09-03,10.9,10.5,3.58,3.61,8/8,1507857987.0
+AGCO,usAGCO.N,AGCO Corporation Common Stock,工业,专用设备,2026-09-03,125.82,24.2,1.78,-0.69,8/8,7812739687.0
+ADM,usADM.N,Archer-Daniels-Midland Company Common Stock,必需消费,农业,2026-09-03,84.38,9.6,0.11,-1.17,5/8,38600143002.0
 AIN,usAIN.N,Albany International Corporation Common Stock,非必需消费,通用设备,2026-09-03,62.59,2.7,10.5,6.48,6/8,1674464000.0
-AJG,usAJG.N,Arthur J. Gallagher & Co. Common Stock,金融,非银行金融,2026-09-03,265.94,5.9,1.29,0.83,5/8,67927189000.0
-ALG,usALG.N,Alamo Group Inc. Common Stock,工业,专用设备,2026-09-03,171.54,3.2,2.27,0.13,5/8,2005653322.0
-ALL,usALL.N,Allstate Corporation (The) Common Stock,金融,非银行金融,2026-09-03,263.11,-4.0,1.75,1.45,5/8,66200739890.0
+AI,usAI.N,C3.ai Inc. Class A Common Stock,科技,计算机软件,2026-09-03,10.9,10.5,3.58,3.61,8/8,1507857987.0
+AFL,usAFL.N,AFLAC Incorporated Common Stock,金融,非银行金融,2026-09-03,118.36,-6.1,1.52,0.96,6/8,58882770350.0
 ALLY,usALLY.N,Ally Financial Inc. Common Stock,金融,非银行金融,2026-09-03,43.59,-1.1,2.99,2.18,6/8,12940654940.0
-AMT,usAMT.N,American Tower Corporation (REIT) Common Stock,房地产,房地产开发,2026-09-03,177.75,3.8,1.92,2.79,5/8,81883159235.0
-ANDG,usANDG.N,Andersen Group Inc. Class A Common Stock,非必需消费,计算机软件,2026-09-03,57.45,17.2,2.73,2.37,6/8,6003076508.0
-AN,usAN.N,AutoNation Inc. Common Stock,非必需消费,汽车,2026-09-03,207.18,-2.0,1.37,0.65,7/8,6498762635.0
-ANRO,usANRO.N,Alto Neuroscience Inc. Common Stock,医疗保健,化学制药,2026-09-03,36.4,27.9,1.27,-0.66,6/8,1433514059.0
+ALL,usALL.N,Allstate Corporation (The) Common Stock,金融,非银行金融,2026-09-03,263.11,-4.0,1.75,1.45,5/8,66200739890.0
+ALG,usALG.N,Alamo Group Inc. Common Stock,工业,专用设备,2026-09-03,171.54,3.2,2.27,0.13,5/8,2005653322.0
+AJG,usAJG.N,Arthur J. Gallagher & Co. Common Stock,金融,非银行金融,2026-09-03,265.94,5.9,1.29,0.83,5/8,67927189000.0
 APH,usAPH.N,Amphenol Corporation Common Stock,科技,电子元件,2026-09-03,82.07,-3.8,2.15,2.54,8/8,198929550952.0
-AR,usAR.N,Antero Resources Corporation Common Stock,能源,石油天然气,2026-09-03,39.69,13.7,0.66,0.25,7/8,11845624670.0
+AMT,usAMT.N,American Tower Corporation (REIT) Common Stock,房地产,房地产开发,2026-09-03,177.75,3.8,1.92,2.79,5/8,81883159235.0
 ARLO,usARLO.N,Arlo Technologies Inc. Common Stock,非必需消费,电子设备制造,2026-09-03,13.48,-12.9,4.36,3.37,5/8,1405429750.0
-AROC,usAROC.N,Archrock Inc. Common Stock,公用事业,石油天然气,2026-09-03,32.56,-2.4,1.89,0.8,6/8,5552960319.0
+AN,usAN.N,AutoNation Inc. Common Stock,非必需消费,汽车,2026-09-03,207.18,-2.0,1.37,0.65,7/8,6498762635.0
+ANDG,usANDG.N,Andersen Group Inc. Class A Common Stock,非必需消费,计算机软件,2026-09-03,57.45,17.2,2.73,2.37,6/8,6003076508.0
+ASB,usASB.N,Associated Banc-Corp Common Stock,金融,银行,2026-09-03,30.91,-0.0,1.91,1.08,5/8,5826011980.0
+ANRO,usANRO.N,Alto Neuroscience Inc. Common Stock,医疗保健,化学制药,2026-09-03,36.4,27.9,1.27,-0.66,6/8,1433514059.0
 ARW,usARW.N,Arrow Electronics Inc. Common Stock,科技,电子器件,2026-09-03,210.87,-5.1,2.0,1.32,5/8,10542513103.0
 ASAN,usASAN.N,Asana Inc. Class A Common Stock,科技,计算机软件,2026-09-03,10.09,16.2,1.94,2.96,7/8,2176012767.0
-ASC,usASC.N,Ardmore Shipping Corporation Common Stock,非必需消费,石油天然气,2026-09-03,18.02,10.8,1.16,-0.28,6/8,692828386.0
+AROC,usAROC.N,Archrock Inc. Common Stock,公用事业,石油天然气,2026-09-03,32.56,-2.4,1.89,0.8,6/8,5552960319.0
 ASH,usASH.N,Ashland Inc. Common Stock,非必需消费,化学制品,2026-09-03,73.2,1.6,-1.58,-1.37,5/8,3403363258.0
-ASB,usASB.N,Associated Banc-Corp Common Stock,金融,银行,2026-09-03,30.91,-0.0,1.91,1.08,5/8,5826011980.0
-AWK,usAWK.N,American Water Works Company Inc. Common Stock,公用事业,水务,2026-09-03,140.89,5.2,1.65,1.0,5/8,27323248698.0
+AR,usAR.N,Antero Resources Corporation Common Stock,能源,石油天然气,2026-09-03,39.69,13.7,0.66,0.25,7/8,11845624670.0
 AVTR,usAVTR.N,Avantor Inc. Common Stock,工业,医疗器械,2026-09-03,15.19,15.3,4.83,3.69,7/8,9807203180.0
-AXS,usAXS.N,Axis Capital Holdings Limited Common Stock,金融,非银行金融,2026-09-03,101.4,-2.9,1.88,1.74,6/8,7297361363.0
-BAP,usBAP.N,Credicorp Ltd. Common Stock,金融,银行,2026-09-03,384.19,-2.1,2.52,1.22,5/8,36105955368.0
+ASC,usASC.N,Ardmore Shipping Corporation Common Stock,非必需消费,石油天然气,2026-09-03,18.02,10.8,1.16,-0.28,6/8,692828386.0
 BAC,usBAC.N,Bank of America Corporation Common Stock,金融,银行,2026-09-03,62.72,0.1,1.22,0.71,6/8,435158730754.0
-BBAR,usBBAR.N,Banco BBVA Argentina S.A. ADS,金融,银行,2026-09-03,15.09,-13.3,-0.66,-1.11,6/8,3047211460.0
-BBD,usBBD.N,Banco Bradesco Sa American Depositary Shares,金融,银行,2026-09-03,3.46,1.5,2.51,0.29,8/8,36463733190.0
+BAP,usBAP.N,Credicorp Ltd. Common Stock,金融,银行,2026-09-03,384.19,-2.1,2.52,1.22,5/8,36105955368.0
+AWK,usAWK.N,American Water Works Company Inc. Common Stock,公用事业,水务,2026-09-03,140.89,5.2,1.65,1.0,5/8,27323248698.0
+AXS,usAXS.N,Axis Capital Holdings Limited Common Stock,金融,非银行金融,2026-09-03,101.4,-2.9,1.88,1.74,6/8,7297361363.0
 BBY,usBBY.N,Best Buy Co. Inc. Common Stock,非必需消费,零售,2026-09-03,87.49,9.3,3.88,0.56,5/8,18429477497.0
-BCH,usBCH.N,Banco De Chile ADS,金融,银行,2026-09-03,42.92,1.8,2.58,1.27,5/8,21026705452.0
-BE,usBE.N,Bloom Energy Corporation Class A Common Stock,能源,其他电气设备,2026-09-03,235.55,2.9,10.12,8.41,7/8,64268812171.0
+BBD,usBBD.N,Banco Bradesco Sa American Depositary Shares,金融,银行,2026-09-03,3.46,1.5,2.51,0.29,8/8,36463733190.0
+BBAR,usBBAR.N,Banco BBVA Argentina S.A. ADS,金融,银行,2026-09-03,15.09,-13.3,-0.66,-1.11,6/8,3047211460.0
 BCE,usBCE.N,BCE Inc. Common Stock,Telecommunications,通信运营,2026-09-03,23.81,4.6,1.58,1.75,5/8,21905031441.0
+BE,usBE.N,Bloom Energy Corporation Class A Common Stock,能源,其他电气设备,2026-09-03,235.55,2.9,10.12,8.41,7/8,64268812171.0
+BCH,usBCH.N,Banco De Chile ADS,金融,银行,2026-09-03,42.92,1.8,2.58,1.27,5/8,21026705452.0
 BG,usBG.N,Bunge Limited Common Shares,必需消费,农业,2026-09-03,120.12,10.9,-0.67,-2.23,5/8,21757490680.0
-BHC,usBHC.N,Bausch Health Companies Inc. Common Stock,医疗保健,化学制药,2026-09-03,6.76,14.4,2.06,-1.02,6/8,2434678552.0
-BH,usBH.N,Biglari Holdings Inc. Class B Common Stock,非必需消费,休闲服务,2026-09-03,385.53,-1.2,-1.57,-2.15,6/8,891231509.0
-BKV,usBKV.N,BKV Corporation Common Stock,能源,石油天然气,2026-09-03,26.29,9.5,5.49,4.66,6/8,2652772999.0
 BILL,usBILL.N,BILL Holdings Inc. Common Stock,科技,计算机软件,2026-09-03,50.86,8.2,4.86,4.31,5/8,4102665982.0
-BMA,usBMA.N,Banco Macro S.A.  ADR (representing Ten Class B Common Shares),金融,银行,2026-09-03,79.18,-8.1,0.49,0.14,6/8,4990441292.0
-BLSH,usBLSH.N,Bullish Ordinary Shares,金融,非银行金融,2026-09-03,36.22,57.2,9.64,10.97,5/8,5285720860.0
+BHC,usBHC.N,Bausch Health Companies Inc. Common Stock,医疗保健,化学制药,2026-09-03,6.76,14.4,2.06,-1.02,6/8,2434678552.0
+BKV,usBKV.N,BKV Corporation Common Stock,能源,石油天然气,2026-09-03,26.29,9.5,5.49,4.66,6/8,2652772999.0
+BH,usBH.N,Biglari Holdings Inc. Class B Common Stock,非必需消费,休闲服务,2026-09-03,385.53,-1.2,-1.57,-2.15,6/8,891231509.0
 BMY,usBMY.N,Bristol-Myers Squibb Company Common Stock,医疗保健,化学制药,2026-09-03,68.09,6.1,1.23,0.64,5/8,138026229306.0
-BNY,usBNY.N,The Bank of New York Mellon Corporation Common Stock,金融,非银行金融,2026-09-03,164.33,3.5,1.8,1.41,5/8,110650455477.0
-BP,usBP.N,BP p.l.c. Common Stock,能源,石油天然气,2026-09-03,43.58,4.5,-0.67,-0.8,5/8,111262042043.0
+BLSH,usBLSH.N,Bullish Ordinary Shares,金融,非银行金融,2026-09-03,36.22,57.2,9.64,10.97,5/8,5285720860.0
 BOW,usBOW.N,Bowhead Specialty Holdings Inc. Common Stock,金融,非银行金融,2026-09-03,33.64,-0.7,0.08,-0.03,6/8,1107214398.0
-BRX,usBRX.N,Brixmor Property Group Inc. Common Stock,房地产,房地产开发,2026-09-03,29.27,-2.9,0.05,-0.44,6/8,9015908644.0
 BOX,usBOX.N,Box Inc. Class A Common Stock,科技,互联网服务,2026-09-03,35.96,12.9,2.76,3.96,7/8,4622839657.0
-BSAC,usBSAC.N,Banco Santander - Chile ADS,金融,银行,2026-09-03,35.86,0.4,1.66,0.34,6/8,16635081843.0
 BTE,usBTE.N,Baytex Energy Corp Common Shares,能源,石油天然气,2026-09-03,4.95,19.6,-1.15,-2.37,7/8,3317595840.0
-BUD,usBUD.N,Anheuser-Busch Inbev SA Sponsored ADR (Belgium),必需消费,饮料,2026-09-03,80.22,-4.5,1.46,1.52,6/8,154674395425.0
-BTGO,usBTGO.N,BitGo Holdings Inc. Class A Common Stock,金融,非银行金融,2026-09-03,7.52,50.7,6.86,6.36,7/8,825170266.0
+BSAC,usBSAC.N,Banco Santander - Chile ADS,金融,银行,2026-09-03,35.86,0.4,1.66,0.34,6/8,16635081843.0
+BMA,usBMA.N,Banco Macro S.A.  ADR (representing Ten Class B Common Shares),金融,银行,2026-09-03,79.18,-8.1,0.49,0.14,6/8,4990441292.0
 BORR,usBORR.N,Borr Drilling Limited Common Shares,能源,石油天然气,2026-09-03,4.61,18.8,-1.43,-4.16,6/8,1353884730.0
+BRX,usBRX.N,Brixmor Property Group Inc. Common Stock,房地产,房地产开发,2026-09-03,29.27,-2.9,0.05,-0.44,6/8,9015908644.0
+BUD,usBUD.N,Anheuser-Busch Inbev SA Sponsored ADR (Belgium),必需消费,饮料,2026-09-03,80.22,-4.5,1.46,1.52,6/8,154674395425.0
+BP,usBP.N,BP p.l.c. Common Stock,能源,石油天然气,2026-09-03,43.58,4.5,-0.67,-0.8,5/8,111262042043.0
 BTU,usBTU.N,Peabody Energy Corporation Common Stock,能源,煤炭,2026-09-03,27.64,17.9,-5.93,-6.08,5/8,3330308000.0
-BWXT,usBWXT.N,BWX Technologies Inc. Common Stock,工业,航空航天装备,2026-09-03,160.25,-3.7,2.28,2.94,6/8,14032822457.0
-BY,usBY.N,Byline Bancorp Inc. Common Stock,金融,银行,2026-09-03,38.72,-1.5,1.82,1.12,5/8,1728832429.0
+BNY,usBNY.N,The Bank of New York Mellon Corporation Common Stock,金融,非银行金融,2026-09-03,164.33,3.5,1.8,1.41,5/8,110650455477.0
+BTGO,usBTGO.N,BitGo Holdings Inc. Class A Common Stock,金融,非银行金融,2026-09-03,7.52,50.7,6.86,6.36,7/8,825170266.0
 BXMT,usBXMT.N,Blackstone Mortgage Trust Inc. Common Stock,房地产,房地产开发,2026-09-03,14.16,2.3,1.63,1.0,5/8,2346126787.0
-CAH,usCAH.N,Cardinal Health Inc. Common Stock,医疗保健,医药商业,2026-09-03,248.61,4.6,2.99,1.27,6/8,55446053555.0
-BZH,usBZH.N,Beazer Homes USA Inc. Common Stock,非必需消费,房地产开发,2026-09-03,33.2,-0.8,0.01,0.0,5/8,884162706.0
-CB,usCB.N,Chubb Limited  Common Stock,金融,非银行金融,2026-09-03,348.25,-1.6,2.71,2.6,5/8,132626417528.0
+BY,usBY.N,Byline Bancorp Inc. Common Stock,金融,银行,2026-09-03,38.72,-1.5,1.82,1.12,5/8,1728832429.0
+BWXT,usBWXT.N,BWX Technologies Inc. Common Stock,工业,航空航天装备,2026-09-03,160.25,-3.7,2.28,2.94,6/8,14032822457.0
 C,usC.N,Citigroup Inc. Common Stock,金融,银行,2026-09-03,138.14,3.2,3.67,2.83,7/8,224038456737.0
+BZH,usBZH.N,Beazer Homes USA Inc. Common Stock,非必需消费,房地产开发,2026-09-03,33.2,-0.8,0.01,0.0,5/8,884162706.0
+CAH,usCAH.N,Cardinal Health Inc. Common Stock,医疗保健,医药商业,2026-09-03,248.61,4.6,2.99,1.27,6/8,55446053555.0
 CCI,usCCI.N,Crown Castle Inc. Common Stock,房地产,房地产开发,2026-09-03,77.26,3.1,2.1,2.49,7/8,32138903862.0
-CF,usCF.N,CF Industries Holdings Inc. Common Stock,工业,化肥农药,2026-09-03,137.81,18.7,1.16,-1.05,8/8,19023202941.0
+CB,usCB.N,Chubb Limited  Common Stock,金融,非银行金融,2026-09-03,348.25,-1.6,2.71,2.6,5/8,132626417528.0
 CFR,usCFR.N,Cullen/Frost Bankers Inc. Common Stock,金融,银行,2026-09-03,162.73,-0.6,1.4,0.66,5/8,10147032127.0
+CLF,usCLF.N,Cleveland-Cliffs Inc. Common Stock,基础材料,钢铁,2026-09-03,12.28,0.4,2.62,-1.13,5/8,6584032142.0
 CHWY,usCHWY.N,Chewy Inc. Class A Common Stock,非必需消费,零售,2026-09-03,23.96,2.3,0.0,-0.87,5/8,9404474035.0
-CLF,usCLF.N,Cleveland-Cliffs Inc. Common Stock,基础材料,钢铁,2026-09-03,12.28,0.4,2.62,-1.13,6/8,6584032142.0
-CI,usCI.N,The Cigna Group Common Stock,医疗保健,非银行金融,2026-09-03,284.69,4.0,1.68,1.21,6/8,74217225303.0
-CLH,usCLH.N,Clean Harbors Inc. Common Stock,工业,环保,2026-09-03,318.65,3.6,1.08,1.09,5/8,16557776080.0
-CMP,usCMP.N,Compass Minerals Intl Inc Common Stock,工业,基本金属,2026-09-03,25.14,-2.0,0.22,-1.76,5/8,1034828544.0
 CMBT,usCMBT.N,CMB.TECH NV Ordinary Shares,非必需消费,港口航运,2026-09-03,18.7,14.0,1.03,-0.27,8/8,5577005470.0
-CNC,usCNC.N,Centene Corporation Common Stock,医疗保健,医疗服务,2026-09-03,68.02,6.0,2.93,1.01,6/8,32341852650.0
-CNH,usCNH.N,CNH Industrial N.V. Common Shares,工业,专用设备,2026-09-03,13.84,27.6,7.31,1.39,8/8,14382375632.0
-CNO,usCNO.N,CNO Financial Group Inc. Common Stock,金融,非银行金融,2026-09-03,56.72,2.2,3.17,2.53,6/8,5063694635.0
+CI,usCI.N,The Cigna Group Common Stock,医疗保健,非银行金融,2026-09-03,284.69,4.0,1.68,1.21,6/8,74217225303.0
+CMP,usCMP.N,Compass Minerals Intl Inc Common Stock,工业,基本金属,2026-09-03,25.14,-2.0,0.22,-1.76,5/8,1034828544.0
 CNM,usCNM.N,Core & Main Inc. Class A Common Stock,非必需消费,贸易,2026-09-03,43.98,-3.3,2.08,0.48,5/8,8392963918.0
+CNO,usCNO.N,CNO Financial Group Inc. Common Stock,金融,非银行金融,2026-09-03,56.72,2.2,3.17,2.53,6/8,5063694635.0
+CF,usCF.N,CF Industries Holdings Inc. Common Stock,工业,化肥农药,2026-09-03,137.81,18.7,1.16,-1.05,8/8,19023202941.0
 CNQ,usCNQ.N,Canadian Natural Resources Limited Common Stock,能源,石油天然气,2026-09-03,51.14,12.5,-0.61,-1.29,7/8,102697217600.0
+CNH,usCNH.N,CNH Industrial N.V. Common Shares,工业,专用设备,2026-09-03,13.84,27.6,7.31,1.39,8/8,14382375632.0
+CNC,usCNC.N,Centene Corporation Common Stock,医疗保健,医疗服务,2026-09-03,68.02,6.0,2.93,1.01,6/8,32341852650.0
 CNP,usCNP.N,CenterPoint Energy Inc (Holding Co) Common Stock,公用事业,电力,2026-09-03,39.98,-1.1,1.17,1.19,6/8,26078736202.0
-CNX,usCNX.N,CNX Resources Corporation Common Stock,能源,石油天然气,2026-09-03,37.77,7.5,1.18,0.51,8/8,5334847550.0
-COR,usCOR.N,Cencora Inc. Common Stock,医疗保健,医药商业,2026-09-03,337.22,4.0,1.54,0.26,8/8,62551236415.0
-COP,usCOP.N,ConocoPhillips Common Stock,能源,石油天然气,2026-09-03,135.72,17.0,-0.16,-1.08,5/8,156906688132.0
+CLH,usCLH.N,Clean Harbors Inc. Common Stock,工业,环保,2026-09-03,318.65,3.6,1.08,1.09,5/8,16557776080.0
 COTY,usCOTY.N,Coty Inc. Class A Common Stock,非必需消费,其他轻工,2026-09-03,2.93,7.7,2.03,1.03,6/8,2413080911.0
-CPAY,usCPAY.N,Corpay Inc. Common Stock,非必需消费,计算机软件,2026-09-03,419.68,5.4,2.26,0.79,5/8,26718860621.0
+COR,usCOR.N,Cencora Inc. Common Stock,医疗保健,医药商业,2026-09-03,337.22,4.0,1.54,0.26,8/8,62551236415.0
+CNX,usCNX.N,CNX Resources Corporation Common Stock,能源,石油天然气,2026-09-03,37.77,7.5,1.18,0.51,8/8,5334847550.0
 CRC,usCRC.N,California Resources Corporation Common Stock,能源,石油天然气,2026-09-03,53.01,1.6,-0.25,-0.28,6/8,4666597178.0
-CRK,usCRK.N,Comstock Resources Inc. Common Stock,能源,石油天然气,2026-09-03,14.95,13.2,-3.18,-3.8,7/8,4257497946.0
-CRM,usCRM.N,Salesforce Inc. Common Stock,科技,计算机软件,2026-09-03,264.43,41.6,2.73,2.92,7/8,168402780000.0
-CRBG,usCRBG.N,Corebridge Financial Inc. Common Stock,金融,非银行金融,2026-09-03,34.75,2.2,5.57,3.61,5/8,14500980141.0
 CRCL,usCRCL.N,Circle Internet Group Inc. Class A Common Stock,金融,非银行金融,2026-09-03,103.23,63.1,14.45,16.46,6/8,22825980461.0
-CTVA,usCTVA.N,Corteva Inc. Common Stock,必需消费,农业,2026-09-03,88.62,15.5,0.54,-1.5,8/8,55297204480.0
-CUBI,usCUBI.N,Customers Bancorp Inc Common Stock,金融,银行,2026-09-03,79.64,-2.9,2.26,1.25,5/8,2653379573.0
+CRK,usCRK.N,Comstock Resources Inc. Common Stock,能源,石油天然气,2026-09-03,14.95,13.2,-3.18,-3.8,7/8,4257497946.0
+CPAY,usCPAY.N,Corpay Inc. Common Stock,非必需消费,计算机软件,2026-09-03,419.68,5.4,2.26,0.79,5/8,26718860621.0
+CRM,usCRM.N,Salesforce Inc. Common Stock,科技,计算机软件,2026-09-03,264.43,41.6,2.73,2.92,7/8,168402780000.0
 CRGY,usCRGY.N,Crescent Energy Company Class A Common Stock,能源,石油天然气,2026-09-03,13.96,24.4,-0.93,-2.17,6/8,4417497416.0
-CVI,usCVI.N,CVR Energy Inc. Common Stock,能源,石油天然气,2026-09-03,43.58,39.4,2.09,1.54,7/8,4024239878.0
+CRBG,usCRBG.N,Corebridge Financial Inc. Common Stock,金融,非银行金融,2026-09-03,34.75,2.2,5.57,3.61,5/8,14500980141.0
+COP,usCOP.N,ConocoPhillips Common Stock,能源,石油天然气,2026-09-03,135.72,17.0,-0.16,-1.08,5/8,156906688132.0
+CTVA,usCTVA.N,Corteva Inc. Common Stock,必需消费,农业,2026-09-03,88.62,15.5,0.54,-1.5,8/8,55297204480.0
 CVE,usCVE.N,Cenovus Energy Inc Common Stock,能源,石油天然气,2026-09-03,32.8,16.1,0.09,-0.03,5/8,59025000000.0
-CWT,usCWT.N,California Water Service Group Common Stock,公用事业,水务,2026-09-03,50.53,2.9,1.09,0.78,5/8,3108033216.0
-CVX,usCVX.N,Chevron Corporation Common Stock,能源,石油天然气,2026-09-03,211.32,12.7,0.43,-0.22,6/8,395569166768.0
+CUBI,usCUBI.N,Customers Bancorp Inc Common Stock,金融,银行,2026-09-03,79.64,-2.9,2.26,1.25,5/8,2653379573.0
+CVI,usCVI.N,CVR Energy Inc. Common Stock,能源,石油天然气,2026-09-03,43.58,39.4,2.09,1.54,7/8,4024239878.0
 DAC,usDAC.N,Danaos Corporation Common Stock,非必需消费,港口航运,2026-09-03,154.15,7.7,1.23,0.55,6/8,2690109536.0
-CVS,usCVS.N,CVS Health Corporation Common Stock,必需消费,医药商业,2026-09-03,97.2,1.0,0.56,-0.03,5/8,120632485204.0
 DB,usDB.N,Deutsche Bank AG Common Stock,金融,银行,2026-09-03,41.56,10.4,3.56,2.62,6/8,75688722000.0
-DAN,usDAN.N,Dana Incorporated Common Stock,非必需消费,汽车,2026-09-03,31.52,15.9,4.61,2.77,5/8,3235906504.0
-DDS,usDDS.N,Dillard's Inc. Common Stock,非必需消费,零售,2026-09-03,652.07,5.7,3.28,2.42,8/8,9872286646.0
+CVS,usCVS.N,CVS Health Corporation Common Stock,必需消费,医药商业,2026-09-03,97.2,1.0,0.56,-0.03,5/8,120632485204.0
 DCOM,usDCOM.N,Dime Commercial Bancshares Inc. Common Stock,金融,银行,2026-09-03,40.93,-0.4,2.04,1.31,5/8,1783926438.0
+CVX,usCVX.N,Chevron Corporation Common Stock,能源,石油天然气,2026-09-03,211.32,12.7,0.43,-0.22,6/8,395569166768.0
 DE,usDE.N,Deere & Company Common Stock,工业,专用设备,2026-09-03,694.41,12.9,1.74,-0.57,7/8,171286093660.0
+DDS,usDDS.N,Dillard's Inc. Common Stock,非必需消费,零售,2026-09-03,652.07,5.7,3.28,2.42,8/8,9872286646.0
+CWT,usCWT.N,California Water Service Group Common Stock,公用事业,水务,2026-09-03,50.53,2.9,1.09,0.78,5/8,3108033216.0
 DINO,usDINO.N,HF Sinclair Corporation Common Stock,能源,石油天然气,2026-09-03,106.15,28.8,1.57,0.08,7/8,17159697105.0
-DELL,usDELL.N,Dell Technologies Inc. Class C Common Stock,科技,计算机硬件,2026-09-03,516.39,18.0,11.56,4.91,7/8,300605448386.0
+DAN,usDAN.N,Dana Incorporated Common Stock,非必需消费,汽车,2026-09-03,31.52,15.9,4.61,2.77,5/8,3235906504.0
+DELL,usDELL.N,Dell Technologies Inc. Class C Common Stock,科技,计算机硬件,2026-09-03,516.39,18.0,11.56,4.91,6/8,300605448386.0
 DG,usDG.N,Dollar General Corporation Common Stock,非必需消费,零售,2026-09-03,131.26,3.0,0.89,0.28,7/8,27083628519.0
-DK,usDK.N,Delek US Holdings Inc. Common Stock,能源,石油天然气,2026-09-03,72.4,23.4,-0.24,1.33,6/8,4337687206.0
 DHT,usDHT.N,DHT Holdings Inc.,非必需消费,石油天然气,2026-09-03,20.19,17.4,1.66,0.6,5/8,2950282790.0
+DK,usDK.N,Delek US Holdings Inc. Common Stock,能源,石油天然气,2026-09-03,72.4,23.4,-0.24,1.33,6/8,4337687206.0
 DOLE,usDOLE.N,Dole plc Ordinary Shares,必需消费,农业,2026-09-03,13.9,0.9,-0.39,-1.14,7/8,1287473539.0
 DMC,usDMC.N,Del Monte Corporation Ordinary Shares,必需消费,农业,2026-09-03,31.56,6.6,-1.87,-2.5,5/8,1486991716.0
 DOCS,usDOCS.N,Doximity Inc. Class A Common Stock,科技,计算机软件,2026-09-03,27.1,31.2,2.63,2.96,6/8,4409805545.0
-DRI,usDRI.N,Darden Restaurants Inc. Common Stock,非必需消费,休闲服务,2026-09-03,218.04,3.4,0.25,-0.9,6/8,24961400397.0
 DVA,usDVA.N,DaVita Inc. Common Stock,医疗保健,医疗服务,2026-09-03,181.66,0.5,2.21,1.27,6/8,11487190000.0
-E,usE.N,ENI S.p.A. Common Stock,能源,石油天然气,2026-09-03,55.13,1.6,-0.17,-0.14,6/8,84286103578.0
-EC,usEC.N,Ecopetrol S.A. American Depositary Shares,能源,石油天然气,2026-09-03,17.2,-1.1,-0.68,-1.77,7/8,33962389822.0
-DXC,usDXC.N,DXC Technology Company Common Stock,科技,计算机软件,2026-09-03,11.67,5.2,2.2,0.34,7/8,1685665169.0
 DVN,usDVN.N,Devon Energy Corporation Common Stock,能源,石油天然气,2026-09-03,48.79,13.2,-0.29,-0.49,6/8,51513000000.0
-ECO,usECO.N,Okeanis Eco Tankers Corp. Common Stock,非必需消费,港口航运,2026-09-03,69.56,18.8,1.94,0.78,7/8,2431701113.0
+E,usE.N,ENI S.p.A. Common Stock,能源,石油天然气,2026-09-03,55.13,1.6,-0.17,-0.14,6/8,84286103578.0
 ED,usED.N,Consolidated Edison Inc. Common Stock,公用事业,电力,2026-09-03,108.75,0.6,1.12,1.0,5/8,39959983796.0
 EE,usEE.N,Excelerate Energy Inc. Class A Common Stock,公用事业,石油天然气,2026-09-03,39.7,5.1,-0.08,-1.29,5/8,4445362516.0
-EDU,usEDU.N,New Oriental Education & Technology Group Inc. Sponsored ADR representing 10 Ordinary Share (Cayman Islands),房地产,教育,2026-09-03,58.22,2.4,-1.03,-1.57,7/8,9185892517.0
-EFXT,usEFXT.N,Enerflex Ltd Common Shares,工业,通用设备,2026-09-03,22.1,7.0,6.06,3.66,6/8,2426184285.0
-EHC,usEHC.N,Encompass Health Corporation Common Stock,医疗保健,医药商业,2026-09-03,122.59,-1.8,1.11,1.16,6/8,11915355720.0
-EG,usEG.N,Everest Group Ltd. Common Stock,金融,非银行金融,2026-09-03,384.16,4.3,2.28,2.11,8/8,14561803519.0
+ECO,usECO.N,Okeanis Eco Tankers Corp. Common Stock,非必需消费,港口航运,2026-09-03,69.56,18.8,1.94,0.78,7/8,2431701113.0
+DRI,usDRI.N,Darden Restaurants Inc. Common Stock,非必需消费,休闲服务,2026-09-03,218.04,3.4,0.25,-0.9,6/8,24961400397.0
+EC,usEC.N,Ecopetrol S.A. American Depositary Shares,能源,石油天然气,2026-09-03,17.2,-1.1,-0.68,-1.77,7/8,33962389822.0
 ELF,usELF.N,e.l.f. Beauty Inc. Common Stock,非必需消费,其他轻工,2026-09-03,107.41,16.4,0.25,0.05,6/8,6312085332.0
 ENB,usENB.N,Enbridge Inc Common Stock,能源,石油天然气,2026-09-03,50.52,-0.9,0.07,0.42,7/8,109987826173.0
 ELV,usELV.N,Elevance Health Inc. Common Stock,医疗保健,医疗服务,2026-09-03,414.78,6.0,3.11,2.2,7/8,87298563997.0
-EOG,usEOG.N,EOG Resources Inc. Common Stock,能源,石油天然气,2026-09-03,145.96,7.2,-1.35,-2.01,5/8,75972805852.0
-EQH,usEQH.N,Equitable Holdings Inc. Common Stock,金融,非银行金融,2026-09-03,53.54,2.6,5.86,3.92,6/8,13616263280.0
-EPD,usEPD.N,Enterprise Products Partners L.P. Common Stock,公用事业,石油天然气,2026-09-03,39.17,2.9,-0.15,-0.48,6/8,84521936395.0
+EFXT,usEFXT.N,Enerflex Ltd Common Shares,工业,通用设备,2026-09-03,22.1,7.0,6.06,3.66,6/8,2426184285.0
+EG,usEG.N,Everest Group Ltd. Common Stock,金融,非银行金融,2026-09-03,384.16,4.3,2.28,2.11,8/8,14561803519.0
+DXC,usDXC.N,DXC Technology Company Common Stock,科技,计算机软件,2026-09-03,11.67,5.2,2.2,0.34,7/8,1685665169.0
+EHC,usEHC.N,Encompass Health Corporation Common Stock,医疗保健,医药商业,2026-09-03,122.59,-1.8,1.11,1.16,6/8,11915355720.0
 EPAM,usEPAM.N,EPAM Systems Inc. Common Stock,科技,计算机软件,2026-09-03,119.88,28.8,2.4,2.29,6/8,5641552242.0
-EQT,usEQT.N,EQT Corporation Common Stock,能源,石油天然气,2026-09-03,55.61,7.8,0.41,-0.25,6/8,34272021640.0
-ESTC,usESTC.N,Elastic N.V. Ordinary Shares,科技,计算机软件,2026-09-03,96.13,37.4,4.58,7.31,5/8,8238166915.0
+EDU,usEDU.N,New Oriental Education & Technology Group Inc. Sponsored ADR representing 10 Ordinary Share (Cayman Islands),房地产,教育,2026-09-03,58.22,2.4,-1.03,-1.57,7/8,9185892517.0
+EPD,usEPD.N,Enterprise Products Partners L.P. Common Stock,公用事业,石油天然气,2026-09-03,39.17,2.9,-0.15,-0.48,6/8,84521936395.0
+EQH,usEQH.N,Equitable Holdings Inc. Common Stock,金融,非银行金融,2026-09-03,53.54,2.6,5.86,3.92,6/8,13616263280.0
 EVC,usEVC.N,Entravision Communications Corporation Common Stock,工业,广播电视,2026-09-03,8.41,-26.3,2.53,0.12,7/8,737383557.0
 ETR,usETR.N,Entergy Corporation Common Stock,公用事业,电力,2026-09-03,107.78,1.8,0.97,0.96,7/8,50036895531.0
 EVTC,usEVTC.N,Evertec Inc. Common Stock,科技,计算机软件,2026-09-03,30.57,-1.2,3.0,1.83,6/8,1778235650.0
+EOG,usEOG.N,EOG Resources Inc. Common Stock,能源,石油天然气,2026-09-03,145.96,7.2,-1.35,-2.01,5/8,75972805852.0
+ESNT,usESNT.N,Essent Group Ltd. Common Shares,金融,非银行金融,2026-09-03,69.63,6.8,1.77,0.96,6/8,6254505148.0
+EQT,usEQT.N,EQT Corporation Common Stock,能源,石油天然气,2026-09-03,55.61,7.8,0.41,-0.25,6/8,34272021640.0
+FBRT,usFBRT.N,Franklin BSP Realty Trust Inc. Common Stock,房地产,房地产开发,2026-09-03,8.53,11.5,1.18,0.24,7/8,701733765.0
 EXK,usEXK.N,Endeavour Silver Corporation Ordinary Shares (Canada),基础材料,贵金属,2026-09-03,11.47,29.9,6.55,3.05,5/8,3224189254.0
+FCF,usFCF.N,First Commonwealth Financial Corporation Common Stock,金融,银行,2026-09-03,21.16,-0.7,1.77,0.81,5/8,2103984359.0
 EVR,usEVR.N,Evercore Inc. Class A Common Stock,金融,非银行金融,2026-09-03,296.91,-4.0,3.27,2.85,6/8,11207365665.0
-FBP,usFBP.N,First BanCorp. New Common Stock,金融,银行,2026-09-03,28.45,-1.4,1.11,0.11,6/8,4293031696.0
+FDS,usFDS.N,FactSet Research Systems Inc. Common Stock,科技,计算机软件,2026-09-03,312.96,14.4,1.83,2.25,5/8,10507839679.0
 FAF,usFAF.N,First American Corporation (New) Common Stock,金融,非银行金融,2026-09-03,76.51,1.8,3.55,3.32,6/8,7517623000.0
 F,usF.N,Ford Motor Company Common Stock,工业,汽车,2026-09-03,14.41,5.6,2.86,1.91,6/8,54442735915.0
-ESNT,usESNT.N,Essent Group Ltd. Common Shares,金融,非银行金融,2026-09-03,69.63,6.8,1.77,0.96,6/8,6254505148.0
-FCF,usFCF.N,First Commonwealth Financial Corporation Common Stock,金融,银行,2026-09-03,21.16,-0.7,1.77,0.81,5/8,2103984359.0
 FET,usFET.N,Forum Energy Technologies Inc. Common Stock,非必需消费,石油天然气,2026-09-03,81.87,8.8,-0.38,-0.43,6/8,850219902.0
-FDS,usFDS.N,FactSet Research Systems Inc. Common Stock,科技,计算机软件,2026-09-03,312.96,14.4,1.83,2.25,5/8,10507839679.0
-FBRT,usFBRT.N,Franklin BSP Realty Trust Inc. Common Stock,房地产,房地产开发,2026-09-03,8.53,11.5,1.18,0.24,7/8,701733765.0
-FE,usFE.N,FirstEnergy Corp. Common Stock,公用事业,电力,2026-09-03,47.04,0.3,1.9,1.62,7/8,27039844022.0
-FG,usFG.N,F&G Annuities & Life Inc. Common Stock,金融,非银行金融,2026-09-03,24.87,-14.8,4.34,3.75,7/8,3069121299.0
-FIS,usFIS.N,Fidelity National Information Services Inc. Common Stock,非必需消费,计算机软件,2026-09-03,42.28,-1.2,2.3,0.98,7/8,20958288467.0
 FLNG,usFLNG.N,FLEX LNG Ltd. Ordinary Shares,非必需消费,港口航运,2026-09-03,31.24,3.1,1.05,0.68,6/8,1645490078.0
-FLR,usFLR.N,Fluor Corporation Common Stock,工业,建筑施工,2026-09-03,57.5,17.9,2.56,1.59,8/8,6958547716.0
-FLUT,usFLUT.N,Flutter Entertainment plc Ordinary Shares,科技,休闲服务,2026-09-03,102.34,10.0,2.26,0.35,5/8,17178260039.0
+FBP,usFBP.N,First BanCorp. New Common Stock,金融,银行,2026-09-03,28.45,-1.4,1.11,0.11,6/8,4293031696.0
 FMC,usFMC.N,FMC Corporation Common Stock,工业,化学制品,2026-09-03,12.98,23.0,3.98,-2.63,7/8,1387513376.0
+FLUT,usFLUT.N,Flutter Entertainment plc Ordinary Shares,科技,休闲服务,2026-09-03,102.34,10.0,2.26,0.35,5/8,17178260039.0
+FLR,usFLR.N,Fluor Corporation Common Stock,工业,建筑施工,2026-09-03,57.5,17.9,2.56,1.59,7/8,6958547716.0
+FIS,usFIS.N,Fidelity National Information Services Inc. Common Stock,非必需消费,计算机软件,2026-09-03,42.28,-1.2,2.3,0.98,7/8,20958288467.0
+FG,usFG.N,F&G Annuities & Life Inc. Common Stock,金融,非银行金融,2026-09-03,24.87,-14.8,4.34,3.75,6/8,3069121299.0
 FRO,usFRO.N,Frontline Plc Ordinary Shares,非必需消费,石油天然气,2026-09-03,45.42,14.8,1.49,0.0,6/8,9172063027.0
-FTI,usFTI.N,TechnipFMC plc Ordinary Share,非必需消费,石油天然气,2026-09-03,80.08,15.1,1.43,0.51,7/8,29686844172.0
-FRT,usFRT.N,Federal Realty Investment Trust Common Stock,房地产,房地产开发,2026-09-03,117.16,-0.6,-0.1,-0.66,7/8,10216424258.0
 FUBO,usFUBO.N,FuboTV Inc. Class A Common Stock,非必需消费,计算机软件,2026-09-03,11.59,28.9,6.42,2.84,6/8,1124726989.0
-FTS,usFTS.N,Fortis Inc. Common Shares,公用事业,电力,2026-09-03,55.57,0.2,0.9,0.94,7/8,28278315000.0
-GAP,usGAP.N,Gap Inc. (The) Common Stock,非必需消费,零售,2026-09-03,22.32,8.8,1.03,1.18,5/8,7613554433.0
-FSK,usFSK.N,FS KKR Capital Corp. Common Stock,金融,非银行金融,2026-09-03,12.33,3.8,0.34,0.65,5/8,3360297805.0
-GBTG,usGBTG.N,Global Business Travel Group Inc. Class A Common Stock,非必需消费,计算机软件,2026-09-03,9.49,0.6,0.21,0.11,6/8,4941652771.0
-GDDY,usGDDY.N,GoDaddy Inc. Class A Common Stock,科技,互联网服务,2026-09-03,103.63,14.7,2.96,1.73,6/8,12099921640.0
+FE,usFE.N,FirstEnergy Corp. Common Stock,公用事业,电力,2026-09-03,47.04,0.3,1.9,1.62,7/8,27039844022.0
+FRT,usFRT.N,Federal Realty Investment Trust Common Stock,房地产,房地产开发,2026-09-03,117.16,-0.6,-0.1,-0.66,7/8,10216424258.0
 G,usG.N,Genpact Limited Common Stock,非必需消费,计算机软件,2026-09-03,38.08,5.3,1.15,1.57,6/8,6197108930.0
+GBTG,usGBTG.N,Global Business Travel Group Inc. Class A Common Stock,非必需消费,计算机软件,2026-09-03,9.49,0.6,0.21,0.11,6/8,4941652771.0
+FSK,usFSK.N,FS KKR Capital Corp. Common Stock,金融,非银行金融,2026-09-03,12.33,3.8,0.34,0.65,5/8,3360297805.0
+GDDY,usGDDY.N,GoDaddy Inc. Class A Common Stock,科技,互联网服务,2026-09-03,103.63,14.7,2.96,1.73,6/8,12099921640.0
+GAP,usGAP.N,Gap Inc. (The) Common Stock,非必需消费,零售,2026-09-03,22.32,8.8,1.03,1.18,5/8,7613554433.0
 GFL,usGFL.N,GFL Environmental Inc. Subordinate voting shares no par value,公用事业,环保,2026-09-03,43.48,4.6,3.04,2.09,8/8,15451781470.0
+FTS,usFTS.N,Fortis Inc. Common Shares,公用事业,电力,2026-09-03,55.57,0.2,0.9,0.94,7/8,28278315000.0
+FTI,usFTI.N,TechnipFMC plc Ordinary Share,非必需消费,石油天然气,2026-09-03,80.08,15.1,1.43,0.51,7/8,29686844172.0
 GGB,usGGB.N,Gerdau S.A. Common Stock,工业,钢铁,2026-09-03,4.95,-1.0,2.94,-0.4,7/8,8821960499.0
-GNK,usGNK.N,Genco Shipping & Trading Limited Ordinary Shares New (Marshall Islands),非必需消费,港口航运,2026-09-03,27.29,12.0,2.8,1.07,5/8,1125842007.0
 GME,usGME.N,GameStop Corporation Common Stock,非必需消费,零售,2026-09-03,19.23,0.0,2.28,1.37,7/8,8062981888.0
-GMRS,usGMRS.N,GMR Solutions Inc. Class A Common Stock,非必需消费,物流,2026-09-03,13.41,10.2,5.52,4.85,5/8,692558335.0
 GNW,usGNW.N,Genworth Financial Inc Common Stock,金融,非银行金融,2026-09-03,10.38,6.9,3.26,2.47,7/8,3744503777.0
+GMRS,usGMRS.N,GMR Solutions Inc. Class A Common Stock,非必需消费,物流,2026-09-03,13.41,10.2,5.52,4.85,5/8,692558335.0
+GRDN,usGRDN.N,Guardian Pharmacy Services Inc. Class A Common Stock,必需消费,医药商业,2026-09-03,40.13,1.7,4.01,2.79,7/8,2374069554.0
+GNK,usGNK.N,Genco Shipping & Trading Limited Ordinary Shares New (Marshall Islands),非必需消费,港口航运,2026-09-03,27.29,12.0,2.8,1.07,5/8,1125842007.0
 GPGI,usGPGI.N,GPGI Inc. Class A Common Stock,金融,专业服务,2026-09-03,13.96,-6.8,2.1,-2.04,6/8,3928010611.0
 GPI,usGPI.N,Group 1 Automotive Inc. Common Stock,非必需消费,汽车,2026-09-03,284.33,5.2,4.22,2.87,8/8,3131133952.0
-GRDN,usGRDN.N,Guardian Pharmacy Services Inc. Class A Common Stock,必需消费,医药商业,2026-09-03,40.13,1.7,4.01,2.79,7/8,2374069554.0
-GPOR,usGPOR.N,Gulfport Energy Corporation Common Shares,能源,石油天然气,2026-09-03,181.86,14.8,0.54,0.78,6/8,3077700039.0
-GSL,usGSL.N,Global Ship Lease Inc New Class A Common Shares,非必需消费,港口航运,2026-09-03,45.74,8.4,2.06,1.35,6/8,1587586385.0
-GWRE,usGWRE.N,Guidewire Software Inc. Common Stock,科技,计算机软件,2026-09-03,202.86,26.8,2.7,5.24,7/8,15907793469.0
-HAL,usHAL.N,Halliburton Company Common Stock,能源,石油天然气,2026-09-03,37.29,15.2,0.42,-0.9,7/8,28693009839.0
 HAFN,usHAFN.N,Hafnia Limited Common Shares,非必需消费,港口航运,2026-09-03,8.4,18.1,2.59,0.48,8/8,3883300740.0
-HDB,usHDB.N,HDFC Bank Limited Common Stock,金融,银行,2026-09-03,23.28,-0.3,1.09,0.3,5/8,118888114720.0
+GPOR,usGPOR.N,Gulfport Energy Corporation Common Shares,能源,石油天然气,2026-09-03,181.86,14.8,0.54,0.78,6/8,3077700039.0
 HCI,usHCI.N,HCI Group Inc. Common Stock,金融,非银行金融,2026-09-03,189.92,5.2,1.46,1.36,7/8,2327063238.0
+GSL,usGSL.N,Global Ship Lease Inc New Class A Common Shares,非必需消费,港口航运,2026-09-03,45.74,8.4,2.06,1.35,6/8,1587586385.0
 HESM,usHESM.N,Hess Midstream LP Class A Representing Limited Partner Interests,能源,石油天然气,2026-09-03,39.85,-0.2,-0.69,-0.45,6/8,5144303310.0
 HG,usHG.N,Hamilton Insurance Group Ltd. Class B Common Shares,金融,非银行金融,2026-09-03,36.11,1.6,2.31,1.72,6/8,2919032654.0
-HMC,usHMC.N,Honda Motor Company Ltd. Common Stock,工业,汽车,2026-09-03,33.04,7.5,2.55,1.85,5/8,40755317228.0
-HIG,usHIG.N,The Hartford Insurance Group Inc. Common Stock,金融,非银行金融,2026-09-03,140.0,-2.7,2.12,2.03,5/8,37884158200.0
-HLX,usHLX.N,Helix Energy Solutions Group Inc. Common Stock,能源,石油天然气,2026-09-01,10.6,10.4,3.77,2.91,6/8,1442874156.0
-HMN,usHMN.N,Horace Mann Educators Corporation Common Stock,金融,非银行金融,2026-09-03,51.93,-4.0,1.55,0.83,5/8,2082564197.0
+GWRE,usGWRE.N,Guidewire Software Inc. Common Stock,科技,计算机软件,2026-09-03,202.86,26.8,2.7,5.24,7/8,15907793469.0
 HLI,usHLI.N,Houlihan Lokey Inc. Class A Common Stock,金融,非银行金融,2026-09-03,136.86,7.8,2.91,2.74,8/8,9071267700.0
+HIG,usHIG.N,The Hartford Insurance Group Inc. Common Stock,金融,非银行金融,2026-09-03,140.0,-2.7,2.12,2.03,5/8,37884158200.0
+HMC,usHMC.N,Honda Motor Company Ltd. Common Stock,工业,汽车,2026-09-03,33.04,7.5,2.55,1.85,5/8,40755317228.0
+HMN,usHMN.N,Horace Mann Educators Corporation Common Stock,金融,非银行金融,2026-09-03,51.93,-4.0,1.55,0.83,5/8,2082564197.0
+HLX,usHLX.N,Helix Energy Solutions Group Inc. Common Stock,能源,石油天然气,2026-09-01,10.6,10.4,3.77,2.91,6/8,1442874156.0
+HDB,usHDB.N,HDFC Bank Limited Common Stock,金融,银行,2026-09-03,23.28,-0.3,1.09,0.3,5/8,118888114720.0
 HP,usHP.N,Helmerich & Payne Inc. Common Stock,能源,石油天然气,2026-09-03,45.02,22.1,-2.86,-5.5,6/8,4137472323.0
 HPQ,usHPQ.N,HP Inc. Common Stock,科技,计算机硬件,2026-09-03,31.62,13.3,1.76,-0.19,7/8,27911232499.0
-HR,usHR.N,Healthcare Realty Trust Incorporated Common Stock,房地产,房地产开发,2026-09-03,19.27,-3.4,0.02,-0.16,6/8,6600782578.0
-HSBC,usHSBC.N,HSBC Holdings plc. Common Stock,金融,银行,2026-09-03,106.46,4.3,2.26,1.45,7/8,356215278403.0
+HUM,usHUM.N,Humana Inc. Common Stock,医疗保健,医疗服务,2026-09-03,406.52,10.7,2.79,1.38,7/8,46958605246.0
+HAL,usHAL.N,Halliburton Company Common Stock,能源,石油天然气,2026-09-03,37.29,15.2,0.42,-0.9,7/8,28693009839.0
 HTGC,usHTGC.N,Hercules Capital Inc. Common Stock,金融,非银行金融,2026-09-03,17.72,6.9,0.2,0.06,6/8,3301572960.0
 HTB,usHTB.N,HomeTrust Bancshares Inc. Common Stock,金融,银行,2026-09-03,47.06,-8.6,0.69,0.04,5/8,780740029.0
-HUM,usHUM.N,Humana Inc. Common Stock,医疗保健,医疗服务,2026-09-03,406.52,10.7,2.79,1.38,7/8,46958605246.0
 IBN,usIBN.N,ICICI Bank Limited Common Stock,金融,银行,2026-09-03,30.52,0.1,0.34,-0.2,5/8,107938696993.0
+HR,usHR.N,Healthcare Realty Trust Incorporated Common Stock,房地产,房地产开发,2026-09-03,19.27,-3.4,0.02,-0.16,6/8,6600782578.0
+INSP,usINSP.N,Inspire Medical Systems Inc. Common Stock,医疗保健,计算机软件,2026-09-03,62.14,5.5,-0.7,-1.47,5/8,1786661175.0
 IFS,usIFS.N,Intercorp Financial Services Inc. Common Shares,金融,银行,2026-09-03,56.29,-4.5,1.87,1.35,5/8,6057522073.0
-ING,usING.N,ING Group N.V. Common Stock,金融,非银行金融,2026-09-03,37.09,5.2,3.56,1.98,6/8,103239708562.0
-INSP,usINSP.N,Inspire Medical Systems Inc. Common Stock,医疗保健,计算机软件,2026-09-03,62.14,5.5,-0.7,-1.47,6/8,1786661175.0
-INSW,usINSW.N,International Seaways Inc. Common Stock,非必需消费,石油天然气,2026-09-03,102.24,9.7,1.99,1.04,6/8,4639597901.0
 INFY,usINFY.N,Infosys Limited American Depositary Shares,科技,计算机软件,2026-09-03,12.09,-2.2,0.78,1.0,6/8,47418849464.0
-INVX,usINVX.N,Innovex International Inc. Common Stock,非必需消费,石油天然气,2026-09-03,30.8,0.3,0.07,-1.12,8/8,1976386471.0
+ING,usING.N,ING Group N.V. Common Stock,金融,非银行金融,2026-09-03,37.09,5.2,3.56,1.98,6/8,103239708562.0
+INVX,usINVX.N,Innovex International Inc. Common Stock,非必需消费,石油天然气,2026-09-03,30.8,0.3,0.07,-1.12,7/8,1976386471.0
 IQV,usIQV.N,IQVIA Holdings Inc. Common Stock,医疗保健,医疗器械,2026-09-03,271.62,16.9,3.81,2.95,7/8,43044546000.0
+INSW,usINSW.N,International Seaways Inc. Common Stock,非必需消费,石油天然气,2026-09-03,102.24,9.7,1.99,1.04,6/8,4639597901.0
 ITGR,usITGR.N,Integer Holdings Corporation Common Stock,医疗保健,医疗器械,2026-09-03,125.5,-0.5,0.14,0.15,6/8,4255464489.0
-IX,usIX.N,ORIX Corporation American Depositary Shares,金融,非银行金融,2026-09-03,41.19,-0.2,4.26,3.13,6/8,44660756172.0
-JMIA,usJMIA.N,Jumia Technologies AG American Depositary Shares each representing two Ordinary Shares,非必需消费,零售,2026-09-03,7.11,25.0,1.13,-0.84,7/8,881731540.0
-JXN,usJXN.N,Jackson Financial Inc. Class A Common Stock,金融,非银行金融,2026-09-03,139.35,4.5,3.19,1.64,6/8,9048560198.0
-JNJ,usJNJ.N,Johnson & Johnson Common Stock,医疗保健,化学制药,2026-09-03,278.43,8.9,2.33,1.17,6/8,650672621190.0
+HSBC,usHSBC.N,HSBC Holdings plc. Common Stock,金融,银行,2026-09-03,106.46,4.3,2.26,1.45,7/8,356215278403.0
+IX,usIX.N,ORIX Corporation American Depositary Shares,金融,非银行金融,2026-09-03,41.19,-0.2,4.26,3.13,5/8,44660756172.0
 JPM,usJPM.N,JP Morgan Chase & Co. Common Stock,金融,银行,2026-09-03,362.06,1.6,1.76,1.64,5/8,947643378518.0
+JMIA,usJMIA.N,Jumia Technologies AG American Depositary Shares each representing two Ordinary Shares,非必需消费,零售,2026-09-03,7.11,25.0,1.13,-0.84,7/8,881731540.0
+JNJ,usJNJ.N,Johnson & Johnson Common Stock,医疗保健,化学制药,2026-09-03,278.43,8.9,2.33,1.17,6/8,650672621190.0
 KEX,usKEX.N,Kirby Corporation Common Stock,非必需消费,港口航运,2026-09-03,143.27,7.8,1.28,1.17,5/8,7340256000.0
-KEY,usKEY.N,KeyCorp Common Stock,金融,银行,2026-09-03,22.12,-1.4,2.69,1.47,5/8,23572869758.0
-KD,usKD.N,Kyndryl Holdings Inc. Common Stock,科技,计算机软件,2026-09-03,13.34,-4.6,1.29,1.91,5/8,2761935575.0
+KMPR,usKMPR.N,Kemper Corporation,金融,非银行金融,2026-09-03,28.69,-2.7,2.37,1.77,7/8,1674006805.0
+JXN,usJXN.N,Jackson Financial Inc. Class A Common Stock,金融,非银行金融,2026-09-03,139.35,4.5,3.19,1.64,6/8,9048560198.0
 KB,usKB.N,KB Financial Group Inc,金融,银行,2026-09-03,132.36,9.1,5.49,4.84,7/8,43338912081.0
 KGS,usKGS.N,Kodiak Gas Services Inc. Common Stock,公用事业,石油天然气,2026-09-03,61.7,9.3,2.3,0.44,6/8,6113760755.0
-KMPR,usKMPR.N,Kemper Corporation,金融,非银行金融,2026-09-03,28.69,-2.7,2.37,1.77,7/8,1674006805.0
-KRC,usKRC.N,Kilroy Realty Corporation Common Stock,房地产,商业物业经营,2026-09-03,36.96,-0.9,1.65,1.34,5/8,4283660028.0
+KD,usKD.N,Kyndryl Holdings Inc. Common Stock,科技,计算机软件,2026-09-03,13.34,-4.6,1.29,1.91,5/8,2761935575.0
+KEY,usKEY.N,KeyCorp Common Stock,金融,银行,2026-09-03,22.12,-1.4,2.69,1.47,5/8,23572869758.0
 KT,usKT.N,KT Corporation Common Stock,Telecommunications,通信运营,2026-09-03,19.83,7.0,0.85,0.92,6/8,9479857877.0
 KSS,usKSS.N,Kohl's Corporation Common Stock,非必需消费,零售,2026-09-03,19.21,4.8,4.61,0.68,5/8,2034395874.0
 LAD,usLAD.N,Lithia Motors Inc. Common Stock,非必需消费,汽车,2026-09-03,378.98,1.0,2.3,1.82,6/8,8137050387.0
-LBRT,usLBRT.N,Liberty Energy Inc. Class A common stock,能源,石油天然气,2026-09-03,20.29,1.7,1.78,1.35,5/8,3020673110.0
-LEA,usLEA.N,Lear Corporation Common Stock,非必需消费,汽车,2026-09-03,131.05,10.7,3.27,1.12,7/8,6136987137.0
 KVYO,usKVYO.N,Klaviyo Inc. Series A Common Stock,科技,计算机软件,2026-09-03,19.76,18.1,-0.91,2.33,7/8,5065301104.0
-LNC,usLNC.N,Lincoln National Corporation Common Stock,金融,非银行金融,2026-09-03,45.66,-2.2,5.21,3.49,6/8,8293498596.0
-LNG,usLNG.N,Cheniere Energy Inc. Common Stock,公用事业,石油天然气,2026-09-03,290.85,9.7,-1.24,-1.69,8/8,58672223605.0
-LNN,usLNN.N,Lindsay Corporation Common Stock,工业,专用设备,2026-09-03,122.85,7.5,4.62,2.28,7/8,1160574845.0
-LPG,usLPG.N,Dorian LPG Ltd. Common Stock,非必需消费,石油天然气,2026-09-03,53.57,20.7,4.39,2.76,7/8,2049290420.0
+LEA,usLEA.N,Lear Corporation Common Stock,非必需消费,汽车,2026-09-03,131.05,10.7,3.27,1.12,7/8,6136987137.0
+LBRT,usLBRT.N,Liberty Energy Inc. Class A common stock,能源,石油天然气,2026-09-03,20.29,1.7,1.78,1.35,5/8,3020673110.0
 LRN,usLRN.N,Stride Inc. Common Stock,房地产,教育,2026-09-03,85.8,7.3,-0.3,0.82,6/8,3515131690.0
+LNG,usLNG.N,Cheniere Energy Inc. Common Stock,公用事业,石油天然气,2026-09-03,290.85,9.7,-1.24,-1.69,8/8,58672223605.0
+LNC,usLNC.N,Lincoln National Corporation Common Stock,金融,非银行金融,2026-09-03,45.66,-2.2,5.21,3.49,6/8,8293498596.0
+KRC,usKRC.N,Kilroy Realty Corporation Common Stock,房地产,商业物业经营,2026-09-03,36.96,-0.9,1.65,1.34,5/8,4283660028.0
+LPG,usLPG.N,Dorian LPG Ltd. Common Stock,非必需消费,石油天然气,2026-09-03,53.57,20.7,4.39,2.76,7/8,2049290420.0
+LUMN,usLUMN.N,Lumen Technologies Inc. Common Stock,Telecommunications,通信运营,2026-09-03,6.91,17.1,5.34,1.47,7/8,6281502510.0
+LNN,usLNN.N,Lindsay Corporation Common Stock,工业,专用设备,2026-09-03,122.85,7.5,4.62,2.28,7/8,1160574845.0
 LTC,usLTC.N,LTC Properties Inc. Common Stock,房地产,房地产开发,2026-09-03,41.9,6.7,1.54,0.79,7/8,2184792468.0
-LUMN,usLUMN.N,Lumen Technologies Inc. Common Stock,Telecommunications,通信运营,2026-09-03,6.91,17.1,5.34,1.47,8/8,6281502510.0
 LYG,usLYG.N,Lloyds Banking Group Plc American Depositary Shares,金融,银行,2026-09-03,6.1,-0.2,2.75,2.01,5/8,89518924041.0
-MCK,usMCK.N,McKesson Corporation Common Stock,医疗保健,医药商业,2026-09-03,921.38,5.9,1.14,-0.37,7/8,104540748984.0
-MCY,usMCY.N,Mercury General Corporation Common Stock,金融,非银行金融,2026-09-03,106.05,-1.3,3.8,3.05,5/8,5819683039.0
-MET,usMET.N,MetLife Inc. Common Stock,金融,非银行金融,2026-09-03,99.23,-0.7,3.84,2.91,5/8,61336232994.0
-MDT,usMDT.N,Medtronic plc. Ordinary Shares,医疗保健,医疗器械,2026-09-03,93.1,8.4,1.39,1.0,6/8,117783838829.0
-MFG,usMFG.N,Mizuho Financial Group Inc. Sponosred ADR (Japan),金融,银行,2026-09-03,11.32,5.9,4.03,2.26,7/8,130094589037.0
 MFC,usMFC.N,Manulife Financial Corporation Common Stock,金融,非银行金融,2026-09-03,44.59,0.9,4.27,3.0,5/8,72146136920.0
-MIR,usMIR.N,Mirion Technologies Inc. Class A Common Stock,工业,通用设备,2026-09-03,16.76,11.6,8.48,7.64,7/8,3710660940.0
+MDT,usMDT.N,Medtronic plc. Ordinary Shares,医疗保健,医疗器械,2026-09-03,93.1,8.4,1.39,1.0,6/8,117783838829.0
+MCK,usMCK.N,McKesson Corporation Common Stock,医疗保健,医药商业,2026-09-03,921.38,5.9,1.14,-0.37,7/8,104540748984.0
+MET,usMET.N,MetLife Inc. Common Stock,金融,非银行金融,2026-09-03,99.23,-0.7,3.84,2.91,5/8,61336232994.0
+MCY,usMCY.N,Mercury General Corporation Common Stock,金融,非银行金融,2026-09-03,106.05,-1.3,3.8,3.05,5/8,5819683039.0
 MGY,usMGY.N,Magnolia Oil & Gas Corporation Class A Common Stock,能源,石油天然气,2026-09-03,27.21,10.7,-0.54,-0.62,6/8,6263079887.0
-MO,usMO.N,Altria Group Inc.,医疗保健,其他轻工,2026-09-03,69.49,2.6,0.21,-0.1,7/8,115412700165.0
-MOH,usMOH.N,Molina Healthcare Inc Common Stock,医疗保健,医疗服务,2026-09-03,202.91,5.7,0.47,0.14,6/8,10566846000.0
+MIR,usMIR.N,Mirion Technologies Inc. Class A Common Stock,工业,通用设备,2026-09-03,16.76,11.6,8.48,7.64,7/8,3710660940.0
 MOS,usMOS.N,Mosaic Company (The) Common Stock,工业,化肥农药,2026-09-03,25.49,8.7,1.43,-1.12,7/8,7680358807.0
+MFG,usMFG.N,Mizuho Financial Group Inc. Sponosred ADR (Japan),金融,银行,2026-09-03,11.32,5.9,4.03,2.26,6/8,130094589037.0
 MPC,usMPC.N,Marathon Petroleum Corporation Common Stock,能源,石油天然气,2026-09-03,387.71,29.9,1.23,0.18,7/8,101734386892.0
 MRP,usMRP.N,Millrose Properties Inc. Class A Common Stock,金融,房地产服务,2026-09-03,31.72,10.1,3.37,2.79,7/8,5092689921.0
+MO,usMO.N,Altria Group Inc.,医疗保健,其他轻工,2026-09-03,69.49,2.6,0.21,-0.1,7/8,115412700165.0
+MOH,usMOH.N,Molina Healthcare Inc Common Stock,医疗保健,医疗服务,2026-09-03,202.91,5.7,0.47,0.14,6/8,10566846000.0
 MT,usMT.N,Arcelor Mittal NY Registry Shares NEW,工业,钢铁,2026-09-03,76.07,4.1,2.15,1.25,6/8,56726707290.0
-MTDR,usMTDR.N,Matador Resources Company Common Stock,能源,石油天然气,2026-09-03,59.72,23.7,0.97,0.23,6/8,6837420434.0
+MUFG,usMUFG.N,Mitsubishi UFJ Financial Group Inc. Common Stock,金融,银行,2026-09-03,24.13,7.1,4.44,3.03,6/8,266311433045.0
 MTG,usMTG.N,MGIC Investment Corporation Common Stock,金融,非银行金融,2026-09-03,31.47,4.0,1.99,1.39,5/8,6418356244.0
-MUFG,usMUFG.N,Mitsubishi UFJ Financial Group Inc. Common Stock,金融,银行,2026-09-03,24.13,7.1,4.44,3.03,7/8,266311433045.0
-MUR,usMUR.N,Murphy Oil Corporation Common Stock,能源,石油天然气,2026-09-03,37.32,14.1,-0.22,-0.98,6/8,4973891226.0
-NABL,usNABL.N,N-able Inc. Common Stock,科技,计算机软件,2026-09-03,3.99,-18.1,1.64,0.5,5/8,717842990.0
-NEE,usNEE.N,NextEra Energy Inc. Common Stock,公用事业,电力,2026-09-03,84.06,0.1,1.4,1.16,7/8,175681084762.0
-NAT,usNAT.N,Nordic American Tankers Limited Common Stock,非必需消费,石油天然气,2026-09-03,7.1,10.9,1.83,0.42,6/8,1380614323.0
-NBR,usNBR.N,Nabors Industries Ltd.,能源,石油天然气,2026-09-03,92.97,11.9,-1.61,-2.76,5/8,1396456499.0
 NE,usNE.N,Noble Corporation plc A Ordinary Shares,能源,石油天然气,2026-09-03,46.59,15.7,-0.19,-2.08,5/8,7212635409.0
+MTDR,usMTDR.N,Matador Resources Company Common Stock,能源,石油天然气,2026-09-03,59.72,23.7,0.97,0.23,6/8,6837420434.0
+NEE,usNEE.N,NextEra Energy Inc. Common Stock,公用事业,电力,2026-09-03,84.06,0.1,1.4,1.16,7/8,175681084762.0
+NABL,usNABL.N,N-able Inc. Common Stock,科技,计算机软件,2026-09-03,3.99,-18.1,1.64,0.5,5/8,717842990.0
 NFG,usNFG.N,National Fuel Gas Company Common Stock,公用事业,燃气,2026-09-03,83.53,3.6,0.2,0.38,6/8,7938166668.0
+NBR,usNBR.N,Nabors Industries Ltd.,能源,石油天然气,2026-09-03,92.97,11.9,-1.61,-2.76,5/8,1396456499.0
+NAT,usNAT.N,Nordic American Tankers Limited Common Stock,非必需消费,石油天然气,2026-09-03,7.1,10.9,1.83,0.42,6/8,1380614323.0
+MUR,usMUR.N,Murphy Oil Corporation Common Stock,能源,石油天然气,2026-09-03,37.32,14.1,-0.22,-0.98,6/8,4973891226.0
 NI,usNI.N,NiSource Inc Common Stock,公用事业,电力,2026-09-03,41.66,-4.0,1.49,1.24,6/8,19724306913.0
 NMAX,usNMAX.N,Newsmax Inc. Class B Common Stock,工业,广播电视,2026-09-03,10.86,26.9,0.91,-1.27,5/8,1363936411.0
 NOW,usNOW.N,ServiceNow Inc. Common Stock,科技,计算机软件,2026-09-03,145.59,24.1,3.48,6.49,6/8,130077200000.0
-NOV,usNOV.N,NOV Inc. Common Stock,非必需消费,石油天然气,2026-09-03,21.49,8.0,-0.14,-1.01,6/8,7211552469.0
-NTB,usNTB.N,Bank of N.T. Butterfield & Son Limited (The) Voting Ordinary Shares,金融,银行,2026-09-03,60.97,-0.9,2.93,2.33,5/8,2358800000.0
-NUE,usNUE.N,Nucor Corporation Common Stock,工业,钢铁,2026-09-03,262.47,-3.5,2.0,-0.57,7/8,57354170893.0
-NTST,usNTST.N,NetSTREIT Corp. Common Stock,房地产,房地产开发,2026-09-03,20.43,-1.8,0.33,0.1,5/8,2106705959.0
-NU,usNU.N,Nu Holdings Ltd. Class A Ordinary Shares,金融,非银行金融,2026-09-03,15.68,11.0,4.99,1.82,7/8,73660568997.0
-NTR,usNTR.N,Nutrien Ltd. Common Shares,工业,化肥农药,2026-09-03,80.73,20.9,2.82,0.55,7/8,35477239971.0
+NUE,usNUE.N,Nucor Corporation Common Stock,工业,钢铁,2026-09-03,262.47,-3.5,2.0,-0.57,6/8,57354170893.0
+NU,usNU.N,Nu Holdings Ltd. Class A Ordinary Shares,金融,非银行金融,2026-09-03,15.68,11.0,4.99,1.82,6/8,73660568997.0
 NVS,usNVS.N,Novartis AG Common Stock,医疗保健,化学制药,2026-09-03,163.09,5.8,1.99,0.39,7/8,300610215510.0
+NOV,usNOV.N,NOV Inc. Common Stock,非必需消费,石油天然气,2026-09-03,21.49,8.0,-0.14,-1.01,5/8,7211552469.0
 NWG,usNWG.N,NatWest Group plc American Depositary Shares (each representing two (2) Ordinary Shares),金融,银行,2026-09-03,18.95,1.2,2.81,1.94,6/8,77128516481.0
-OBDC,usOBDC.N,Blue Owl Capital Corporation Common Stock,金融,非银行金融,2026-09-03,11.38,0.8,-0.15,0.18,5/8,5547853901.0
-OFG,usOFG.N,OFG Bancorp Common Stock,金融,银行,2026-09-03,52.82,-0.1,0.8,0.21,6/8,2207949407.0
-OGE,usOGE.N,OGE Energy Corp Common Stock,公用事业,电力,2026-09-03,46.89,0.2,1.6,0.93,7/8,9616358910.0
-OGN,usOGN.N,Organon & Co. Common Stock,医疗保健,化学制药,2026-09-03,13.77,1.8,0.04,0.0,5/8,3616131892.0
+NTB,usNTB.N,Bank of N.T. Butterfield & Son Limited (The) Voting Ordinary Shares,金融,银行,2026-09-03,60.97,-0.9,2.93,2.33,5/8,2358800000.0
+NTST,usNTST.N,NetSTREIT Corp. Common Stock,房地产,房地产开发,2026-09-03,20.43,-1.8,0.33,0.1,5/8,2106705959.0
 OHI,usOHI.N,Omega Healthcare Investors Inc. Common Stock,房地产,房地产开发,2026-09-03,47.04,-3.4,0.79,0.11,6/8,14232520610.0
 OII,usOII.N,Oceaneering International Inc. Common Stock,能源,石油天然气,2026-09-03,51.78,5.1,0.42,0.29,5/8,4938660985.0
 OKE,usOKE.N,ONEOK Inc. Common Stock,公用事业,石油天然气,2026-09-03,95.75,8.9,-0.17,-0.27,6/8,59822081398.0
+OFG,usOFG.N,OFG Bancorp Common Stock,金融,银行,2026-09-03,52.82,-0.1,0.8,0.21,6/8,2207949407.0
+OGE,usOGE.N,OGE Energy Corp Common Stock,公用事业,电力,2026-09-03,46.89,0.2,1.6,0.93,7/8,9616358910.0
 OPY,usOPY.N,Oppenheimer Holdings Inc. Class A Common Stock (DE),金融,非银行金融,2026-09-03,124.74,9.3,5.43,6.29,7/8,1240736539.0
-ORCL,usORCL.N,Oracle Corporation Common Stock,科技,计算机软件,2026-09-03,154.04,7.4,6.2,5.69,6/8,428815717770.0
 ONT,usONT.N,Onterris Inc. Common Stock,非必需消费,环保,2026-09-03,17.58,16.5,3.64,1.44,6/8,582246890.0
-PAGS,usPAGS.N,PagSeguro Digital Ltd. Class A Common Shares,科技,计算机软件,2026-09-03,9.96,6.4,5.39,1.22,8/8,2627726489.0
 OVV,usOVV.N,Ovintiv Inc. (DE),能源,石油天然气,2026-09-03,65.91,10.1,-0.97,-1.49,5/8,18239804000.0
-OXY,usOXY.N,Occidental Petroleum Corporation Common Stock,能源,石油天然气,2026-09-03,60.61,8.2,-0.27,-0.49,5/8,58598742688.0
+OBDC,usOBDC.N,Blue Owl Capital Corporation Common Stock,金融,非银行金融,2026-09-03,11.38,0.8,-0.15,0.18,5/8,5547853901.0
+NTR,usNTR.N,Nutrien Ltd. Common Shares,工业,化肥农药,2026-09-03,80.73,20.9,2.82,0.55,7/8,35477239971.0
+OGN,usOGN.N,Organon & Co. Common Stock,医疗保健,化学制药,2026-09-03,13.77,1.8,0.04,0.0,5/8,3616131892.0
 PAM,usPAM.N,Pampa Energia S.A.,公用事业,电力,2026-09-03,84.74,2.3,-0.15,-1.94,7/8,4402534587.0
-PATH,usPATH.N,UiPath Inc. Class A Common Stock,科技,计算机软件,2026-09-03,18.22,30.1,0.29,1.28,5/8,8683695658.0
-PBF,usPBF.N,PBF Energy Inc. Class A Common Stock,能源,石油天然气,2026-09-03,75.33,23.5,0.68,-0.2,7/8,8265573714.0
-PBA,usPBA.N,Pembina Pipeline Corp. Ordinary Shares (Canada),能源,石油天然气,2026-09-03,48.6,1.2,-0.29,0.02,6/8,28286835200.0
 PAYC,usPAYC.N,Paycom Software Inc. Common Stock,科技,计算机软件,2026-09-03,240.52,11.5,1.35,1.81,7/8,10470587810.0
-PBR,usPBR.N,Petroleo Brasileiro S.A. Petrobras ADS,能源,石油天然气,2026-09-03,20.51,14.0,0.63,-1.68,8/8,114451946927.0
-PARR,usPARR.N,Par Pacific Holdings Inc.  Common Stock,能源,石油天然气,2026-09-03,81.98,18.9,2.38,2.27,8/8,3796048738.0
-PBI,usPBI.N,Pitney Bowes Inc. Common Stock,其他,其他轻工,2026-09-03,17.58,-1.5,1.87,1.03,8/8,2331904506.0
+PAGS,usPAGS.N,PagSeguro Digital Ltd. Class A Common Shares,科技,计算机软件,2026-09-03,9.96,6.4,5.39,1.22,8/8,2627726489.0
+OXY,usOXY.N,Occidental Petroleum Corporation Common Stock,能源,石油天然气,2026-09-03,60.61,8.2,-0.27,-0.49,5/8,58598742688.0
 PBH,usPBH.N,Prestige Consumer Healthcare Inc. Common Stock,医疗保健,化学制药,2026-09-03,52.56,-3.4,0.0,-0.51,8/8,2470581322.0
+PBA,usPBA.N,Pembina Pipeline Corp. Ordinary Shares (Canada),能源,石油天然气,2026-09-03,48.6,1.2,-0.29,0.02,6/8,28286835200.0
+ORCL,usORCL.N,Oracle Corporation Common Stock,科技,计算机软件,2026-09-03,154.04,7.4,6.2,5.69,6/8,428815717770.0
+PBR,usPBR.N,Petroleo Brasileiro S.A. Petrobras ADS,能源,石油天然气,2026-09-03,20.51,14.0,0.63,-1.68,8/8,114451946927.0
 PD,usPD.N,PagerDuty Inc. Common Stock,科技,计算机软件,2026-09-03,14.1,27.0,1.27,2.4,6/8,940124067.0
-PEG,usPEG.N,Public Service Enterprise Group Incorporated Common Stock,公用事业,电力,2026-09-03,73.15,-1.6,0.61,0.67,5/8,36898034821.0
+PARR,usPARR.N,Par Pacific Holdings Inc.  Common Stock,能源,石油天然气,2026-09-03,81.98,18.9,2.38,2.27,7/8,3796048738.0
+PBF,usPBF.N,PBF Energy Inc. Class A Common Stock,能源,石油天然气,2026-09-03,75.33,23.5,0.68,-0.2,7/8,8265573714.0
+PBI,usPBI.N,Pitney Bowes Inc. Common Stock,其他,其他轻工,2026-09-03,17.58,-1.5,1.87,1.03,8/8,2331904506.0
+PATH,usPATH.N,UiPath Inc. Class A Common Stock,科技,计算机软件,2026-09-03,18.22,30.1,0.29,1.28,5/8,8683695658.0
 PFE,usPFE.N,Pfizer Inc. Common Stock,医疗保健,化学制药,2026-09-03,28.81,10.0,0.16,-0.72,7/8,161300762569.0
 PG,usPG.N,Procter & Gamble Company (The) Common Stock,非必需消费,其他轻工,2026-09-03,146.92,-0.0,0.15,-0.49,5/8,337042793700.0
-PGR,usPGR.N,Progressive Corporation (The) Common Stock,金融,非银行金融,2026-09-03,223.87,4.0,1.55,1.12,6/8,129361032543.0
-PLGO,usPLGO.N,Pelagos Insurance Capital Limited Common Shares,金融,非银行金融,2026-09-03,25.56,0.1,3.16,2.44,7/8,2117898751.0
 PJT,usPJT.N,PJT Partners Inc. Class A Common Stock,金融,非银行金融,2026-09-03,185.82,7.7,2.96,2.58,7/8,7167598905.0
-PKX,usPKX.N,POSCO HOLDINGS INC. American Depositary Shares (Each representing 1/4th of a share of Common Stock),工业,钢铁,2026-09-03,63.13,13.3,2.96,2.77,8/8,18915649541.0
-PMT,usPMT.N,PennyMac Mortgage Investment Trust Common Shares of Beneficial Interest,房地产,房地产开发,2026-09-03,9.63,3.1,2.56,1.26,6/8,804877801.0
 PIPR,usPIPR.N,Piper Sandler Companies Common Stock,金融,非银行金融,2026-09-03,77.75,4.8,3.73,3.4,7/8,5260696462.0
+PLGO,usPLGO.N,Pelagos Insurance Capital Limited Common Shares,金融,非银行金融,2026-09-03,25.56,0.1,3.16,2.44,7/8,2117898751.0
+PGR,usPGR.N,Progressive Corporation (The) Common Stock,金融,非银行金融,2026-09-03,223.87,4.0,1.55,1.12,6/8,129361032543.0
 PRGO,usPRGO.N,Perrigo Company plc Ordinary Shares,医疗保健,化学制药,2026-09-03,14.27,16.1,-1.6,-1.52,5/8,2048234056.0
 POST,usPOST.N,Post Holdings Inc. Common Stock,必需消费,食品,2026-09-03,84.26,-6.6,0.42,-0.07,7/8,3603139306.0
+PEG,usPEG.N,Public Service Enterprise Group Incorporated Common Stock,公用事业,电力,2026-09-03,73.15,-1.6,0.61,0.67,5/8,36898034821.0
+PMT,usPMT.N,PennyMac Mortgage Investment Trust Common Shares of Beneficial Interest,房地产,房地产开发,2026-09-03,9.63,3.1,2.56,1.26,6/8,804877801.0
+PKX,usPKX.N,POSCO HOLDINGS INC. American Depositary Shares (Each representing 1/4th of a share of Common Stock),工业,钢铁,2026-09-03,63.13,13.3,2.96,2.77,8/8,18915649541.0
 PR,usPR.N,Permian Resources Corporation Class A Common Stock,能源,非银行金融,2026-09-03,23.74,17.1,0.16,-0.34,5/8,19054422410.0
-PSX,usPSX.N,Phillips 66 Common Stock,能源,石油天然气,2026-09-03,254.66,24.6,0.69,-0.56,8/8,96654836483.0
-PUMP,usPUMP.N,ProPetro Holding Corp. Common Stock,能源,石油天然气,2026-09-03,11.24,2.6,-0.46,0.09,5/8,1305618238.0
-QGEN,usQGEN.N,Qiagen N.V. Common Shares,医疗保健,医疗器械,2026-09-03,43.86,5.1,0.2,-0.77,6/8,8935401290.0
-RAMP,usRAMP.N,LiveRamp Holdings Inc. Common Stock,科技,计算机软件,2026-09-03,37.76,-0.2,-0.08,-0.11,7/8,2287715173.0
 QSR,usQSR.N,Restaurant Brands International Inc. Common Shares,非必需消费,休闲服务,2026-09-03,80.26,10.1,2.27,1.76,5/8,36024374859.0
-RBLX,usRBLX.N,Roblox Corporation Class A Common Stock,科技,影视动漫,2026-09-03,41.51,15.2,1.09,0.73,7/8,26831960344.0
+PUMP,usPUMP.N,ProPetro Holding Corp. Common Stock,能源,石油天然气,2026-09-03,11.24,2.6,-0.46,0.09,5/8,1305618238.0
+PSX,usPSX.N,Phillips 66 Common Stock,能源,石油天然气,2026-09-03,254.66,24.6,0.69,-0.56,8/8,96654836483.0
+QGEN,usQGEN.N,Qiagen N.V. Common Shares,医疗保健,医疗器械,2026-09-03,43.86,5.1,0.2,-0.77,6/8,8935401290.0
 RCI,usRCI.N,Rogers Communication Inc. Common Stock,Telecommunications,通信运营,2026-09-03,37.64,10.0,3.76,3.69,6/8,19950482587.0
-RELX,usRELX.N,RELX PLC PLC American Depositary Shares (Each representing One Ordinary Share),非必需消费,专业服务,2026-09-03,36.65,3.3,3.05,4.27,5/8,64459364673.0
-RGA,usRGA.N,Reinsurance Group of America Incorporated Common Stock,金融,非银行金融,2026-09-03,255.91,8.7,2.5,1.4,6/8,16100125506.0
-RJF,usRJF.N,Raymond James Financial Inc. Common Stock,金融,非银行金融,2026-09-03,181.1,1.0,3.11,2.93,6/8,33988390717.0
+RAMP,usRAMP.N,LiveRamp Holdings Inc. Common Stock,科技,计算机软件,2026-09-03,37.76,-0.2,-0.08,-0.11,7/8,2287715173.0
 RIG,usRIG.N,Transocean Ltd (Switzerland) Common Stock,能源,石油天然气,2026-09-03,6.02,16.7,-0.38,-3.22,6/8,6254528476.0
+RBLX,usRBLX.N,Roblox Corporation Class A Common Stock,科技,影视动漫,2026-09-03,41.51,15.2,1.09,0.73,6/8,26831960344.0
 RNR,usRNR.N,RenaissanceRe Holdings Ltd. Common Stock,金融,非银行金融,2026-09-03,337.97,4.5,2.4,2.04,7/8,13784009465.0
 RNG,usRNG.N,RingCentral Inc. Class A Common Stock,科技,通信运营,2026-09-03,76.36,23.5,6.91,5.21,8/8,5516417062.0
-RS,usRS.N,Reliance Inc. Common Stock,工业,钢铁,2026-09-03,398.24,-4.5,1.12,-0.49,6/8,19970499734.0
-RRC,usRRC.N,Range Resources Corporation Common Stock,能源,石油天然气,2026-09-03,42.37,9.9,0.36,-0.26,7/8,9709383848.0
-RSI,usRSI.N,Rush Street Interactive Inc. Class A Common Stock,非必需消费,休闲服务,2026-09-03,26.77,6.7,3.12,2.29,7/8,6114181184.0
-RSG,usRSG.N,Republic Services Inc. Common Stock,公用事业,环保,2026-09-03,225.12,7.4,1.21,1.17,7/8,68034399452.0
-RSKD,usRSKD.N,Riskified Ltd. Class A Ordinary Shares,非必需消费,计算机软件,2026-09-03,6.93,33.5,7.73,4.21,8/8,811718262.0
-RVTY,usRVTY.N,Revvity Inc. Common Stock,工业,医疗器械,2026-09-03,130.63,14.3,1.14,-0.24,8/8,14098941766.0
+RGA,usRGA.N,Reinsurance Group of America Incorporated Common Stock,金融,非银行金融,2026-09-03,255.91,8.7,2.5,1.4,6/8,16100125506.0
 RTO,usRTO.N,Rentokil Initial plc American Depositary Shares (each representing five (5) Ordinary Shares),非必需消费,专业服务,2026-09-03,24.02,-0.9,-0.38,-0.46,7/8,11823136000.0
+RRC,usRRC.N,Range Resources Corporation Common Stock,能源,石油天然气,2026-09-03,42.37,9.9,0.36,-0.26,7/8,9709383848.0
+RSI,usRSI.N,Rush Street Interactive Inc. Class A Common Stock,非必需消费,休闲服务,2026-09-03,26.77,6.7,3.12,2.29,6/8,6114181184.0
 RYZ,usRYZ.N,Ryerson Holding Corporation Common Stock,工业,钢铁,2026-09-03,25.79,-3.4,0.89,-1.19,5/8,1305251123.0
+RSKD,usRSKD.N,Riskified Ltd. Class A Ordinary Shares,非必需消费,计算机软件,2026-09-03,6.93,33.5,7.73,4.21,7/8,811718262.0
 SAN,usSAN.N,Banco Santander S.A. Sponsored ADR (Spain),金融,银行,2026-09-03,15.05,2.7,3.09,2.03,5/8,215932996679.0
-SBS,usSBS.N,Companhia de saneamento Basico Do Estado De Sao Paulo - Sabesp American Depositary Shares (Each repstg 250 Common Shares),公用事业,水务,2026-09-03,5.13,-4.5,3.11,0.79,8/8,17093990021.0
+RVTY,usRVTY.N,Revvity Inc. Common Stock,工业,医疗器械,2026-09-03,130.63,14.3,1.14,-0.24,8/8,14098941766.0
+RS,usRS.N,Reliance Inc. Common Stock,工业,钢铁,2026-09-03,398.24,-4.5,1.12,-0.49,6/8,19970499734.0
 SBSW,usSBSW.N,D/B/A Sibanye-Stillwater Limited ADS,基础材料,基本金属,2026-09-03,13.12,32.7,8.13,4.46,6/8,8555389555.0
+RJF,usRJF.N,Raymond James Financial Inc. Common Stock,金融,非银行金融,2026-09-03,181.1,1.0,3.11,2.93,6/8,33988390717.0
+RSG,usRSG.N,Republic Services Inc. Common Stock,公用事业,环保,2026-09-03,225.12,7.4,1.21,1.17,7/8,68034399452.0
 SCHW,usSCHW.N,Charles Schwab Corporation (The) Common Stock,金融,非银行金融,2026-09-03,110.38,2.8,1.67,1.98,5/8,189172033754.0
-SFL,usSFL.N,SFL Corporation Ltd,非必需消费,石油天然气,2026-09-03,12.4,4.6,1.36,1.22,6/8,1599903192.0
 SDRL,usSDRL.N,Seadrill Limited Common Shares,能源,石油天然气,2026-09-03,50.07,16.6,0.71,-0.83,7/8,2913805829.0
+SGI,usSGI.N,Somnigroup International Inc. Common Stock,非必需消费,家具,2026-09-03,69.52,7.4,5.49,2.51,6/8,13217263800.0
 SHEL,usSHEL.N,Shell PLC American Depositary Shares (each representing two (2) Ordinary Shares),能源,石油天然气,2026-09-03,92.33,4.0,-0.44,-0.51,7/8,259203015027.0
 SECZ,usSECZ.N,Securitize Corp. Common Stock,金融,非银行金融,2026-09-03,7.1,-1.3,10.59,9.06,5/8,1110206658.0
 SHG,usSHG.N,Shinhan Financial Group Co Ltd American Depositary Shares,金融,银行,2026-09-03,84.47,13.8,4.92,3.76,8/8,36785712978.0
-SGI,usSGI.N,Somnigroup International Inc. Common Stock,非必需消费,家具,2026-09-03,69.52,7.4,5.49,2.51,6/8,13217263800.0
 SGHC,usSGHC.N,Super Group (SGHC) Limited Ordinary Shares,非必需消费,休闲服务,2026-09-03,14.17,9.1,3.89,2.76,7/8,7072428889.0
+SFL,usSFL.N,SFL Corporation Ltd,非必需消费,石油天然气,2026-09-03,12.4,4.6,1.36,1.22,6/8,1599903192.0
+SBS,usSBS.N,Companhia de saneamento Basico Do Estado De Sao Paulo - Sabesp American Depositary Shares (Each repstg 250 Common Shares),公用事业,水务,2026-09-03,5.13,-4.5,3.11,0.79,8/8,17093990021.0
 SITE,usSITE.N,SiteOne Landscape Supply Inc. Common Stock,非必需消费,贸易,2026-09-03,98.47,-0.1,0.39,0.18,6/8,4193973317.0
 SLB,usSLB.N,SLB Limited Common Shares,能源,石油天然气,2026-09-03,57.41,12.0,-1.12,-1.24,5/8,79550077182.0
-SM,usSM.N,SM Energy Company Common Stock,能源,石油天然气,2026-09-03,37.38,31.0,-1.02,-1.79,7/8,8410519844.0
-SNAP,usSNAP.N,Snap Inc. Class A Common Stock,科技,计算机软件,2026-09-03,5.7,9.2,3.49,1.97,5/8,9166291599.0
-SMFG,usSMFG.N,Sumitomo Mitsui Financial Group Inc Unsponsored American Depositary Shares (Japan),金融,银行,2026-09-03,27.56,7.1,4.67,3.14,8/8,115949513746.0
 SNX,usSNX.N,TD SYNNEX Corporation Common Stock,科技,电子器件,2026-09-03,262.53,1.3,3.97,3.74,5/8,20403074748.0
-SNOW,usSNOW.N,Snowflake Inc. Common Stock,科技,计算机软件,2026-09-03,356.47,12.1,13.23,16.55,6/8,109307242000.0
+SMFG,usSMFG.N,Sumitomo Mitsui Financial Group Inc Unsponsored American Depositary Shares (Japan),金融,银行,2026-09-03,27.56,7.1,4.67,3.14,7/8,115949513746.0
+SM,usSM.N,SM Energy Company Common Stock,能源,石油天然气,2026-09-03,37.38,31.0,-1.02,-1.79,6/8,8410519844.0
 SOLV,usSOLV.N,Solventum Corporation Common Stock,医疗保健,医疗器械,2026-09-03,92.44,11.4,1.09,0.59,7/8,15580577915.0
 SONY,usSONY.N,Sony Group Corporation American Depositary Shares,必需消费,消费电子设备,2026-09-03,24.96,8.1,1.14,1.26,8/8,142492897986.0
-SPOT,usSPOT.N,Spotify Technology S.A. Ordinary Shares,非必需消费,互联网服务,2026-09-03,560.11,17.9,1.55,0.13,6/8,113214064826.0
-SPGI,usSPGI.N,S&P Global Inc. Common Stock,金融,非银行金融,2026-09-03,450.58,11.4,3.57,4.37,7/8,128677252000.0
 SPNT,usSPNT.N,SiriusPoint Ltd. Common Shares,金融,非银行金融,2026-09-03,24.84,5.1,2.13,2.14,7/8,2785637084.0
-SRE,usSRE.N,DBA Sempra Common Stock,公用事业,电力,2026-09-03,84.57,0.3,1.28,0.93,5/8,55764621677.0
+SNAP,usSNAP.N,Snap Inc. Class A Common Stock,科技,计算机软件,2026-09-03,5.7,9.2,3.49,1.97,5/8,9166291599.0
+SNOW,usSNOW.N,Snowflake Inc. Common Stock,科技,计算机软件,2026-09-03,356.47,12.1,13.23,16.55,6/8,109307242000.0
 SQM,usSQM.N,Sociedad Quimica y Minera S.A. Common Stock,工业,化肥农药,2026-09-03,78.35,10.3,-0.93,-1.71,5/8,22359727610.0
+SPGI,usSPGI.N,S&P Global Inc. Common Stock,金融,非银行金融,2026-09-03,450.58,11.4,3.57,4.37,7/8,128677252000.0
+SSL,usSSL.N,Sasol Ltd. American Depositary Shares,能源,石油天然气,2026-09-03,12.35,9.3,-0.99,-2.6,6/8,7376901181.0
+SPOT,usSPOT.N,Spotify Technology S.A. Ordinary Shares,非必需消费,互联网服务,2026-09-03,560.11,17.9,1.55,0.13,6/8,113214064826.0
 SSB,usSSB.N,SouthState Bank Corporation Common Stock,金融,银行,2026-09-03,107.11,-0.7,1.71,0.77,5/8,10314211436.0
+SU,usSU.N,Suncor Energy  Inc. Common Stock,能源,石油天然气,2026-09-03,67.8,11.2,-0.01,-0.22,7/8,76809576620.0
 STAG,usSTAG.N,Stag Industrial Inc. Common Stock,房地产,房地产开发,2026-09-03,37.7,2.4,0.63,0.72,7/8,7168613672.0
 STNG,usSTNG.N,Scorpio Tankers Inc. Common Shares,非必需消费,石油天然气,2026-09-03,80.11,5.5,-0.3,-1.61,7/8,3874444832.0
-SSL,usSSL.N,Sasol Ltd. American Depositary Shares,能源,石油天然气,2026-09-03,12.35,9.3,-0.99,-2.6,6/8,7376901181.0
-SU,usSU.N,Suncor Energy  Inc. Common Stock,能源,石油天然气,2026-09-03,67.8,11.2,-0.01,-0.22,7/8,76809576620.0
 STLA,usSTLA.N,Stellantis N.V. Common Shares,工业,汽车,2026-09-03,5.49,-1.1,2.87,4.17,5/8,14922038459.0
+SRE,usSRE.N,DBA Sempra Common Stock,公用事业,电力,2026-09-03,84.57,0.3,1.28,0.93,5/8,55764621677.0
 SUZ,usSUZ.N,Suzano S.A. American Depositary Shares (each representing One Ordinary Share),基础材料,造纸印刷,2026-09-03,9.15,10.9,2.02,0.11,6/8,11301211478.0
 T,usT.N,AT&T Inc.,Telecommunications,通信运营,2026-09-03,26.19,10.5,0.91,0.92,8/8,177271216766.0
-TAK,usTAK.N,Takeda Pharmaceutical Company Limited American Depositary Shares (each representing 1/2 of a share of Common Stock),医疗保健,化学制药,2026-09-03,18.71,9.9,2.36,1.52,6/8,57603967204.0
-TAL,usTAL.N,TAL Education Group American Depositary Shares,房地产,教育,2026-09-03,11.99,-3.8,-0.74,-1.15,8/8,6484457659.0
-TDS,usTDS.N,Telephone and Data Systems Inc. Common Shares,Telecommunications,通信运营,2026-09-03,37.82,5.1,8.92,5.44,7/8,3830528000.0
-TD,usTD.N,Toronto Dominion Bank (The) Common Stock,金融,银行,2026-09-03,123.31,1.8,2.11,1.51,7/8,197348520600.0
-TALO,usTALO.N,Talos Energy Inc. Common Stock,能源,石油天然气,2026-09-03,17.29,22.8,0.24,0.35,7/8,2791662625.0
+TAL,usTAL.N,TAL Education Group American Depositary Shares,房地产,教育,2026-09-03,11.99,-3.8,-0.74,-1.15,7/8,6484457659.0
 TDC,usTDC.N,Teradata Corporation Common Stock,科技,计算机软件,2026-09-03,28.79,6.8,0.94,1.88,6/8,2516580000.0
-TDW,usTDW.N,Tidewater Inc. Common Stock,非必需消费,石油天然气,2026-09-03,94.58,15.9,-3.16,-5.99,6/8,4418850875.0
+TDS,usTDS.N,Telephone and Data Systems Inc. Common Shares,Telecommunications,通信运营,2026-09-03,37.82,5.1,8.92,5.44,7/8,3830528000.0
+TALO,usTALO.N,Talos Energy Inc. Common Stock,能源,石油天然气,2026-09-03,17.29,22.8,0.24,0.35,7/8,2791662625.0
+TD,usTD.N,Toronto Dominion Bank (The) Common Stock,金融,银行,2026-09-03,123.31,1.8,2.11,1.51,6/8,197348520600.0
 TEL,usTEL.N,TE Connectivity plc Ordinary Shares,科技,电子设备制造,2026-09-03,209.41,-2.3,2.39,3.56,5/8,59358897137.0
-TFC,usTFC.N,Truist Financial Corporation Common Stock,金融,银行,2026-09-03,51.61,-0.9,2.92,1.57,6/8,61899798946.0
-TFX,usTFX.N,Teleflex Incorporated Common Stock,医疗保健,医疗器械,2026-09-03,139.96,1.0,-0.76,-0.72,7/8,5878746360.0
-THG,usTHG.N,Hanover Insurance Group Inc,金融,非银行金融,2026-09-03,231.68,0.1,2.26,2.01,5/8,7953286679.0
+TAK,usTAK.N,Takeda Pharmaceutical Company Limited American Depositary Shares (each representing 1/2 of a share of Common Stock),医疗保健,化学制药,2026-09-03,18.71,9.9,2.36,1.52,6/8,57603967204.0
 TM,usTM.N,Toyota Motor Corporation Common Stock,工业,汽车,2026-09-03,199.87,6.6,1.01,0.79,8/8,250042950912.0
 TNC,usTNC.N,Tennant Company Common Stock,工业,通用设备,2026-09-03,70.34,-8.1,0.78,0.16,6/8,1200611917.0
-TNK,usTNK.N,Teekay Tankers Ltd.,非必需消费,石油天然气,2026-09-03,91.83,19.5,2.28,1.19,5/8,2882368986.0
-TRGP,usTRGP.N,Targa Resources Inc. Common Stock,公用事业,石油天然气,2026-09-03,293.54,9.4,-0.25,0.03,5/8,63049153105.0
+TFX,usTFX.N,Teleflex Incorporated Common Stock,医疗保健,医疗器械,2026-09-03,139.96,1.0,-0.76,-0.72,7/8,5878746360.0
+TFC,usTFC.N,Truist Financial Corporation Common Stock,金融,银行,2026-09-03,51.61,-0.9,2.92,1.57,6/8,61899798946.0
 TRLV,usTRLV.N,Trulieve Cannabis Corp. Subordinate Voting Shares,医疗保健,化学制药,2026-09-03,11.99,33.2,2.76,2.57,8/8,2201021402.0
 TRP,usTRP.N,TC Energy Corporation Common Stock,公用事业,石油天然气,2026-09-03,62.88,-1.6,0.3,0.62,6/8,62860000000.0
+TNK,usTNK.N,Teekay Tankers Ltd.,非必需消费,石油天然气,2026-09-03,91.83,19.5,2.28,1.19,5/8,2882368986.0
+TDW,usTDW.N,Tidewater Inc. Common Stock,非必需消费,石油天然气,2026-09-03,94.58,15.9,-3.16,-5.99,6/8,4418850875.0
 TS,usTS.N,Tenaris S.A. American Depositary Shares,工业,石油天然气,2026-09-03,56.31,5.4,0.3,0.59,7/8,28516194828.0
-TTE,usTTE.N,TotalEnergies SE Ordinary Shares,能源,石油天然气,2026-09-03,89.25,3.5,-0.69,-1.08,7/8,190105618983.0
-TX,usTX.N,Ternium S.A. Ternium S.A. American Depositary Shares (each representing ten shares USD1.00 par value),工业,钢铁,2026-09-03,57.98,11.7,3.37,1.95,6/8,10822442288.0
-TXNM,usTXNM.N,TXNM Energy Inc. Common Stock,公用事业,电力,2026-09-03,58.14,1.1,0.39,0.12,7/8,5929273227.0
-TYL,usTYL.N,Tyler Technologies Inc. Common Stock,科技,计算机软件,2026-09-03,379.27,23.8,1.19,1.17,7/8,14441819426.0
-UA,usUA.N,Under Armour Inc. Class C Common Stock,非必需消费,服装家纺,2026-09-03,5.1,-18.7,3.26,1.39,5/8,2156318616.0
+THG,usTHG.N,Hanover Insurance Group Inc,金融,非银行金融,2026-09-03,231.68,0.1,2.26,2.01,5/8,7953286679.0
 UBS,usUBS.N,UBS Group AG Registered Ordinary Shares,金融,非银行金融,2026-09-03,55.68,5.4,1.55,1.42,6/8,169199290321.0
-UI,usUI.N,Ubiquiti Inc. Common Stock,科技,通信设备,2026-09-03,595.96,5.2,0.47,-0.4,5/8,36123337781.0
 UNM,usUNM.N,Unum Group Common Stock,金融,非银行金融,2026-09-03,96.57,7.5,4.35,4.06,7/8,14486655085.0
-UGP,usUGP.N,Ultrapar Participacoes S.A. (New) American Depositary Shares (Each representing one Common Share),公用事业,石油天然气,2026-09-03,7.16,16.0,2.98,0.42,8/8,7177625738.0
-USB,usUSB.N,U.S. Bancorp Common Stock,金融,银行,2026-09-03,63.53,-0.4,2.38,1.21,5/8,97845630809.0
-VAL,usVAL.N,Valaris Limited Common Shares,能源,石油天然气,2026-09-03,89.74,16.2,-0.14,-3.0,6/8,5804833465.0
-VALE,usVALE.N,VALE S.A.  American Depositary Shares Each Representing one common share,基础材料,钢铁,2026-09-03,15.31,6.9,-0.67,-2.67,6/8,64725837591.0
-VET,usVET.N,Vermilion Energy Inc. Common (Canada),能源,石油天然气,2026-09-03,13.02,18.7,-0.64,-1.14,7/8,1878232000.0
+TTE,usTTE.N,TotalEnergies SE Ordinary Shares,能源,石油天然气,2026-09-03,89.25,3.5,-0.69,-1.08,7/8,190105618983.0
+UA,usUA.N,Under Armour Inc. Class C Common Stock,非必需消费,服装家纺,2026-09-03,5.1,-18.7,3.26,1.39,5/8,2156318616.0
+TYL,usTYL.N,Tyler Technologies Inc. Common Stock,科技,计算机软件,2026-09-03,379.27,23.8,1.19,1.17,7/8,14441819426.0
+TXNM,usTXNM.N,TXNM Energy Inc. Common Stock,公用事业,电力,2026-09-03,58.14,1.1,0.39,0.12,7/8,5929273227.0
+TX,usTX.N,Ternium S.A. Ternium S.A. American Depositary Shares (each representing ten shares USD1.00 par value),工业,钢铁,2026-09-03,57.98,11.7,3.37,1.95,6/8,10822442288.0
+UI,usUI.N,Ubiquiti Inc. Common Stock,科技,通信设备,2026-09-03,595.96,5.2,0.47,-0.4,5/8,36123337781.0
+TRGP,usTRGP.N,Targa Resources Inc. Common Stock,公用事业,石油天然气,2026-09-03,293.54,9.4,-0.25,0.03,5/8,63049153105.0
 VG,usVG.N,Venture Global Inc. Class A common stock,公用事业,石油天然气,2026-09-03,14.48,6.6,-2.32,-1.7,5/8,35751327769.0
-VIST,usVIST.N,Vista Energy S.A.B. de C.V. American Depositary Shares each representing one series A share with no par value,能源,石油天然气,2026-09-03,74.61,12.5,-0.73,-3.14,6/8,7643052821.0
-VEEV,usVEEV.N,Veeva Systems Inc. Class A Common Stock,科技,计算机软件,2026-09-03,284.38,30.6,1.11,1.3,6/8,39968993127.0
-VIV,usVIV.N,Telefonica Brasil S.A. American Depositary Shares (Each representing One Common Share),Telecommunications,通信运营,2026-09-03,11.89,-1.2,1.68,0.59,6/8,18550494873.0
-VOYA,usVOYA.N,Voya Financial Inc. Common Stock,金融,非银行金融,2026-09-03,104.86,3.8,3.04,2.41,6/8,9199153277.0
+UGP,usUGP.N,Ultrapar Participacoes S.A. (New) American Depositary Shares (Each representing one Common Share),公用事业,石油天然气,2026-09-03,7.16,16.0,2.98,0.42,8/8,7177625738.0
+VAL,usVAL.N,Valaris Limited Common Shares,能源,石油天然气,2026-09-03,89.74,16.2,-0.14,-3.0,6/8,5804833465.0
+USB,usUSB.N,U.S. Bancorp Common Stock,金融,银行,2026-09-03,63.53,-0.4,2.38,1.21,5/8,97845630809.0
+VET,usVET.N,Vermilion Energy Inc. Common (Canada),能源,石油天然气,2026-09-03,13.02,18.7,-0.64,-1.14,6/8,1878232000.0
 VLO,usVLO.N,Valero Energy Corporation Common Stock,能源,石油天然气,2026-09-03,370.69,22.3,2.01,1.26,8/8,100207394252.0
-VST,usVST.N,Vistra Corp. Common Stock,公用事业,电力,2026-09-03,144.22,2.0,2.6,0.53,6/8,46998996356.0
+VEEV,usVEEV.N,Veeva Systems Inc. Class A Common Stock,科技,计算机软件,2026-09-03,284.38,30.6,1.11,1.3,6/8,39968993127.0
+VIST,usVIST.N,Vista Energy S.A.B. de C.V. American Depositary Shares each representing one series A share with no par value,能源,石油天然气,2026-09-03,74.61,12.5,-0.73,-3.14,6/8,7643052821.0
+VALE,usVALE.N,VALE S.A.  American Depositary Shares Each Representing one common share,基础材料,钢铁,2026-09-03,15.31,6.9,-0.67,-2.67,6/8,64725837591.0
 VZ,usVZ.N,Verizon Communications Inc. Common Stock,Telecommunications,通信运营,2026-09-03,50.59,7.7,0.77,0.74,7/8,208528167388.0
-VYX,usVYX.N,NCR Voyix Corporation Common Stock,其他,计算机硬件,2026-09-03,8.96,6.9,2.03,-0.22,5/8,1226060694.0
+VIV,usVIV.N,Telefonica Brasil S.A. American Depositary Shares (Each representing One Common Share),Telecommunications,通信运营,2026-09-03,11.89,-1.2,1.68,0.59,6/8,18550494873.0
 WDS,usWDS.N,Woodside Energy Group Limited American Depositary Shares each representing one Ordinary Share,能源,石油天然气,2026-09-03,23.15,4.6,-0.08,-0.47,7/8,43535193275.0
-WBI,usWBI.N,WaterBridge Infrastructure LLC Class A Shares Representing Limited Liability Company Interests,能源,石油天然气,2026-09-03,32.24,-1.3,-0.11,-0.06,5/8,3902450766.0
-WEAV,usWEAV.N,Weave Communications Inc. Common Stock,科技,计算机软件,2026-09-03,7.33,10.1,0.31,0.27,6/8,584793560.0
+VYX,usVYX.N,NCR Voyix Corporation Common Stock,其他,计算机硬件,2026-09-03,8.96,6.9,2.03,-0.22,5/8,1226060694.0
+VST,usVST.N,Vistra Corp. Common Stock,公用事业,电力,2026-09-03,144.22,2.0,2.6,0.53,6/8,46998996356.0
+VOYA,usVOYA.N,Voya Financial Inc. Common Stock,金融,非银行金融,2026-09-03,104.86,3.8,3.04,2.41,6/8,9199153277.0
 WD,usWD.N,Walker & Dunlop Inc Common Stock,金融,非银行金融,2026-09-03,41.7,-4.2,3.68,4.07,6/8,1382984266.0
-WHD,usWHD.N,Cactus Inc. Class A Common Stock,非必需消费,石油天然气,2026-09-03,71.64,4.8,0.43,-0.69,7/8,5327120465.0
+WFC,usWFC.N,Wells Fargo & Company Common Stock,金融,银行,2026-09-03,89.19,2.4,1.34,-0.09,7/8,257735463407.0
+WOR,usWOR.N,Worthington Enterprises Inc. Common Shares,工业,钢铁,2026-09-03,61.27,5.8,5.18,2.91,6/8,2836285668.0
+WEAV,usWEAV.N,Weave Communications Inc. Common Stock,科技,计算机软件,2026-09-03,7.33,10.1,0.31,0.27,6/8,584793560.0
+WBI,usWBI.N,WaterBridge Infrastructure LLC Class A Shares Representing Limited Liability Company Interests,能源,石油天然气,2026-09-03,32.24,-1.3,-0.11,-0.06,5/8,3902450766.0
 WK,usWK.N,Workiva Inc. Class A Common Stock,科技,计算机软件,2026-09-03,78.59,26.7,2.26,3.75,6/8,4054028356.0
-WFC,usWFC.N,Wells Fargo & Company Common Stock,金融,银行,2026-09-03,89.19,2.4,1.34,-0.09,8/8,257735463407.0
 WM,usWM.N,Waste Management Inc. Common Stock,公用事业,环保,2026-09-03,221.72,-3.2,1.13,1.22,5/8,88432987308.0
 WMB,usWMB.N,Williams Companies Inc. (The) Common Stock,公用事业,石油天然气,2026-09-03,74.05,3.2,-1.48,-1.48,6/8,91015891592.0
-WOR,usWOR.N,Worthington Enterprises Inc. Common Shares,工业,钢铁,2026-09-03,61.27,5.8,5.18,2.91,6/8,2836285668.0
+WHD,usWHD.N,Cactus Inc. Class A Common Stock,非必需消费,石油天然气,2026-09-03,71.64,4.8,0.43,-0.69,7/8,5327120465.0
 WRB,usWRB.N,W.R. Berkley Corporation Common Stock,金融,非银行金融,2026-09-03,69.5,-3.6,2.38,2.03,6/8,25492194416.0
-WSO,usWSO.N,Watsco Inc. Common Stock,非必需消费,贸易,2026-09-03,315.38,-1.8,1.44,2.09,5/8,12969277272.0
 WTTR,usWTTR.N,Select Water Solutions Inc. Class A common stock,能源,石油天然气,2026-09-03,20.17,-2.2,1.85,2.02,7/8,2662986419.0
-WTRG,usWTRG.N,Essential Utilities Inc. Common Stock,公用事业,水务,2026-09-03,41.87,5.9,1.28,0.77,7/8,11566815940.0
 WTI,usWTI.N,W&T Offshore Inc. Common Stock,能源,石油天然气,2026-09-03,3.89,16.8,1.93,1.3,6/8,538866339.0
-XOM,usXOM.N,ExxonMobil Holdings Corporation Common Stock,能源,石油天然气,2026-09-03,162.21,5.4,-0.86,-1.18,5/8,650463352952.0
 XPRO,usXPRO.N,Expro Ltd Ordinary Shares,能源,石油天然气,2026-09-03,17.9,5.4,-1.26,-2.98,5/8,1990087217.0
+WSO,usWSO.N,Watsco Inc. Common Stock,非必需消费,贸易,2026-09-03,315.38,-1.8,1.44,2.09,5/8,12969277272.0
+WTRG,usWTRG.N,Essential Utilities Inc. Common Stock,公用事业,水务,2026-09-03,41.87,5.9,1.28,0.77,7/8,11566815940.0
 YPF,usYPF.N,YPF Sociedad Anonima American Depositary Shares,能源,石油天然气,2026-09-03,52.41,5.6,-1.1,-2.78,5/8,19771834104.0
+XOM,usXOM.N,ExxonMobil Holdings Corporation Common Stock,能源,石油天然气,2026-09-03,162.21,5.4,-0.86,-1.18,5/8,650463352952.0
 ZETA,usZETA.N,Zeta Global Holdings Corp. Class A Common Stock,科技,计算机软件,2026-09-03,32.68,27.9,5.85,7.36,8/8,7086114069.0
 HYLN,usHYLN.AM,Hyliion Holdings Corp. Class A Common Stock,非必需消费,非银行金融,2026-09-03,3.66,-7.3,4.6,2.81,5/8,592942764.0
-VZLA,usVZLA.AM,Vizsla Silver Corp. Common Shares,基础材料,贵金属,2026-09-03,4.17,18.1,3.24,0.48,5/8,1421212445.0
 TMP,usTMP.AM,Tompkins Financial Corporation Common Stock,金融,银行,2026-09-03,98.69,-0.5,1.89,1.16,5/8,1402908554.0
+VZLA,usVZLA.AM,Vizsla Silver Corp. Common Shares,基础材料,贵金属,2026-09-03,4.17,18.1,3.24,0.48,5/8,1421212445.0

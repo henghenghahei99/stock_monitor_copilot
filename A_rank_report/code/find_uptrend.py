@@ -172,7 +172,7 @@ def cond7_volume_up(close, volume, ma):
 
 def cond7_windows(close, volume, ma):
     """8 窗口持续性: 7日为窗, 逐日往前移共7个窗口(覆盖最近13个交易日);
-    7个窗口涨幅中 >=5 个 >0 且 >=4 个 >2%。
+    7个窗口涨幅中 >=6 个 >0 且 >=4 个 >2%。
 
     win_k = close[t-k] / close[t-k-7] - 1, k=0..6
     """
@@ -188,7 +188,7 @@ def cond7_windows(close, volume, ma):
         wins.append(c[i] / c[j] - 1)
     n_pos = sum(1 for w in wins if w > 0)
     n_big = sum(1 for w in wins if w > 0.02)
-    return bool(n_pos >= 5 and n_big >= 4)
+    return bool(n_pos >= 6 and n_big >= 4)
 
 
 def cond7_vol_windows(close, volume, ma):
