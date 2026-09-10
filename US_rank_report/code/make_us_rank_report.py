@@ -438,17 +438,17 @@ def main() -> None:
             d = d[keep]
             mom_today = {str(r["industry"]).strip(): float(r["动量分"]) for _, r in rank.iterrows()} \
                 if "动量分" in rank else {}
-            # 排序: 完全新进池 → 新进池 → 池内(排名变化降序: 提高多→没变→降低少→降低多) → 退出池
-            # 组内次键: 当日动量分降序(新进池/退出池按动量强弱; 池内同排名变化时按动量强弱)
+            # 排序: 完全新进池 → 新进池 → 池内(按动量分变化降序: 提高多→没变→降低少→降低多) → 退出池
+            # 组内次键: 当日动量分降序(新进池/退出池按动量强弱; 池内同动量变化时按动量强弱)
             _gm = {"完全新进池": 0, "新进池": 1, "池内": 2, "退出池": 3}
             d["_g"] = d["状态"].astype(str).map(lambda s: _gm.get(s, 9))
-            _rc = pd.to_numeric(d["排名变化"], errors="coerce").fillna(0)
-            d["_rc"] = _rc.where(d["状态"].astype(str).eq("池内"), 0.0)
+            _pm = pd.to_numeric(d["动量分变化"], errors="coerce").fillna(0)
+            d["_pm"] = _pm.where(d["状态"].astype(str).eq("池内"), 0.0)
             d["_mc"] = pd.to_numeric(
                 d["行业"].map(lambda i: mom_today.get(str(i).strip(), -999.0)),
                 errors="coerce").fillna(-999.0)
-            d = (d.sort_values(["_g", "_rc", "_mc"], ascending=[True, False, False], kind="stable")
-                   .drop(columns=["_g", "_rc", "_mc"]).reset_index(drop=True))
+            d = (d.sort_values(["_g", "_pm", "_mc"], ascending=[True, False, False], kind="stable")
+                   .drop(columns=["_g", "_pm", "_mc"]).reset_index(drop=True))
         if not d.empty:
             delta_html = ("<h3>与前一交易日排名升降 (排名变化: 正=名次上升)</h3>" + _html_table(d))
             delta_txt_lines = ["", "== 与前一交易日排名升降 ==", _txt_table(d)]
@@ -456,7 +456,7 @@ def main() -> None:
                           "padding:10px 14px;font-size:12px;line-height:1.8'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
                           f"(入池=原得分前{top} ∪ 动量入池分前{top}、池内按总分=趋势分×50%+动量分×50% 降序)计算后对比。"
                           "状态：池内=两日均在池内；新进池=今日新进(前日不在池)；完全新进池=此前几日均未入池、今日首次入池(紫)；退出池=今日掉出池。"
-                          "本表全量列出(排序: 完全新进池 → 新进池 → 池内按排名变化降序[提高多→没变→降低少→降低多] → 退出池; 组内按当日动量分降序)。"
+                          "本表全量列出(排序: 完全新进池 → 新进池 → 池内按动量分变化降序[提高多→没变→降低少→降低多] → 退出池; 组内按当日动量分降序)。"
                           "涨红跌绿：排名变化=前日排名−今日排名(正=名次上升)；"
                           "趋势分变化/动量分变化/总分变化=今日−前日(正=升，负=降)。<br>"
                           "评价：池内按 趋势分变化(正=趋势增强/负=趋势减弱) + 动量分变化(≥1.5动量爆发 / 0~1.5动量增强 / -1.5~0动量减弱 / <-1.5动量大幅下滑)；"
