@@ -46,8 +46,8 @@ def size_factor(n: int) -> float:
 _mem_sz: dict[str, int] | None = None
 
 
-# 细分并入主板块(A股报告聚合口径): 焦炭Ⅱ 并入 煤炭开采(按用户口径把焦炭都算煤炭)
-INDUSTRY_MERGE = {"焦炭Ⅱ": "煤炭开采"}
+# 细分并入主板块(A股报告聚合口径): 现用东财二级行业, 煤炭已含焦炭, 无需合并
+INDUSTRY_MERGE: dict[str, str] = {}
 
 
 def _merge_ind(ind) -> str:
