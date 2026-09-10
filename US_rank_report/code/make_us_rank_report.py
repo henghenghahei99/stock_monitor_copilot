@@ -461,8 +461,20 @@ def main() -> None:
                         & ~d["行业"].astype(str).str.strip().isin(prev_pool))
                 d.loc[newm, "状态"] = "完全新进池"
             d = _add_eval(d, rank)
+            # 5日进池次数: 窗口内(含今日, 最多5个交易日)该板块在池的交易日数(与走势图同一窗口),
+            # 插在“评价”列前面
+            if series:
+                _pc: dict[str, int] = {}
+                for _sd in series:
+                    for _i in _sd["pool"]:
+                        _k = str(_i).strip()
+                        _pc[_k] = _pc.get(_k, 0) + 1
+                _loc = (int(d.columns.get_loc("评价")) if "评价" in d.columns
+                        else len(d.columns))
+                d.insert(_loc, "5日进池次数",
+                         [int(_pc.get(str(_i).strip(), 0)) for _i in d["行业"]])
             keep = [c for c in ["行业", "状态", "排名变化", "趋势分变化",
-                                "动量分变化", "总分变化", "评价"] if c in d.columns]
+                                "动量分变化", "总分变化", "5日进池次数", "评价"] if c in d.columns]
             d = d[keep]
             mom_today = {str(r["industry"]).strip(): float(r["动量分"]) for _, r in rank.iterrows()} \
                 if "动量分" in rank else {}
@@ -487,6 +499,7 @@ def main() -> None:
                           "本表全量列出(排序: 完全新进池 → 新进池 → 池内按动量分变化降序[提高多→没变→降低少→降低多] → 退出池; 组内按当日动量分降序)。"
                           "涨红跌绿：排名变化=前日排名−今日排名(正=名次上升)；"
                           "趋势分变化/动量分变化/总分变化=今日−前日(正=升，负=降)。<br>"
+                          f"5日进池次数=最近{len(series) or 5}个交易日(含今日, 与下方走势图同一窗口)该板块在池的天数(每日取当天自己的池)；"
                           "评价：池内按 趋势分变化(正=趋势增强/负=趋势减弱) + 动量分变化(≥1.5动量爆发 / 0~1.5动量增强 / -1.5~0动量减弱 / <-1.5动量大幅下滑；阈值均按**加权后**分值)；"
                           "新进/退出按该板块当日趋势分、动量分在今日池内百分位：趋势 前10%很强 / 动量 前10%爆发；10-30%强 / 30-70%一般 / 70-100%弱。</p>")
 
