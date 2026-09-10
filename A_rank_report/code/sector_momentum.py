@@ -7,7 +7,7 @@
     当日% = 今收/昨收-1;  近2日% = 今收/2交易日前收-1;  近3日% = 今收/3交易日前收-1
 
 展示口径(池内, "和以前一样"):
-  趋势分 = 加权命中股平均分; 动量分(±10) = 前n只代表股 m 求和按 S/(5/3×只数) 归一;
+  趋势分 = 加权命中股平均分; 动量分(±10) = 前n只代表股 m 求和按 S/(1.4×只数) 归一;
   总分 = 趋势分×50% + 动量分×50%; 池内按总分降序; 代表股 = 加权分前10 命中股。
 
 双口径入池(2026-09-06 用户口径):
@@ -37,8 +37,9 @@ OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 
 # 动量 m 权重(加强当日): 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20, 和为1
 MOM_W1, MOM_W2, MOM_W3 = 0.50, 0.30, 0.20
-# 动量分归一除数: 原口径(等权三条叠加)≈3×单日涨幅, 改为权重和=1后等比缩放为 5/3, 保持 ±10 量级
-MOM_NORM = 5.0 / 3.0
+# 动量分归一除数: 权重和已由 3 变 1(加权 m 变小), 用 1.4(=7/5) 标定,
+# 使动量分均值与"等权三条叠加+除5"的旧口径一致(A股实测 ~1.02×, 美股 ~1.00×), 保持 ±10 量级
+MOM_NORM = 1.4
 
 
 def _weighted_m(d1: float, d2: float, d3: float) -> float:
@@ -335,7 +336,7 @@ def industry_momentum_stats(rep_rows: pd.DataFrame, asof: date) -> tuple[int, fl
             S += m
     if n == 0:
         return 0, 0.0, 0.0
-    pts = S / (MOM_NORM * n)   # 权重和已由3变1, 除 5/3 等比缩放保持量级, 允许为负, ±10 封顶
+    pts = S / (MOM_NORM * n)   # 权重和已由3变1, 除 1.4 标定回原量级, 允许为负, ±10 封顶
     pts = max(-10.0, min(10.0, pts))
     return n, round(S, 2), round(pts, 2)
 
@@ -382,7 +383,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
 
     动量(展示与入池同源, 基于板块全部成分股):
       板块成分股按 m=当日%×50%+近2日%×30%+近3日%×20% 降序前10(不足按实际只数), S=Σm;
-      动量入池分 = S(原始);  展示动量分(±10) = S ÷ (5/3×动量股数);
+      动量入池分 = S(原始);  展示动量分(±10) = S ÷ (1.4×动量股数);
       入池 = 原行业"得分"前 top ∪ "动量入池分"前 top(并集, 最多 2*top)。
     池内按 总分 = 趋势分×50% + 动量分×50% 降序。
     代表股列 = 趋势代表股(加权分前5) + ◎动量代表股(全部成分股按 m 前5, ◎=短线动量, 报告端标色)。
@@ -404,7 +405,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     cnt_map = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
 
     def _display_pts(raw, cnt) -> float:
-        """动量分(±10) = S/(5/3×动量股数), 与动量入池分同源归一(5/3 为权重归一后的等比缩放)。"""
+        """动量分(±10) = S/(1.4×动量股数), 与动量入池分同源归一(1.4 为标定回旧口径量级的除数)。"""
         if raw is None or cnt is None or int(cnt) <= 0:
             return 0.0
         pts = float(raw) / (MOM_NORM * int(cnt))
