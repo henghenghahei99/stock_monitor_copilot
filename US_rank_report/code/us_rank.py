@@ -506,7 +506,10 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
     global LAST_WEIGHTS
     wt, wm = dynamic_weights(rk["趋势分"], rk["动量分"])
     LAST_WEIGHTS = (wt, wm)
-    rk["总分"] = (rk["趋势分"] * wt + rk["动量分"] * wm).round(2)
+    # 展示口径: 趋势分/动量分原始值保留(走势图用原始量级), 另给加权后贡献两列
+    rk["趋势贡献"] = (rk["趋势分"] * wt).round(2)
+    rk["动量贡献"] = (rk["动量分"] * wm).round(2)
+    rk["总分"] = (rk["趋势贡献"] + rk["动量贡献"]).round(2)
     rk = rk.sort_values("总分", ascending=False).reset_index(drop=True)
     rk.insert(0, "排名", range(1, len(rk) + 1))
     out = os.path.join(OUT, f"us_rank_{day_key}.csv")
@@ -556,7 +559,10 @@ def _scores_index(day_key: str, pool: set[str]) -> dict[str, dict]:
     for _, r in df.iterrows():
         ind = str(r["industry"]).strip()
         if ind in pool or ind in {str(x).strip() for x in df["industry"]}:
-            out[ind] = {"趋势分": float(r["趋势分"]), "动量分": float(r["动量分"]),
+            # 展示口径取“加权后贡献”列(老数据无此列时退回原始列)
+            tk = r["趋势贡献"] if "趋势贡献" in df.columns else r["趋势分"]
+            mk = r["动量贡献"] if "动量贡献" in df.columns else r["动量分"]
+            out[ind] = {"趋势分": float(tk), "动量分": float(mk),
                         "总分": float(r["总分"])}
     return out
 

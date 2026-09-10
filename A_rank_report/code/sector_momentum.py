@@ -472,7 +472,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
       板块成分股按 m=当日%×50%+近2日%×30%+近3日%×20% 降序前10(不足按实际只数), S=Σm;
       动量入池分 = S(原始);  展示动量分(±10) = S ÷ (1.4×动量股数);
       入池 = 原行业"得分"前 top ∪ "动量入池分"前 top(并集, 最多 2*top)。
-    池内按 总分 = 趋势分/动量分 动态配平(w_T/w_M 由当日池内两分量平均量级取反比) 降序。
+    池内按 总分 = 趋势贡献 + 动量贡献 降序; 列含 趋势分/动量分(原始) 与 趋势贡献/动量贡献(加权后, 相加=总分)。
     代表股列 = 趋势代表股(加权分前5) + ◎动量代表股(全部成分股按 m 前5, ◎=短线动量, 报告端标色)。
     列: industry/得分/股票数/趋势分/动量分/总分/动量入池分/代表股/入池
     """
@@ -580,7 +580,11 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
         return out
     wt, wm = dynamic_weights(out["趋势分"], out["动量分"])
     LAST_WEIGHTS = (wt, wm)
-    out["总分"] = (out["趋势分"] * wt + out["动量分"] * wm).round(2)
+    # 展示口径: 趋势分/动量分原始值保留(供求走势图用原始量级), 另给“加权后贡献”两列,
+    # 使报告里看到的分值就是实际入总分的值(趋势贡献+动量贡献=总分)
+    out["趋势贡献"] = (out["趋势分"] * wt).round(2)
+    out["动量贡献"] = (out["动量分"] * wm).round(2)
+    out["总分"] = (out["趋势贡献"] + out["动量贡献"]).round(2)
     return out.sort_values("总分", ascending=False).reset_index(drop=True)
 
 

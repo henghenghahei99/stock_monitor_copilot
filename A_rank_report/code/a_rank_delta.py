@@ -58,16 +58,24 @@ def main() -> None:
     new = a_rank(args.new, args.col, mapping, args.top, args.sort).set_index("industry")
 
     inds = sorted(set(old.index) | set(new.index), key=lambda x: new["排名"].get(x, 99))
+
+    def _col(tbl: pd.DataFrame, name: str):
+        """优先取“加权后贡献”列(展示口径=实际入总分的值), 老数据退回原始列。"""
+        for c in (name + "贡献", name):
+            if c in tbl.columns:
+                return tbl[c]
+        return pd.Series(dtype=float)
+
     rows = []
     for ind in inds:
         rows.append({
             "行业": ind,
             "前日排名": old["排名"].get(ind),
             "今日排名": new["排名"].get(ind),
-            "前日趋势分": old["趋势分"].get(ind),
-            "今日趋势分": new["趋势分"].get(ind),
-            "前日动量分": old["动量分"].get(ind),
-            "今日动量分": new["动量分"].get(ind),
+            "前日趋势分": _col(old, "趋势分").get(ind),
+            "今日趋势分": _col(new, "趋势分").get(ind),
+            "前日动量分": _col(old, "动量分").get(ind),
+            "今日动量分": _col(new, "动量分").get(ind),
             "前日总分": old["总分"].get(ind),
             "今日总分": new["总分"].get(ind),
         })
