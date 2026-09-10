@@ -47,6 +47,9 @@ MOM_NORM = 1.4
 #   以池内"平均绝对值"为量级基准(base-T / base-M), 权重取反比 -> 两分量对总分的**平均贡献相等**;
 #   动量整体接近0的极端日按 [MOM_W_MIN, MOM_W_MAX] 截断, 避免权重失真。
 MOM_W_MIN, MOM_W_MAX = 0.35, 0.65
+# 展示倍率: 加权贡献再×2才与“未加权原始值”同一量级(w_T+w_M=1 -> 平均倍率 2×0.5=1),
+# 否则加权后每个分值看起来“小一半”, 总分也对应偏小。
+DISPLAY_SCALE = 2.0
 LAST_WEIGHTS: tuple[float, float] = (0.5, 0.5)   # (趋势权重, 动量权重), 供报告脚注展示当日实际值
 
 
@@ -581,9 +584,10 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     wt, wm = dynamic_weights(out["趋势分"], out["动量分"])
     LAST_WEIGHTS = (wt, wm)
     # 展示口径: 趋势分/动量分原始值保留(供求走势图用原始量级), 另给“加权后贡献”两列,
-    # 使报告里看到的分值就是实际入总分的值(趋势贡献+动量贡献=总分)
-    out["趋势贡献"] = (out["趋势分"] * wt).round(2)
-    out["动量贡献"] = (out["动量分"] * wm).round(2)
+    # 使报告里看到的分值就是实际入总分的值(趋势贡献+动量贡献=总分);
+    # 贡献 = 原始分 × (2×权重), 平均倍率=1, 保持与原始值同一量级
+    out["趋势贡献"] = (out["趋势分"] * wt * DISPLAY_SCALE).round(2)
+    out["动量贡献"] = (out["动量分"] * wm * DISPLAY_SCALE).round(2)
     out["总分"] = (out["趋势贡献"] + out["动量贡献"]).round(2)
     return out.sort_values("总分", ascending=False).reset_index(drop=True)
 

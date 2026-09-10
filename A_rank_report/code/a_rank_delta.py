@@ -61,9 +61,11 @@ def main() -> None:
 
     def _col(tbl: pd.DataFrame, name: str):
         """优先取“加权后贡献”列(展示口径=实际入总分的值), 老数据退回原始列。"""
-        for c in (name + "贡献", name):
-            if c in tbl.columns:
-                return tbl[c]
+        wn = "趋势贡献" if name == "趋势分" else "动量贡献"
+        if wn in tbl.columns:
+            return tbl[wn]
+        if name in tbl.columns:
+            return tbl[name]
         return pd.Series(dtype=float)
 
     rows = []

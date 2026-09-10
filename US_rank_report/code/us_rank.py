@@ -73,6 +73,7 @@ MOM_NORM = 1.4
 # 池内动态权重(与A股同一套, 2026-09-10 起): 固定 50/50 会让量级小的一侧形同虚设,
 # 改为按当日池内两分量"平均绝对值"取反比权重, 使两者对总分的平均贡献相等。
 MOM_W_MIN, MOM_W_MAX = 0.35, 0.65
+DISPLAY_SCALE = 2.0   # 展示倍率: 加权贡献×2 才与未加权原始值同量级(平均倍率=1)
 LAST_WEIGHTS: tuple[float, float] = (0.5, 0.5)   # (趋势权重, 动量权重)
 
 
@@ -506,9 +507,9 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
     global LAST_WEIGHTS
     wt, wm = dynamic_weights(rk["趋势分"], rk["动量分"])
     LAST_WEIGHTS = (wt, wm)
-    # 展示口径: 趋势分/动量分原始值保留(走势图用原始量级), 另给加权后贡献两列
-    rk["趋势贡献"] = (rk["趋势分"] * wt).round(2)
-    rk["动量贡献"] = (rk["动量分"] * wm).round(2)
+    # 展示口径: 趋势分/动量分原始值保留(走势图用原始量级), 另给加权后贡献两列(×2 保持原量级)
+    rk["趋势贡献"] = (rk["趋势分"] * wt * DISPLAY_SCALE).round(2)
+    rk["动量贡献"] = (rk["动量分"] * wm * DISPLAY_SCALE).round(2)
     rk["总分"] = (rk["趋势贡献"] + rk["动量贡献"]).round(2)
     rk = rk.sort_values("总分", ascending=False).reset_index(drop=True)
     rk.insert(0, "排名", range(1, len(rk) + 1))

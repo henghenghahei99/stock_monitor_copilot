@@ -569,6 +569,8 @@ def main() -> None:
         rk = sm.combined_rank(dfr, args.col, {8: 8, 7: 6, 6: 4}, args.top)
         w_t, w_m = sm.LAST_WEIGHTS            # 当日池内动态权重(趋势, 动量)
         w_txt = f"趋势{w_t:.0%}/动量{w_m:.0%}"
+        sc = sm.DISPLAY_SCALE
+        sc_txt = f"原始指标×{w_t * sc:.2f} / ×{w_m * sc:.2f}"
         # 展示口径 = 加权后的贡献值(趋势贡献/动量贡献, 相加正好=总分); 原始分只给走势图用
         rk = rk.drop(columns=["趋势分", "动量分", "得分", "股票数", "动量入池分"], errors="ignore")
         rk = rk.rename(columns={"趋势贡献": "趋势分", "动量贡献": "动量分"})
@@ -580,12 +582,13 @@ def main() -> None:
         rk = None
         w_t = w_m = 0.5
         w_txt = "趋势50%/动量50%"
+        sc_txt = "原始指标×1.00 / ×1.00"
 
     # delta + 评价列
     delta = pd.read_csv(args.delta) if args.delta and os.path.exists(args.delta) else None
     if delta is not None and dfr is not None:
         try:
-            today_scores = sm.industry_momentum_scores(dfr)
+            today_scores = sm.industry_momentum_scores(dfr, args.col)
             pool_inds = set(rk["industry"]) if rk is not None else set(today_scores["industry"])
             _add_eval_col(delta, today_scores, pool_inds)
         except Exception as exc:  # noqa: BLE001
@@ -708,8 +711,9 @@ def main() -> None:
                  "③ 行业得分=该行业成员加权分之和；趋势分=得分/计入股票数。<br>"
                  "④ 动量分(±10)与动量入池分同源：取板块全部成分股按 m=当日%×50%+近2日%×30%+近3日%×20%(加强当日)降序前10"
                  "(不足按实际只数)，S=Σ前10的m；动量入池分=S；展示动量分=S÷(1.4×动量股数) 归一(允许为负, ±10封顶)。<br>"
-                 f"⑤ 总分 = 趋势分 + 动量分（**池内动态配平**：两个分值已按当日权重加权，即实际入总分的**贡献值**；"
-                 f"权重按当日池内两分量的平均绝对量级取反比确定，使两者对总分的平均贡献相等，w_M 限 [35%, 65%]；今日 {w_txt}。"
+                 f"⑤ 总分 = 趋势分 + 动量分（两个分值已按当日权重加权并×2，即实际入总分的**贡献值**；"
+                 f"展示倍率={sc_txt}，平均倍率为1，故与原始指标同量级；"
+                 f"权重按当日池内两分量的平均绝对量级取反比，使两者对总分的平均贡献相等，w_M 限 [35%, 65%]；今日 {w_txt}。"
                  f"原始未加权指标仅供下方走势图）；入池=原行业得分前{args.top}名 ∪ 动量入池分前{args.top}名(并集, 最多{2 * args.top}个)，"
                  "池内按总分降序排名；入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前7(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日涨幅); ◆紫=相比前日新进入动量前7。<br>"
@@ -726,7 +730,7 @@ def main() -> None:
             "表后注(今日板块排名算法)：<br>",
             f"表后注(今日板块排名算法)：<br><b style='color:#6a1b9a'>实验口径: 策略列 = {args.col}</b><br>")
     if rk is not None:
-        parts.append(f"<h3>今日板块排名(趋势分/动量分动态配平 {w_txt} → 入池=原得分前{args.top} ∪ 动量前{args.top} → 总分)</h3>")
+        parts.append(f"<h3>今日板块排名({sc_txt}(=2×权重; 权重 {w_txt}) → 入池=原得分前{args.top} ∪ 动量前{args.top} → 总分)</h3>")
         parts.append(_html_table(rk.rename(columns={"industry": "行业"})))
         parts.append(rank_note)
     delta_note = (f"<p class='note'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
@@ -765,7 +769,7 @@ def main() -> None:
                      "②行业加权 8/8->8分、7/8->6分、6/8->4分(6以下计0); ③行业得分=成员加权分之和, "
                      "趋势分=得分/股票数; ④动量分(±10)与动量入池分同源: 板块全部成分股按 m=当日%×50%+近2日%×30%+近3日%×20% 降序前10"
                      "(不足按实际只数)S=Σ, 动量入池分=S, 展示动量分=S/(1.4×动量股数)(允许为负, ±10封顶); "
-                     f"⑤总分=趋势分+动量分(两分值已按当日权重加权, 相加=总分; 权重按池内量级取反比, 平均贡献相等, w_M限[35%,65%]; 今日{w_txt}), 入池=原得分前{args.top} ∪ 动量入池分前{args.top}(并集, 最多{2 * args.top}), 池内按总分降序; "
+                     f"⑤总分=趋势分+动量分(两分值=原始指标×{sm.DISPLAY_SCALE:.0f}×权重, 相加=总分; 展示倍率{sc_txt}, 平均=1; 今日权重{w_txt}), 入池=原得分前{args.top} ∪ 动量入池分前{args.top}(并集, 最多{2 * args.top}), 池内按总分降序; "
                      "入池列: 趋势=得分入池, 动量=动量入池, 趋势+动量=双口径; "
                      "⑥代表股=趋势前5(加权分, X/8,+近20日%) + ◎动量前7(板块全部成分股按m最强, 括号=当日涨幅; ◆=相比前日新进入)")
     if delta is not None:
