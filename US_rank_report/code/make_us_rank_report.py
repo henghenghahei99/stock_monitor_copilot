@@ -259,10 +259,12 @@ def _load_series(tag: str, days: int = CHART_DAYS) -> list[dict]:
             series.append({
                 "label": f"{core[4:6]}-{core[6:]}",
                 "pool": [str(x) for x in df["industry"]],
-                # 走势图用**未加权原始指标**(表格里展示的是加权后的贡献值)
-                "scores": {str(r["industry"]): {"trend": float(r["趋势分"]),
-                                                "mom": float(r["动量分"])}
-                           for _, r in df.iterrows()},
+                # 走势图与表格同口径: **加权后贡献值**(趋势贡献/动量贡献 = 原始×2×当日权重);
+                # 旧文件无贡献列时退回原始值
+                "scores": {str(r["industry"]): {
+                    "trend": float(r["趋势贡献"] if "趋势贡献" in df.columns else r["趋势分"]),
+                    "mom": float(r["动量贡献"] if "动量贡献" in df.columns else r["动量分"])}
+                    for _, r in df.iterrows()},
             })
         except Exception:  # noqa: BLE001
             pass
@@ -507,8 +509,8 @@ def main() -> None:
         gi = 0
         chart_no = 0
         png_dir = os.path.join(OUT, f"us_rank_report_{tag}_charts")
-        metrics = (("mom", "动量分走势(未加权原始值, ±10)", "动量分"),
-                   ("trend", "趋势分走势(未加权原始值)", "趋势分"))
+        metrics = (("mom", "动量分走势（加权后贡献值, 每日按当日权重×2）", "动量分"),
+                   ("trend", "趋势分走势（加权后贡献值, 每日按当日权重×2）", "趋势分"))
         # 分组顺序: **先动量(整体上升→整体下降), 再趋势(整体上升→整体下降)**
         dirs = {m: _direction_groups(series, today_pool, m) for m, _, _ in metrics}
         for metric, mname, short in metrics:
@@ -559,7 +561,8 @@ def main() -> None:
                  "④ 动量分(±10)与动量入池分同源：取板块全部成分股按 m=当日%×50% + 近2日%×30% + 近3日%×20%(加强当日)降序前10(不足按实际只数)，S=Σ前10的m；"
                  "动量入池分=S；展示动量分=S÷(1.4×动量股数) 归一(允许为负, ±10封顶)。<br>"
                  f"⑤ 总分=趋势分+动量分（两个分值已按当日权重加权并×2，即实际入总分的**贡献值**；展示倍率={sc_txt}，平均=1，与原始指标同量级；"
-                 f"权重按当日池内两分量的平均绝对量级取反比，使两者对总分的平均贡献相等，w_M 限[35%,65%]；今日 {w_txt}。原始未加权指标仅供下方走势图）；入池=原行业得分前{top} ∪ 动量入池分前{top}(并集, 最多{2 * top})，池内按总分降序排名；"
+                 f"权重按当日池内两分量的平均绝对量级取反比，使两者对总分的平均贡献相等，w_M 限[35%,65%]；今日 {w_txt}。"
+                 f"下方走势图同样为加权后贡献值(每日按各自权重)）；入池=原行业得分前{top} ∪ 动量入池分前{top}(并集, 最多{2 * top})，池内按总分降序排名；"
                  "入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日%) + ◎动量前7(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日%); "
                  "◆紫=相比前日新进入动量前7。<br>"

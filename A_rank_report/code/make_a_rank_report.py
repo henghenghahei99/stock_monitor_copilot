@@ -245,7 +245,9 @@ def _recent_pool_series(date_mmdd: str, days: int = 5, top: int = 15,
     """近 days 个有结果CSV的交易日(<=报告日, 含报告日本身), 各自"当天池"的每板块分数。
 
     每天用当天自己的池(combined_rank 双口径: 得分前 top ∪ 动量入池分前 top),
-    记录 池内每板块 趋势分/动量分。某板块某天不在池则当天无分数(=出池, 画图时断线)。
+    记录 池内每板块 **加权后贡献值**(趋势贡献/动量贡献 = 原始值×2×当日池内权重,
+    即上方两表里看到的趋势分/动量分——每天用当天自己的权重, 跨日可比)。
+    某板块某天不在池则当天无分数(=出池, 画图时断线)。
     返回按日期升序, 有多少天返回多少。
     注意: 历史CSV的口径列必须与报告一致(V1=uptrend, V2=uptrend7), 否则取不到分数。
     """
@@ -265,13 +267,16 @@ def _recent_pool_series(date_mmdd: str, days: int = 5, top: int = 15,
             rk = sm.combined_rank(dfr, col, {8: 8, 7: 6, 6: 4}, top)
             if rk.empty:
                 continue
+            # 加权后贡献值(=表格口径); 旧版无此列时退回原始值
+            tcol = "趋势贡献" if "趋势贡献" in rk.columns else "趋势分"
+            mcol = "动量贡献" if "动量贡献" in rk.columns else "动量分"
             series.append({
                 "label": f"{core[:2]}-{core[2:]}",
                 "date": core,
                 "n": int(len(rk)),
                 "pool": [str(x) for x in rk["industry"]],
-                "scores": {str(r["industry"]): {"trend": float(r["趋势分"]),
-                                              "mom": float(r["动量分"])}
+                "scores": {str(r["industry"]): {"trend": float(r[tcol]),
+                                              "mom": float(r[mcol])}
                            for _, r in rk.iterrows()},
                 "cov": _coverage_tag(dfr),
             })
@@ -532,7 +537,7 @@ def _view_txt(order: list[tuple[str, int | None]], series: list[dict]) -> list[s
             if s is None:
                 cells.append(f"{p['label']}: -")
             else:
-                cells.append(f"{p['label']}: 趋{s['trend']:.1f}/动{s['mom']:.1f}")
+                cells.append(f"{p['label']}: 趋{s['trend']:.2f}/动{s['mom']:.2f}")
         out.append(head + "  " + "  ".join(cells))
     return out
 
@@ -657,8 +662,8 @@ def main() -> None:
             gi = 0
             chart_no = 0
             del empty_groups[:]
-            metrics = (("mom", "动量分走势（未加权原始值, ±10）", "动量分"),
-                       ("trend", "趋势分走势(未加权原始值, 每日该板块入池得分)", "趋势分"))
+            metrics = (("mom", "动量分走势（加权后贡献值, 每日按当日权重×2）", "动量分"),
+                       ("trend", "趋势分走势（加权后贡献值, 每日按当日权重×2）", "趋势分"))
             # 分组顺序: **先动量(整体上升→整体下降), 再趋势(整体上升→整体下降)**
             dirs = {m: _direction_groups(order, series, m) for m, _, _ in metrics}
             for metric, mname, short in metrics:
@@ -695,7 +700,8 @@ def main() -> None:
                 "覆盖: " + "、".join(f"{p['label']}({p['cov'] or '?'})" for p in series) + "；x 轴下方数字 = 该日池内板块数。",
                 f"筛选: 退出的不画；窗口内在池天数<{CHART_MIN_RUN}日的(零散孤点)不画；不做振幅/横盘过滤。",
                 "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”；排序=先动量(上升→下降)，再趋势(上升→下降)。",
-                f"口径: 每日取当天自己的入池板块(原得分前{args.top} ∪ 动量入池分前{args.top})；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
+                f"口径: 分值为**加权后的贡献值**(=原始指标×2×当日池内权重, 与上方两表同口径；每天用当天自己的权重)，跨日直接可比；"
+                f"每日取当天自己的入池板块(原得分前{args.top} ∪ 动量入池分前{args.top})；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
             ]
             if empty_groups:
                 note_lines.append("本日无满足条件的分组(因此不画图): " + "、".join(empty_groups)
@@ -714,7 +720,7 @@ def main() -> None:
                  f"⑤ 总分 = 趋势分 + 动量分（两个分值已按当日权重加权并×2，即实际入总分的**贡献值**；"
                  f"展示倍率={sc_txt}，平均倍率为1，故与原始指标同量级；"
                  f"权重按当日池内两分量的平均绝对量级取反比，使两者对总分的平均贡献相等，w_M 限 [35%, 65%]；今日 {w_txt}。"
-                 f"原始未加权指标仅供下方走势图）；入池=原行业得分前{args.top}名 ∪ 动量入池分前{args.top}名(并集, 最多{2 * args.top}个)，"
+                 f"下方走势图同样为加权后贡献值(每日按各自权重)）；入池=原行业得分前{args.top}名 ∪ 动量入池分前{args.top}名(并集, 最多{2 * args.top}个)，"
                  "池内按总分降序排名；入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前7(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日涨幅); ◆紫=相比前日新进入动量前7。<br>"
                  "⑦ 数量因子f: 从0只起按0.003/只(=0.06/20)连续线性递减(如20只≈0.94、120只=0.64)，n≥120封底0.64不再减；趋势分、动量分(±10)、动量入池分及入池资格(得分/动量两条腿)均乘f。</p>")
@@ -784,7 +790,7 @@ def main() -> None:
                      "新进/退出按当日趋势分、动量分在今日池内百分位(趋势前10%很强/动量前10%爆发/10-30%强/30-70%一般/70-100%弱)")
     if series:
         lines.append("")
-        lines.append("== 附: 板块近%d日走势 (今日池中走势明显的板块; 不在池日为 -) ==" % len(series))
+        lines.append("== 附: 板块近%d日走势 (加权后贡献值=原始×2×当日权重; 今日池中走势明显的板块; 不在池日为 -) ==" % len(series))
         if order:
             lines += _view_txt(order, series)
         else:
