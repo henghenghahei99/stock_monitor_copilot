@@ -29,7 +29,7 @@ if [[ -f "$NEW" ]]; then
   echo "[1/4] 今日结果已存在, 跳过扫描: $NEW"
 else
   echo "[1/4] 扫描 A股上涨趋势 + A_rank 排名 (top=$TOP, workers=$WORKERS, delay=$DELAY, min_price=$MIN_PRICE) ..."
-  "$PY" -u code/scan_rank.py --strategies a_rank_report_v1 \
+  "$PY" -u code/scan_rank.py --strategies a_rank_report_v2 \
     --workers "$WORKERS" --delay "$DELAY" --top "$TOP" --min-price "$MIN_PRICE" \
     --results-out "$NEW" --rank-out "output/a_rank_${DATE}.csv"
 fi
@@ -66,7 +66,7 @@ fi
 # 3) 生成 HTML/文本报告
 echo "[3/4] 生成报告 (top=$TOP) ..."
 "$PY" -u code/make_a_rank_report.py --date "$DATE" \
-  --results "$NEW" --delta "output/cn_uptrend_${DATE}_delta.csv" --top "$TOP" >/dev/null
+  --results "$NEW" --delta "output/cn_uptrend_${DATE}_delta.csv" --top "$TOP" --col uptrend7 >/dev/null
 # 4) 发邮件(收件人取 ~/.mail_sender.json 的 to, 默认两个邮箱)
 echo "[4/4] 发送邮件 ..."
 "$PY" -u code/send_report.py \

@@ -605,7 +605,9 @@ def main() -> None:
                 mom_today = dict(zip(today_scores["industry"],
                                      pd.to_numeric(today_scores["动量分"], errors="coerce")))
 
-    title = f"A_rank 日报 · {args.label or ('2026-' + args.date[:2] + '-' + args.date[2:])} A股板块得分排名"
+    _disp = args.label or ('2026-' + args.date[:2] + '-' + args.date[2:])
+    _tag = " V2" if args.col == "uptrend7" else ""
+    title = f"A_rank 日报{_tag} · {_disp} A股板块得分排名"
     head = ("<head><meta charset='utf-8'><title>%s</title><style>"
             "body{font-family:Segoe UI,'Microsoft YaHei',sans-serif;color:#222}"
             "h2{color:#2b579a}h3{color:#444}.note{color:#999;font-size:12px}"
@@ -700,11 +702,17 @@ def main() -> None:
                  "池内按总分降序排名；入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前7(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日涨幅); ◆紫=相比前日新进入动量前7。<br>"
                  "⑦ 数量因子f: 从0只起按0.003/只(=0.06/20)连续线性递减(如20只≈0.94、120只=0.64)，n≥120封底0.64不再减；趋势分、动量分(±10)、动量入池分及入池资格(得分/动量两条腿)均乘f。</p>")
-    if args.col != "uptrend":
+    if args.col == "uptrend7":
         rank_note = rank_note.replace(
             "表后注(今日板块排名算法)：<br>",
-            "表后注(今日板块排名算法)：<br><b style='color:#6a1b9a'>实验口径: 趋势分改用【7交易日窗口】条件"
-            "(站上MA7 / MA7上行 / 低点抬高 / 高点抬高 / 斜率向上 / 近7日新高 / 放量 共7个, 满足≥4命中, 展示折算到 /8)</b><br>")
+            "表后注(今日板块排名算法)：<br><b style='color:#6a1b9a'>口径 V2 = 趋势分用【7交易日窗口】的9个条件"
+            "(站上MA7 / MA7上行 / 低点抬高 / 高点抬高 / 斜率向上 / 近7日新高 / 放量 / "
+            "7窗口持续性[7日为窗逐日前移共7窗, ≥5窗涨幅>0 且 ≥4窗涨幅>2%] / "
+            "7窗口量能放大[7窗累计成交量回归斜率>0 且 最新窗量>最老窗量]), 满足≥6命中, 展示折算到 /8</b><br>")
+    elif args.col != "uptrend":
+        rank_note = rank_note.replace(
+            "表后注(今日板块排名算法)：<br>",
+            f"表后注(今日板块排名算法)：<br><b style='color:#6a1b9a'>实验口径: 策略列 = {args.col}</b><br>")
     if rk is not None:
         parts.append(f"<h3>今日板块排名(趋势分50% + 动量分50% → 入池=原得分前{args.top} ∪ 动量前{args.top} → 总分)</h3>")
         parts.append(_html_table(rk.rename(columns={"industry": "行业"})))

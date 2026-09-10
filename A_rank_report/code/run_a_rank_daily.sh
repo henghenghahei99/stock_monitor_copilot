@@ -28,7 +28,7 @@ if [[ -f "$NEW" ]]; then
   echo "[跳过扫描] 今日结果已存在: $NEW"
 else
   echo "[1/2] 运行 A_rank_report_v1 扫描 (A股上涨趋势 -> 行业加权排名, min_price=$MIN_PRICE) ..."
-  "$PY" -u code/scan_rank.py --strategies a_rank_report_v1 \
+  "$PY" -u code/scan_rank.py --strategies a_rank_report_v2 \
     --workers "$WORKERS" --delay "$DELAY" --top "$TOP" --min-price "$MIN_PRICE" \
     --results-out "$NEW" \
     --rank-out "output/a_rank_${DATE}.csv"

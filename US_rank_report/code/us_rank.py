@@ -48,11 +48,11 @@ for p in (HERE, A_CODE):
 
 import find_overbought_stocks as fos  # noqa: E402
 from translations import translate  # noqa: E402
-from run_strategy import eval_uptrend  # noqa: E402
+from run_strategy import eval_uptrend_7d  # noqa: E402
 
 BARS = 320            # 需覆盖 MA200/近60日
 SCORE_MAP = {8: 8, 7: 6, 6: 4}
-MIN_SCORE = 5
+MIN_SCORE = 6
 # 与 A股默认过滤一致(价格/成交额/成交量/停牌天数); 股价门槛已放宽到 $1
 MIN_PRICE = 1.0
 MIN_VOLUME = 10_000_000.0        # 日均成交额(USD) > 1000 万美元 才参与
@@ -243,7 +243,7 @@ def scan_one(rec: dict, no_cache: bool, asof: date | None = None) -> tuple[dict 
             if m is not None else None
         if len(close) < 60:
             return None, mom_row
-        hit_ok, val = eval_uptrend(close, vol, {"min_score": MIN_SCORE})
+        hit_ok, val = eval_uptrend_7d(close, vol, {"min_score": MIN_SCORE})
         if not hit_ok:
             return None, mom_row
         chg20 = round((last / float(close.iloc[-21]) - 1) * 100, 1) if len(close) > 21 else 0.0

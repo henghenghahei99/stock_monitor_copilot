@@ -103,12 +103,14 @@ def eval_uptrend(close: pd.Series, volume: pd.Series, params: dict):
 
 
 def eval_uptrend_7d(close: pd.Series, volume: pd.Series, params: dict):
-    """上涨趋势(7交易日窗口版): 7个短周期条件打分, 满足数 >= min_score 即命中。
+    """上涨趋势(7交易日窗口版): 9个条件打分, 满足数 >= min_score 即命中。
 
-    条件全部只用最近7根K线(站上MA7/MA7上行/低点抬高/高点抬高/斜率向上/近7日新高/放量);
-    展示值按比例折算到 /8(如 7/7->8/8, 6/7->7/8), 使下游 8:8,7:6,6:4 加权映射仍适用。
+    条件: 站上MA7 / MA7上行 / 低点抬高 / 高点抬高 / 斜率向上 / 近7日新高 / 放量
+         + 7窗口持续性(7日为窗逐日前移共7个窗口, >=5窗涨幅>0 且 >=4窗涨幅>2%)
+         + 7窗口量能放大(7个窗口累计成交量回归斜率>0 且 最新窗量>最老窗量);
+    展示值按比例折算到 /8(K线不足只评得部分条件时同样折算)。
     """
-    min_score = int(params.get("min_score", 4))
+    min_score = int(params.get("min_score", 6))
     ma = uptrend_ma7(close)
     s = ev = 0
     for _cname, fn in UPTREND_CONDITIONS_7D:

@@ -170,7 +170,51 @@ def cond7_volume_up(close, volume, ma):
     return bool(volume[-3:].mean() > volume[-7:].mean())
 
 
-# 7交易日窗口条件列表(共7个; 展示时按比例折算到 /8, 下游打分映射不变)
+def cond7_windows(close, volume, ma):
+    """8 窗口持续性: 7日为窗, 逐日往前移共7个窗口(覆盖最近13个交易日);
+    7个窗口涨幅中 >=5 个 >0 且 >=4 个 >2%。
+
+    win_k = close[t-k] / close[t-k-7] - 1, k=0..6
+    """
+    if len(close) < 14:
+        return None
+    c = [float(x) for x in close.tail(14)]
+    wins = []
+    for k in range(7):
+        i = len(c) - 1 - k          # 窗口右端
+        j = i - 7                   # 窗口左端
+        if j < 0 or c[j] <= 0:
+            return None
+        wins.append(c[i] / c[j] - 1)
+    n_pos = sum(1 for w in wins if w > 0)
+    n_big = sum(1 for w in wins if w > 0.02)
+    return bool(n_pos >= 5 and n_big >= 4)
+
+
+def cond7_vol_windows(close, volume, ma):
+    """9 窗口量能放大: 7个窗口的累计成交量呈放大趋势。
+
+    窗口量 = 该7日窗口内的成交量之和; 7个窗口(从老到新)做线性回归, 要求
+    斜率 > 0 且 最新窗口量 > 最老窗口量。
+    """
+    if len(close) < 14 or len(volume) < 14:
+        return None
+    v = [float(x) for x in volume.tail(14)]
+    wins = []
+    for k in range(6, -1, -1):           # 从最老(k=6)到最新(k=0)
+        i = len(v) - 1 - k
+        j = i - 6
+        if j < 0:
+            return None
+        wins.append(sum(v[j:i + 1]))
+    if wins[-1] <= 0 or wins[0] <= 0:
+        return None
+    x = np.arange(7)
+    slope = float(np.polyfit(x, wins, 1)[0])
+    return bool(slope > 0 and wins[-1] > wins[0])
+
+
+# 7交易日窗口条件列表(共9个; 展示按比例折算到 /8, 下游 8:8,7:6,6:4 映射直接适用)
 CONDITIONS_7D = [
     ("站上MA7", cond7_above_ma7),
     ("MA7上行", cond7_ma7_up),
@@ -179,6 +223,8 @@ CONDITIONS_7D = [
     ("斜率向上", cond7_slope_up),
     ("近7日新高", cond7_near_high),
     ("放量", cond7_volume_up),
+    ("7窗口持续性", cond7_windows),
+    ("7窗口量能放大", cond7_vol_windows),
 ]
 
 
