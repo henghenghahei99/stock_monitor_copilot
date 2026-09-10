@@ -8,7 +8,7 @@
     "market": "cn",
     "base": "uptrend",
     "score_map": "8:8,7:6,6:4",
-    "top": 15,
+    "top": 10,
     "sort": "平均分"
   }
 }

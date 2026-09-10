@@ -55,7 +55,7 @@ def load_meta_strategy(strategies_arg: str) -> dict | None:
     """若 --strategies 指向 strategies/xxx.json 且 type==sector_rank, 返回其配置。
 
     例如 a_rank: {"market":"cn","base":"uptrend","score_map":"8:8,7:6,6:4",
-                "top":15, "sort":"平均分"} —— 底层扫描 base 策略, 再做板块加权排名。
+                "top":10, "sort":"平均分"} —— 底层扫描 base 策略, 再做板块加权排名。
     """
     sid = strategies_arg.split(",")[0].strip()
     path = os.path.join(STRATEGY_DIR, f"{sid}.json")
@@ -92,7 +92,7 @@ def main() -> None:
     p.add_argument("--score-map", default="8:8,7:6,6:4",
                    help="得分->加权分映射(默认 8:8,7:6,6:4, 未列出不计入)")
     p.add_argument("--sort", choices=["平均分", "得分", "股票数"], default="平均分")
-    p.add_argument("--top", type=int, default=15, help="显示前N个行业(0=全部)")
+    p.add_argument("--top", type=int, default=10, help="显示前N个行业(0=全部)")
     # --- 输出 ---
     p.add_argument("--results-out", default=None, help="命中结果CSV路径")
     p.add_argument("--rank-out", default=None, help="行业排行CSV路径")
