@@ -633,6 +633,7 @@ def main() -> None:
               if (args.results and os.path.exists(today_file)) else [])
     order = _active_view(series) if series else []
     chart_parts: list[str] = []
+    empty_groups: list[str] = []          # 空分组(0个板块)不画图, 但要写出来免得像“少了一张图”
 
     # 状态细化: 前5日(窗口内除今天)从未入过池的“新进池” → 标记为 完全新进池
     if delta is not None and series:
@@ -668,11 +669,13 @@ def main() -> None:
             seq = ["①", "②", "③", "④"]
             gi = 0
             chart_no = 0
-            for metric, mname in (("mom", "动量分走势（未加权原始值, ±10）"),
-                                  ("trend", "趋势分走势(未加权原始值, 每日该板块入池得分)")):
+            del empty_groups[:]
+            for metric, mname, short in (("mom", "动量分走势（未加权原始值, ±10）", "动量分"),
+                                         ("trend", "趋势分走势(未加权原始值, 每日该板块入池得分)", "趋势分")):
                 up, down = _direction_groups(order, series, metric)
                 for tag, g in (("整体上升", up), ("整体下降", down)):
                     if not g:
+                        empty_groups.append(f"{short}·{tag}")
                         continue
                     title = f"{seq[gi]} {mname} · {tag} {len(g)}条"
                     # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
@@ -700,6 +703,9 @@ def main() -> None:
                 "分组: 趋势分、动量分各自成图，组内按该指标窗口内 首日→末日 净变化 分“整体上升 / 整体下降”。",
                 f"口径: 每日取当天自己的入池板块(原得分前{args.top} ∪ 动量入池分前{args.top})；每个板块一条连续线——某日不在池(出池/未入池)时以该板块窗口内最低分代替该点(空心圈标注)。",
             ]
+            if empty_groups:
+                note_lines.append("本日无满足条件的分组(因此不画图): " + "、".join(empty_groups)
+                                 + "（共4个分组=动量↑/动量↓/趋势↑/趋势↓）。")
             if any(p.get("cov") == "仅沪市" for p in series):
                 note_lines.append("注意: 标“仅沪市”的日期为行情状态码修复前的扫描产物，仅沪市口径，与“沪深北”日期不可直接比绝对值。")
             chart_parts.append("<p class='note'>" + "<br>".join(note_lines) + "</p>")
@@ -789,6 +795,9 @@ def main() -> None:
             lines += _view_txt(order, series)
         else:
             lines.append("(今日池板块窗口内无满足条件的走势)")
+        if empty_groups:
+            lines.append("本日无满足条件的分组(不画图): " + "、".join(empty_groups)
+                         + " (共4个分组=动量↑/动量↓/趋势↑/趋势↓)")
         if any(p.get("cov") == "仅沪市" for p in series):
             lines.append("注: 标'仅沪市'的日期为修复前扫描产物, 仅沪市口径, 与'沪深北'日期不可直接比绝对值。")
     with open(base + ".txt", "w", encoding="utf-8") as f:

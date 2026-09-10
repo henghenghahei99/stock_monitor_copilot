@@ -491,6 +491,7 @@ def main() -> None:
                           "新进/退出按该板块当日趋势分、动量分在今日池内百分位：趋势 前10%很强 / 动量 前10%爆发；10-30%强 / 30-70%一般 / 70-100%弱。</p>")
 
     chart_parts: list[str] = []
+    empty_groups: list[str] = []   # 空分组不画图, 但要说明, 免得看着像少了图
     today_pool = [str(x) for x in rank["industry"]]
     # 只画近5日中≥3日在池(非退出池/未入池)的板块; 临时进池的板块不画走势
     today_pool = [x for x in today_pool
@@ -506,11 +507,12 @@ def main() -> None:
         gi = 0
         chart_no = 0
         png_dir = os.path.join(OUT, f"us_rank_report_{tag}_charts")
-        for metric, mname in (("mom", "动量分走势(未加权原始值, ±10)"),
-                              ("trend", "趋势分走势(未加权原始值)")):
+        for metric, mname, short in (("mom", "动量分走势(未加权原始值, ±10)", "动量分"),
+                                     ("trend", "趋势分走势(未加权原始值)", "趋势分")):
             up, down = _direction_groups(series, today_pool, metric)
             for tag2, g in (("整体上升", up), ("整体下降", down)):
                 if not g:
+                    empty_groups.append(f"{short}·{tag2}")
                     continue
                 title = f"{seq[gi]} {mname} · {tag2} {len(g)}条"
                 # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
@@ -531,6 +533,10 @@ def main() -> None:
                 chart_no += 1
     if chart_parts:
         chart_parts.insert(0, "<h3>板块近{}个交易日走势 — 今日池板块 (仅选5日中≥{}日在池者; 空心圈=出池/未入池以最低分代替)</h3>".format(len(series), CHART_MIN_POOL_DAYS))
+        if empty_groups:
+            chart_parts.insert(1, "<p class='note'>本日无满足条件的分组(因此不画图): "
+                                  + "、".join(empty_groups)
+                                  + "（共4个分组=动量↑/动量↓/趋势↑/趋势↓）。</p>")
 
     parts = [f"<h2>{title}</h2>"]
     parts.append(f"<h3>今日板块排名({sc_txt}(=2×权重; 权重 {w_txt}) → 入池=原得分前{top} ∪ 动量前{top} → 总分)</h3>")
