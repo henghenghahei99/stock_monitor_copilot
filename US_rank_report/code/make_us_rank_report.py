@@ -509,10 +509,10 @@ def main() -> None:
         png_dir = os.path.join(OUT, f"us_rank_report_{tag}_charts")
         metrics = (("mom", "动量分走势(未加权原始值, ±10)", "动量分"),
                    ("trend", "趋势分走势(未加权原始值)", "趋势分"))
-        # 分组顺序: **先整体上升、后整体下降**; 同一方向内 动量分 在前、趋势分 在后
+        # 分组顺序: **先动量(整体上升→整体下降), 再趋势(整体上升→整体下降)**
         dirs = {m: _direction_groups(series, today_pool, m) for m, _, _ in metrics}
-        for di, dname in enumerate(("整体上升", "整体下降")):
-            for metric, mname, short in metrics:
+        for metric, mname, short in metrics:
+            for di, dname in enumerate(("整体上升", "整体下降")):
                 g = dirs[metric][di]
                 if not g:
                     empty_groups.append(f"{short}·{dname}")
