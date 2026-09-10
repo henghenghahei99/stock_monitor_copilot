@@ -13,7 +13,7 @@ A_rank_delta: A_rank 板块得分排名的"前一日对比"榜单。
 
 用法:
   python a_rank_delta.py --old output/cn_uptrend_0901.csv --new output/cn_uptrend_0902.csv
-  python a_rank_delta.py -o output/cn_uptrend_0901.csv -n output/cn_uptrend_0902.csv --top 15
+  python a_rank_delta.py -o output/cn_uptrend_0901.csv -n output/cn_uptrend_0902.csv --top 10
 """
 
 from __future__ import annotations

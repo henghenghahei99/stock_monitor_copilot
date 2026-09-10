@@ -96,7 +96,7 @@ def aggregate(df: pd.DataFrame, col: str, mapping: dict[int, int]) -> pd.DataFra
 def rank_table(agg: pd.DataFrame, top: int = 15, sort_by: str = "平均分") -> pd.DataFrame:
     """两步排名: 先按板块总分取前 top 名作为池, 再在池内按 sort_by(默认平均分)排序。
 
-    与用户口径一致: "先按8/7/6打分得到板块总分, 取前15名, 再按平均分排名"。
+    与用户口径一致: "先按8/7/6打分得到板块总分, 取前N名(top 参数, 日报用 10), 再按平均分排名"。
     """
     pool = agg.sort_values("得分", ascending=False).head(top) if top and top > 0 else agg
     return pool.sort_values([sort_by, "得分", "股票数"], ascending=False).reset_index(drop=True)
