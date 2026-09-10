@@ -467,7 +467,8 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
                 reps.append(_rep_mom(uni_names.get(pref, pref), pref, r.get("chg1"), new=is_new))
             mrep_by[ind] = reps
 
-    # 数量因子(不对称, N=板块全部成分股总数): <20轻度加成, >20每多20减0.06, >=120封底0.70(入围与排序均乘)
+    # 数量因子(美股口径): N=板块全部成分股数(_uni_sz, 过滤后市值>5亿/非壳), f=max(0.80, 1-0.00037*N);
+    # 趋势腿(得分×f)与动量腿(动量入池分×f)、以及展示的趋势分/动量分 均乘同一 f
     fmap = {str(a["industry"]): _fsz(str(a["industry"]), int(a["股票数"])) for _, a in agg.iterrows()}
     _agg = agg.copy()
     _agg["_f"] = _agg.apply(lambda r: _fsz(str(r["industry"]), int(r["股票数"])), axis=1)
