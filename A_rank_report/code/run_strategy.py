@@ -36,7 +36,9 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import find_overbought_stocks as fos  # noqa: E402
 from find_uptrend import CONDITIONS as UPTREND_CONDITIONS  # noqa: E402
+from find_uptrend import CONDITIONS_7D as UPTREND_CONDITIONS_7D  # noqa: E402
 from find_uptrend import compute_ma as uptrend_ma  # noqa: E402
+from find_uptrend import compute_ma7 as uptrend_ma7  # noqa: E402
 from translations import translate  # noqa: E402  行业/板块中英翻译
 
 STRATEGY_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "strategies")
@@ -100,6 +102,29 @@ def eval_uptrend(close: pd.Series, volume: pd.Series, params: dict):
     return s >= min_score, f"{n}/8"
 
 
+def eval_uptrend_7d(close: pd.Series, volume: pd.Series, params: dict):
+    """上涨趋势(7交易日窗口版): 7个短周期条件打分, 满足数 >= min_score 即命中。
+
+    条件全部只用最近7根K线(站上MA7/MA7上行/低点抬高/高点抬高/斜率向上/近7日新高/放量);
+    展示值按比例折算到 /8(如 7/7->8/8, 6/7->7/8), 使下游 8:8,7:6,6:4 加权映射仍适用。
+    """
+    min_score = int(params.get("min_score", 4))
+    ma = uptrend_ma7(close)
+    s = ev = 0
+    for _cname, fn in UPTREND_CONDITIONS_7D:
+        try:
+            r = fn(close, volume, ma)
+        except Exception:  # noqa: BLE001
+            r = None
+        if r is None:
+            continue
+        ev += 1
+        if r:
+            s += 1
+    n = min(round(s * 8 / ev), 8) if ev > 0 else 0
+    return s >= min_score, f"{n}/8"
+
+
 def eval_pullback(close: pd.Series, volume: pd.Series, params: dict):
     """大涨回撤缩量: 只看当前天的 涨/撤/缩量 组合。
 
@@ -126,7 +151,8 @@ def eval_pullback(close: pd.Series, volume: pd.Series, params: dict):
     return ok, f"涨{chg20:.0f}% 撤{drawdown:.0f}% 量比{ratio:.2f}"
 
 
-EVALUATORS = {"rsi": eval_rsi, "uptrend": eval_uptrend, "pullback": eval_pullback}
+EVALUATORS = {"rsi": eval_rsi, "uptrend": eval_uptrend, "uptrend7": eval_uptrend_7d,
+              "pullback": eval_pullback}
 
 
 # ---------- 单只股票处理 ----------

@@ -551,6 +551,10 @@ def _view_txt(order: list[tuple[str, int | None]], series: list[dict]) -> list[s
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--date", required=True, help="报告日期, 如 0902")
+    p.add_argument("--label", default=None,
+                   help="标题里显示的日期/说明(默认取 --date, 用于口径对比实验)")
+    p.add_argument("--col", default="uptrend",
+                   help="策略列名(默认 uptrend; 7交易日窗口实验用 uptrend7)")
     p.add_argument("--results", default=None, help="命中结果CSV(用于算今日榜单)")
     p.add_argument("--delta", default=None, help="delta CSV(可选)")
     p.add_argument("--top", type=int, default=10,
@@ -560,7 +564,7 @@ def main() -> None:
     # 今日 A_rank 榜单
     dfr = pd.read_csv(args.results) if args.results else None
     if dfr is not None:
-        rk = sm.combined_rank(dfr, "uptrend", {8: 8, 7: 6, 6: 4}, args.top)
+        rk = sm.combined_rank(dfr, args.col, {8: 8, 7: 6, 6: 4}, args.top)
         # 榜单不展示: 行业得分/股票数/动量入池分(原始分, 只看归一后的动量分)
         rk = rk.drop(columns=["得分", "股票数", "动量入池分"], errors="ignore")
         rk.insert(0, "排名", range(1, len(rk) + 1))
@@ -601,7 +605,7 @@ def main() -> None:
                 mom_today = dict(zip(today_scores["industry"],
                                      pd.to_numeric(today_scores["动量分"], errors="coerce")))
 
-    title = f"A_rank 日报 · 2026-{args.date[:2]}-{args.date[2:]} A股板块得分排名"
+    title = f"A_rank 日报 · {args.label or ('2026-' + args.date[:2] + '-' + args.date[2:])} A股板块得分排名"
     head = ("<head><meta charset='utf-8'><title>%s</title><style>"
             "body{font-family:Segoe UI,'Microsoft YaHei',sans-serif;color:#222}"
             "h2{color:#2b579a}h3{color:#444}.note{color:#999;font-size:12px}"
@@ -696,6 +700,11 @@ def main() -> None:
                  "池内按总分降序排名；入池列: 趋势=按得分入池、动量=按动量入池分入池、趋势+动量=双口径都占。<br>"
                  "⑥ 代表股=趋势前5(加权分最高, 记X/8,+近20日涨幅) + ◎动量前7(板块全部成分股按m最强, 橙色◎=短线动量, 括号=当日涨幅); ◆紫=相比前日新进入动量前7。<br>"
                  "⑦ 数量因子f: 从0只起按0.003/只(=0.06/20)连续线性递减(如20只≈0.94、120只=0.64)，n≥120封底0.64不再减；趋势分、动量分(±10)、动量入池分及入池资格(得分/动量两条腿)均乘f。</p>")
+    if args.col != "uptrend":
+        rank_note = rank_note.replace(
+            "表后注(今日板块排名算法)：<br>",
+            "表后注(今日板块排名算法)：<br><b style='color:#6a1b9a'>实验口径: 趋势分改用【7交易日窗口】条件"
+            "(站上MA7 / MA7上行 / 低点抬高 / 高点抬高 / 斜率向上 / 近7日新高 / 放量 共7个, 满足≥4命中, 展示折算到 /8)</b><br>")
     if rk is not None:
         parts.append(f"<h3>今日板块排名(趋势分50% + 动量分50% → 入池=原得分前{args.top} ∪ 动量前{args.top} → 总分)</h3>")
         parts.append(_html_table(rk.rename(columns={"industry": "行业"})))

@@ -115,6 +115,78 @@ CONDITIONS = [
 ]
 
 
+# ---------------- 7个交易日窗口版本(短周期趋势, 全部只用最近7根K线) ----------------
+
+def cond7_above_ma7(close, volume, ma):
+    """1 站上MA7: 收盘价 > 7日均线"""
+    m7 = ma["ma7"]
+    if pd.isna(m7.iloc[-1]):
+        return None
+    return bool(close.iloc[-1] > m7.iloc[-1])
+
+
+def cond7_ma7_up(close, volume, ma):
+    """2 MA7上行: 当前 MA7 > 3日前的 MA7"""
+    m7 = ma["ma7"]
+    if pd.isna(m7.iloc[-1]) or pd.isna(m7.iloc[-4]):
+        return None
+    return bool(m7.iloc[-1] > m7.iloc[-4])
+
+
+def cond7_higher_low(close, volume, ma):
+    """3 低点抬高: 最近3日最低 > 前4日最低(合起来=近7日)"""
+    if len(close) < 7:
+        return None
+    return bool(close[-3:].min() > close[-7:-3].min())
+
+
+def cond7_higher_high(close, volume, ma):
+    """4 高点抬高: 最近3日最高 > 前4日最高(合起来=近7日)"""
+    if len(close) < 7:
+        return None
+    return bool(close[-3:].max() > close[-7:-3].max())
+
+
+def cond7_slope_up(close, volume, ma):
+    """5 斜率向上: 近7日线性回归斜率 > 0"""
+    if len(close) < 7:
+        return None
+    x = np.arange(7)
+    slope = float(np.polyfit(x, close[-7:], 1)[0])
+    return bool(slope > 0)
+
+
+def cond7_near_high(close, volume, ma):
+    """6 近7日新高: 收盘价 >= 近7日最高价的98%"""
+    if len(close) < 7:
+        return None
+    return bool(close.iloc[-1] >= 0.98 * close[-7:].max())
+
+
+def cond7_volume_up(close, volume, ma):
+    """7 放量: 近3日均量 > 近7日均量"""
+    if len(volume) < 7:
+        return None
+    return bool(volume[-3:].mean() > volume[-7:].mean())
+
+
+# 7交易日窗口条件列表(共7个; 展示时按比例折算到 /8, 下游打分映射不变)
+CONDITIONS_7D = [
+    ("站上MA7", cond7_above_ma7),
+    ("MA7上行", cond7_ma7_up),
+    ("低点抬高", cond7_higher_low),
+    ("高点抬高", cond7_higher_high),
+    ("斜率向上", cond7_slope_up),
+    ("近7日新高", cond7_near_high),
+    ("放量", cond7_volume_up),
+]
+
+
+def compute_ma7(close: pd.Series) -> dict:
+    """7交易日窗口需要的均线(仅 MA7)。"""
+    return {"ma7": close.rolling(7).mean()}
+
+
 def compute_ma(close: pd.Series) -> dict:
     return {f"ma{n}": close.rolling(n).mean() for n in (20, 50, 200)}
 
