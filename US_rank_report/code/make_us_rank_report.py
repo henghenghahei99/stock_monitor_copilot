@@ -504,7 +504,8 @@ def main() -> None:
         gi = 0
         chart_no = 0
         png_dir = os.path.join(OUT, f"us_rank_report_{tag}_charts")
-        for metric, mname in (("mom", "动量分走势"), ("trend", "趋势分走势")):
+        for metric, mname in (("mom", "动量分走势(未加权原始值, ±10)"),
+                              ("trend", "趋势分走势(未加权原始值)")):
             up, down = _direction_groups(series, today_pool, metric)
             for tag2, g in (("整体上升", up), ("整体下降", down)):
                 if not g:
