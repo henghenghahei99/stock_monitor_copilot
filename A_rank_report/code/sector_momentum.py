@@ -3,11 +3,11 @@
 """
 板块合计排名(A_rank_report_v1): 池内 趋势分 50% + 代表股短线动量分 50% 得"总分"; 双口径入池。
 
-个股动量(用户定义): m = 当日% + 近2日% + 近3日%   (三段叠加)
+个股动量(用户定义, 2026-09-10 起加强当日): m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20
     当日% = 今收/昨收-1;  近2日% = 今收/2交易日前收-1;  近3日% = 今收/3交易日前收-1
 
 展示口径(池内, "和以前一样"):
-  趋势分 = 加权命中股平均分; 动量分(±10) = 前n只代表股 m 求和按 S/(5×只数)=平均/5 归一;
+  趋势分 = 加权命中股平均分; 动量分(±10) = 前n只代表股 m 求和按 S/(5/3×只数) 归一;
   总分 = 趋势分×50% + 动量分×50%; 池内按总分降序; 代表股 = 加权分前10 命中股。
 
 双口径入池(2026-09-06 用户口径):
@@ -34,6 +34,16 @@ import industry_score as isc  # noqa: E402
 
 DEFAULT_MAP = {8: 8, 7: 6, 6: 4}
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output")
+
+# 动量 m 权重(加强当日): 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20, 和为1
+MOM_W1, MOM_W2, MOM_W3 = 0.50, 0.30, 0.20
+# 动量分归一除数: 原口径(等权三条叠加)≈3×单日涨幅, 改为权重和=1后等比缩放为 5/3, 保持 ±10 量级
+MOM_NORM = 5.0 / 3.0
+
+
+def _weighted_m(d1: float, d2: float, d3: float) -> float:
+    """m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20 (三段累计再加权, 权重和=1)。"""
+    return round(d1 * MOM_W1 + d2 * MOM_W2 + d3 * MOM_W3, 2)
 
 
 def size_factor(n: int) -> float:
@@ -72,7 +82,7 @@ def as_of_date(df: pd.DataFrame) -> date:
 
 
 def stock_momentum(prefixed: str, asof: date) -> float | None:
-    """截至 asof(含)收盘: m = 当日% + 近2日% + 近3日%; 数据不足返回 None。"""
+    """截至 asof(含)收盘: m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20; 数据不足返回 None。"""
     try:
         k = fos.tencent_kline(str(prefixed), 80, use_cache=True)
         if k is None:
@@ -87,7 +97,7 @@ def stock_momentum(prefixed: str, asof: date) -> float | None:
         d1 = (c0 / c1 - 1) * 100
         d2 = (c0 / c2 - 1) * 100
         d3 = (c0 / c3 - 1) * 100
-        return round(d1 + d2 + d3, 2)
+        return _weighted_m(d1, d2, d3)
     except Exception:  # noqa: BLE001
         return None
 
@@ -123,7 +133,7 @@ def _cached_stock_momentum(prefixed: str, asof: date, bars: int = 80) -> float |
 
 def market_momentum(asof: date, force: bool = False, workers: int = 10,
                     cache_only: bool = False) -> pd.DataFrame:
-    """全市场成分股动量表: 板块全部成分股逐只 m=当日%+近2日%+近3日%。
+    """全市场成分股动量表: 板块全部成分股逐只 m=当日%×0.50+近2日%×0.30+近3日%×0.20。
 
     板块归属来自 data/cn_sector_members.json(东财行业); 行情优先本地K线缓存
     (当日扫描已预热), 缺失才联网; cache_only=True 时只读缓存、缺失不联网。
@@ -229,7 +239,8 @@ def ensure_momentum_offline(asof, workers: int = 30) -> pd.DataFrame:
             c0, c1, c2, c3 = c.iloc[-1], c.iloc[-2], c.iloc[-3], c.iloc[-4]
             if c0 <= 0 or c1 <= 0 or c2 <= 0 or c3 <= 0:
                 return None
-            return round((c0 / c1 - 1) * 100 + (c0 / c2 - 1) * 100 + (c0 / c3 - 1) * 100, 2)
+            return _weighted_m((c0 / c1 - 1) * 100, (c0 / c2 - 1) * 100,
+                               (c0 / c3 - 1) * 100)
         except Exception:  # noqa: BLE001
             return None
 
@@ -303,7 +314,7 @@ def _row_momentum(r) -> float | None:
     try:
         has = all(pd.notna(r.get(k)) for k in ("chg1", "chg2", "chg3"))
         if has:
-            return round(float(r["chg1"]) + float(r["chg2"]) + float(r["chg3"]), 2)
+            return _weighted_m(float(r["chg1"]), float(r["chg2"]), float(r["chg3"]))
     except Exception:  # noqa: BLE001
         pass
     # 回退: 联网/缓存取K线按 asof 切片
@@ -324,7 +335,7 @@ def industry_momentum_stats(rep_rows: pd.DataFrame, asof: date) -> tuple[int, fl
             S += m
     if n == 0:
         return 0, 0.0, 0.0
-    pts = S / (5.0 * n)      # = 平均涨幅/5, 允许为负, ±10 封顶
+    pts = S / (MOM_NORM * n)   # 权重和已由3变1, 除 5/3 等比缩放保持量级, 允许为负, ±10 封顶
     pts = max(-10.0, min(10.0, pts))
     return n, round(S, 2), round(pts, 2)
 
@@ -357,7 +368,7 @@ def industry_momentum_scores(df: pd.DataFrame, col: str = "uptrend",
         r, c = raw.get(ind), cnt.get(ind)
         pts = 0.0
         if r is not None and c is not None and int(c) > 0:
-            pts = round(max(-10.0, min(10.0, float(r) / (5.0 * int(c)))) * f, 2)
+            pts = round(max(-10.0, min(10.0, float(r) / (MOM_NORM * int(c)))) * f, 2)
         raw_adj = round(float(r) * f, 2) if r is not None else None
         rows.append({"industry": ind, "趋势分": round(float(a["平均分"]) * f, 2),
                      "动量分": pts, "动量入池分": raw_adj})
@@ -370,8 +381,8 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     """双口径入池 A_rank 表。
 
     动量(展示与入池同源, 基于板块全部成分股):
-      板块成分股按 m=当日%+近2日%+近3日% 降序前10(不足按实际只数), S=Σm;
-      动量入池分 = S(原始);  展示动量分(±10) = S ÷ (5×只数) = 前n只平均涨幅÷5;
+      板块成分股按 m=当日%×50%+近2日%×30%+近3日%×20% 降序前10(不足按实际只数), S=Σm;
+      动量入池分 = S(原始);  展示动量分(±10) = S ÷ (5/3×动量股数);
       入池 = 原行业"得分"前 top ∪ "动量入池分"前 top(并集, 最多 2*top)。
     池内按 总分 = 趋势分×50% + 动量分×50% 降序。
     代表股列 = 趋势代表股(加权分前5) + ◎动量代表股(全部成分股按 m 前5, ◎=短线动量, 报告端标色)。
@@ -393,10 +404,10 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     cnt_map = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
 
     def _display_pts(raw, cnt) -> float:
-        """动量分(±10) = S/(5×只数) = 前n只平均涨幅÷5, 与动量入池分同源归一。"""
+        """动量分(±10) = S/(5/3×动量股数), 与动量入池分同源归一(5/3 为权重归一后的等比缩放)。"""
         if raw is None or cnt is None or int(cnt) <= 0:
             return 0.0
-        pts = float(raw) / (5.0 * int(cnt))
+        pts = float(raw) / (MOM_NORM * int(cnt))
         return round(max(-10.0, min(10.0, pts)), 2)
 
     # 1) 趋势代表股(命中股加权分前5)
