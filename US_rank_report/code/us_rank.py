@@ -7,9 +7,9 @@ US_rank: 美股板块 A_rank（照搬 A股日报口径，按细分 industry 分�
   - 个股上涨趋势 8 条件打分(>=5 命中, 历史不足按比例折算 /8)
   - 行业加权 8/8→8分、7/8→6分、6/8→4分(6分以下命中但计0)
   - 趋势分 = 行业得分/计入股票数(平均分)
-  - 个股动量 m = 当日% + 近2日% + 近3日%(三段叠加累计)
+  - 个股动量 m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20 (加强当日权重)
   - 动量入池分(每板块) = 全部成分股按 m 降序前10 只 m 之和(不足按实际只数)
-  - 展示动量分(±10) = S/(5×只数) = 前n只平均涨幅÷5 (允许为负, ±10封顶)
+  - 展示动量分(±10) = S/(5/3×动量股数) (允许为负, ±10封顶; 5/3 为权重归一后的等比缩放)
   - 入池 = 原行业得分前 top ∪ 动量入池分前 top(并集, 最多 2*top)
   - 池内按 总分 = 趋势分×50% + 动量分×50% 降序
   - 代表股 = 趋势代表股(加权分前5, name(8/8,+20日%)) + ◎动量代表股(全部成分股按m前5, ◎name(+当日%))
@@ -60,6 +60,10 @@ MIN_SHARES = 100_000.0
 MAX_STALE_DAYS = 7
 # 市值过滤: 市值 > 5 亿美元才参与(不满足的连“成分股/动量成员”都不计入)
 MIN_MARKET_CAP = 500_000_000.0      # 5 亿美金
+# 动量 m 权重(加强当日): 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20, 和为1
+MOM_W1, MOM_W2, MOM_W3 = 0.50, 0.30, 0.20
+# 动量分归一除数: 原口径(等权三条叠加)≈3×单日涨幅, 改用权重和=1后等比缩放为 5/3, 保持 ±10 量级
+MOM_NORM = 5.0 / 3.0
 EXCLUDE_INDUSTRY = {"空白支票公司(壳)"}
 UNIVERSE_FILE = os.path.join(DATA, "us_universe.json")
 EM_INDUSTRY_FILE = os.path.join(DATA, "us_em_industry.json")   # 东财美股行业(中文)
@@ -170,14 +174,16 @@ def ensure_universe(force: bool = False) -> list[dict]:
 # ---------------- 单只: 计算 趋势分 与 动量 ----------------
 
 def _momentum_close(close: pd.Series) -> float | None:
-    """m = 当日% + 近2日% + 近3日% (三段叠加累计), 数据不足返回 None。"""
+    """m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20 (加强当日权重), 数据不足返回 None。"""
     c = close.astype(float).dropna()
     if len(c) < 4:
         return None
     c0, c1, c2, c3 = c.iloc[-1], c.iloc[-2], c.iloc[-3], c.iloc[-4]
     if c0 <= 0 or c1 <= 0 or c2 <= 0 or c3 <= 0:
         return None
-    return round((c0 / c1 - 1) * 100 + (c0 / c2 - 1) * 100 + (c0 / c3 - 1) * 100, 2)
+    return round((c0 / c1 - 1) * 100 * MOM_W1
+                 + (c0 / c2 - 1) * 100 * MOM_W2
+                 + (c0 / c3 - 1) * 100 * MOM_W3, 2)
 
 
 def _chg1(close: pd.Series) -> float | None:
@@ -398,7 +404,8 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
         r, c = raw_map.get(ind), cnt_map.get(ind)
         if r is None or c is None or int(c) <= 0:
             return 0.0
-        pts = float(r) / (5.0 * int(c))
+        # 除 5/3 (而非 5): 权重和为1(原等权三条叠加≈3×单日), 等比缩放以保持动量分 ±10 量级不变
+        pts = float(r) / (MOM_NORM * int(c))
         return round(max(-10.0, min(10.0, pts)), 2)
 
     # 趋势代表股: 命中加权分前5(同分按 chg20) —— 名字用名单/命中英文全名(离线, 不联网)
