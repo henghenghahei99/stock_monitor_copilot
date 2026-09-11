@@ -215,9 +215,10 @@ def _add_eval_col(delta, today_scores, pool_inds):
     for _, r in delta.iterrows():
         st = r.get("状态")
         ind = r.get("行业")
-        if st == "池内":
-            tw, mw = _trend_word(r.get("趋势分变化")), _mom_word(r.get("动量分变化"))
-            evals.append("、".join(x for x in (tw, mw) if x))
+        tw, mw = _trend_word(r.get("趋势分变化")), _mom_word(r.get("动量分变化"))
+        # 池内 -> 按变化评价; 被阈值(动量<2/总分<5)剔出池的板块仍有两日分数, 同样按池内口径评价
+        if st == "池内" or tw or mw:
+            evals.append("、".join(x for x in (tw, mw) if x) or "平稳")
             continue
         sub = today_scores[today_scores["industry"] == ind]
         if sub.empty:
@@ -275,6 +276,8 @@ def _recent_pool_series(date_mmdd: str, days: int = 5, top: int = 15,
         try:
             dfr = pd.read_csv(path, encoding="utf-8-sig")
             rk = sm.combined_rank(dfr, col, {8: 8, 7: 6, 6: 4}, top)
+            if "池内" in rk.columns:      # 出池行(动量<2/总分<5)不算在池内
+                rk = rk[rk["池内"] == 1]
             if rk.empty:
                 continue
             # 加权后贡献值(=表格口径); 旧版无此列时退回原始值
@@ -574,7 +577,10 @@ def main() -> None:
         sc = sm.DISPLAY_SCALE
         sc_txt = f"原始指标×{w_t * sc:.2f} / ×{w_m * sc:.2f}"
         # 展示口径 = 加权后的贡献值(趋势贡献/动量贡献, 相加正好=总分); 原始分只给走势图用
-        rk = rk.drop(columns=["趋势分", "动量分", "得分", "股票数", "动量入池分"], errors="ignore")
+        if "池内" in rk.columns:          # 排名表只显示池内板块
+            rk = rk[rk["池内"] == 1].copy()
+        rk = rk.drop(columns=["趋势分", "动量分", "得分", "股票数", "动量入池分",
+                              "池内", "出池原因"], errors="ignore")
         rk = rk.rename(columns={"趋势贡献": "趋势分", "动量贡献": "动量分"})
         rk.insert(0, "排名", range(1, len(rk) + 1))
         rk = rk.reindex(columns=[c for c in
@@ -606,10 +612,13 @@ def main() -> None:
         # 升降表: 列出自"今日池内" + "今日退出池"的全部板块(不再按名次变化过滤); 变化类列按需展示
         if "排名变化" in delta.columns and "状态" in delta.columns:
             # 保持全量(名次未变但分数变动的板块也要能看到, 如长期第1的板块)
-            # 新进池/退出池无前日基线, 变化列显示 "-"
+            # 变化列不做整列清空: 缺任一日分数(NaN)的行统一显示 "-"; 因此
+            # “阈值出池”的板块仍能看到今日分数与变化, 并按池内口径给评价
             for c in ["排名变化", "趋势分变化", "动量分变化", "总分变化"]:
                 if c in delta.columns:
-                    delta.loc[delta["状态"] != "池内", c] = "-"
+                    delta[c] = delta[c].apply(
+                        lambda v: "-" if pd.isna(v) or v == "" else
+                        (v if isinstance(v, str) else f"{float(v):+.2f}"))
             keep = [c for c in ["行业", "状态", "排名变化",
                                 "趋势分变化", "动量分变化", "总分变化", "评价"] if c in delta.columns]
             delta = delta[keep]

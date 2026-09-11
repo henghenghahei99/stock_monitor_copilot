@@ -472,29 +472,53 @@ POOL_MIN_MOM = 2.0
 POOL_MIN_TOTAL = 5.0
 
 
+def pool_floor_reason(mom: float, total: float, min_mom: float = POOL_MIN_MOM,
+                      min_total: float = POOL_MIN_TOTAL) -> str:
+    """出池原因文本(达标返回空串): "动量<2" / "总分<5" / "动量<2+总分<5"。"""
+    r = []
+    if mom < min_mom:
+        r.append(f"动量<{min_mom:g}")
+    if total < min_total:
+        r.append(f"总分<{min_total:g}")
+    return "+".join(r)
+
+
 def apply_pool_floor(df: pd.DataFrame, min_mom: float = POOL_MIN_MOM,
                      min_total: float = POOL_MIN_TOTAL) -> pd.DataFrame:
-    """算 趋势贡献/动量贡献/总分, 并把 动量分<min_mom 或 总分<min_total 的板块剔除。
+    """算 趋势贡献/动量贡献/总分, 并标出每行是否达标: **池内**(1/0) 与 **出池原因**。
 
-    返回筛后的 df(含 趋势贡献/动量贡献/总分, 未排序), 同时更新 LAST_WEIGHTS。
+    达标线(用户口径): 动量分 >= min_mom 且 总分 >= min_total, 否则视为“出池”。
+    注意: **返回全部行**(不剔除), 出池行保留分数——升降表要用它们的当日分数与评价;
+    调用方按 `池内 == 1` 取真正的池子。
+    权重与总分互相依赖(权重按池内量级配平), 故“配权->算总分->剔不达标”迭代到稳定(<=5轮)。
     """
     global LAST_WEIGHTS
     cur = df
-    for _ in range(5):                      # 权重<->总分 互相依赖, 迭代到稳定
+    for _ in range(5):
         if cur.empty:
             LAST_WEIGHTS = (0.5, 0.5)
-            return cur
+            break
         wt, wm = dynamic_weights(cur["趋势分"], cur["动量分"])
         LAST_WEIGHTS = (wt, wm)
-        cur = cur.copy()
-        cur["趋势贡献"] = (cur["趋势分"] * wt * DISPLAY_SCALE).round(2)
-        cur["动量贡献"] = (cur["动量分"] * wm * DISPLAY_SCALE).round(2)
-        cur["总分"] = (cur["趋势贡献"] + cur["动量贡献"]).round(2)
-        keep = (cur["动量贡献"] >= min_mom) & (cur["总分"] >= min_total)
-        if bool(keep.all()):
-            return cur
-        cur = cur[keep]
-    return cur
+        tmp = cur.copy()
+        tmp["趋势贡献"] = (tmp["趋势分"] * wt * DISPLAY_SCALE).round(2)
+        tmp["动量贡献"] = (tmp["动量分"] * wm * DISPLAY_SCALE).round(2)
+        tmp["总分"] = (tmp["趋势贡献"] + tmp["动量贡献"]).round(2)
+        bad = (tmp["动量贡献"] < min_mom) | (tmp["总分"] < min_total)
+        cur = tmp
+        if not bool(bad.any()):
+            break
+        cur = tmp[~bad]
+    # 用最终权重(固定点)给**全部**行打分与打标
+    out = df.copy()
+    wt, wm = LAST_WEIGHTS
+    out["趋势贡献"] = (out["趋势分"] * wt * DISPLAY_SCALE).round(2)
+    out["动量贡献"] = (out["动量分"] * wm * DISPLAY_SCALE).round(2)
+    out["总分"] = (out["趋势贡献"] + out["动量贡献"]).round(2)
+    out["池内"] = ((out["动量贡献"] >= min_mom) & (out["总分"] >= min_total)).astype(int)
+    out["出池原因"] = [pool_floor_reason(m, t, min_mom, min_total)
+                     for m, t in zip(out["动量贡献"], out["总分"])]
+    return out
 
 
 def combined_rank(df: pd.DataFrame, col: str = "uptrend",
@@ -607,11 +631,12 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
             "入池": "+".join(src),
         })
     out = pd.DataFrame(rows)
-    # 池内动态配权 + 入池下限(动量分<2 或 总分<5 -> 按出池剔除; 数据为空时退回 50/50)
+    # 池内动态配权 + 入池下限(动量分<2 或 总分<5 -> 标为出池; 行仍保留, 供升降表显示)
     out = apply_pool_floor(out)
     if out.empty:
         return out
-    return out.sort_values("总分", ascending=False).reset_index(drop=True)
+    # 池内在前, 各自按总分降序(排名只给池内行, 见调用方)
+    return out.sort_values(["池内", "总分"], ascending=[False, False]).reset_index(drop=True)
 
 
 if __name__ == "__main__":

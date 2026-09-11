@@ -436,29 +436,52 @@ POOL_MIN_MOM = 2.0
 POOL_MIN_TOTAL = 5.0
 
 
+def pool_floor_reason(mom: float, total: float, min_mom: float = POOL_MIN_MOM,
+                      min_total: float = POOL_MIN_TOTAL) -> str:
+    """出池原因文本(达标返回空串): "动量<2" / "总分<5" / "动量<2+总分<5"。"""
+    r = []
+    if mom < min_mom:
+        r.append(f"动量<{min_mom:g}")
+    if total < min_total:
+        r.append(f"总分<{min_total:g}")
+    return "+".join(r)
+
+
 def apply_pool_floor(df: pd.DataFrame, min_mom: float = POOL_MIN_MOM,
                      min_total: float = POOL_MIN_TOTAL) -> pd.DataFrame:
-    """算 趋势贡献/动量贡献/总分, 并把 动量分<min_mom 或 总分<min_total 的板块剔除。
+    """算 趋势贡献/动量贡献/总分, 并标出每行是否达标: **池内**(1/0) 与 **出池原因**。
 
-    返回筛后的 df(含 趋势贡献/动量贡献/总分, 未排序), 同时更新 LAST_WEIGHTS。
+    达标线(用户口径, 与A股同一套): 动量分 >= min_mom 且 总分 >= min_total。
+    **返回全部行**(不剔除), 出池行保留分数——升降表要显示它们的当日分数与评价;
+    调用方按 `池内 == 1` 取真正的池子。
+    权重与总分互相依赖(权重按池内量级配平), 故“配权->算总分->剔不达标”迭代到稳定(<=5轮)。
     """
     global LAST_WEIGHTS
     cur = df
-    for _ in range(5):                      # 权重<->总分 互相依赖, 迭代到稳定
+    for _ in range(5):
         if cur.empty:
             LAST_WEIGHTS = (0.5, 0.5)
-            return cur
+            break
         wt, wm = dynamic_weights(cur["趋势分"], cur["动量分"])
         LAST_WEIGHTS = (wt, wm)
-        cur = cur.copy()
-        cur["趋势贡献"] = (cur["趋势分"] * wt * DISPLAY_SCALE).round(2)
-        cur["动量贡献"] = (cur["动量分"] * wm * DISPLAY_SCALE).round(2)
-        cur["总分"] = (cur["趋势贡献"] + cur["动量贡献"]).round(2)
-        keep = (cur["动量贡献"] >= min_mom) & (cur["总分"] >= min_total)
-        if bool(keep.all()):
-            return cur
-        cur = cur[keep]
-    return cur
+        tmp = cur.copy()
+        tmp["趋势贡献"] = (tmp["趋势分"] * wt * DISPLAY_SCALE).round(2)
+        tmp["动量贡献"] = (tmp["动量分"] * wm * DISPLAY_SCALE).round(2)
+        tmp["总分"] = (tmp["趋势贡献"] + tmp["动量贡献"]).round(2)
+        bad = (tmp["动量贡献"] < min_mom) | (tmp["总分"] < min_total)
+        cur = tmp
+        if not bool(bad.any()):
+            break
+        cur = tmp[~bad]
+    out = df.copy()
+    wt, wm = LAST_WEIGHTS
+    out["趋势贡献"] = (out["趋势分"] * wt * DISPLAY_SCALE).round(2)
+    out["动量贡献"] = (out["动量分"] * wm * DISPLAY_SCALE).round(2)
+    out["总分"] = (out["趋势贡献"] + out["动量贡献"]).round(2)
+    out["池内"] = ((out["动量贡献"] >= min_mom) & (out["总分"] >= min_total)).astype(int)
+    out["出池原因"] = [pool_floor_reason(m, t, min_mom, min_total)
+                     for m, t in zip(out["动量贡献"], out["总分"])]
+    return out
 
 
 def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
@@ -553,13 +576,20 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
             "入池": "+".join(src),
         })
     rk = pd.DataFrame(rows)
-    # 池内动态配权 + 入池下限(动量分<2 或 总分<5 -> 按出池剔除; 与A股同一套)
+    # 池内动态配权 + 入池下限(动量分<2 或 总分<5 -> 标为出池; 行仍保留, 供升降表显示)
     rk = apply_pool_floor(rk)
-    rk = rk.sort_values("总分", ascending=False).reset_index(drop=True)
-    rk.insert(0, "排名", range(1, len(rk) + 1))
+    rk = rk.sort_values(["池内", "总分"], ascending=[False, False]).reset_index(drop=True)
+    # 排名只给池内行(出池行留空, 但分数保留)
+    rk["排名"] = pd.NA
+    _pool = rk[rk["池内"] == 1]
+    if not _pool.empty:
+        rk.loc[_pool.index, "排名"] = list(range(1, len(_pool) + 1))
+    rk["排名"] = pd.to_numeric(rk["排名"], errors="coerce").astype("Int64")
+    rk = rk[["排名"] + [c for c in rk.columns if c != "排名"]]
     out = os.path.join(OUT, f"hk_rank_{day_key}.csv")
     rk.to_csv(out, index=False, encoding="utf-8-sig")
-    print(f"[rank] {day_key} 入池 {len(rk)} 板块 -> {out}", file=sys.stderr)
+    print(f"[rank] {day_key} 入池 {int(rk['池内'].sum())} 板块(腿池 {len(rk)}, "
+          f"阈值出池 {int((rk['池内'] == 0).sum())}) -> {out}", file=sys.stderr)
     return rk
 
 
@@ -591,7 +621,9 @@ def _rank_index(day_key: str) -> dict[str, int]:
     if not os.path.exists(p):
         return {}
     df = pd.read_csv(p, encoding="utf-8-sig")
-    return {str(i).strip(): int(r) for i, r in zip(df["industry"], df["排名"])}
+    # 只认池内行(阈值出池的行排名为空 -> 在升降表里表现为“退出池”)
+    return {str(i).strip(): int(r) for i, r in zip(df["industry"], df["排名"])
+            if pd.notna(r)}
 
 
 def _scores_index(day_key: str, pool: set[str]) -> dict[str, dict]:
@@ -646,9 +678,11 @@ def build_delta(day_key: str) -> pd.DataFrame:
     if m.empty:
         return m
     m["排名变化"] = m["前日排名"] - m["今日排名"]            # 正=上升
-    m["趋势分变化"] = m["今日趋势分"].fillna(0) - m["前日趋势分"].fillna(0)
-    m["动量分变化"] = m["今日动量分"].fillna(0) - m["前日动量分"].fillna(0)
-    m["总分变化"] = m["今日总分"].fillna(0) - m["前日总分"].fillna(0)
+    # 变化列不做 fillna(0): 缺任一日分数的行保持 NaN -> 报告显示 "-"
+    # (否则“退出池且今日无分数”会被算成 -前日 的假下跌)
+    m["趋势分变化"] = m["今日趋势分"] - m["前日趋势分"]
+    m["动量分变化"] = m["今日动量分"] - m["前日动量分"]
+    m["总分变化"] = m["今日总分"] - m["前日总分"]
     m = m.sort_values(["今日排名", "前日排名"], na_position="last").reset_index(drop=True)
     out = os.path.join(OUT, f"hk_delta_{day_key}.csv")
     m.to_csv(out, index=False, encoding="utf-8-sig")
@@ -680,7 +714,8 @@ def main() -> None:
             day_key = os.path.basename(files[-1]).replace("hk_uptrend_", "").replace(".csv", "") \
                 if files else day_key
         rk = build_rank(day_key, a.top)
-        print(rk[["排名", "industry", "趋势分", "动量分", "总分", "入池"]].to_string(index=False)
+        _show = rk[rk["池内"] == 1] if "池内" in rk.columns else rk
+        print(_show[["排名", "industry", "趋势分", "动量分", "总分", "入池"]].to_string(index=False)
               if not rk.empty else "rank空")
     if a.delta:
         if day_key == "auto":

@@ -37,7 +37,15 @@ def a_rank(path: str, col: str, mapping: dict[int, int], top: int,
     import sector_momentum as sm  # noqa: PLC0415
     df = pd.read_csv(path)
     rk = sm.combined_rank(df, col, mapping, top).reset_index(drop=True)
-    rk["排名"] = rk.index + 1
+    if "池内" in rk.columns:
+        # 排名只给池内行; 被阈值剔出池的行保留分数(升降表要显示“退出池”的今日分数)
+        rk["排名"] = pd.NA
+        pool = rk[rk["池内"] == 1]
+        if not pool.empty:
+            rk.loc[pool.index, "排名"] = list(range(1, len(pool) + 1))
+        rk["排名"] = pd.to_numeric(rk["排名"], errors="coerce")
+    else:
+        rk["排名"] = rk.index + 1
     return rk
 
 
@@ -87,9 +95,11 @@ def main() -> None:
         else ("新进池" if pd.isna(r["前日排名"]) and pd.notna(r["今日排名"]) else "退出池"),
         axis=1)
     m["排名变化"] = m["前日排名"] - m["今日排名"]              # 正=名次上升
-    m["趋势分变化"] = m["今日趋势分"].fillna(0) - m["前日趋势分"].fillna(0)
-    m["动量分变化"] = m["今日动量分"].fillna(0) - m["前日动量分"].fillna(0)
-    m["总分变化"] = m["今日总分"].fillna(0) - m["前日总分"].fillna(0)
+    # 变化列不做 fillna(0): 缺任一日分数的行保持 NaN -> 报告显示 "-"
+    # (否则“退出池且今日无分数”会被算成 -前日 的假下跌)
+    m["趋势分变化"] = m["今日趋势分"] - m["前日趋势分"]
+    m["动量分变化"] = m["今日动量分"] - m["前日动量分"]
+    m["总分变化"] = m["今日总分"] - m["前日总分"]
     m = m.sort_values(["今日排名", "前日排名"], na_position="last").reset_index(drop=True)
 
     print(f"=== A_rank_delta: 前一日({args.old}) vs 今日({args.new}) 排名升降 (总分=趋势分/动量分动态配平) ===")

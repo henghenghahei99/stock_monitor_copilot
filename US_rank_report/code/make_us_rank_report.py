@@ -165,10 +165,10 @@ def _add_eval(delta: pd.DataFrame, rank: pd.DataFrame) -> pd.DataFrame:
     evals = []
     for _, r in d.iterrows():
         st = r.get("状态")
-        if st == "池内":
-            ev = "、".join(x for x in (_trend_word(r.get("趋势分变化")),
-                                       _mom_word(r.get("动量分变化"))) if x)
-            evals.append(ev or "平稳")
+        tw, mw = _trend_word(r.get("趋势分变化")), _mom_word(r.get("动量分变化"))
+        # 池内 -> 按变化评价; 被阈值(动量<2/总分<5)剔出池的板块仍有两日分数, 同样按池内口径
+        if st == "池内" or tw or mw:
+            evals.append("、".join(x for x in (tw, mw) if x) or "平稳")
             continue
         ind = str(r["行业"]).strip()
         rec = refs.get(ind)
@@ -268,7 +268,8 @@ def _load_series(tag: str, days: int = CHART_DAYS) -> list[dict]:
                 continue
             series.append({
                 "label": f"{core[4:6]}-{core[6:]}",
-                "pool": [str(x) for x in df["industry"]],
+                "pool": [str(x) for x in (df[df["池内"] == 1]["industry"]
+                                          if "池内" in df.columns else df["industry"])],
                 # 走势图与表格同口径: **加权后贡献值**(趋势贡献/动量贡献 = 原始×2×当日权重);
                 # 旧文件无贡献列时退回原始值
                 "scores": {str(r["industry"]): {
@@ -441,7 +442,10 @@ def main() -> None:
     top = a.top
     title = f"美股板块 A_rank 日报 V2 · {disp}"
 
-    rk = rank.drop(columns=["趋势分", "动量分", "得分", "股票数", "动量入池分"], errors="ignore")
+    if "池内" in rank.columns:            # 排名表只显示池内板块(阈值出池的不显示)
+        rank = rank[rank["池内"] == 1].copy()
+    rk = rank.drop(columns=["趋势分", "动量分", "得分", "股票数", "动量入池分",
+                            "池内", "出池原因"], errors="ignore")
     rk = rk.rename(columns={"趋势贡献": "趋势分", "动量贡献": "动量分", "industry": "行业"})
     rk = rk.reindex(columns=[c for c in
                              ["排名", "行业", "趋势分", "动量分", "总分", "代表股", "入池"]
@@ -458,15 +462,18 @@ def main() -> None:
     dpath = os.path.join(OUT, f"us_delta_{tag}.csv")
     if os.path.exists(dpath):
         d = pd.read_csv(dpath, encoding="utf-8-sig")
-        for c in ["前日趋势分", "今日趋势分", "趋势分变化", "前日动量分", "今日动量分",
-                  "动量分变化", "前日总分", "今日总分", "总分变化"]:
+        for c in ["前日趋势分", "今日趋势分", "前日动量分", "今日动量分",
+                  "前日总分", "今日总分"]:
             if c in d.columns:
                 d[c] = d[c].apply(lambda v: "-" if pd.isna(v) else f"{float(v):.2f}")
+        # 变化列: 缺任一日分数(NaN)显示 "-"; 其余带符号显示。
+        # 不再对“非池内”整列清空 —— 阈值(动量<2/总分<5)出池的板块仍带今日分数与变化,
+        # 并按池内口径给评价。
+        for c in ["排名变化", "趋势分变化", "动量分变化", "总分变化"]:
+            if c in d.columns:
+                d[c] = d[c].apply(lambda v: "-" if pd.isna(v) else f"{float(v):+.2f}")
         if "排名变化" in d.columns and "状态" in d.columns:
             d = d.reset_index(drop=True)   # 池内全列(不再按名次变化过滤)
-            for c in ["排名变化", "趋势分变化", "动量分变化", "总分变化"]:
-                if c in d.columns:
-                    d.loc[d["状态"] != "池内", c] = "-"
             if series:
                 prev_pool = {str(i).strip() for sd in series[:-1] for i in sd["pool"]}
                 newm = (d["状态"].astype(str).eq("新进池")
