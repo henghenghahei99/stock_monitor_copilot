@@ -238,6 +238,9 @@ def _txt_table(df: pd.DataFrame) -> str:
 CHART_DAYS = 5            # 走势图只画最近 5 个交易日
 CHART_MIN_POOL_DAYS = 3   # 板块须 5 日中有 ≥3 日在池(非退出池/未入池)才画走势
 
+# 是否在报告里输出“表后注/走势图说明”等长注释段(用户口径: 默认不输出, 需要时改 True)
+SHOW_NOTES = False
+
 
 def _load_series(tag: str, days: int = CHART_DAYS) -> list[dict]:
     """从 us_rank_*.csv 取 <= tag 的最近 days 天: 每天 入池/分数。"""
@@ -543,7 +546,7 @@ def main() -> None:
                 chart_no += 1
     if chart_parts:
         chart_parts.insert(0, "<h3>板块近{}个交易日走势 — 今日池板块 (在池≥{}日即画; 空心圈=出池/未入池以最低分代替)</h3>".format(len(series), CHART_MIN_POOL_DAYS))
-        if empty_groups:
+        if empty_groups and SHOW_NOTES:
             chart_parts.insert(1, "<p class='note'>本日无满足条件的分组(因此不画图): "
                                   + "、".join(empty_groups)
                                   + "（共4个分组=动量↑/动量↓/趋势↑/趋势↓）。</p>")
@@ -570,14 +573,16 @@ def main() -> None:
                  "全市场口径(市值>5亿美元、剔除空壳)。<br>"
                  "⑧ 数量因子f(美股口径): 从0只起按0.00037/只连续线性递减，n≥541封底0.80不再减(如100只≈0.963、300只≈0.889、500只=0.80)；"
                  "计数=过滤后(市值>5亿美元、非壳)的板块成分股数；趋势分、动量分(±10)、动量入池分及入池资格(得分/动量两条腿)均乘f。</p>")
-    parts.append(rank_note)
+    if SHOW_NOTES:
+        parts.append(rank_note)
     if delta_html:
         parts.append(delta_html)
-        parts.append(delta_note)
+        if SHOW_NOTES:
+            parts.append(delta_note)
     if chart_parts:
         parts.append("<hr style='border:none;border-top:1px solid #e3e9f2;margin:24px 0'/>")
         parts += chart_parts
-    elif len(series) < 2:
+    elif len(series) < 2 and SHOW_NOTES:
         parts.append("<p class='note' style='color:#999;font-size:12px'>板块走势图需积累≥2个交易日(明天起自动显示, 与A股日报同构)。</p>")
     parts.append("<p class='note' style='color:#999;font-size:12px'>AI生成，仅供研究，不构成投资建议</p>")
 

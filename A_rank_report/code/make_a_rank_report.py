@@ -46,6 +46,9 @@ NEW_MOM_COL = "#6a1b9a"  # 代表股: ◆动量代表股中相比前日新进入
 NUM_COLS = {"排名", "得分", "股票数", "趋势分", "动量分", "总分", "前日排名", "今日排名",
            "排名变化", "趋势分变化", "动量分变化", "总分变化"}
 
+# 是否在报告里输出“表后注/走势图说明”等长注释段(用户口径: 默认不输出, 需要时改 True)
+SHOW_NOTES = False
+
 
 def _color(c: str, v):
     """变化列按正负返回红/绿(涨红跌绿); 状态列 新进池=蓝, 完全新进池=紫, 退出池=灰。"""
@@ -708,7 +711,8 @@ def main() -> None:
                                  + "（共4个分组=动量↑/动量↓/趋势↑/趋势↓，空组仍占用序号）。")
             if any(p.get("cov") == "仅沪市" for p in series):
                 note_lines.append("注意: 标“仅沪市”的日期为行情状态码修复前的扫描产物，仅沪市口径，与“沪深北”日期不可直接比绝对值。")
-            chart_parts.append("<p class='note'>" + "<br>".join(note_lines) + "</p>")
+            if SHOW_NOTES:
+                chart_parts.append("<p class='note'>" + "<br>".join(note_lines) + "</p>")
 
     rank_note = ("<p class='note'>表后注(今日板块排名算法)：<br>"
                  "① 个股分=上涨趋势8个条件(多头排列/站上年线/MA20上行/低点抬高/高点抬高/斜率向上/"
@@ -738,7 +742,8 @@ def main() -> None:
     if rk is not None:
         parts.append(f"<h3>今日板块排名({sc_txt}(=2×权重; 权重 {w_txt}) → 入池=原得分前{args.top} ∪ 动量前{args.top} → 总分)</h3>")
         parts.append(_html_table(rk.rename(columns={"industry": "行业"})))
-        parts.append(rank_note)
+        if SHOW_NOTES:
+            parts.append(rank_note)
     delta_note = (f"<p class='note'>表后注(排名升降算法)：对前一交易日与今日各自按上方A_rank"
                   f"(入池=原得分前{args.top} ∪ 动量入池分前{args.top}、池内按总分=趋势分/动量分按当日池内量级动态配平 降序)计算后对比。"
                   "状态：池内=两日均在池内；新进池=今日新进(前日不在池)；完全新进池=前5个交易日均未入池、今日首次入池(紫)；退出池=今日掉出池。"
@@ -754,7 +759,8 @@ def main() -> None:
             if c in d.columns:
                 d[c] = d[c].where(d[c].notna(), "-")
         parts.append(_html_table(d))
-        parts.append(delta_note)
+        if SHOW_NOTES:
+            parts.append(delta_note)
     if chart_parts:
         parts.append("<hr style='border:none;border-top:1px solid #e3e9f2;margin:24px 0'/>")
         parts += chart_parts
@@ -770,7 +776,8 @@ def main() -> None:
     if rk is not None:
         lines.append("== 今日板块排名 ==")
         lines.append(_txt_table(rk))
-        lines.append("算法: ①个股分=上涨趋势8条件(多头排列/站上年线/MA20上行/低点抬高/高点抬高/斜率向上/"
+        if SHOW_NOTES:
+            lines.append("算法: ①个股分=上涨趋势8条件(多头排列/站上年线/MA20上行/低点抬高/高点抬高/斜率向上/"
                      "近60日新高/放量)满足个数(1个1分, >=5命中; 历史不足按比例折到/8, 如5/7->6/8); "
                      "②行业加权 8/8->8分、7/8->6分、6/8->4分(6以下计0); ③行业得分=成员加权分之和, "
                      "趋势分=得分/股票数; ④动量分(±10)与动量入池分同源: 板块全部成分股按 m=当日%×50%+近2日%×30%+近3日%×20% 降序前10"
@@ -782,7 +789,8 @@ def main() -> None:
         lines.append("")
         lines.append("== 与前一日排名升降 ==")
         lines.append(_txt_table(delta))
-        lines.append(f"算法: 前一日与今日各自按上方A_rank(入池=原得分前{args.top} ∪ 动量入池分前{args.top}, 池内按总分=趋势分+动量分, 两分值已加权)后对比; "
+        if SHOW_NOTES:
+            lines.append(f"算法: 前一日与今日各自按上方A_rank(入池=原得分前{args.top} ∪ 动量入池分前{args.top}, 池内按总分=趋势分+动量分, 两分值已加权)后对比; "
                      "本表排序: 完全新进池 → 新进池 → 池内(按动量分变化降序: 提高多→没变→降低少→降低多) → 退出池(组内按当日动量分降序); "
                      "状态: 池内=两日均在池内, 新进池=今日新进(蓝), 完全新进池=前5个交易日均未入池今日首次入池(紫), 退出池=今日掉出(灰); "
                      "涨红跌绿: 排名变化=前日排名-今日排名(正=名次上升); 趋势分变化/动量分变化/总分变化=今日-前日(均为加权后分值, 各日按各自权重); "
@@ -795,10 +803,10 @@ def main() -> None:
             lines += _view_txt(order, series)
         else:
             lines.append("(今日池板块窗口内无满足条件的走势)")
-        if empty_groups:
+        if empty_groups and SHOW_NOTES:
             lines.append("本日无满足条件的分组(不画图): " + "、".join(empty_groups)
                          + " (共4个分组=动量↑/动量↓/趋势↑/趋势↓)")
-        if any(p.get("cov") == "仅沪市" for p in series):
+        if any(p.get("cov") == "仅沪市" for p in series) and SHOW_NOTES:
             lines.append("注: 标'仅沪市'的日期为修复前扫描产物, 仅沪市口径, 与'沪深北'日期不可直接比绝对值。")
     with open(base + ".txt", "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
