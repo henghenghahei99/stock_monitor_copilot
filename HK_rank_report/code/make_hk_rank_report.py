@@ -71,6 +71,13 @@ def _color(c: str, v):
         if val < 0:
             return DOWN
         return "#999"
+    if c == "动量分":
+        # 今日板块排名表: 动量分 <1 视为动量偏弱 -> 绿色(涨红跌绿)
+        try:
+            mv = float(v)
+        except Exception:  # noqa: BLE001
+            return ""
+        return DOWN if mv < 1 else ""
     if c == "状态":
         if v == "完全新进池":
             return NEW_PURPLE
