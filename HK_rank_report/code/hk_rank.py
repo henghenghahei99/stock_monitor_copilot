@@ -551,9 +551,18 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
                         reverse=True)
     mom_top = {ind for ind, _ in mom_sorted[:top]}
 
+    # 行集合 = 有命中股的行业 ∪ 今日有动量数据的行业(后者趋势分记 0)。
+    # 后者必须保留: 港股/美股常有“某日该板块无命中股但有动量”的情况, 升降表里
+    # 它们也要能带上分数(否则显示 "-")。
+    _ind_rows = [(str(a["industry"]), int(a["得分"]), int(a["股票数"]), float(a["平均分"]))
+                 for _, a in agg.iterrows()]
+    _has = {r[0] for r in _ind_rows}
+    for ind in raw_map:
+        if str(ind) not in _has:
+            _ind_rows.append((str(ind), 0, 0, 0.0))
     rows = []
-    for _, a in agg.iterrows():
-        ind = a["industry"]
+    for ind, _score, _cnt, _avg in _ind_rows:
+        a = {"industry": ind, "得分": _score, "股票数": _cnt, "平均分": _avg}
         # 腿池外的行业也保留(分数照算), 升降表里表现为“退出池”; 排名/池内由 腿池+阈值 决定
         _leg = int(ind in score_top or ind in mom_top)
         src = []

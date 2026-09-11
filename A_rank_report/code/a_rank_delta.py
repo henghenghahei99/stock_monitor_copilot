@@ -43,6 +43,28 @@ def a_rank(path: str, col: str, mapping: dict[int, int], top: int,
     # 腿池外的行业也补进来(用同一套权重算展示分), 使升降表里“退出池”的板块都带分数与评价
     wt, wm = sm.LAST_WEIGHTS
     allsc = sm.industry_momentum_scores(df, col, mapping, cache_only=True)
+    # 今日“无命中股但有动量数据”的行业(趋势分记 0)也要补上, 否则它们在升降表里没有分数
+    _have = set(rk["industry"].astype(str)) | set(allsc["industry"].astype(str))
+    try:
+        entry = sm.sector_momentum_entry(sm.as_of_date(df), cache_only=True)
+        if not entry.empty:
+            entry = entry.assign(sector=entry["sector"].astype(str).map(sm._merge_ind))
+            entry = (entry.groupby("sector", sort=False)
+                          .agg(动量入池分=("动量入池分", "sum"), 动量股数=("动量股数", "sum"))
+                          .reset_index())
+            miss = []
+            for _, e in entry[~entry["sector"].isin(_have)].iterrows():
+                _f = sm.size_factor(sm._sector_size(str(e["sector"]), 1))
+                _n = int(e["动量股数"])
+                _pts = (round(max(-10.0, min(10.0,
+                            float(e["动量入池分"]) / (sm.MOM_NORM * _n))) * _f, 2)
+                        if _n > 0 else 0.0)
+                miss.append({"industry": str(e["sector"]), "趋势分": 0.0, "动量分": _pts,
+                             "动量入池分": round(float(e["动量入池分"]) * _f, 2)})
+            if miss:
+                allsc = pd.concat([allsc, pd.DataFrame(miss)], ignore_index=True)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[警告] 无命中行业补分失败: {exc}", file=sys.stderr)
     extra = allsc[~allsc["industry"].astype(str).isin(set(rk["industry"].astype(str)))]
     if not extra.empty:
         extra = extra.copy()
