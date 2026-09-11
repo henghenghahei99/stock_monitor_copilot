@@ -25,7 +25,7 @@ HK_rank: 港股板块 A_rank（与 A股 A_rank_report_v2 同口径，按东财�
 
 用法:
   python hk_rank.py --scan --workers 30                # 全市场扫描(当日K线缓存), 产出 hits+动量表
-  python hk_rank.py --rank --top 10                    # 由当日 hits+动量表 算板块入池排名
+  python hk_rank.py --rank --top 7                     # 由当日 hits+动量表 算板块入池排名
   python hk_rank.py --delta                            # 与前一日排名升降
   python hk_rank.py --limit 200 --scan --rank --delta  # 小批量联调(先跑通再全量)
 """
@@ -430,7 +430,7 @@ def _rep_mom(name: str, prefixed: str, chg1, new: bool = False) -> str:
     return f"{mark}{_short(name, prefixed)}({chg})"
 
 
-def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
+def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
     """由当日 hits+动量表 -> 双口径入池排名表 hk_rank_{day_key}.csv。"""
     hits = pd.read_csv(os.path.join(OUT, f"hk_uptrend_{day_key}.csv"), encoding="utf-8-sig")
     mom = pd.read_csv(os.path.join(OUT, f"hk_momentum_{day_key}.csv"), encoding="utf-8-sig")
@@ -640,7 +640,7 @@ def main() -> None:
     p.add_argument("--workers", type=int, default=30)
     p.add_argument("--no-cache", action="store_true")
     p.add_argument("--limit", type=int, default=0, help="只扫前N只(联调用)")
-    p.add_argument("--top", type=int, default=10)
+    p.add_argument("--top", type=int, default=7)
     p.add_argument("--force", action="store_true")
     a = p.parse_args()
 

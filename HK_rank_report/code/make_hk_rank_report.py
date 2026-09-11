@@ -5,7 +5,7 @@
 
 读 output/hk_rank_{YYYYMMDD}.csv(入池排名) + hk_delta_{YYYYMMDD}.csv(升降,可选)
 多日(hk_rank_*.csv)自动生成 4 张走势图(动量↑/↓、趋势↑/↓), 与 A股一致放报告末尾。
-用法: python make_hk_rank_report.py [YYYYMMDD] [--top 10]
+用法: python make_hk_rank_report.py [YYYYMMDD] [--top 7]
 """
 from __future__ import annotations
 
@@ -425,7 +425,7 @@ def _direction_groups(series: list[dict], order: list[str], metric: str):
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("day", nargs="?", default="")
-    p.add_argument("--top", type=int, default=10)
+    p.add_argument("--top", type=int, default=7)
     a = p.parse_args()
     tag = a.day or os.path.basename(sorted(glob.glob(os.path.join(OUT, "hk_rank_*.csv")))[-1]) \
         .replace("hk_rank_", "").replace(".csv", "")

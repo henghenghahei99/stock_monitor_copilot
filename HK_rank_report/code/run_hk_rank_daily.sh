@@ -7,13 +7,13 @@
 # 用法:
 #   bash code/run_hk_rank_daily.sh              # 最新"已收盘确认"交易日
 #   bash code/run_hk_rank_daily.sh 20260910     # 指定日期(回补历史)
-#   TOP/WORKERS 可用环境变量覆盖(默认 TOP=10、WORKERS=30)
+#   TOP/WORKERS 可用环境变量覆盖(默认 TOP=7(港股板块少, 趋势/动量各取前7)、WORKERS=30)
 set -euo pipefail
 cd "$(dirname "$0")/.."              # .../HK_rank_report
 
 PY="${PY:-/home/sld/miniconda3/envs/py12/bin/python}"
 DAY="${1:-auto}"
-TOP="${TOP:-10}"
+TOP="${TOP:-7}"
 WORKERS="${WORKERS:-30}"
 
 echo "=== 港股板块 A_rank ${DAY} (top=${TOP}, workers=${WORKERS}) ==="

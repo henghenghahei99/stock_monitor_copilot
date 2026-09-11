@@ -75,7 +75,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description="港股历史回补(离线)")
     ap.add_argument("dates", nargs="*", help="指定交易日 YYYYMMDD(默认取最近 N 日)")
     ap.add_argument("--days", type=int, default=6, help="默认回补最近 N 个交易日")
-    ap.add_argument("--top", type=int, default=10, help="入池各取前 N(默认10)")
+    ap.add_argument("--top", type=int, default=7, help="入池各取前 N(默认7)")
     ap.add_argument("--report", action="store_true", help="顺带生成最新一日的报告")
     a = ap.parse_args()
 
