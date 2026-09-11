@@ -278,6 +278,34 @@ def scan_one(rec: dict, no_cache: bool, asof: date | None = None) -> tuple[dict 
         return None, None
 
 
+def _latest_us_session(probe: int = 4) -> date | None:
+    """探测最新可用美股交易日: 取几只大市值标的**新鲜**K线(不走缓存)末根日期的最大值。
+
+    用于设置 K线缓存增量基准(参考 A股 run_strategy 的做法)。美股当日K线要等到
+    北京时间次日凌晨才收盘确认，只靠 mtime TTL(1天) 会在早盘时段把上一交易日的
+    缓存当成最新数据复用，导致日报日期卡在昨天。
+    """
+    try:
+        recs = sorted(ensure_universe(),
+                      key=lambda r: -(r.get("market_cap") or 0))[:max(1, probe)]
+    except Exception:  # noqa: BLE001
+        return None
+    best: date | None = None
+    for r in recs:
+        try:
+            k = fos.tencent_kline(r["prefixed"], BARS, use_cache=False)
+        except Exception:  # noqa: BLE001
+            continue
+        if not k:
+            continue
+        close = k[0].astype(float).dropna()
+        if close.empty:
+            continue
+        d = close.index[-1].date()
+        best = d if best is None else max(best, d)
+    return best
+
+
 def scan_day(day_key: str, workers: int, no_cache: bool, limit: int,
              force: bool = False) -> tuple[pd.DataFrame, str]:
     """全市场扫描当日: 产出 hits 与 动量成员两表(日期=最后K线交易日)。
@@ -301,6 +329,14 @@ def scan_day(day_key: str, workers: int, no_cache: bool, limit: int,
     moms: list[dict] = []
     # 指定了具体日期(YYYYMMDD)时按该交易日切片回补历史; auto=最新日(不切片)
     asof = pd.Timestamp(day_key).date() if day_key != "auto" else None
+    if asof is None and not no_cache:
+        # 增量基准: 先探最新美股交易日, 让“停在上一交易日”的缓存重拉(不靠 TTL)
+        ref = _latest_us_session()
+        if ref is not None:
+            fos.set_kline_asof_ref(ref)
+            print(f"[scan] K线增量基准(最新美股交易日) = {ref}", file=sys.stderr)
+        else:
+            print("[警告] 无法探测最新美股交易日, 退回缓存 TTL 判断", file=sys.stderr)
     done = 0
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=workers) as pool:
