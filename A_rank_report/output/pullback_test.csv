@@ -1,5 +1,0 @@
-﻿ticker,name,sector,industry,date,close,chg20,volume,score,passed,pullback
-TWLO,Twilio Inc.,Technology,Computer Software: Prepackaged Software,2026-08-27,241.34,26.4,606675835,1.0,pullback,涨26% 撤6% 量比0.61
-DOCS,"Doximity, Inc.",Technology,EDP Services,2026-08-27,25.59,20.5,197036336,1.0,pullback,涨20% 撤7% 量比0.30
-DXCM,德康医疗,Health Care,Medical/Dental Instruments,2026-08-27,89.29,19.8,482047674,1.0,pullback,涨20% 撤3% 量比0.69
-AXON,"Axon Enterprise, Inc.",Industrials,Ordnance And Accessories,2026-08-27,611.2,16.4,540730833,1.0,pullback,涨16% 撤5% 量比0.61
