@@ -37,15 +37,27 @@ def a_rank(path: str, col: str, mapping: dict[int, int], top: int,
     import sector_momentum as sm  # noqa: PLC0415
     df = pd.read_csv(path)
     rk = sm.combined_rank(df, col, mapping, top).reset_index(drop=True)
-    if "池内" in rk.columns:
-        # 排名只给池内行; 被阈值剔出池的行保留分数(升降表要显示“退出池”的今日分数)
-        rk["排名"] = pd.NA
-        pool = rk[rk["池内"] == 1]
-        if not pool.empty:
-            rk.loc[pool.index, "排名"] = list(range(1, len(pool) + 1))
-        rk["排名"] = pd.to_numeric(rk["排名"], errors="coerce")
-    else:
+    if "池内" not in rk.columns:
         rk["排名"] = rk.index + 1
+        return rk
+    # 腿池外的行业也补进来(用同一套权重算展示分), 使升降表里“退出池”的板块都带分数与评价
+    wt, wm = sm.LAST_WEIGHTS
+    allsc = sm.industry_momentum_scores(df, col, mapping, cache_only=True)
+    extra = allsc[~allsc["industry"].astype(str).isin(set(rk["industry"].astype(str)))]
+    if not extra.empty:
+        extra = extra.copy()
+        extra["趋势贡献"] = (extra["趋势分"] * wt * sm.DISPLAY_SCALE).round(2)
+        extra["动量贡献"] = (extra["动量分"] * wm * sm.DISPLAY_SCALE).round(2)
+        extra["总分"] = (extra["趋势贡献"] + extra["动量贡献"]).round(2)
+        extra["池内"] = 0
+        extra["出池原因"] = "腿池外"
+        rk = pd.concat([rk, extra], ignore_index=True)
+    # 排名只给池内行; 出池行保留分数(升降表要显示“退出池”的今日分数)
+    rk["排名"] = pd.NA
+    pool = rk[rk["池内"] == 1]
+    if not pool.empty:
+        rk.loc[pool.index, "排名"] = list(range(1, len(pool) + 1))
+    rk["排名"] = pd.to_numeric(rk["排名"], errors="coerce")
     return rk
 
 
@@ -65,7 +77,16 @@ def main() -> None:
     old = a_rank(args.old, args.col, mapping, args.top, args.sort).set_index("industry")
     new = a_rank(args.new, args.col, mapping, args.top, args.sort).set_index("industry")
 
-    inds = sorted(set(old.index) | set(new.index), key=lambda x: new["排名"].get(x, 99))
+    # 榜单行 = 两日“池内”板块的并集(逻辑与之前一致); 分数从全量表取,
+    # 因此“退出池”的板块也能带上当日分数并按池内口径评价
+    def _pool_set(tbl: pd.DataFrame) -> set:
+        if "池内" not in tbl.columns:
+            return set(tbl.index)
+        return set(tbl.index[tbl["池内"] == 1])
+
+    inds = sorted(_pool_set(old) | _pool_set(new),
+                  key=lambda x: (new["排名"].get(x)
+                                 if pd.notna(new["排名"].get(x)) else 99))
 
     def _col(tbl: pd.DataFrame, name: str):
         """优先取“加权后贡献”列(展示口径=实际入总分的值), 老数据退回原始列。"""

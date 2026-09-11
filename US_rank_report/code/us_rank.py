@@ -572,8 +572,8 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
     rows = []
     for _, a in agg.iterrows():
         ind = a["industry"]
-        if ind not in score_top and ind not in mom_top:
-            continue
+        # 腿池外的行业也保留(分数照算), 升降表里表现为“退出池”; 排名/池内由 腿池+阈值 决定
+        _leg = int(ind in score_top or ind in mom_top)
         src = []
         if ind in score_top:
             src.append("趋势")
@@ -591,11 +591,26 @@ def build_rank(day_key: str, top: int = 10) -> pd.DataFrame:
             "动量分": pts,
             "动量入池分": round(rawv * f, 2) if rawv is not None else None,
             "代表股": "、".join(trep_by.get(ind, [])[:5] + mrep_by.get(ind, [])[:MOM_REPS]) or "-",
-            "入池": "+".join(src),
+            "入池": "+".join(src) or "—",
+            "_leg": _leg,
         })
     rk = pd.DataFrame(rows)
-    # 池内动态配权 + 入池下限(动量分<2 或 总分<5 -> 标为出池; 行仍保留, 供升降表显示)
-    rk = apply_pool_floor(rk)
+    # (1) 腿池行 -> 动态配权 + 阈值(动量<2/总分<5)
+    leg = apply_pool_floor(rk[rk["_leg"] == 1].copy())
+    wt, wm = LAST_WEIGHTS
+    _leg_kept = set(leg.loc[leg["池内"] == 1, "industry"]) if not leg.empty else set()
+    _leg_reason = (dict(zip(leg["industry"], leg["出池原因"]))
+                   if not leg.empty else {})
+    # (2) 用同一权重给**全部行业**(含腿池外)算展示分, 退出池的板块也能带分数与评价
+    rk = rk.drop(columns=["池内", "出池原因"], errors="ignore")
+    rk["趋势贡献"] = (rk["趋势分"] * wt * DISPLAY_SCALE).round(2)
+    rk["动量贡献"] = (rk["动量分"] * wm * DISPLAY_SCALE).round(2)
+    rk["总分"] = (rk["趋势贡献"] + rk["动量贡献"]).round(2)
+    rk["池内"] = rk["industry"].isin(_leg_kept).astype(int)
+    rk["出池原因"] = ["" if int(k) == 1 else
+                    (_leg_reason.get(str(i)) or "腿池外")
+                    for i, k in zip(rk["industry"], rk["池内"])]
+    rk = rk.drop(columns=["_leg"], errors="ignore")
     rk = rk.sort_values(["池内", "总分"], ascending=[False, False]).reset_index(drop=True)
     # 排名只给池内行(出池行留空, 但分数保留)
     rk["排名"] = pd.NA

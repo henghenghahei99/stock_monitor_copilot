@@ -166,8 +166,8 @@ def _add_eval(delta: pd.DataFrame, rank: pd.DataFrame) -> pd.DataFrame:
     for _, r in d.iterrows():
         st = r.get("状态")
         tw, mw = _trend_word(r.get("趋势分变化")), _mom_word(r.get("动量分变化"))
-        # 池内 -> 按变化评价; 被阈值(动量<2/总分<5)剔出池的板块仍有两日分数, 同样按池内口径
-        if st == "池内" or tw or mw:
+        # 池内/退出池 -> 按变化评价(“进池”口径); 新进池仍按当日分数在池内百分位评价
+        if st == "池内" or (st == "退出池" and (tw or mw)):
             evals.append("、".join(x for x in (tw, mw) if x) or "平稳")
             continue
         ind = str(r["行业"]).strip()
