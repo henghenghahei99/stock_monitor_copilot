@@ -680,12 +680,12 @@ def main() -> None:
                             f"{seq[gi]} {mname} · {dname} 0条 —— 本组无板块(不画图)</div>")
                         gi += 1
                         continue
-                    title = f"{seq[gi]} {mname} · {dname} {len(g)}条"
+                    ctitle = f"{seq[gi]} {mname} · {dname} {len(g)}条"
                     # 邮件可见性: QQ/163 不渲染内嵌SVG, 故每张图同时导出 PNG(chart_N.png)
                     png_dir = os.path.join(OUT, f"a_rank_report_{args.date}_charts")
                     try:
                         os.makedirs(png_dir, exist_ok=True)
-                        png = _chart_png_bytes(metric, series, g, colors, idx, title)
+                        png = _chart_png_bytes(metric, series, g, colors, idx, ctitle)
                         if png:
                             with open(os.path.join(png_dir, f"chart_{chart_no}.png"), "wb") as fp:
                                 fp.write(png)
@@ -693,7 +693,7 @@ def main() -> None:
                         print(f"[警告] 图表PNG生成失败(chart_{chart_no}): {exc}", file=sys.stderr)
                     chart_parts.append(f"<!--CHART:{chart_no}-->")
                     chart_parts.append(
-                        f"<div style='font-weight:600;color:#444;margin:8px 0 2px'>{title}</div>")
+                        f"<div style='font-weight:600;color:#444;margin:8px 0 2px'>{ctitle}</div>")
                     chart_parts.append(_metric_svg(metric, series, g, colors, idx))
                     chart_parts.append(_legend_html(g, colors, idx))   # 该图自己的小图例
                     chart_parts.append("<!--/CHART-->")

@@ -606,9 +606,10 @@ def _scores_index(day_key: str, pool: set[str]) -> dict[str, dict]:
 
 
 def build_delta(day_key: str) -> pd.DataFrame:
-    """对比前一可用日期的 us_rank_*.csv -> us_delta_{day_key}.csv。"""
+    """对比**最近一个更早交易日**的 us_rank_*.csv -> us_delta_{day_key}.csv。"""
     rks = sorted(f for f in os.listdir(OUT)
-                 if f.startswith("us_rank_") and f.endswith(".csv") and day_key not in f)
+                 if f.startswith("us_rank_") and f.endswith(".csv")
+                 and f[len("us_rank_"):-4] < day_key)     # 必须更早, 不能取最新那份
     if not rks:
         print("[delta] 无更早日排名, 跳过", file=sys.stderr)
         return pd.DataFrame()

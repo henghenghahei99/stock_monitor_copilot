@@ -200,7 +200,20 @@ def scan_one(rec: dict, no_cache: bool, asof: date | None = None,
         k = fos.tencent_kline(rec["prefixed"], BARS, use_cache=not no_cache)
         if k is None:
             return None, None
-        close, volume = k
+        return eval_stock(rec, k[0], k[1], asof, live)
+    except Exception as exc:  # noqa: BLE001
+        print(f"[警告] {rec['prefixed']} 处理失败: {exc}", file=sys.stderr)
+        return None, None
+
+
+def eval_stock(rec: dict, close: pd.Series, volume: pd.Series,
+               asof: date | None = None, live: bool = False
+               ) -> tuple[dict | None, dict | None]:
+    """已拿到K线序列后的统一评估(联网扫描与离线历史回补共用): 返回 (hits行, 动量成员行)。
+
+    asof: 只算到该交易日(含); live: 额外做停牌过滤(最新日扫描才用)。
+    """
+    try:
         close = close.astype(float).dropna()
         if asof is not None:
             close = close[close.index.date <= asof]
@@ -575,9 +588,10 @@ def _scores_index(day_key: str, pool: set[str]) -> dict[str, dict]:
 
 
 def build_delta(day_key: str) -> pd.DataFrame:
-    """对比前一可用日期的 hk_rank_*.csv -> hk_delta_{day_key}.csv。"""
+    """对比**最近一个更早交易日**的 hk_rank_*.csv -> hk_delta_{day_key}.csv。"""
     rks = sorted(f for f in os.listdir(OUT)
-                 if f.startswith("hk_rank_") and f.endswith(".csv") and day_key not in f)
+                 if f.startswith("hk_rank_") and f.endswith(".csv")
+                 and f[len("hk_rank_"):-4] < day_key)     # 必须更早, 不能取最新那份
     if not rks:
         print("[delta] 无更早日排名, 跳过", file=sys.stderr)
         return pd.DataFrame()
