@@ -430,6 +430,37 @@ def _rep_mom(name: str, prefixed: str, chg1, new: bool = False) -> str:
     return f"{mark}{_short(name, prefixed)}({chg})"
 
 
+# 入池下限(用户口径, 2026-09-11): 展示动量分 < 2 或 总分 < 5 的板块按“出池”对待。
+# 注意权重与总分互相依赖(权重按池内量级配平), 故“配权→算总分→筛掉不达标”迭代到稳定。
+POOL_MIN_MOM = 2.0
+POOL_MIN_TOTAL = 5.0
+
+
+def apply_pool_floor(df: pd.DataFrame, min_mom: float = POOL_MIN_MOM,
+                     min_total: float = POOL_MIN_TOTAL) -> pd.DataFrame:
+    """算 趋势贡献/动量贡献/总分, 并把 动量分<min_mom 或 总分<min_total 的板块剔除。
+
+    返回筛后的 df(含 趋势贡献/动量贡献/总分, 未排序), 同时更新 LAST_WEIGHTS。
+    """
+    global LAST_WEIGHTS
+    cur = df
+    for _ in range(5):                      # 权重<->总分 互相依赖, 迭代到稳定
+        if cur.empty:
+            LAST_WEIGHTS = (0.5, 0.5)
+            return cur
+        wt, wm = dynamic_weights(cur["趋势分"], cur["动量分"])
+        LAST_WEIGHTS = (wt, wm)
+        cur = cur.copy()
+        cur["趋势贡献"] = (cur["趋势分"] * wt * DISPLAY_SCALE).round(2)
+        cur["动量贡献"] = (cur["动量分"] * wm * DISPLAY_SCALE).round(2)
+        cur["总分"] = (cur["趋势贡献"] + cur["动量贡献"]).round(2)
+        keep = (cur["动量贡献"] >= min_mom) & (cur["总分"] >= min_total)
+        if bool(keep.all()):
+            return cur
+        cur = cur[keep]
+    return cur
+
+
 def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
     """由当日 hits+动量表 -> 双口径入池排名表 hk_rank_{day_key}.csv。"""
     hits = pd.read_csv(os.path.join(OUT, f"hk_uptrend_{day_key}.csv"), encoding="utf-8-sig")
@@ -522,14 +553,8 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
             "入池": "+".join(src),
         })
     rk = pd.DataFrame(rows)
-    # 池内动态配权(与A股同一套): 趋势/动量按当日池内量级取反比权重, 平均贡献相等
-    global LAST_WEIGHTS
-    wt, wm = dynamic_weights(rk["趋势分"], rk["动量分"])
-    LAST_WEIGHTS = (wt, wm)
-    # 展示口径: 趋势分/动量分原始值保留(走势图用原始量级), 另给加权后贡献两列(×2 保持原量级)
-    rk["趋势贡献"] = (rk["趋势分"] * wt * DISPLAY_SCALE).round(2)
-    rk["动量贡献"] = (rk["动量分"] * wm * DISPLAY_SCALE).round(2)
-    rk["总分"] = (rk["趋势贡献"] + rk["动量贡献"]).round(2)
+    # 池内动态配权 + 入池下限(动量分<2 或 总分<5 -> 按出池剔除; 与A股同一套)
+    rk = apply_pool_floor(rk)
     rk = rk.sort_values("总分", ascending=False).reset_index(drop=True)
     rk.insert(0, "排名", range(1, len(rk) + 1))
     out = os.path.join(OUT, f"hk_rank_{day_key}.csv")

@@ -101,7 +101,10 @@ def main() -> None:
             continue
         for d, asof in zip(dates, asofs):
             try:
-                h, mo = hk.eval_stock(rec, close, volume, asof=asof, live=False)
+                # 最新那个已收盘日按“实时扫描”口径处理(停牌超 MAX_STALE_DAYS 的不参与),
+                # 否则会把长期停牌股按陈旧K线算出的动量混进当日板块里
+                h, mo = hk.eval_stock(rec, close, volume, asof=asof,
+                                      live=(asof == asofs[-1]) and (len(dates) > 1))
             except Exception:  # noqa: BLE001
                 h = mo = None
             if h:
