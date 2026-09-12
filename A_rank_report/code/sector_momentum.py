@@ -15,7 +15,7 @@
     按 m 降序取前10 只的 m 之和(不足按实际只数);
   动量入池 = 动量入池分 前 top 板块 与 原行业得分前 top 并集(最多 2*top)。
   入池列: 趋势=按得分入池, 动量=按动量入池分入池, 趋势+动量=双口径。
-  小板块对齐: 板块股票总数 3-9 只时, 入池分 ×10/总数(其余不动), 趋势腿/动量腿同规则。
+  小板块对齐: 板块股票总数 5-9 只时, 入池分 ×10/总数(其余不动), 趋势腿/动量腿同规则。
 全市场动量表 output/cn_momentum_YYYYMMDD.csv 按交易日缓存(行情走本地K线缓存, 缺失才联网)。
 """
 from __future__ import annotations
@@ -80,12 +80,12 @@ OLD_MOM_MARK = "◎"
 # gate 用“板块股票总数”(不是命中只数/动量只数) —— 只有整个板块都 <10 只才对齐。
 # 注意: 只影响入池比较与该列数值; 展示用的“趋势分/动量分”是人均值, 不受影响。
 ENTRY_ALIGN_N = 10
-# 1-2 只成分股的板块样本太小, 放大 5-10 倍会引入噪声, 故仅对 >=3 只的板块对齐(用户口径)
-ENTRY_ALIGN_MIN = 3
+# 少于 5 只成分股的板块样本太小, 放大 5-10 倍会引入噪声, 故仅对 >=5 只的板块对齐(用户口径)
+ENTRY_ALIGN_MIN = 5
 
 
 def align_entry(raw, total):
-    """入池分对齐(趋势腿/动量腿共用): 板块股票总数 3-9 只时 ×10/总数, 否则原值。
+    """入池分对齐(趋势腿/动量腿共用): 板块股票总数 5-9 只时 ×10/总数, 否则原值。
     total = 板块股票总数(不是命中只数, 也不是动量只数); raw=None 返回 None。"""
     if raw is None:
         return None
@@ -571,7 +571,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
                      .reset_index())
     raw_map = dict(zip(entry["sector"], entry["动量入池分"])) if not entry.empty else {}
     cnt_map = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
-    # 入池用动量分: 板块股票总数 3-9 只时 ×10/总数 对齐(展示动量分仍用 raw÷(1.4×只数))
+    # 入池用动量分: 板块股票总数 5-9 只时 ×10/总数 对齐(展示动量分仍用 raw÷(1.4×只数))
     adj_map = {ind: align_entry(v, _sector_size(str(ind), int(cnt_map.get(ind) or 0)))
                for ind, v in raw_map.items()}
 
@@ -621,7 +621,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     # 3) 两条入池路径各自取前 top(入围也乘数量因子; 并列按板块名稳定排序)
     _agg = agg.copy()
     _agg["_f"] = _agg.apply(lambda r: size_factor(_sector_size(str(r["industry"]), int(r["股票数"]))), axis=1)
-    # 趋势腿同样对齐: 板块股票总数 3-9 只时 得分 × 10/总数, 与动量腿同一口径
+    # 趋势腿同样对齐: 板块股票总数 5-9 只时 得分 × 10/总数, 与动量腿同一口径
     _agg["_s"] = _agg.apply(
         lambda r: align_entry(r["得分"], _sector_size(str(r["industry"]), int(r["股票数"]))) * r["_f"],
         axis=1)
