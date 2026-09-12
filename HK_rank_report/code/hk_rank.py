@@ -13,7 +13,7 @@ HK_rank: 港股板块 A_rank（与 A股 A_rank_report_v2 同口径，按东财�
   - 动量入池分(每板块) = 全部成分股按 m 降序前10 只 m 之和(不足按实际只数) ×f
   - 展示动量分(±10) = S/(1.4×动量股数) ×f
   - 入池 = 趋势腿(得分×f 前 top) ∪ 动量腿(动量入池分×f 前 top)(并集, 最多 2*top)
-  - 入池 = 趋势腿(得分×f 前 top) ∪ 动量腿(动量入池分×f 前 top)(并集, 最多 2*top)
+  - 小板块对齐: 板块股票总数 3-9 只时, 入池分 ×10/总数(其余不动), 趋势腿/动量腿同规则
   - 池内按 总分 = 趋势分/动量分 动态配平(按当日池内量级) 降序
   - 代表股 = 趋势代表股(加权分前5, 名称(8/8,+20日%)) + ◎动量代表股(全部成分股按m前7, ◎名称(+当日%))
 
@@ -69,24 +69,25 @@ MOM_REPS = 7
 NEW_MOM_MARK = "◆"
 OLD_MOM_MARK = "◎"
 
-# 动量入池分对齐基准(用户口径, 2026-09-12): 板块成分股不足 10 只时,
-# 求和项天生比 10 只的板块少, 按 入池分 × 10 ÷ 只数 折算到“10 只口径”再比大小。
-# 注意: 只影响入池比较与“动量入池分”列; 展示用的“动量分”是人均值, 不受影响。
+# 入池分对齐基准(用户口径, 2026-09-12): 板块股票总数不足 10 只时, 求和项天生比
+# 10 只的板块少, 按 入池分 × 10 ÷ 板块股票总数 折算到“10 只口径”再比大小。
+# gate 用“板块股票总数”(不是命中只数/动量只数) —— 只有整个板块都 <10 只才对齐。
+# 注意: 只影响入池比较与该列数值; 展示用的“趋势分/动量分”是人均值, 不受影响。
 ENTRY_ALIGN_N = 10
 # 1-2 只成分股的板块样本太小, 放大 5-10 倍会引入噪声, 故仅对 >=3 只的板块对齐(用户口径)
 ENTRY_ALIGN_MIN = 3
 
 
-def align_entry(raw, cnt):
-    """入池分对齐(趋势腿/动量腿共用): ENTRY_ALIGN_MIN <= 只数 < ENTRY_ALIGN_N 时
-    ×ENTRY_ALIGN_N/只数, 否则原值; raw=None 返回 None。"""
+def align_entry(raw, total):
+    """入池分对齐(趋势腿/动量腿共用): 板块股票总数 3-9 只时 ×10/总数, 否则原值。
+    total = 板块股票总数(不是命中只数, 也不是动量只数); raw=None 返回 None。"""
     if raw is None:
         return None
-    if cnt is None:
+    if total is None:
         return float(raw)
-    c = int(cnt)
-    if ENTRY_ALIGN_MIN <= c < ENTRY_ALIGN_N:
-        return float(raw) * ENTRY_ALIGN_N / c
+    n = int(total)
+    if ENTRY_ALIGN_MIN <= n < ENTRY_ALIGN_N:
+        return float(raw) * ENTRY_ALIGN_N / n
     return float(raw)
 # 动量分归一除数: 权重和已由 3 变 1(加权 m 变小), 用 1.4(=7/5) 标定,
 # 使动量分均值与"等权三条叠加+除5"的旧口径一致(美股实测 ~1.00×, A股 ~1.02×), 保持 ±10 量级
@@ -515,8 +516,6 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
         return pd.DataFrame()
     raw_map = dict(zip(entry["industry"], entry["动量入池分"])) if not entry.empty else {}
     cnt_map = dict(zip(entry["industry"], entry["动量股数"])) if not entry.empty else {}
-    # 入池用的动量分: 不足10只的板块按 ×10/只数 对齐(展示动量分仍用 raw÷(1.4×只数))
-    adj_map = {ind: align_entry(v, cnt_map.get(ind)) for ind, v in raw_map.items()}
 
     def _pts(ind) -> float:
         r, c = raw_map.get(ind), cnt_map.get(ind)
@@ -538,6 +537,15 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
 
     def _fsz(ind: str, fallback: int) -> float:
         return size_factor(_sz.get(str(ind)) or int(fallback))
+
+    def _tsz(ind: str, fallback: int) -> int:
+        """板块股票总数(_sz 同行业计数; 缺失退回 fallback)。对齐只按此口径判断。"""
+        return int(_sz.get(str(ind)) or int(fallback or 0))
+
+    # 入池用动量分: 板块股票总数 3-9 只时 ×10/总数 对齐(展示动量分仍用 raw÷(1.4×只数))
+    adj_map = {ind: align_entry(v, _tsz(ind, cnt_map.get(ind) or 0))
+               for ind, v in raw_map.items()}
+
     h = hits.copy()
     h["加权分"] = h["uptrend"].map(lambda s: SCORE_MAP.get(int(str(s).split("/")[0]), 0))
     h = h[h["加权分"] > 0]
@@ -567,9 +575,10 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
     fmap = {str(a["industry"]): _fsz(str(a["industry"]), int(a["股票数"])) for _, a in agg.iterrows()}
     _agg = agg.copy()
     _agg["_f"] = _agg.apply(lambda r: _fsz(str(r["industry"]), int(r["股票数"])), axis=1)
-    # 趋势腿同样对齐: 命中股数 3-9 只时 得分 × 10/命中股数, 与动量腿口径一致
+    # 趋势腿同样对齐: 板块股票总数 3-9 只时 得分 × 10/总数, 与动量腿同一口径
     _agg["_s"] = _agg.apply(
-        lambda r: align_entry(r["得分"], r["股票数"]) * r["_f"], axis=1)
+        lambda r: align_entry(r["得分"], _tsz(r["industry"], r["股票数"])) * r["_f"],
+        axis=1)
     score_top = set(_agg.sort_values("_s", ascending=False).head(top)["industry"])
     mom_sorted = sorted(adj_map.items(),
                         key=lambda kv: (kv[1] * fmap.get(kv[0], 1.0), kv[0]),
@@ -601,7 +610,7 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
         pts = round(_pts(ind) * f, 2)                   # 动量分 ×数量因子
         rows.append({
             "industry": ind,
-            "得分": int(round(align_entry(_score, _cnt))),
+            "得分": int(round(align_entry(_score, _tsz(ind, _cnt)))),
             "股票数": int(a["股票数"]),
             "趋势分": trend,
             "动量分": pts,
