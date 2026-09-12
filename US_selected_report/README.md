@@ -106,7 +106,9 @@ python code/monitor_us_macd_decay.py --mode any            # 任一条线低即�
   （即金叉到 ▲ 之间不能再死叉，▲那根仍处金叉后的多头区间）。完整含义：
   **高点 → 死叉回调 → 金叉重新走强 → 创更高的新高（但 MACD 反而更低）**。
   区间内可能有多组交叉，取 **▲之前最后一次金叉** 及其之前的最后一次死叉作为「对应」的那一对。
-  这一步过滤很强（实测自选缓存：236 条 → 19 条）
+- **▲ 距金叉 > `--min-gold-bars`（默认 5，即至少 6 根）**：避免「刚金叉就新高」的退化情形，
+  要求金叉后走出一段再创出新高。实测自选缓存：无此条件 19 条 → >3 根 9 条 → >5 根 **6 条**
+  （金叉后根数分布 `{1:7, 2:2, 3:1, 5:3, 6:1, 12:2, 13:1, 14:2}`）
 - 前高落在 MACD 预热区（前 40 根）内则跳过；同一只票可命中多个「分时K × 窗口」组合（多尺度共振）
 
 ### 数据源
@@ -153,7 +155,8 @@ python code/plot_intraday_decay.py --periods 60分钟,120分钟 --windows 1,2,3
 产物：`output/charts_intraday/*.png` + `output/us_intraday_decay_charts_YYYYMMDD.html`（图表索引）。
 
 参数：`--source`(auto|td|em) `--periods` `--windows`(1,2,3,4,5,6) `--mode`(both|any)
-`--workers`(4) `--bars`(320, 日线根数) `--td-interval-sec`(7.6) `--limit` `--cache`。
+`--workers`(4) `--bars`(320, 日线根数) `--td-interval-sec`(7.6) `--min-gold-bars`(5, ▲距金叉必须**大于**该根数)
+`--no-cross` `--limit` `--cache`。
 产物：`output/us_selected_intraday_decay_YYYYMMDD.csv` + `us_intraday_decay_report_YYYYMMDD.html`
 （表列：分时K / 窗口(日) / 最近新高时间 / 新高价 / 上个新高时间 / 前高价 / 新高幅度 /
 DIF / 前高DIF / DIF差 / DEA / 前高DEA / DEA差 / 衰减类型）。

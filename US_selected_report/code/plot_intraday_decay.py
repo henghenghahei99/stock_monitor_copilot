@@ -168,7 +168,8 @@ def plot_one(df: pd.DataFrame, r: dict, ticker: str, name: str, out_png: str) ->
     ax2.legend(loc="upper left", fontsize=9, ncol=2, framealpha=0.9)
 
     gap = (f"DIF差 {r['dif_gap']:+.3f}   DEA差 {r['dea_gap']:+.3f}   [{r['kind']}]"
-           f"   死叉 {str(r.get('dead_time',''))[5:16]} → 金叉 {str(r.get('gold_time',''))[5:16]}")
+           f"   死叉 {str(r.get('dead_time',''))[5:16]} → 金叉 {str(r.get('gold_time',''))[5:16]}"
+           f" → ▲金叉后第 {r.get('gold_gap','-')} 根")
     fig.suptitle(f"{ticker}  {name}   ·   {r['period']}   ·   窗口 {r['window']} 个交易日   ·   {gap}",
                  fontsize=13, fontweight="bold", color="#2b579a", y=0.975)
     ax2.xaxis.set_major_locator(mdates.AutoDateLocator())
@@ -187,6 +188,8 @@ def main() -> None:
     ap.add_argument("--max-series", type=int, default=0, help="最多画多少张图(0=全部)")
     ap.add_argument("--no-cross", action="store_true",
                     help="关闭「先死叉后金叉 + 新高在金叉后」过滤")
+    ap.add_argument("--min-gold-bars", type=int, default=M.MIN_GOLD_BARS,
+                    help=f"最近新高距金叉必须**大于**多少根(默认{M.MIN_GOLD_BARS})")
     a = ap.parse_args()
 
     windows = [int(x) for x in a.windows.split(",") if x.strip().isdigit()] or M.WINDOWS
@@ -210,7 +213,7 @@ def main() -> None:
                 continue
             if label != "日线":
                 have_cache += 1
-            for r in M.scan_period(df, label, "both", not a.no_cross):
+            for r in M.scan_period(df, label, "both", not a.no_cross, a.min_gold_bars):
                 if r["window"] not in windows:
                     continue
                 r.update({"ticker": p["ticker"], "code": p["code"], "name": p.get("name", "")})
@@ -266,6 +269,7 @@ def main() -> None:
           DEA差 <b style="color:#d93025">{r['dea_gap']:+.3f}</b></span>
     <span>死叉 <b style="color:#5f6368">{str(r.get('dead_time',''))[5:16]}</b>
           → 金叉 <b style="color:#0b8043">{str(r.get('gold_time',''))[5:16]}</b>
+          → 新高 <b style="color:#d93025">金叉后第 {r.get('gold_gap','-')} 根</b>
           <span style="color:#666">（区间内共 死叉×{r.get('n_dead',0)} / 金叉×{r.get('n_gold',0)}）</span></span>
     <span style="color:{kind_c};font-weight:600">{r['kind']}</span>
   </div>
@@ -286,7 +290,7 @@ tr:nth-child(even) td{{background:#f7f9fc}}</style></head><body><div class='wrap
             font-size:13px;color:#8d6e00;margin:10px 0">
 口径: 最近 W 个交易日内的<b>最高价</b>那根(▲) vs 跳过最近窗口后再往前 W 个交易日内的最高价那根(▼)；
 ▲价 &gt; ▼价、两点之间<b>先死叉、后金叉</b>、<b>最近新高位于金叉之后（MACD 仍多头、未再死叉）</b>、
-且 ▲那根的 DIF/DEA <b>都低于</b> ▼那根 → 短线上涨衰减。<br>
+<b>▲ 距金叉 &gt;{a.min_gold_bars} 根</b>、且 ▲那根的 DIF/DEA <b>都低于</b> ▼那根 → 短线上涨衰减。<br>
 本页图表**只用本地缓存离线重算**，未发任何网络请求；数据源 Twelve Data(分时) + 腾讯(日线)。
 共 {len(cards)} 条命中，横轴为该分时K线的时间(美东)。</div>
 {'<div style="padding:10px 0;color:#888">缓存里还没有命中可画</div>' if not cards else ''}

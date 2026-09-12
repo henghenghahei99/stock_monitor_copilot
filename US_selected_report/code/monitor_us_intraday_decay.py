@@ -82,6 +82,7 @@ WINDOWS = [1, 2, 3, 4, 5, 6]                     # 交易日
 MACD_FAST, MACD_SLOW, MACD_SIGNAL = 12, 26, 9
 WARMUP = 40                                      # MACD 预热根数
 DEFAULT_BARS = 320
+MIN_GOLD_BARS = 5                                # ▲距金叉必须 **大于** 这个根数
 TD_OUTPUTSIZE = 1000                             # Twelve Data 单次返回根数
 
 # 东财市场码: 105 纳斯达克 / 106 纽交所 / 107 美交所(ETF 多在 107)
@@ -341,7 +342,7 @@ def macd(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def scan_period(df: pd.DataFrame, label: str, mode: str,
-                require_cross: bool = True) -> list[dict]:
+                require_cross: bool = True, min_gold_bars: int = MIN_GOLD_BARS) -> list[dict]:
     """在给定分时K线上, 遍历所有窗口, 返回命中的「短线上涨衰减」。
 
     require_cross=True: 两个背离点(上个新高 -> 最近新高)之间, 必须**先出现死叉
@@ -393,6 +394,8 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
                 continue
             if not difv[i_cur] > deav[i_cur]:               # ▲那根仍处金叉后状态
                 continue
+            if i_cur - i_gold <= min_gold_bars:             # ▲ 距金叉必须 > min_gold_bars 根
+                continue
             i_dead = max(prev_dead)
         dl, el = difv[i_cur] < difv[i_prv], deav[i_cur] < deav[i_prv]
         hit = (dl and el) if mode == "both" else (dl or el)
@@ -405,6 +408,7 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
             "dead_time": str(df.index[i_dead]) if i_dead >= 0 else "",
             "n_gold": len(g_in), "n_dead": len(d_in),
             "post_gold": int(i_gold >= 0),
+            "gold_gap": (i_cur - i_gold) if i_gold >= 0 else -1,
             "cur_time": str(df.index[i_cur]), "cur_high": round(float(highs[i_cur]), 2),
             "cur_close": round(float(closev[i_cur]), 2),
             "prv_time": str(df.index[i_prv]), "prv_high": round(float(highs[i_prv]), 2),
@@ -456,7 +460,8 @@ def fetch_bars(p: dict, period: str, src: str, klt, bars: int,
 
 
 def scan_one(p: dict, bars: int, mode: str, periods: list, windows: list,
-             cache_only: bool, require_cross: bool = True) -> list[dict]:
+             cache_only: bool, require_cross: bool = True,
+             min_gold_bars: int = MIN_GOLD_BARS) -> list[dict]:
     if not p.get("prefixed"):
         mus._fetch_best(p, bars)
     if not p.get("prefixed"):
@@ -475,7 +480,7 @@ def scan_one(p: dict, bars: int, mode: str, periods: list, windows: list,
                     df60 = df
             if df.empty:
                 continue
-            for r in scan_period(df, label, mode, require_cross):
+            for r in scan_period(df, label, mode, require_cross, min_gold_bars):
                 if r["window"] in windows or not windows:
                     r.update({"code": p["code"], "ticker": p["ticker"],
                               "name": p.get("name", ""), "bars": len(df)})
@@ -511,7 +516,7 @@ def _badge(kind):
 
 
 def write_html(rows, date_tag, watch_total, mode, periods, windows, stats, src="td",
-               require_cross=True):
+               require_cross=True, min_gold_bars=MIN_GOLD_BARS):
     import html as _h
     cols = ["#", "代码", "腾讯码", "名称", "分时K", "窗口(日)", "最近新高时间", "新高价",
             "上个新高时间", "前高价", "新高幅度", "DIF", "前高DIF", "DIF差",
@@ -558,7 +563,8 @@ def write_html(rows, date_tag, watch_total, mode, periods, windows, stats, src="
                 f"background:{PCOLOR.get(lab, GREY)}22;color:{PCOLOR.get(lab, GREY)};font-weight:600'>"
                 f"{lab}: {k}</span>")
     mode_txt = "快线+慢线都低于前高" if mode == "both" else "快线或慢线任一低于前高"
-    cross_txt = ("且两背离点之间<b>先死叉、后金叉</b>、最近新高位于<b>金叉之后</b>(MACD 仍多头)"
+    cross_txt = ("且两背离点之间<b>先死叉、后金叉</b>、最近新高位于<b>金叉之后</b>"
+                 f"(距金叉 &gt;{min_gold_bars} 根, MACD 仍多头)"
                  if require_cross else "(未启用「死叉→金叉」过滤)")
     if src == "td":
         src_txt = "分时数据来自 Twelve Data(美东时间, 30min/1h/2h) · 日线来自腾讯"
@@ -611,8 +617,11 @@ def main() -> None:
                     help=f"Twelve Data 请求最小间隔秒(免费档8次/分, 默认{TD_MIN_INTERVAL})")
     ap.add_argument("--no-cross", action="store_true",
                     help="关闭「先死叉后金叉 + 新高在金叉后」过滤(默认开启)")
+    ap.add_argument("--min-gold-bars", type=int, default=MIN_GOLD_BARS,
+                    help=f"最近新高距金叉必须**大于**多少根K线(默认{MIN_GOLD_BARS}，即≥6根)")
     a = ap.parse_args()
     require_cross = not a.no_cross
+    min_gold_bars = a.min_gold_bars
 
     src = a.source
     if src == "auto":
@@ -634,13 +643,14 @@ def main() -> None:
               f" | 预计 {n_req} 次请求 ≈ {n_req * TD_MIN_INTERVAL / 60:.0f} 分钟"
               f"(免费档限 800次/日、8次/分)")
     print(f"[信息] 自选美股 {len(watch)} 只 | 源={src} | 分时K {[p[0] for p in periods]} | "
-          f"窗口 {windows} | mode={a.mode} | 死叉→金叉→新高过滤={'开' if require_cross else '关'}")
+          f"窗口 {windows} | mode={a.mode} | 死叉→金叉→新高过滤={'开' if require_cross else '关'}"
+          f" | ▲距金叉>{min_gold_bars}根")
 
     if a.cache:
         ok = 0
         with ThreadPoolExecutor(max_workers=a.workers) as ex:
-            futs = [ex.submit(scan_one, p, a.bars, a.mode, periods, [], True, require_cross)
-                    for p in watch]
+            futs = [ex.submit(scan_one, p, a.bars, a.mode, periods, [], True, require_cross,
+                              min_gold_bars) for p in watch]
             for i, _ in enumerate(as_completed(futs), 1):
                 ok += 1
                 if i % 20 == 0 or i == len(watch):
@@ -651,8 +661,8 @@ def main() -> None:
     rows: list[dict] = []
     n_data = 0
     with ThreadPoolExecutor(max_workers=a.workers) as ex:
-        futs = [ex.submit(scan_one, p, a.bars, a.mode, periods, windows, False, require_cross)
-                for p in watch]
+        futs = [ex.submit(scan_one, p, a.bars, a.mode, periods, windows, False, require_cross,
+                          min_gold_bars) for p in watch]
         for i, f in enumerate(as_completed(futs), 1):
             try:
                 r = f.result()
@@ -680,7 +690,7 @@ def main() -> None:
     fields = ["code", "ticker", "name", "period", "window", "cur_time", "cur_high",
               "cur_close", "prv_time", "prv_high", "high_gain%", "dif", "prv_dif",
               "dif_gap", "dea", "prv_dea", "dea_gap", "kind", "gold_time", "dead_time",
-              "n_gold", "n_dead", "post_gold", "dif_lower", "dea_lower", "bars"]
+              "n_gold", "n_dead", "post_gold", "gold_gap", "dif_lower", "dea_lower", "bars"]
     with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
@@ -690,7 +700,7 @@ def main() -> None:
     html_path = os.path.join(OUT_DIR, f"us_intraday_decay_report_{tag}.html")
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(write_html(rows, tag, len(watch), a.mode, periods, windows,
-                           {"stocks": n_data}, src, require_cross))
+                           {"stocks": n_data}, src, require_cross, min_gold_bars))
     print("报告已生成:", html_path)
 
 
