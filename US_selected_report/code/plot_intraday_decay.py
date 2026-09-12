@@ -95,6 +95,13 @@ def plot_one(df: pd.DataFrame, r: dict, ticker: str, name: str, out_png: str) ->
             if difv[i] <= deav[i] and difv[i + 1] > deav[i + 1]]
     didx = [i + 1 for i in range(lo, len(difv) - 1)
             if difv[i] > deav[i] and difv[i + 1] <= deav[i + 1]]
+    # 口径用到的那一对(粗边高亮): 最近新高之前的最后一次金叉 + 它之前的最后一次死叉
+    try:
+        i_gold = df.index.get_loc(pd.Timestamp(r["gold_time"])) if r.get("gold_time") else -1
+        i_dead = df.index.get_loc(pd.Timestamp(r["dead_time"])) if r.get("dead_time") else -1
+    except KeyError:
+        i_dead = i_gold = -1
+    post_txt = (f"\n金叉后第 {i_cur - i_gold} 根" if i_gold >= 0 else "")
 
     fig, (ax, ax2) = plt.subplots(
         2, 1, figsize=(11.5, 6.4), sharex=True,
@@ -112,7 +119,8 @@ def plot_one(df: pd.DataFrame, r: dict, ticker: str, name: str, out_png: str) ->
                 (tp, hp), textcoords="offset points", xytext=(-8, -34),
                 fontsize=9.5, color=PV_C, ha="right",
                 bbox=dict(boxstyle="round,pad=0.28", fc="#e8f0fe", ec=PV_C, lw=0.8))
-    ax.annotate(f"最近新高 {hc:.2f}  ({r['high_gain%']:+.2f}%)\n{df.index[i_cur]:%m-%d %H:%M}",
+    ax.annotate(f"最近新高 {hc:.2f}  ({r['high_gain%']:+.2f}%)\n{df.index[i_cur]:%m-%d %H:%M}"
+                f"{post_txt}",
                 (tc, hc), textcoords="offset points", xytext=(8, 16),
                 fontsize=9.5, color=UP_C, ha="left", fontweight="bold",
                 bbox=dict(boxstyle="round,pad=0.28", fc="#fdecea", ec=UP_C, lw=0.8))
@@ -128,12 +136,7 @@ def plot_one(df: pd.DataFrame, r: dict, ticker: str, name: str, out_png: str) ->
     ax2.axhline(0, color="#9e9e9e", lw=0.9)
     ax2.scatter([tp], [float(d["dea"].iloc[i_prv])], s=42, color=PV_C, zorder=5)
     ax2.scatter([tc], [float(d["dea"].iloc[i_cur])], s=52, color=UP_C, marker="^", zorder=5)
-    # 两个新高点之间实际发生的金叉/死叉(口径要求: 先死叉、后金叉)
-    try:
-        i_dead = df.index.get_loc(pd.Timestamp(r["dead_time"])) if r.get("dead_time") else -1
-        i_gold = df.index.get_loc(pd.Timestamp(r["gold_time"])) if r.get("gold_time") else -1
-    except KeyError:
-        i_dead = i_gold = -1
+    # 两个新高点之间实际发生的金叉/死叉(口径要求: 先死叉、后金叉、新高在金叉后)
     for i in didx:
         if i_prv < i < i_cur:
             used = (i == i_dead)
@@ -183,7 +186,7 @@ def main() -> None:
     ap.add_argument("--periods", default="", help="只看这些分时K(如 60分钟,120分钟)")
     ap.add_argument("--max-series", type=int, default=0, help="最多画多少张图(0=全部)")
     ap.add_argument("--no-cross", action="store_true",
-                    help="关闭「两背离点之间必须先死叉后金叉」过滤")
+                    help="关闭「先死叉后金叉 + 新高在金叉后」过滤")
     a = ap.parse_args()
 
     windows = [int(x) for x in a.windows.split(",") if x.strip().isdigit()] or M.WINDOWS
@@ -282,7 +285,8 @@ tr:nth-child(even) td{{background:#f7f9fc}}</style></head><body><div class='wrap
 <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 14px;
             font-size:13px;color:#8d6e00;margin:10px 0">
 口径: 最近 W 个交易日内的<b>最高价</b>那根(▲) vs 跳过最近窗口后再往前 W 个交易日内的最高价那根(▼)；
-▲价 &gt; ▼价、两点之间<b>先死叉、后金叉</b>、且 ▲那根的 DIF/DEA <b>都低于</b> ▼那根 → 短线上涨衰减。<br>
+▲价 &gt; ▼价、两点之间<b>先死叉、后金叉</b>、<b>最近新高位于金叉之后（MACD 仍多头、未再死叉）</b>、
+且 ▲那根的 DIF/DEA <b>都低于</b> ▼那根 → 短线上涨衰减。<br>
 本页图表**只用本地缓存离线重算**，未发任何网络请求；数据源 Twelve Data(分时) + 腾讯(日线)。
 共 {len(cards)} 条命中，横轴为该分时K线的时间(美东)。</div>
 {'<div style="padding:10px 0;color:#888">缓存里还没有命中可画</div>' if not cards else ''}

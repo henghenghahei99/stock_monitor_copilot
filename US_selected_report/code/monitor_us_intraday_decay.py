@@ -345,8 +345,9 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
     """在给定分时K线上, 遍历所有窗口, 返回命中的「短线上涨衰减」。
 
     require_cross=True: 两个背离点(上个新高 -> 最近新高)之间, 必须**先出现死叉
-    (DIF 下穿 DEA)、后出现金叉(DIF 上穿 DEA)** —— 即先破位回调、再金叉重新走强,
-    最后才创出更高的新高, 这一轮才算真背离(死叉/金叉都在两点之间, 不含端点)。
+    (DIF 下穿 DEA)、后出现金叉(DIF 上穿 DEA)**, 且**最近新高必须落在金叉之后**
+    —— 即金叉后再到最近新高之间不能又出现死叉, ▲那根仍处于金叉后的多头区间。
+    整体含义: 高点 -> 死叉回调 -> 金叉重新走强 -> 创更高的新高(但 MACD 反而更低)。
     """
     if df.empty or len(df) < WARMUP + 10:
         return []
@@ -381,11 +382,18 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
         d_in = [i for i in dead_i if i_prv < i < i_cur]
         i_dead = i_gold = -1
         if require_cross:
-            # 必须「先死叉、后金叉」（存在一对 d < g）
-            if not d_in or not g_in or min(d_in) > max(g_in):
+            # 必须「先死叉、后金叉」, 而且最近新高在金叉之后(未再次死叉)
+            if not d_in or not g_in:
                 continue
-            i_dead = min(d_in)
-            i_gold = min(g for g in g_in if g > i_dead)
+            i_gold = max(g_in)                              # ▲之前最后一次金叉
+            prev_dead = [d for d in d_in if d < i_gold]
+            if not prev_dead:                               # 金叉之前要有死叉
+                continue
+            if any(i_gold < d < i_cur for d in d_in):       # 金叉后、▲前不能再死叉
+                continue
+            if not difv[i_cur] > deav[i_cur]:               # ▲那根仍处金叉后状态
+                continue
+            i_dead = max(prev_dead)
         dl, el = difv[i_cur] < difv[i_prv], deav[i_cur] < deav[i_prv]
         hit = (dl and el) if mode == "both" else (dl or el)
         if not hit:
@@ -396,6 +404,7 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
             "gold_time": str(df.index[i_gold]) if i_gold >= 0 else "",
             "dead_time": str(df.index[i_dead]) if i_dead >= 0 else "",
             "n_gold": len(g_in), "n_dead": len(d_in),
+            "post_gold": int(i_gold >= 0),
             "cur_time": str(df.index[i_cur]), "cur_high": round(float(highs[i_cur]), 2),
             "cur_close": round(float(closev[i_cur]), 2),
             "prv_time": str(df.index[i_prv]), "prv_high": round(float(highs[i_prv]), 2),
@@ -549,8 +558,8 @@ def write_html(rows, date_tag, watch_total, mode, periods, windows, stats, src="
                 f"background:{PCOLOR.get(lab, GREY)}22;color:{PCOLOR.get(lab, GREY)};font-weight:600'>"
                 f"{lab}: {k}</span>")
     mode_txt = "快线+慢线都低于前高" if mode == "both" else "快线或慢线任一低于前高"
-    cross_txt = ("且两背离点之间<b>先死叉、后金叉</b>(破位回调后再走强)" if require_cross
-                 else "(未启用「先死叉后金叉」过滤)")
+    cross_txt = ("且两背离点之间<b>先死叉、后金叉</b>、最近新高位于<b>金叉之后</b>(MACD 仍多头)"
+                 if require_cross else "(未启用「死叉→金叉」过滤)")
     if src == "td":
         src_txt = "分时数据来自 Twelve Data(美东时间, 30min/1h/2h) · 日线来自腾讯"
         line3 = "③ 120分钟 = Twelve Data 原生 2h K线。"
@@ -601,7 +610,7 @@ def main() -> None:
     ap.add_argument("--td-interval-sec", type=float, default=TD_MIN_INTERVAL,
                     help=f"Twelve Data 请求最小间隔秒(免费档8次/分, 默认{TD_MIN_INTERVAL})")
     ap.add_argument("--no-cross", action="store_true",
-                    help="关闭「两背离点之间必须先死叉后金叉」过滤(默认开启)")
+                    help="关闭「先死叉后金叉 + 新高在金叉后」过滤(默认开启)")
     a = ap.parse_args()
     require_cross = not a.no_cross
 
@@ -625,7 +634,7 @@ def main() -> None:
               f" | 预计 {n_req} 次请求 ≈ {n_req * TD_MIN_INTERVAL / 60:.0f} 分钟"
               f"(免费档限 800次/日、8次/分)")
     print(f"[信息] 自选美股 {len(watch)} 只 | 源={src} | 分时K {[p[0] for p in periods]} | "
-          f"窗口 {windows} | mode={a.mode} | 先死叉后金叉过滤={'开' if require_cross else '关'}")
+          f"窗口 {windows} | mode={a.mode} | 死叉→金叉→新高过滤={'开' if require_cross else '关'}")
 
     if a.cache:
         ok = 0
@@ -671,7 +680,7 @@ def main() -> None:
     fields = ["code", "ticker", "name", "period", "window", "cur_time", "cur_high",
               "cur_close", "prv_time", "prv_high", "high_gain%", "dif", "prv_dif",
               "dif_gap", "dea", "prv_dea", "dea_gap", "kind", "gold_time", "dead_time",
-              "n_gold", "n_dead", "dif_lower", "dea_lower", "bars"]
+              "n_gold", "n_dead", "post_gold", "dif_lower", "dea_lower", "bars"]
     with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
