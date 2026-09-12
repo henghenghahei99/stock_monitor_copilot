@@ -615,27 +615,26 @@ def main() -> None:
             _add_eval_col(delta, today_scores, pool_inds)
         except Exception as exc:  # noqa: BLE001
             print(f"[警告] 评价列计算失败: {exc}", file=sys.stderr)
-    # 第二表数值保留两位小数(排名仍为整数, 由后面的 "-" 处理)
+    # 第二表数值: 前日/今日绝对值保留两位小数; 变化列带正负号(与美股/港股口径一致);
+    # 名次变化为整数位次; 缺任一日分数的统一显示 "-"
     if delta is not None:
         for c in delta.columns:
-            if c in {"前日趋势分", "今日趋势分", "趋势分变化",
-                     "前日动量分", "今日动量分", "动量分变化",
-                     "前日总分", "今日总分", "总分变化"}:
+            if c in {"前日趋势分", "今日趋势分", "前日动量分", "今日动量分",
+                     "前日总分", "今日总分"}:
                 delta[c] = delta[c].apply(
                     lambda v: "-" if pd.isna(v) else f"{float(v):.2f}")
-        # 升降表: 列出自"今日池内" + "今日退出池"的全部板块(不再按名次变化过滤); 变化类列按需展示
+        for c in ["趋势分变化", "动量分变化", "总分变化"]:
+            if c in delta.columns:
+                delta[c] = delta[c].apply(
+                    lambda v: "-" if pd.isna(v) or v == "" else
+                    (v if isinstance(v, str) and v.strip() == "-"
+                     else f"{float(v):+.2f}"))
+        # 名次变化=整数位次, 不带小数(如 +3 / -1 / 0)
+        if "排名变化" in delta.columns:
+            delta["排名变化"] = delta["排名变化"].apply(_fmt_rank_delta)
+        # 升降表: 列出自"今日池内" + "今日退出池"的全部板块(不再按名次变化过滤)
         if "排名变化" in delta.columns and "状态" in delta.columns:
             # 保持全量(名次未变但分数变动的板块也要能看到, 如长期第1的板块)
-            # 变化列不做整列清空: 缺任一日分数(NaN)的行统一显示 "-"; 因此
-            # “阈值出池”的板块仍能看到今日分数与变化, 并按池内口径给评价
-            for c in ["趋势分变化", "动量分变化", "总分变化"]:
-                if c in delta.columns:
-                    delta[c] = delta[c].apply(
-                        lambda v: "-" if pd.isna(v) or v == "" else
-                        (v if isinstance(v, str) else f"{float(v):+.2f}"))
-            # 名次变化=整数位次, 不带小数(如 +3 / -1 / 0)
-            if "排名变化" in delta.columns:
-                delta["排名变化"] = delta["排名变化"].apply(_fmt_rank_delta)
             keep = [c for c in ["行业", "状态", "排名变化",
                                 "趋势分变化", "动量分变化", "总分变化", "评价"] if c in delta.columns]
             delta = delta[keep]
