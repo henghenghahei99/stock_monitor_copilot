@@ -60,6 +60,20 @@ def _fmt(v) -> str:
     return str(v)
 
 
+def _fmt_rank_delta(v) -> str:
+    """名次变化: 只显示整数位次(不带小数); 0 显示为 0, 其余带正负号; 缺失为 -。"""
+    if v is None or (isinstance(v, str) and v.strip() in ("", "-")):
+        return "-"
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return str(v)
+    if pd.isna(f):
+        return "-"
+    n = int(round(f))
+    return "0" if n == 0 else f"{n:+d}"
+
+
 def _color(c: str, v):
     if c in ("排名变化", "趋势分变化", "动量分变化", "总分变化"):
         try:
@@ -469,9 +483,12 @@ def main() -> None:
         # 变化列: 缺任一日分数(NaN)显示 "-"; 其余带符号显示。
         # 不再对“非池内”整列清空 —— 阈值(动量<2/总分<5)出池的板块仍带今日分数与变化,
         # 并按池内口径给评价。
-        for c in ["排名变化", "趋势分变化", "动量分变化", "总分变化"]:
+        for c in ["趋势分变化", "动量分变化", "总分变化"]:
             if c in d.columns:
                 d[c] = d[c].apply(lambda v: "-" if pd.isna(v) else f"{float(v):+.2f}")
+        # 名次变化=整数位次, 不带小数(如 +3 / -1 / 0)
+        if "排名变化" in d.columns:
+            d["排名变化"] = d["排名变化"].apply(_fmt_rank_delta)
         if "排名变化" in d.columns and "状态" in d.columns:
             d = d.reset_index(drop=True)   # 池内全列(不再按名次变化过滤)
             if series:

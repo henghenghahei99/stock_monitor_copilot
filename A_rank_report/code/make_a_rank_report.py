@@ -37,6 +37,20 @@ def _fmt(v):
     return v
 
 
+def _fmt_rank_delta(v):
+    """名次变化: 只显示整数位次(不带小数); 0 显示为 0, 其余带正负号; 缺失为 -。"""
+    if v is None or (isinstance(v, str) and v.strip() in ("", "-")):
+        return "-"
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return v
+    if pd.isna(f):
+        return "-"
+    n = int(round(f))
+    return "0" if n == 0 else f"{n:+d}"
+
+
 UP = "#d93025"      # 红: 上涨/名次上升
 DOWN = "#188038"     # 绿: 下跌/名次下降
 NEW_BLUE = "#1a73e8"    # 新进池
@@ -614,11 +628,14 @@ def main() -> None:
             # 保持全量(名次未变但分数变动的板块也要能看到, 如长期第1的板块)
             # 变化列不做整列清空: 缺任一日分数(NaN)的行统一显示 "-"; 因此
             # “阈值出池”的板块仍能看到今日分数与变化, 并按池内口径给评价
-            for c in ["排名变化", "趋势分变化", "动量分变化", "总分变化"]:
+            for c in ["趋势分变化", "动量分变化", "总分变化"]:
                 if c in delta.columns:
                     delta[c] = delta[c].apply(
                         lambda v: "-" if pd.isna(v) or v == "" else
                         (v if isinstance(v, str) else f"{float(v):+.2f}"))
+            # 名次变化=整数位次, 不带小数(如 +3 / -1 / 0)
+            if "排名变化" in delta.columns:
+                delta["排名变化"] = delta["排名变化"].apply(_fmt_rank_delta)
             keep = [c for c in ["行业", "状态", "排名变化",
                                 "趋势分变化", "动量分变化", "总分变化", "评价"] if c in delta.columns]
             delta = delta[keep]
