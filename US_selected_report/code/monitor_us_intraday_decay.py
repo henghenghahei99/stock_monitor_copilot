@@ -344,9 +344,9 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
                 require_cross: bool = True) -> list[dict]:
     """在给定分时K线上, 遍历所有窗口, 返回命中的「短线上涨衰减」。
 
-    require_cross=True: 两个背离点(上个新高 -> 最近新高)之间, 必须出现过
-    **至少一次金叉(DIF 上穿 DEA)和至少一次死叉(DIF 下穿 DEA)** —— 即这一波形
-    完整走完一次「破位->再拉回」或「金叉->再破位」的循环, 才算真背离。
+    require_cross=True: 两个背离点(上个新高 -> 最近新高)之间, 必须**先出现死叉
+    (DIF 下穿 DEA)、后出现金叉(DIF 上穿 DEA)** —— 即先破位回调、再金叉重新走强,
+    最后才创出更高的新高, 这一轮才算真背离(死叉/金叉都在两点之间, 不含端点)。
     """
     if df.empty or len(df) < WARMUP + 10:
         return []
@@ -379,8 +379,13 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
             continue
         g_in = [i for i in gold_i if i_prv < i < i_cur]
         d_in = [i for i in dead_i if i_prv < i < i_cur]
-        if require_cross and (not g_in or not d_in):   # 两点之间必须走完金叉+死叉
-            continue
+        i_dead = i_gold = -1
+        if require_cross:
+            # 必须「先死叉、后金叉」（存在一对 d < g）
+            if not d_in or not g_in or min(d_in) > max(g_in):
+                continue
+            i_dead = min(d_in)
+            i_gold = min(g for g in g_in if g > i_dead)
         dl, el = difv[i_cur] < difv[i_prv], deav[i_cur] < deav[i_prv]
         hit = (dl and el) if mode == "both" else (dl or el)
         if not hit:
@@ -388,8 +393,8 @@ def scan_period(df: pd.DataFrame, label: str, mode: str,
         kind = "双线衰减" if (dl and el) else ("仅快线衰减" if dl else "仅慢线衰减")
         res.append({
             "period": label, "window": w,
-            "gold_time": str(df.index[g_in[-1]]) if g_in else "",
-            "dead_time": str(df.index[d_in[-1]]) if d_in else "",
+            "gold_time": str(df.index[i_gold]) if i_gold >= 0 else "",
+            "dead_time": str(df.index[i_dead]) if i_dead >= 0 else "",
             "n_gold": len(g_in), "n_dead": len(d_in),
             "cur_time": str(df.index[i_cur]), "cur_high": round(float(highs[i_cur]), 2),
             "cur_close": round(float(closev[i_cur]), 2),
@@ -544,8 +549,8 @@ def write_html(rows, date_tag, watch_total, mode, periods, windows, stats, src="
                 f"background:{PCOLOR.get(lab, GREY)}22;color:{PCOLOR.get(lab, GREY)};font-weight:600'>"
                 f"{lab}: {k}</span>")
     mode_txt = "快线+慢线都低于前高" if mode == "both" else "快线或慢线任一低于前高"
-    cross_txt = ("且两背离点之间<b>已走过一次金叉和一次死叉</b>" if require_cross
-                 else "(未启用「金叉+死叉」过滤)")
+    cross_txt = ("且两背离点之间<b>先死叉、后金叉</b>(破位回调后再走强)" if require_cross
+                 else "(未启用「先死叉后金叉」过滤)")
     if src == "td":
         src_txt = "分时数据来自 Twelve Data(美东时间, 30min/1h/2h) · 日线来自腾讯"
         line3 = "③ 120分钟 = Twelve Data 原生 2h K线。"
@@ -596,7 +601,7 @@ def main() -> None:
     ap.add_argument("--td-interval-sec", type=float, default=TD_MIN_INTERVAL,
                     help=f"Twelve Data 请求最小间隔秒(免费档8次/分, 默认{TD_MIN_INTERVAL})")
     ap.add_argument("--no-cross", action="store_true",
-                    help="关闭「两背离点之间必须有金叉+死叉」过滤(默认开启)")
+                    help="关闭「两背离点之间必须先死叉后金叉」过滤(默认开启)")
     a = ap.parse_args()
     require_cross = not a.no_cross
 
@@ -620,7 +625,7 @@ def main() -> None:
               f" | 预计 {n_req} 次请求 ≈ {n_req * TD_MIN_INTERVAL / 60:.0f} 分钟"
               f"(免费档限 800次/日、8次/分)")
     print(f"[信息] 自选美股 {len(watch)} 只 | 源={src} | 分时K {[p[0] for p in periods]} | "
-          f"窗口 {windows} | mode={a.mode} | 金叉+死叉过滤={'开' if require_cross else '关'}")
+          f"窗口 {windows} | mode={a.mode} | 先死叉后金叉过滤={'开' if require_cross else '关'}")
 
     if a.cache:
         ok = 0

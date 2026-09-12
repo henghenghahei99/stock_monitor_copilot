@@ -101,6 +101,9 @@ python code/monitor_us_macd_decay.py --mode any            # 任一条线低即�
 - **上个新高**：跳过最近窗口、再往前 W 个交易日内的最高价那根
 - **短线上涨衰减**：最近新高价 **>** 上个新高价（必须真创新高），且最近那根的
   `DIF=EMA12-EMA26` 与 `DEA=EMA9(DIF)` **都低于**前高那根 → 成立（`--mode any` 则任一低即报）
+- **金叉/死叉条件（默认开启，`--no-cross` 关）**：两个背离点之间必须**先出现死叉**
+  (DIF 下穿 DEA)、**后出现金叉** (DIF 上穿 DEA) —— 即先破位回调、再金叉重新走强，
+  最后才创出更高的新高；两端点不算在内。这一步过滤很强（实测自选缓存：236 条 → 19 条）
 - 前高落在 MACD 预热区（前 40 根）内则跳过；同一只票可命中多个「分时K × 窗口」组合（多尺度共振）
 
 ### 数据源
@@ -129,7 +132,22 @@ python code/monitor_us_intraday_decay.py --periods 60分钟,120分钟
 python code/monitor_us_intraday_decay.py --cache           # 只拉取/缓存分时K线
 python code/monitor_us_intraday_decay.py --mode any        # 任一条线低即报
 python code/monitor_us_intraday_decay.py --source em       # 强制走东财(需 IP 未被封)
+python code/monitor_us_intraday_decay.py --no-cross       # 关闭「先死叉后金叉」过滤
 ```
+
+### 命中图核对（`code/plot_intraday_decay.py`）
+
+只用本地缓存离线重算并画图（不发网络请求、不耗 Twelve Data 额度），每条命中一张：
+上方价格（最高价/收盘价）+ 红色▲最近新高 / 蓝色▼上个新高；下方 MACD DIF/DEA +
+标注区间内的金叉(绿▲)/死叉(灰▼)，**口径用到的那一对用粗边高亮**。
+
+```bash
+python code/plot_intraday_decay.py                     # 画缓存里全部命中
+python code/plot_intraday_decay.py --stocks KEYS,SNAP   # 只看某几只
+python code/plot_intraday_decay.py --periods 60分钟,120分钟 --windows 1,2,3
+```
+
+产物：`output/charts_intraday/*.png` + `output/us_intraday_decay_charts_YYYYMMDD.html`（图表索引）。
 
 参数：`--source`(auto|td|em) `--periods` `--windows`(1,2,3,4,5,6) `--mode`(both|any)
 `--workers`(4) `--bars`(320, 日线根数) `--td-interval-sec`(7.6) `--limit` `--cache`。

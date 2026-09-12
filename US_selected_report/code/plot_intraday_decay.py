@@ -128,21 +128,30 @@ def plot_one(df: pd.DataFrame, r: dict, ticker: str, name: str, out_png: str) ->
     ax2.axhline(0, color="#9e9e9e", lw=0.9)
     ax2.scatter([tp], [float(d["dea"].iloc[i_prv])], s=42, color=PV_C, zorder=5)
     ax2.scatter([tc], [float(d["dea"].iloc[i_cur])], s=52, color=UP_C, marker="^", zorder=5)
-    # 两个新高点之间实际发生的金叉/死叉(新条件要求至少各一次)
-    for i in gidx:
-        if i_prv < i < i_cur:
-            ax2.scatter([d.index[i].to_pydatetime()], [float(difv[i])], s=95, marker="^",
-                        color="#0b8043", zorder=6, edgecolors="#fff", linewidths=0.7)
-            ax2.annotate("金叉", (d.index[i].to_pydatetime(), float(difv[i])),
-                         textcoords="offset points", xytext=(0, -20), ha="center",
-                         fontsize=9, fontweight="bold", color="#0b8043")
+    # 两个新高点之间实际发生的金叉/死叉(口径要求: 先死叉、后金叉)
+    try:
+        i_dead = df.index.get_loc(pd.Timestamp(r["dead_time"])) if r.get("dead_time") else -1
+        i_gold = df.index.get_loc(pd.Timestamp(r["gold_time"])) if r.get("gold_time") else -1
+    except KeyError:
+        i_dead = i_gold = -1
     for i in didx:
         if i_prv < i < i_cur:
-            ax2.scatter([d.index[i].to_pydatetime()], [float(difv[i])], s=95, marker="v",
-                        color="#5f6368", zorder=6, edgecolors="#fff", linewidths=0.7)
+            used = (i == i_dead)
+            ax2.scatter([d.index[i].to_pydatetime()], [float(difv[i])], s=95 if not used else 140,
+                        marker="v", color="#5f6368", zorder=6 if not used else 7,
+                        edgecolors="#fff" if not used else "#212121", linewidths=0.7 if not used else 1.4)
             ax2.annotate("死叉", (d.index[i].to_pydatetime(), float(difv[i])),
                          textcoords="offset points", xytext=(0, 14), ha="center",
                          fontsize=9, fontweight="bold", color="#5f6368")
+    for i in gidx:
+        if i_prv < i < i_cur:
+            used = (i == i_gold)
+            ax2.scatter([d.index[i].to_pydatetime()], [float(difv[i])], s=95 if not used else 140,
+                        marker="^", color="#0b8043", zorder=6 if not used else 7,
+                        edgecolors="#fff" if not used else "#0b8043", linewidths=0.7 if not used else 1.4)
+            ax2.annotate("金叉", (d.index[i].to_pydatetime(), float(difv[i])),
+                         textcoords="offset points", xytext=(0, -20), ha="center",
+                         fontsize=9, fontweight="bold", color="#0b8043")
     ax2.annotate(f"DIF {r['dif']:+.3f} / DEA {r['dea']:+.3f}",
                  (tc, float(d["dea"].iloc[i_cur])), textcoords="offset points",
                  xytext=(8, 8), fontsize=9.5, color=UP_C, fontweight="bold")
@@ -156,7 +165,7 @@ def plot_one(df: pd.DataFrame, r: dict, ticker: str, name: str, out_png: str) ->
     ax2.legend(loc="upper left", fontsize=9, ncol=2, framealpha=0.9)
 
     gap = (f"DIF差 {r['dif_gap']:+.3f}   DEA差 {r['dea_gap']:+.3f}   [{r['kind']}]"
-           f"   金叉×{r.get('n_gold', 0)} 死叉×{r.get('n_dead', 0)}")
+           f"   死叉 {str(r.get('dead_time',''))[5:16]} → 金叉 {str(r.get('gold_time',''))[5:16]}")
     fig.suptitle(f"{ticker}  {name}   ·   {r['period']}   ·   窗口 {r['window']} 个交易日   ·   {gap}",
                  fontsize=13, fontweight="bold", color="#2b579a", y=0.975)
     ax2.xaxis.set_major_locator(mdates.AutoDateLocator())
@@ -174,7 +183,7 @@ def main() -> None:
     ap.add_argument("--periods", default="", help="只看这些分时K(如 60分钟,120分钟)")
     ap.add_argument("--max-series", type=int, default=0, help="最多画多少张图(0=全部)")
     ap.add_argument("--no-cross", action="store_true",
-                    help="关闭「两背离点之间必须有金叉+死叉」过滤")
+                    help="关闭「两背离点之间必须先死叉后金叉」过滤")
     a = ap.parse_args()
 
     windows = [int(x) for x in a.windows.split(",") if x.strip().isdigit()] or M.WINDOWS
@@ -252,9 +261,9 @@ def main() -> None:
           <b style="color:#d93025">{r['high_gain%']:+.2f}%</b></span>
     <span>DIF差 <b style="color:#d93025">{r['dif_gap']:+.3f}</b>
           DEA差 <b style="color:#d93025">{r['dea_gap']:+.3f}</b></span>
-    <span>金叉×<b style="color:#0b8043">{r.get('n_gold', 0)}</b>
-          死叉×<b style="color:#5f6368">{r.get('n_dead', 0)}</b>
-          <span style="color:#666;font-size:12px">{r.get('gold_time','')} → {r.get('dead_time','')}</span></span>
+    <span>死叉 <b style="color:#5f6368">{str(r.get('dead_time',''))[5:16]}</b>
+          → 金叉 <b style="color:#0b8043">{str(r.get('gold_time',''))[5:16]}</b>
+          <span style="color:#666">（区间内共 死叉×{r.get('n_dead',0)} / 金叉×{r.get('n_gold',0)}）</span></span>
     <span style="color:{kind_c};font-weight:600">{r['kind']}</span>
   </div>
   <img src="{rel}" style="width:100%;display:block">
@@ -273,7 +282,7 @@ tr:nth-child(even) td{{background:#f7f9fc}}</style></head><body><div class='wrap
 <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 14px;
             font-size:13px;color:#8d6e00;margin:10px 0">
 口径: 最近 W 个交易日内的<b>最高价</b>那根(▲) vs 跳过最近窗口后再往前 W 个交易日内的最高价那根(▼)；
-▲价 &gt; ▼价、两点之间<b>已走过至少一次金叉和一次死叉</b>、且 ▲那根的 DIF/DEA <b>都低于</b> ▼那根 → 短线上涨衰减。<br>
+▲价 &gt; ▼价、两点之间<b>先死叉、后金叉</b>、且 ▲那根的 DIF/DEA <b>都低于</b> ▼那根 → 短线上涨衰减。<br>
 本页图表**只用本地缓存离线重算**，未发任何网络请求；数据源 Twelve Data(分时) + 腾讯(日线)。
 共 {len(cards)} 条命中，横轴为该分时K线的时间(美东)。</div>
 {'<div style="padding:10px 0;color:#888">缓存里还没有命中可画</div>' if not cards else ''}
