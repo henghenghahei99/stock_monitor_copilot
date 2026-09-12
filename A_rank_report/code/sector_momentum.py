@@ -74,6 +74,23 @@ MOM_REPS = 7
 NEW_MOM_MARK = "◆"
 OLD_MOM_MARK = "◎"
 
+# 动量入池分对齐基准(用户口径, 2026-09-12): 板块成分股不足 10 只时,
+# 求和项天生比 10 只的板块少, 按 入池分 × 10 ÷ 只数 折算到“10 只口径”再比大小。
+# 注意: 只影响入池比较与“动量入池分”列; 展示用的“动量分”是人均值, 不受影响。
+ENTRY_ALIGN_N = 10
+
+
+def align_entry(raw, cnt):
+    """动量入池分对齐: 只数 < ENTRY_ALIGN_N 时 ×N/只数, 否则原值; raw=None 返回 None。"""
+    if raw is None:
+        return None
+    if cnt is None:
+        return float(raw)
+    c = int(cnt)
+    if 0 < c < ENTRY_ALIGN_N:
+        return float(raw) * ENTRY_ALIGN_N / c
+    return float(raw)
+
 
 def _weighted_m(d1: float, d2: float, d3: float) -> float:
     """m = 当日%×0.50 + 近2日%×0.30 + 近3日%×0.20 (三段累计再加权, 权重和=1)。"""
@@ -460,7 +477,8 @@ def industry_momentum_scores(df: pd.DataFrame, col: str = "uptrend",
         pts = 0.0
         if r is not None and c is not None and int(c) > 0:
             pts = round(max(-10.0, min(10.0, float(r) / (MOM_NORM * int(c)))) * f, 2)
-        raw_adj = round(float(r) * f, 2) if r is not None else None
+        adj = align_entry(r, c)
+        raw_adj = round(adj * f, 2) if adj is not None else None
         rows.append({"industry": ind, "趋势分": round(float(a["平均分"]) * f, 2),
                      "动量分": pts, "动量入池分": raw_adj})
     return pd.DataFrame(rows)
@@ -548,6 +566,8 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
                      .reset_index())
     raw_map = dict(zip(entry["sector"], entry["动量入池分"])) if not entry.empty else {}
     cnt_map = dict(zip(entry["sector"], entry["动量股数"])) if not entry.empty else {}
+    # 入池用的动量分: 不足10只的板块按 ×10/只数 对齐(展示动量分仍用 raw÷(1.4×只数))
+    adj_map = {ind: align_entry(v, cnt_map.get(ind)) for ind, v in raw_map.items()}
 
     def _display_pts(raw, cnt) -> float:
         """动量分(±10) = S/(1.4×动量股数), 与动量入池分同源归一(1.4 为标定回旧口径量级的除数)。"""
@@ -597,7 +617,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
     _agg["_f"] = _agg.apply(lambda r: size_factor(_sector_size(str(r["industry"]), int(r["股票数"]))), axis=1)
     _agg["_s"] = _agg["得分"] * _agg["_f"]
     score_top = set(_agg.sort_values("_s", ascending=False).head(top)["industry"])
-    mom_sorted = sorted(raw_map.items(),
+    mom_sorted = sorted(adj_map.items(),
                         key=lambda kv: (kv[1] * fmap.get(kv[0], 1.0), kv[0]),
                         reverse=True)
     mom_top = {ind for ind, _ in mom_sorted[:top]}
@@ -615,7 +635,7 @@ def combined_rank(df: pd.DataFrame, col: str = "uptrend",
             src.append("动量")
         pts = _display_pts(raw_map.get(ind), cnt_map.get(ind))
         f = size_factor(_sector_size(str(ind), int(a["股票数"])))
-        rawv = raw_map.get(ind)
+        rawv = adj_map.get(ind)     # 已按 ×10/只数 对齐的入池分
         pts = round(pts * f, 2)
         trend = round(float(a["平均分"]) * f, 2)      # 结构分=>趋势分, 乘数量因子
         total = round(trend * 0.5 + pts * 0.5, 2)

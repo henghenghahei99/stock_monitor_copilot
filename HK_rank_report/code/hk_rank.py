@@ -67,6 +67,23 @@ MOM_W1, MOM_W2, MOM_W3 = 0.50, 0.30, 0.20
 MOM_REPS = 7
 NEW_MOM_MARK = "◆"
 OLD_MOM_MARK = "◎"
+
+# 动量入池分对齐基准(用户口径, 2026-09-12): 板块成分股不足 10 只时,
+# 求和项天生比 10 只的板块少, 按 入池分 × 10 ÷ 只数 折算到“10 只口径”再比大小。
+# 注意: 只影响入池比较与“动量入池分”列; 展示用的“动量分”是人均值, 不受影响。
+ENTRY_ALIGN_N = 10
+
+
+def align_entry(raw, cnt):
+    """动量入池分对齐: 只数 < ENTRY_ALIGN_N 时 ×N/只数, 否则原值; raw=None 返回 None。"""
+    if raw is None:
+        return None
+    if cnt is None:
+        return float(raw)
+    c = int(cnt)
+    if 0 < c < ENTRY_ALIGN_N:
+        return float(raw) * ENTRY_ALIGN_N / c
+    return float(raw)
 # 动量分归一除数: 权重和已由 3 变 1(加权 m 变小), 用 1.4(=7/5) 标定,
 # 使动量分均值与"等权三条叠加+除5"的旧口径一致(美股实测 ~1.00×, A股 ~1.02×), 保持 ±10 量级
 MOM_NORM = 1.4
@@ -494,6 +511,8 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
         return pd.DataFrame()
     raw_map = dict(zip(entry["industry"], entry["动量入池分"])) if not entry.empty else {}
     cnt_map = dict(zip(entry["industry"], entry["动量股数"])) if not entry.empty else {}
+    # 入池用的动量分: 不足10只的板块按 ×10/只数 对齐(展示动量分仍用 raw÷(1.4×只数))
+    adj_map = {ind: align_entry(v, cnt_map.get(ind)) for ind, v in raw_map.items()}
 
     def _pts(ind) -> float:
         r, c = raw_map.get(ind), cnt_map.get(ind)
@@ -546,7 +565,7 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
     _agg["_f"] = _agg.apply(lambda r: _fsz(str(r["industry"]), int(r["股票数"])), axis=1)
     _agg["_s"] = _agg["得分"] * _agg["_f"]
     score_top = set(_agg.sort_values("_s", ascending=False).head(top)["industry"])
-    mom_sorted = sorted(raw_map.items(),
+    mom_sorted = sorted(adj_map.items(),
                         key=lambda kv: (kv[1] * fmap.get(kv[0], 1.0), kv[0]),
                         reverse=True)
     mom_top = {ind for ind, _ in mom_sorted[:top]}
@@ -571,7 +590,7 @@ def build_rank(day_key: str, top: int = 7) -> pd.DataFrame:
         if ind in mom_top:
             src.append("动量")
         f = _fsz(str(ind), int(a["股票数"]))
-        rawv = raw_map.get(ind)
+        rawv = adj_map.get(ind)     # 已按 ×10/只数 对齐的入池分
         trend = round(float(a["平均分"]) * f, 2)      # 趋势分 ×数量因子
         pts = round(_pts(ind) * f, 2)                   # 动量分 ×数量因子
         rows.append({
