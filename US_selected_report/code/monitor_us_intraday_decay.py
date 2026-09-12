@@ -13,27 +13,32 @@
   短线上涨衰减: 最近新高价 > 上个新高价(**必须是新高**), 且最近新高那根的
                 MACD(12,26,9) DIF 与 DEA **都低于**上个新高那根 → 成立
 
-数据源:
-  分时(30m/60m): 东财 push2his kline(klt=30/60, 前台复权) —— 美股 60 分钟实测可用
-  120m        : 由 60m 在同一美股交易日内两两合成(东财无 US 120m)
-  日线        : 复用腾讯日K缓存(data/kline_cache, 已随全市场扫描落盘)
+数据源(两套, 用 --source 选择):
+  [td] Twelve Data  (推荐, 默认优先)  api.twelvedata.com
+       30分钟->30min / 60分钟->1h / 120分钟->2h(原生, 无需合成) / 日线->复用腾讯日K
+       免费档: 800 次/日、8 次/分钟 -> 210 只 × 3 个分时周期 = 630 次(约 80 分钟跑完)
+       key 放 ~/.twelvedata.json  {"apikey":"..."}  或环境变量 TWELVEDATA_API_KEY
+  [em] 东财 push2his kline(klt=30/60, 前台复权), 120m 由 60m 两两合成
+       注意: 东财对分钟级限流强, 且**实测(2026-09-12)本机 IP 已被 push2his/push2 封禁**
+       (0.1s TCP 断开, 连它家日线也拒; datacenter.eastmoney.com 仍通 = 行情主机级封禁)
 
-  注意: 东财对分钟级接口有较强限流(实测: 首个请求成功、密集请求会被 RemoteDisconnected),
-        故本脚本内置 节流 + 重试 + 本地缓存(data/kline_cache_em/), 首次全量较慢, 之后走缓存。
-        **实测风险(2026-09-12)**: 密集探测后东财会对本机 IP 直接封禁 push2his/push2
-        (0.1s 内 TCP 断开, 连它家日线也被拒; datacenter.eastmoney.com 仍通 = 行情主机级封禁),
-        需换出口 IP / 代理池 / 等冷却。其它美股分时源均已验证不可用:
-          腾讯 web.ifzq/usfqkline m60 -> "bad params"(不支持美股分钟线)
-          腾讯 proxy.finance.qq.com mkline -> "param error"
-          新浪 US_MinKService.getMinKLine(scale=60/30) -> "Service not found/valid"
-          Yahoo query1/2 chart?interval=60m -> HTTP 403
+  其它美股分时源均已逐一验证不可用(2026-09-12):
+    腾讯 web.ifzq/usfqkline m60/m5 + 控制器爆破 -> "bad params"/"Can't load controller"(不支持美股分钟线)
+    腾讯 proxy.finance.qq.com mkline -> "param error"; 新浪 US_MinKService(scale=60/30) -> "Service not found/valid"
+    雪球 stock.xueqiu.com -> 400(需 xq_a_token); 同花顺 d.10jqka 美股路径 -> 404
+    富途 futunn quote-api -> 404; 东财 push2delay -> 仅元数据无K线
+    Yahoo/WSJ/GoogleFinance/CNBC/investing/marketwatch/stooq分时 -> 一律 403/Errno 101(环境层屏蔽)
+    公共 CORS 转代理(allorigins/codetabs/jina/corsproxy) -> 520/522/101(环境层屏蔽, 绕不过东财封禁)
+    Nasdaq api: 分时仅当日 1 分钟, 带 fromdate/todate 只回日线
 
 用法:
   cd US_selected_report
   python code/monitor_us_intraday_decay.py --cache            # 只拉取/缓存分时K
   python code/monitor_us_intraday_decay.py --limit 10         # 先小样本试跑
   python code/monitor_us_intraday_decay.py                    # 全量扫自选
+  python code/monitor_us_intraday_decay.py --periods 60分钟,120分钟
   python code/monitor_us_intraday_decay.py --mode any         # 任一条线低即报
+  python code/monitor_us_intraday_decay.py --source em        # 强制走东财(需 IP 未被封)
 
 产物: output/us_selected_intraday_decay_YYYYMMDD.csv + us_intraday_decay_report_YYYYMMDD.html
 """
@@ -47,6 +52,7 @@ import ssl
 import sys
 import threading
 import time
+import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -64,14 +70,19 @@ import find_overbought_stocks as fos  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "output")
 EM_CACHE_DIR = os.path.join(REPO, "data", "kline_cache_em")
+TD_CACHE_DIR = os.path.join(REPO, "data", "kline_cache_td")
 
-# 分时K线周期: 标签 -> (来源, klt)
-PERIODS = [("30分钟", "em", 30), ("60分钟", "em", 60),
-           ("120分钟", "from60", 120), ("日线", "tencent", 101)]
+# 分时K线周期: 标签 -> (来源, 参数)
+PERIODS_EM = [("30分钟", "em", 30), ("60分钟", "em", 60),
+              ("120分钟", "from60", 120), ("日线", "tencent", 101)]
+PERIODS_TD = [("30分钟", "td", "30min"), ("60分钟", "td", "1h"),
+              ("120分钟", "td", "2h"), ("日线", "tencent", 101)]
+PERIODS = PERIODS_TD
 WINDOWS = [1, 2, 3, 4, 5, 6]                     # 交易日
 MACD_FAST, MACD_SLOW, MACD_SIGNAL = 12, 26, 9
 WARMUP = 40                                      # MACD 预热根数
 DEFAULT_BARS = 320
+TD_OUTPUTSIZE = 1000                             # Twelve Data 单次返回根数
 
 # 东财市场码: 105 纳斯达克 / 106 纽交所 / 107 美交所(ETF 多在 107)
 _EX_TO_MKT = {".OQ": 105, ".N": 106, ".AM": 107, ".O": 107}
@@ -142,6 +153,112 @@ def em_klines(secid: str, klt: int, lmt: int = 500, force: bool = False) -> list
             last_exc = exc
         time.sleep(2 + 3 * attempt)
     raise last_exc if last_exc else RuntimeError("东财取数失败")
+
+
+# ---------------- Twelve Data ----------------
+_td_lock = threading.Lock()
+_td_last = [0.0]
+TD_MIN_INTERVAL = 7.6        # 免费档 8 次/分钟
+_TD_KEY_FILES = [os.path.expanduser("~/.twelvedata.json"),
+                 os.path.join(REPO, "data", "twelvedata.json")]
+_td_key_cache = [None]
+
+
+def td_apikey() -> str:
+    """优先环境变量, 其次 ~/.twelvedata.json / data/twelvedata.json 的 {"apikey": "..."}。"""
+    if _td_key_cache[0] is not None:
+        return _td_key_cache[0]
+    key = (os.environ.get("TWELVEDATA_API_KEY") or os.environ.get("TD_API_KEY") or "").strip()
+    if not key:
+        for f in _TD_KEY_FILES:
+            try:
+                with open(f, encoding="utf-8") as fh:
+                    key = str(json.load(fh).get("apikey", "")).strip()
+                if key:
+                    break
+            except Exception:  # noqa: BLE001
+                continue
+    _td_key_cache[0] = key
+    return key
+
+
+def _td_throttle() -> None:
+    with _td_lock:
+        wait = TD_MIN_INTERVAL - (time.time() - _td_last[0])
+        if wait > 0:
+            time.sleep(wait)
+        _td_last[0] = time.time()
+
+
+def td_klines(symbol: str, interval: str, outputsize: int = TD_OUTPUTSIZE,
+              force: bool = False) -> list[dict]:
+    """Twelve Data time_series -> [{'datetime','open','high','low','close'}, ...]。
+
+    时间用 timezone=America/New_York, 所以 datetime 已是美东时间, 日期即美东交易日。
+    """
+    os.makedirs(TD_CACHE_DIR, exist_ok=True)
+    safe = symbol.replace("/", "_").replace(" ", "")
+    cf = os.path.join(TD_CACHE_DIR, f"{safe}_{interval}.json")
+    if not force and os.path.exists(cf):
+        try:
+            with open(cf, encoding="utf-8") as f:
+                rows = json.load(f)
+            if rows:
+                return rows
+        except Exception:  # noqa: BLE001
+            pass
+    key = td_apikey()
+    if not key:
+        raise RuntimeError("缺少 Twelve Data API key(见 ~/.twelvedata.json)")
+    url = (f"https://api.twelvedata.com/time_series?symbol={urllib.parse.quote(symbol)}"
+           f"&interval={interval}&outputsize={outputsize}&order=ASC"
+           f"&timezone=America/New_York&apikey={urllib.parse.quote(key)}")
+    last_exc = None
+    for attempt in range(4):
+        _td_throttle()
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": _HDR["User-Agent"],
+                                                       "Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=25, context=_CTX) as r:
+                j = json.loads(r.read().decode("utf-8", "ignore"))
+            if j.get("status") == "error":
+                code = j.get("code")
+                msg = str(j.get("message", ""))
+                last_exc = RuntimeError(f"twelvedata error {code}: {msg[:60]}")
+                if code in (429, 401, 403) or "limit" in msg.lower():
+                    time.sleep(8 + 10 * attempt)          # 限流/无权限 -> 退避
+                    continue
+                raise last_exc
+            rows = j.get("values") or []
+            if rows:
+                with open(cf, "w", encoding="utf-8") as f:
+                    json.dump(rows, f)
+                return rows
+            last_exc = RuntimeError("twelvedata 空数据")
+        except RuntimeError:
+            raise
+        except Exception as exc:  # noqa: BLE001
+            last_exc = exc
+        time.sleep(3 + 5 * attempt)
+    raise last_exc if last_exc else RuntimeError("twelvedata 取数失败")
+
+
+def td_df(rows: list[dict]) -> pd.DataFrame:
+    """Twelve Data values -> DataFrame(index=DatetimeIndex(美东), 列 open/close/high/low/date_us)。"""
+    recs = []
+    for r in rows:
+        try:
+            ts = pd.Timestamp(str(r.get("datetime", "")).strip())
+            recs.append({"ts": ts, "open": float(r["open"]), "close": float(r["close"]),
+                         "high": float(r["high"]), "low": float(r["low"])})
+        except Exception:  # noqa: BLE001
+            continue
+    if not recs:
+        return pd.DataFrame()
+    df = pd.DataFrame(recs).set_index("ts").sort_index()
+    df = df[~df.index.duplicated(keep="last")]
+    df["date_us"] = [str(t.date()) for t in df.index]     # 美东时间, 直接取日期
+    return df
 
 
 def em_secid_candidates(prefixed: str) -> list[str]:
@@ -270,9 +387,9 @@ def scan_period(df: pd.DataFrame, label: str, mode: str) -> list[dict]:
     return res
 
 
-def fetch_bars(p: dict, period: str, src: str, klt: int, bars: int,
+def fetch_bars(p: dict, period: str, src: str, klt, bars: int,
                cache_only: bool) -> pd.DataFrame:
-    """取某周期的K线 DataFrame(含 date_us)。"""
+    """取某周期的K线 DataFrame(含 date_us)。src: tencent(日线) / em(东财分时) / td(Twelve Data)。"""
     if src == "tencent":
         if not p.get("prefixed"):
             mus._fetch_best(p, bars)
@@ -285,6 +402,14 @@ def fetch_bars(p: dict, period: str, src: str, klt: int, bars: int,
         df = pd.DataFrame({"open": close, "close": close, "high": close, "low": close})
         df["date_us"] = [str(t.date()) for t in df.index]
         return df
+    if src == "td":
+        sym = (p.get("ticker") or "").replace(".", ".").strip().upper()
+        if not sym:
+            return pd.DataFrame()
+        try:
+            return td_df(td_klines(sym, klt))
+        except Exception:  # noqa: BLE001
+            return pd.DataFrame()
     # 东财
     for secid in em_secid_candidates(p["prefixed"] or mus._fetch_best(p, bars) or ""):
         if not secid or secid.endswith("."):
@@ -354,7 +479,7 @@ def _badge(kind):
             f"color:{c};background:{bg};font-weight:600'>{_h.escape(kind)}</span>")
 
 
-def write_html(rows, date_tag, watch_total, mode, periods, windows, stats):
+def write_html(rows, date_tag, watch_total, mode, periods, windows, stats, src="td"):
     import html as _h
     cols = ["#", "代码", "腾讯码", "名称", "分时K", "窗口(日)", "最近新高时间", "新高价",
             "上个新高时间", "前高价", "新高幅度", "DIF", "前高DIF", "DIF差",
@@ -401,11 +526,17 @@ def write_html(rows, date_tag, watch_total, mode, periods, windows, stats):
                 f"background:{PCOLOR.get(lab, GREY)}22;color:{PCOLOR.get(lab, GREY)};font-weight:600'>"
                 f"{lab}: {k}</span>")
     mode_txt = "快线+慢线都低于前高" if mode == "both" else "快线或慢线任一低于前高"
+    if src == "td":
+        src_txt = "分时数据来自 Twelve Data(美东时间, 30min/1h/2h) · 日线来自腾讯"
+        line3 = "③ 120分钟 = Twelve Data 原生 2h K线。"
+    else:
+        src_txt = "分时数据来自东财(北京时间标注, 已归到美股交易日) · 日线来自腾讯"
+        line3 = "③ 120分钟由 60分钟 在同一美股交易日内两两合成(东财无美股 120m 接口)。"
     note = (f"<div style='background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:8px 14px;"
             f"font-size:13px;color:#8d6e00;margin:10px 0'>"
             f"口径: 分时K {len(periods)} 种 × 窗口 {len(windows)} 种 = 每只 {len(periods)*len(windows)} 个组合 · "
             f"最近 W 日新高价 &gt; 再往前 W 日新高价 且 {mode_txt} → 短线上涨衰减 · "
-            f"MACD(12,26,9) · 分时数据来自东财(北京时间标注, 已归到美股交易日) · 日线来自腾讯</div>")
+            f"MACD(12,26,9) · {src_txt}</div>")
 
     doc = f"""<!DOCTYPE html><html><head><meta charset='utf-8'>
 <title>美股自选 分时MACD 短线上涨衰减 · {date_tag}</title>
@@ -423,7 +554,7 @@ table{{width:100%;border-collapse:collapse}}</style></head>
 <b>说明</b><br>
 ① <b>最近新高</b> = 最近 W 个交易日内该分时K线最高价那根; <b>上个新高</b> = 跳过最近窗口后, 再往前 W 个交易日内的最高价那根。<br>
 ② 必须 <b>最近新高价 &gt; 上个新高价</b> 才算“新高”; 否则该组合不成立。<br>
-③ 120分钟由 60分钟 在同一美股交易日内两两合成(东财无美股 120m 接口)。<br>
+{line3}<br>
 ④ 同一只票可命中多个「分时K × 窗口」组合 —— 命中越多, 说明背离在多个尺度上共振。<br>
 ⑤ 顶背离是<b>减仓/止盈提示</b>, 不代表立刻下跌。</div>
 </div></body></html>"""
@@ -431,6 +562,7 @@ table{{width:100%;border-collapse:collapse}}</style></head>
 
 
 def main() -> None:
+    global TD_MIN_INTERVAL
     ap = argparse.ArgumentParser(description="美股自选 分时MACD 短线上涨衰减扫描")
     ap.add_argument("--cache", action="store_true", help="只拉取/缓存分时K线, 不判定")
     ap.add_argument("--limit", type=int, default=0, help="只扫前 N 只(调试)")
@@ -439,18 +571,33 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=4, help="并发(东财限流, 建议<=4)")
     ap.add_argument("--periods", default="", help="只看这些分时K, 逗号分隔(如 60分钟,日线)")
     ap.add_argument("--windows", default="", help="只看这些窗口(如 3,4,5)")
+    ap.add_argument("--source", choices=["auto", "td", "em"], default="auto",
+                    help="分时数据源: auto=有TwelveData key用td否则em; td=Twelve Data; em=东财")
+    ap.add_argument("--td-interval-sec", type=float, default=TD_MIN_INTERVAL,
+                    help=f"Twelve Data 请求最小间隔秒(免费档8次/分, 默认{TD_MIN_INTERVAL})")
     a = ap.parse_args()
 
-    periods = PERIODS
+    src = a.source
+    if src == "auto":
+        src = "td" if td_apikey() else "em"
+    TD_MIN_INTERVAL = a.td_interval_sec
+    base = PERIODS_TD if src == "td" else PERIODS_EM
+    periods = base
     if a.periods:
         want = {x.strip() for x in a.periods.split(",") if x.strip()}
-        periods = [p for p in PERIODS if p[0] in want]
+        periods = [p for p in base if p[0] in want]
     windows = [int(x) for x in a.windows.split(",") if x.strip().isdigit()] or WINDOWS
 
     watch = mus.load_watch()
     if a.limit:
         watch = watch[:a.limit]
-    print(f"[信息] 自选美股 {len(watch)} 只 | 分时K {[p[0] for p in periods]} | 窗口 {windows} | mode={a.mode}")
+    n_req = len(watch) * len([p for p in periods if p[1] == "td"])
+    if src == "td" and n_req:
+        print(f"[信息] Twelve Data key: {'已就绪' if td_apikey() else '缺失(见 ~/.twelvedata.json)'}"
+              f" | 预计 {n_req} 次请求 ≈ {n_req * TD_MIN_INTERVAL / 60:.0f} 分钟"
+              f"(免费档限 800次/日、8次/分)")
+    print(f"[信息] 自选美股 {len(watch)} 只 | 源={src} | 分时K {[p[0] for p in periods]} | "
+          f"窗口 {windows} | mode={a.mode}")
 
     if a.cache:
         ok = 0
@@ -501,7 +648,7 @@ def main() -> None:
     html_path = os.path.join(OUT_DIR, f"us_intraday_decay_report_{tag}.html")
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(write_html(rows, tag, len(watch), a.mode, periods, windows,
-                           {"stocks": n_data}))
+                           {"stocks": n_data}, src))
     print("报告已生成:", html_path)
 
 

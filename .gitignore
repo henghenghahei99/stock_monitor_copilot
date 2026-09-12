@@ -12,5 +12,9 @@ __pycache__/
 # (历史已跟踪的缓存文件不受影响; 如需彻底瘦身可 git rm --cached 后提交)
 data/kline_cache/
 
+# 东财/Twelve Data 分时K线缓存(自选股分时监控用)
+data/kline_cache_em/
+data/kline_cache_td/
+
 # 报告输出/中间结果: 可随时重跑生成, 不入库
 output/

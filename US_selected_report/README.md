@@ -88,3 +88,53 @@ python code/monitor_us_macd_decay.py --mode any            # 任一条线低即�
 基准率（自选 202 只有数据、`--windows 6m` 单窗口、近 320 根 K 线）：**创新高事件 4653 次，
 其中双线衰减 535 次 ≈ 11.5%** —— 大约每 9 次创新高出现 1 次衰减。弱市里"创新高"的标的本身很少
 （如 2026-09-11 三个窗口合计仅 5 只），所以当天没有信号属正常，不是脚本失效。
+
+## 分时 MACD 短线上涨衰减（`code/monitor_us_intraday_decay.py`）
+
+把上面「上涨衰减」的思路搬到**分时 K 线**上：分时尺度上最近新高，MACD 快慢线却低于上一个新高。
+
+### 口径（用户定义 2026-09-12）
+
+- **分时 K 线（4 种）**：30 分钟、60 分钟、120 分钟、日线
+- **窗口（6 种）**：1 / 2 / 3 / 4 / 5 / 6 个交易日 → 每只票 `4 × 6 = 24` 个组合
+- **最近新高**：最近 W 个交易日内，该分时 K 线**最高价**那根
+- **上个新高**：跳过最近窗口、再往前 W 个交易日内的最高价那根
+- **短线上涨衰减**：最近新高价 **>** 上个新高价（必须真创新高），且最近那根的
+  `DIF=EMA12-EMA26` 与 `DEA=EMA9(DIF)` **都低于**前高那根 → 成立（`--mode any` 则任一低即报）
+- 前高落在 MACD 预热区（前 40 根）内则跳过；同一只票可命中多个「分时K × 窗口」组合（多尺度共振）
+
+### 数据源
+
+| 源 | 分时 | 说明 |
+|---|---|---|
+| **Twelve Data**（默认，推荐） | 30min / 1h / **2h 原生** | `api.twelvedata.com`；免费档 **800 次/日、8 次/分**，210 只 × 3 周期 = 630 次 ≈ 80 分钟 |
+| 东财 `push2his` | klt=30/60 | 120m 由 60m 两两合成；**本机 IP 已被东财封禁**（2026-09-12，0.1s TCP 断开），需换出口 IP |
+
+Twelve Data 的 key：注册后放 `~/.twelvedata.json` → `{"apikey": "你的key"}`（或环境变量 `TWELVEDATA_API_KEY`）。
+日线仍走腾讯日 K 缓存（不消耗 Twelve Data 配额）。
+
+已逐一验证**不可用**的其它美股分时源（2026-09-12）：
+腾讯 `usfqkline` 只支持 `day`（m60/m5/控制器爆破全失败）· 新浪 `US_MinKService`（已下线）·
+雪球（需 `xq_a_token`）· 同花顺 `d.10jqka` 美股 404 · 富途 `quote-api` 404 · Nasdaq api 分时只有当日 1 分钟 ·
+Yahoo/WSJ/Google/CNBC/investing/marketwatch/stooq 分时一律 403/不可达（环境层屏蔽）·
+公共 CORS 转代理（allorigins/codetabs/jina/corsproxy）同样被环境层屏蔽。
+
+### 用法
+
+```bash
+cd US_selected_report
+python code/monitor_us_intraday_decay.py --limit 10        # 先小样本试跑
+python code/monitor_us_intraday_decay.py                   # 全量扫自选(约 80 分钟)
+python code/monitor_us_intraday_decay.py --periods 60分钟,120分钟
+python code/monitor_us_intraday_decay.py --cache           # 只拉取/缓存分时K线
+python code/monitor_us_intraday_decay.py --mode any        # 任一条线低即报
+python code/monitor_us_intraday_decay.py --source em       # 强制走东财(需 IP 未被封)
+```
+
+参数：`--source`(auto|td|em) `--periods` `--windows`(1,2,3,4,5,6) `--mode`(both|any)
+`--workers`(4) `--bars`(320, 日线根数) `--td-interval-sec`(7.6) `--limit` `--cache`。
+产物：`output/us_selected_intraday_decay_YYYYMMDD.csv` + `us_intraday_decay_report_YYYYMMDD.html`
+（表列：分时K / 窗口(日) / 最近新高时间 / 新高价 / 上个新高时间 / 前高价 / 新高幅度 /
+DIF / 前高DIF / DIF差 / DEA / 前高DEA / DEA差 / 衰减类型）。
+
+本地 HTML 预览：`python -m http.server 8738 --bind 127.0.0.1`（cwd = `US_selected_report/output`）。
