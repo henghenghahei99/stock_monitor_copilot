@@ -614,7 +614,7 @@ def main() -> None:
     n_data = 0
     with ThreadPoolExecutor(max_workers=a.workers) as ex:
         futs = [ex.submit(scan_one, p, a.bars, a.mode, periods, windows, False) for p in watch]
-        for f in as_completed(futs):
+        for i, f in enumerate(as_completed(futs), 1):
             try:
                 r = f.result()
             except Exception:  # noqa: BLE001
@@ -622,6 +622,8 @@ def main() -> None:
             if r:
                 n_data += 1
                 rows.extend(r)
+            if i % 10 == 0 or i == len(watch):
+                print(f"[进度] {i}/{len(watch)} 只  命中组合 {len(rows)}", file=sys.stderr, flush=True)
 
     rows.sort(key=lambda r: (r["kind"] != "双线衰减", r["ticker"], r["period"], r["window"]))
     print(f"\n命中 {len(rows)} 个「分时K×窗口」组合, 涉及 {n_data} 只股票")
