@@ -18,6 +18,8 @@
        30分钟->30min / 60分钟->1h / 120分钟->2h(原生, 无需合成) / 日线->复用腾讯日K
        免费档: 800 次/日、8 次/分钟 -> 210 只 × 3 个分时周期 = 630 次(约 80 分钟跑完)
        key 放 ~/.twelvedata.json  {"apikey":"..."}  或环境变量 TWELVEDATA_API_KEY
+       **中转/Replay**: 配置里加 "base_url"(如 https://ai-tool.indevs.in/api-relay/twelvedata),
+       中转只认请求头 X-API-Key(本站发的 key), 不认 apikey 参数; 脚本自动切换鉴权方式
   [em] 东财 push2his kline(klt=30/60, 前台复权), 120m 由 60m 两两合成
        注意: 东财对分钟级限流强, 且**实测(2026-09-12)本机 IP 已被 push2his/push2 封禁**
        (0.1s TCP 断开, 连它家日线也拒; datacenter.eastmoney.com 仍通 = 行情主机级封禁)
@@ -160,27 +162,47 @@ def em_klines(secid: str, klt: int, lmt: int = 500, force: bool = False) -> list
 _td_lock = threading.Lock()
 _td_last = [0.0]
 TD_MIN_INTERVAL = 7.6        # 免费档 8 次/分钟
+TD_BASE_OFFICIAL = "https://api.twelvedata.com"
+TD_BASE_RELAY = "https://ai-tool.indevs.in/api-relay/twelvedata"   # 中转(只认 X-API-Key)
 _TD_KEY_FILES = [os.path.expanduser("~/.twelvedata.json"),
                  os.path.join(REPO, "data", "twelvedata.json")]
-_td_key_cache = [None]
+_td_cfg_cache = [None]
+
+
+def td_config() -> tuple[str, str]:
+    """-> (key, base_url)。
+
+    优先级: 环境变量 > ~/.twelvedata.json > data/twelvedata.json, 配置项:
+      {"apikey": "...", "base_url": "..."}   base_url 留空/缺省即官方 api.twelvedata.com
+    环境变量: TWELVEDATA_API_KEY / TD_API_KEY, TWELVEDATA_BASE_URL / TD_BASE_URL
+    """
+    if _td_cfg_cache[0] is not None:
+        return _td_cfg_cache[0]
+    key = (os.environ.get("TWELVEDATA_API_KEY") or os.environ.get("TD_API_KEY") or "").strip()
+    base = (os.environ.get("TWELVEDATA_BASE_URL") or os.environ.get("TD_BASE_URL") or "").strip()
+    for f in _TD_KEY_FILES:
+        if key and base:
+            break
+        try:
+            with open(f, encoding="utf-8") as fh:
+                cfg = json.load(fh)
+        except Exception:  # noqa: BLE001
+            continue
+        if not isinstance(cfg, dict):
+            continue
+        if not key:
+            key = str(cfg.get("apikey", "")).strip()
+        if not base:
+            base = str(cfg.get("base_url") or cfg.get("relay") or "").strip()
+    if base and "ai-tool.indevs.in" in base and "twelvedata" not in base.rstrip("/"):
+        base = TD_BASE_RELAY          # 只给了站点根路径 -> 补全 twelvedata 中转入口
+    _td_cfg_cache[0] = (key, base.rstrip("/") or TD_BASE_OFFICIAL)
+    return _td_cfg_cache[0]
 
 
 def td_apikey() -> str:
-    """优先环境变量, 其次 ~/.twelvedata.json / data/twelvedata.json 的 {"apikey": "..."}。"""
-    if _td_key_cache[0] is not None:
-        return _td_key_cache[0]
-    key = (os.environ.get("TWELVEDATA_API_KEY") or os.environ.get("TD_API_KEY") or "").strip()
-    if not key:
-        for f in _TD_KEY_FILES:
-            try:
-                with open(f, encoding="utf-8") as fh:
-                    key = str(json.load(fh).get("apikey", "")).strip()
-                if key:
-                    break
-            except Exception:  # noqa: BLE001
-                continue
-    _td_key_cache[0] = key
-    return key
+    """兼容旧调用: 只取 key(环境变量优先, 其次 ~/.twelvedata.json)。"""
+    return td_config()[0]
 
 
 def _td_throttle() -> None:
@@ -208,18 +230,23 @@ def td_klines(symbol: str, interval: str, outputsize: int = TD_OUTPUTSIZE,
                 return rows
         except Exception:  # noqa: BLE001
             pass
-    key = td_apikey()
+    key, base = td_config()
     if not key:
         raise RuntimeError("缺少 Twelve Data API key(见 ~/.twelvedata.json)")
-    url = (f"https://api.twelvedata.com/time_series?symbol={urllib.parse.quote(symbol)}"
+    use_relay = "ai-tool.indevs.in" in base
+    url = (f"{base}/time_series?symbol={urllib.parse.quote(symbol)}"
            f"&interval={interval}&outputsize={outputsize}&order=ASC"
-           f"&timezone=America/New_York&apikey={urllib.parse.quote(key)}")
+           f"&timezone=America/New_York")
+    hdrs = {"User-Agent": _HDR["User-Agent"], "Accept": "application/json"}
+    if use_relay:
+        hdrs["X-API-Key"] = key      # 中转: 本站 key 走请求头
+    else:
+        url += f"&apikey={urllib.parse.quote(key)}"
     last_exc = None
     for attempt in range(4):
         _td_throttle()
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": _HDR["User-Agent"],
-                                                       "Accept": "application/json"})
+            req = urllib.request.Request(url, headers=hdrs)
             with urllib.request.urlopen(req, timeout=25, context=_CTX) as r:
                 j = json.loads(r.read().decode("utf-8", "ignore"))
             if j.get("status") == "error":
@@ -639,9 +666,11 @@ def main() -> None:
         watch = watch[:a.limit]
     n_req = len(watch) * len([p for p in periods if p[1] == "td"])
     if src == "td" and n_req:
-        print(f"[信息] Twelve Data key: {'已就绪' if td_apikey() else '缺失(见 ~/.twelvedata.json)'}"
+        _k, _b = td_config()
+        print(f"[信息] Twelve Data key: {'已就绪' if _k else '缺失(见 ~/.twelvedata.json)'}"
+              f" | 入口 {_b}{' (中转 X-API-Key)' if 'ai-tool.indevs.in' in _b else ''}"
               f" | 预计 {n_req} 次请求 ≈ {n_req * TD_MIN_INTERVAL / 60:.0f} 分钟"
-              f"(免费档限 800次/日、8次/分)")
+              f"(官方免费档限 800次/日、8次/分)")
     print(f"[信息] 自选美股 {len(watch)} 只 | 源={src} | 分时K {[p[0] for p in periods]} | "
           f"窗口 {windows} | mode={a.mode} | 死叉→金叉→新高过滤={'开' if require_cross else '关'}"
           f" | ▲距金叉>{min_gold_bars}根")

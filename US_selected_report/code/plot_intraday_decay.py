@@ -40,7 +40,8 @@ import find_overbought_stocks as fos  # noqa: E402
 
 CHART_DIR = os.path.join(ROOT, "output", "charts_intraday")
 
-plt.rcParams["font.sans-serif"] = ["Noto Sans CJK JP", "Droid Sans Fallback", "DejaVu Sans"]
+plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei", "Noto Sans CJK JP",
+                                   "Droid Sans Fallback", "DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
 
 UP_C = "#d93025"      # 最近新高(红)

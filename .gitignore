@@ -18,3 +18,9 @@ data/kline_cache_td/
 
 # 报告输出/中间结果: 可随时重跑生成, 不入库
 output/
+
+# 本地凭据(API Key / 兑换码 / SMTP 授权码), 绝不入库
+key
+*.key
+.twelvedata.json
+.mail_sender.json
